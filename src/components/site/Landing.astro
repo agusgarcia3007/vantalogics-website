@@ -2,13 +2,17 @@
 import Layout from "@/layouts/main.astro"
 import SiteHeader from "@/components/site/SiteHeader.astro"
 import Hero from "@/components/site/Hero.astro"
+import Tools from "@/components/site/Tools.astro"
+import Problem from "@/components/site/Problem.astro"
 import Services from "@/components/site/Services.astro"
+import AgentDemo from "@/components/site/AgentDemo.astro"
 import Process from "@/components/site/Process.astro"
-import SocialProof from "@/components/site/SocialProof.astro"
+import Proof from "@/components/site/Proof.astro"
 import Faq from "@/components/site/Faq.astro"
 import CallToAction from "@/components/site/CallToAction.astro"
 import SiteFooter from "@/components/site/SiteFooter.astro"
 import { localizePath, useTranslations, type Lang } from "@/i18n"
+import { GITHUB_URL, INSTAGRAM_URL } from "@/site"
 
 interface Props {
   lang: Lang
@@ -36,6 +40,7 @@ const organization = {
   email: "hello@vantalogics.com",
   telephone: "+541178296140",
   slogan: t.hero.title,
+  sameAs: [GITHUB_URL, INSTAGRAM_URL],
   knowsAbout:
     lang === "es"
       ? [
@@ -62,7 +67,7 @@ const organization = {
   availableLanguage: ["es", "en"],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: t.services.title,
+    name: t.services.titleBright,
     itemListElement: t.services.items.map((service) => ({
       "@type": "Offer",
       itemOffered: {
@@ -115,9 +120,12 @@ const faqPage = {
 
   <main id="contenido">
     <Hero lang={lang} />
+    <Tools lang={lang} />
+    <Problem lang={lang} />
     <Services lang={lang} />
+    <AgentDemo lang={lang} />
     <Process lang={lang} />
-    <SocialProof lang={lang} />
+    <Proof lang={lang} />
     <Faq lang={lang} />
     <CallToAction lang={lang} />
   </main>

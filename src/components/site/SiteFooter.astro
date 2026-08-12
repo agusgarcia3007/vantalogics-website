@@ -1,7 +1,10 @@
 ---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Github01Icon, InstagramIcon } from "@hugeicons/core-free-icons"
+
 import Wordmark from "@/components/site/Wordmark.astro"
 import { localizePath, otherLang, useTranslations, type Lang } from "@/i18n"
-import { CONTACT_EMAIL } from "@/site"
+import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/site"
 
 interface Props {
   lang: Lang
@@ -12,34 +15,65 @@ const t = useTranslations(lang)
 const alt = otherLang(lang)
 const year = new Date().getFullYear()
 const email = CONTACT_EMAIL
+
+const socials = [
+  { href: GITHUB_URL, label: "GitHub", icon: Github01Icon },
+  { href: INSTAGRAM_URL, label: "Instagram", icon: InstagramIcon },
+]
 ---
 
-<!-- Sin padding inferior: la marca a sangre tiene que apoyar contra el borde
-     de la página, sin aire debajo. -->
-<footer class="pt-(--spacing-band)">
-  <div class="page-x grid gap-x-[50px] gap-y-[clamp(40px,5vw,80px)] md:grid-cols-3">
+<footer
+  class="mx-auto w-full max-w-[1180px] border-x border-hairline"
+  style="container-type: inline-size;"
+>
+  <div
+    class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-10 border-t border-hairline px-[clamp(20px,4vw,56px)] py-[clamp(48px,6vw,80px)] md:grid-cols-[minmax(0,1.2fr)_repeat(2,minmax(0,0.8fr))]"
+  >
     <div>
       <Wordmark alt={t.a11y.logoAlt} />
-      <p class="copy mt-[20px] max-w-[34ch] text-muted-ash">
-        {t.footer.tagline}
-      </p>
+      <p class="copy mt-5 max-w-[32ch] text-ash">{t.footer.tagline}</p>
       <a
-        class="copy mt-[20px] inline-block text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
+        class="copy mt-5 inline-block text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
         href={`mailto:${email}`}
       >
         {email}
       </a>
+
+      <!-- Perfiles públicos. Van con glifo y rótulo: un ícono suelto en un
+           sistema monocromo no se distingue de un botón cualquiera. -->
+      <ul class="mt-7 flex flex-wrap gap-3">
+        {
+          socials.map((social) => (
+            <li>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="me noopener noreferrer"
+                class="social flex items-center gap-[9px] rounded-pill border border-hairline px-[13px] py-[8px]"
+              >
+                <HugeiconsIcon
+                  icon={social.icon}
+                  size={16}
+                  strokeWidth={1.5}
+                  className="shrink-0"
+                />
+                <span class="label-untitled">{social.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
 
     {
       t.footer.columns.map((column) => (
         <nav aria-label={column.title}>
-          <h2 class="font-opx text-subheading text-bone">{column.title}</h2>
-          <ul class="mt-[20px] flex flex-col gap-3">
+          <h2 class="label-untitled text-muted-ash">{column.title}</h2>
+          <ul class="mt-5 flex flex-col gap-[10px]">
             {column.links.map((link) => (
               <li>
                 <a
-                  class="copy text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                  class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
                   href={link.href}
                 >
                   {link.label}
@@ -53,7 +87,7 @@ const email = CONTACT_EMAIL
   </div>
 
   <div
-    class="rule-t page-x mt-[clamp(48px,7vw,100px)] flex flex-wrap items-center justify-between gap-x-[50px] gap-y-4 pt-[30px]"
+    class="flex flex-wrap items-center justify-between gap-x-[clamp(24px,4vw,56px)] gap-y-3 border-t border-hairline px-[clamp(20px,4vw,56px)] py-[22px]"
   >
     <p class="label-untitled text-muted-ash">© Vantalogics {year}</p>
     <p class="label-untitled text-muted-ash">{t.footer.tags}</p>
@@ -67,26 +101,36 @@ const email = CONTACT_EMAIL
     </a>
   </div>
 
-  <!-- Marca a sangre: el nombre ocupa el ancho completo y se corta por la
-       mitad contra el borde inferior de la página. Es decorativo — el nombre
-       accesible ya está en el bloque de arriba. -->
-  <!-- La altura del contenedor es la mitad de la altura de mayúscula de Inter
-       (0.727em), y el desplazamiento sube la línea hasta que el tope de las
-       letras coincide con el borde superior: el nombre queda partido al medio
-       contra el final de la página, sin espacio sobrante debajo. -->
+  <!-- Marca a sangre: el nombre ocupa el ancho de la columna y se corta por la
+       mitad contra el borde inferior. Es decorativo — el nombre accesible ya
+       está arriba. La altura es la mitad de la altura de mayúscula de Inter
+       (0.727em) y el desplazamiento sube la línea hasta que el tope de las
+       letras coincide con el borde: queda partido al medio, sin aire debajo. -->
   <div
-    class="mt-[clamp(40px,6vw,80px)] overflow-hidden select-none"
-    style="font-size: 19.5vw; height: 0.363em;"
+    class="overflow-hidden border-t border-hairline select-none"
+    style="font-size: 18.6cqw; height: 0.363em;"
     aria-hidden="true"
     data-reveal
   >
-    <!-- Sólo contorno: el trazo blanco es el mismo recurso que usan los
-         pills del sistema, escalado al tamaño de la marca. -->
     <span
       class="block w-full text-center font-opx whitespace-nowrap text-transparent"
-      style="line-height: 1; margin-top: -0.137em; letter-spacing: -0.035em; -webkit-text-stroke: 2px var(--bone); text-stroke: 2px var(--bone);"
+      style="line-height: 1; margin-top: -0.137em; letter-spacing: -0.035em; -webkit-text-stroke: 1.5px var(--bone);"
     >
       Vantalogics
     </span>
   </div>
 </footer>
+
+<style>
+  .social {
+    color: var(--color-ash);
+    transition:
+      color var(--duration-state) var(--ease-opx),
+      border-color var(--duration-state) var(--ease-opx);
+  }
+
+  .social:hover {
+    color: var(--color-bone);
+    border-color: var(--color-bone);
+  }
+</style>

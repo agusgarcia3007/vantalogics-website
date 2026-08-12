@@ -106,6 +106,16 @@ const imageUrl = new URL(`/og-${lang}.png`, SITE).href
           return
         }
 
+        // Lo que ya está en pantalla se revela de entrada, sin esperar al
+        // observer: el titular del hero no puede depender de un callback que
+        // el navegador difiere cuando la pestaña no está enfocada.
+        nodes.forEach((n) => {
+          const box = n.getBoundingClientRect()
+          if (box.top < window.innerHeight && box.bottom > 0) {
+            n.setAttribute("data-revealed", "")
+          }
+        })
+
         const io = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -117,7 +127,9 @@ const imageUrl = new URL(`/og-${lang}.png`, SITE).href
           { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
         )
 
-        nodes.forEach((n) => io.observe(n))
+        nodes.forEach((n) => {
+          if (!n.hasAttribute("data-revealed")) io.observe(n)
+        })
       })()
     </script>
   </body>

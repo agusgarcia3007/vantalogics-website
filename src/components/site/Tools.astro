@@ -1,0 +1,81 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import {
+  Building06Icon,
+  DatabaseIcon,
+  GoogleSheetIcon,
+  Mail01Icon,
+  Notion01Icon,
+  SlackIcon,
+  StructureFolderIcon,
+  WhatsappIcon,
+} from "@hugeicons/core-free-icons"
+
+import Frame from "@/components/site/Frame.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).tools
+
+// La franja de confianza. En vez de logos de clientes —que a esta altura de la
+// agencia serían prestados o inventados— muestra dónde trabaja el sistema.
+// Dice lo mismo que un muro de logos ("esto se enchufa a tu mundo real") y es
+// verificable.
+const icons = [
+  WhatsappIcon,
+  Mail01Icon,
+  GoogleSheetIcon,
+  SlackIcon,
+  Notion01Icon,
+  DatabaseIcon,
+  Building06Icon,
+  StructureFolderIcon,
+]
+---
+
+<Frame>
+  <div
+    class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-[clamp(32px,5vw,72px)]"
+  >
+    <div class="max-w-[34ch]" data-reveal>
+      <h2 class="font-untitled text-[19px] leading-snug text-bone">
+        {t.title}
+      </h2>
+      <p class="label-untitled mt-3 text-muted-ash">{t.note}</p>
+    </div>
+
+    <ul
+      class="grid grid-cols-2 gap-x-3 gap-y-3 sm:grid-cols-4 lg:shrink-0"
+      data-reveal
+      style="--reveal-delay: 120ms;"
+    >
+      {
+        t.items.map((item, i) => (
+          <li class="tool flex items-center gap-[9px] rounded-pill border border-hairline px-[13px] py-[9px]">
+            <HugeiconsIcon
+              icon={icons[i]}
+              size={16}
+              strokeWidth={1.5}
+              className="shrink-0 text-ash"
+            />
+            <span class="label-untitled truncate text-bone">{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Frame>
+
+<style>
+  .tool {
+    transition: border-color var(--duration-state) var(--ease-opx);
+  }
+
+  .tool:hover {
+    border-color: var(--color-bone);
+  }
+</style>

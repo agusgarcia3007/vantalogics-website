@@ -1,11 +1,13 @@
-export const en = {
+import type { Dictionary } from "./es"
+
+export const en: Dictionary = {
   htmlLang: "en",
   ogLocale: "en_US",
 
   meta: {
-    title: "Vantalogics — AI systems agency for process automation",
+    title: "Vantalogics — We automate the repetitive work in your company",
     description:
-      "We automate company processes and build custom AI agents: evaluated, monitored and under human control. Systems that survive production, not demos.",
+      "We build AI agents that answer customers, file data and close cases inside the tools you already use. With a human in charge where money is on the line.",
     imageAlt: "Vantalogics — AI systems agency",
   },
 
@@ -19,10 +21,10 @@ export const en = {
 
   nav: {
     items: [
-      { href: "#servicios", label: "Services" },
-      { href: "#proceso", label: "Process" },
+      { href: "#que-hacemos", label: "What we do" },
+      { href: "#proceso", label: "How we work" },
       { href: "#resultados", label: "Results" },
-      { href: "#faq", label: "FAQ" },
+      { href: "#faq", label: "Questions" },
     ],
     cta: "Book a diagnostic",
     menu: "Menu",
@@ -43,200 +45,221 @@ export const en = {
 
   hero: {
     eyebrow: "AI systems agency",
-    tagline: "Automation · Agents · AI Solutions",
-    title: "We design systems that do more with less.",
-    lead: "We automate processes and build AI agents that survive production: measured, monitored and under human control where it counts.",
+    title: "Let a system do the repetitive work.",
+    lead: "We build AI agents that answer customers, file data and close cases inside the tools you already use. You keep deciding where money is on the line.",
     ctaPrimary: "Book a free diagnostic",
-    ctaSecondary: "See what we build",
-    note: "30 minutes, free. You leave with a plan.",
-    trace: {
-      caption: "One customer complaint, solved step by step",
-      runLabel: "Case",
-      runId: "Billing complaint",
-      agent: "Customer support",
+    ctaSecondary: "Try an agent right now",
+    note: "30 minutes, free. You leave with a map of your process and an estimate.",
+    flow: {
+      caption: "An order that comes in over WhatsApp, handled on its own",
+      label: "Example flow",
       status: "Working right now",
-      columns: { time: "Time", step: "Step", detail: "Detail" },
-      steps: [
+      trigger: {
+        title: "A message arrives",
+        detail: "“Hi, I need 20 boxes for Thursday”",
+      },
+      agent: {
+        title: "Your agent",
+        detail: "Reads it, understands it and decides what to do",
+      },
+      outputs: [
         {
-          time: "0.4 s",
-          kind: "A customer writes",
-          detail: "“I never got my March invoice”",
-          meta: "",
+          title: "It answers the customer",
+          detail: "Confirms stock and delivery date",
         },
         {
-          time: "1.1 s",
-          kind: "It recognises them",
-          detail: "Finds them in your system, with their history",
-          meta: "",
+          title: "It files the order",
+          detail: "Lands in your system, nobody types it in",
         },
         {
-          time: "2.0 s",
-          kind: "Looks up the invoice",
-          detail: "March, issued on the 3rd",
-          meta: "",
-        },
-        {
-          time: "3.2 s",
-          kind: "Double-checks it",
-          detail: "The numbers match what they bought",
-          meta: "",
-        },
-        {
-          time: "4.9 s",
-          kind: "Asks your permission",
-          detail: "Amount is over the limit · you approve it",
-          meta: "",
-        },
-        {
-          time: "5.6 s",
-          kind: "Solves it",
-          detail: "Invoice sent and case closed",
-          meta: "",
+          title: "It asks when there is a call to make",
+          detail: "An unusual discount: you approve it",
         },
       ],
-      summary: [
-        { value: "6", label: "steps, all in plain sight" },
-        { value: "5.6 s", label: "to solve the case" },
-        { value: "1", label: "decision that stays yours" },
-      ],
+      footnote: "Six seconds end to end. Every step is on the record.",
     },
-    stats: [
-      { value: "24/7", label: "It works at night too" },
-      { value: "100%", label: "The system stays in your name" },
-      { value: "0", label: "Nothing ties you to us" },
-      { value: "EN · ES", label: "We work in two languages" },
+  },
+
+  tools: {
+    title: "It works inside what you already use",
+    note: "And anything else with an API. You don't switch systems — we add hands to them.",
+    items: [
+      "WhatsApp",
+      "Email",
+      "Spreadsheets",
+      "Slack",
+      "Notion",
+      "Your ERP",
+      "Your CRM",
+      "Your site",
+    ],
+  },
+
+  problem: {
+    label: "The problem",
+    titleMuted: "Your team doesn't hate the work.",
+    titleBright: "It hates doing it twice.",
+    body: [
+      "Most companies don't have a people problem. They have tasks done by hand three times a week because nobody ever turned them into a system.",
+      "That's exactly what we do. We look at the real process, not the slide about the process, and automate the part that repeats.",
+    ],
+    items: [
+      {
+        title: "Orders over chat.",
+        detail: "Someone retypes them into the system, and now and then one slips.",
+      },
+      {
+        title: "Invoices and delivery notes.",
+        detail: "Read, filed and double-checked one by one, every single day.",
+      },
+      {
+        title: "The same questions.",
+        detail: "The same message answered twenty times a day, forever.",
+      },
+      {
+        title: "Monday's report.",
+        detail: "Half a morning rebuilding what was built last week.",
+      },
     ],
   },
 
   services: {
-    label: "Services",
-    title: "Four ways to put AI to work",
+    label: "What we do",
+    titleMuted: "Four ways to put AI to work.",
+    titleBright: "All of them end in something running.",
     items: [
       {
         index: "01",
-        title: "Process automation",
+        title: "Automate a process",
         summary:
-          "Repetitive work moves to a system that runs on its own and logs every step.",
+          "Work someone does today by copying and pasting moves to a system that runs on its own and logs every step it takes.",
         items: [
           "Customer and vendor onboarding",
-          "Document extraction and validation",
-          "Reconciliations and system-to-system loads",
+          "Reading and filing documents",
+          "System-to-system checks that are manual today",
           "Ticket triage and replies",
         ],
       },
       {
         index: "02",
-        title: "Custom AI agents",
+        title: "A custom agent",
         summary:
-          "Agents that use your real tools, with scoped permissions and a human where mistakes get expensive.",
+          "It answers, looks up your real data and takes concrete actions. With scoped permissions and a human wherever a mistake gets expensive.",
         items: [
-          "Support and sales with your own context",
-          "Internal copilots over your data",
-          "Multi-step orchestration with approvals",
-          "Slack, WhatsApp, email or your product",
+          "Support and sales with your own information",
+          "Internal copilots for your team",
+          "Multi-step tasks with approval",
+          "On WhatsApp, email, Slack or your product",
         ],
       },
       {
         index: "03",
-        title: "Reliable, measurable agents",
+        title: "Make it behave every time",
         summary:
-          "We define what working well means for your agent and measure it on every release.",
+          "We agree what working well means and measure it on every change. If quality drops, an alert fires before a customer tells you.",
         items: [
-          "Evaluation sets from your real operation",
-          "Guardrails, action limits and fallbacks",
-          "Traces, cost and latency per run",
-          "Alerts when quality degrades",
+          "Tests built from your real cases",
+          "Explicit limits on what it may do alone",
+          "Log, cost and time for every run",
+          "Alerts when something degrades",
         ],
       },
       {
         index: "04",
-        title: "AI Solutions and integration",
+        title: "AI inside your product",
         summary:
-          "When AI has to live inside your product, we own the whole architecture.",
+          "If you sell software and AI has to live inside it, we own the whole architecture and hand it over running to your team.",
         items: [
-          "Semantic search and RAG over your data",
+          "Search over your own data",
           "AI features embedded in your product",
-          "Model selection and cost control",
-          "Handover to your internal team",
+          "Model choice and cost control",
+          "Documented handover to your team",
         ],
-      },
-    ],
-    principlesTitle: "Engineering, not enthusiasm",
-    principles: [
-      {
-        title: "Measured or not shipped",
-        body: "Every automation starts with a metric: hours, response time or error rate.",
-      },
-      {
-        title: "Process first, model second",
-        body: "Most of the gain comes from redesigning the flow. The model is just one part.",
-      },
-      {
-        title: "Human in the loop where it counts",
-        body: "High-risk cases go through explicit approval and are logged in full.",
-      },
-      {
-        title: "No vendor lock-in",
-        body: "The code, the prompts and the infrastructure stay in your repos and your accounts.",
       },
     ],
   },
 
+  agentDemo: {
+    label: "Try it now",
+    titleMuted: "This site has an agent inside it.",
+    titleBright: "Tell it your case and answer two questions.",
+    body: "It's the same kind of agent we build for clients: it looks up real information, takes notes on what you tell it and asks permission before passing your contact to a person. Not a video, not a recorded demo.",
+    cta: "Open the agent",
+    points: [
+      "Every step it takes is written in the chat",
+      "It sends nothing without your approval",
+      "If it doesn't understand, it says so instead of inventing",
+    ],
+  },
+
   process: {
-    label: "Process",
-    title: "From the conversation to a working system",
+    label: "How we work",
+    titleMuted: "From the first conversation",
+    titleBright: "to a system that runs.",
     steps: [
       {
-        step: "Phase 01",
+        step: "01",
         title: "Diagnostic",
-        body: "Half an hour with whoever knows the process. You leave with a flow map and what's worth automating.",
+        body: "Half an hour with whoever really knows the process. You leave with a map of the flow and what's worth automating first.",
+        meta: "30 minutes · free",
       },
       {
-        step: "Phase 02",
+        step: "02",
         title: "Design and test",
-        body: "We define the success metric and build the smallest version that solves the whole problem.",
+        body: "We set the success metric and build the smallest version that solves the whole problem — not a mockup.",
+        meta: "First few weeks",
       },
       {
-        step: "Phase 03",
+        step: "03",
         title: "Production",
-        body: "Integration, permissions, guardrails and observability. It opens to more users once the numbers hold.",
+        body: "Integration, permissions, limits and monitoring. It opens to more people once the numbers hold, not before.",
+        meta: "On your real data",
       },
       {
-        step: "Ongoing",
-        title: "Operation and handover",
-        body: "Monitoring and cost control. We document and train so your team can carry on without us.",
+        step: "04",
+        title: "Running it and handing it over",
+        body: "We monitor, control cost and document. If you have a technical team, they end up able to carry on without us.",
+        meta: "Ongoing",
       },
     ],
   },
 
   proof: {
-    clientsLabel: "Already running on our systems",
-    clientsAria: "Vantalogics clients",
     label: "Results",
-    title: "What changes in production",
+    titleMuted: "What changes",
+    titleBright: "once the system is in production.",
     intro:
-      "In all three, the metric was agreed before we started and measured on the real operation.",
+      "In all three, the metric was agreed before we started and measured on the real operation, not on a lab test.",
+    headline: {
+      value: "310 h",
+      unit: "a month",
+      title: "of manual work that stopped happening",
+      body: "A distributor with three people filing delivery notes by hand. Today the system reads them, files them and only raises the unclear ones.",
+      chartLabel: "Manual hours per month",
+      chartFrom: "Before",
+      chartTo: "Today",
+    },
     results: [
       {
         metric: "−72%",
         metricLabel: "Response time",
-        sector: "B2B SaaS",
-        body: "Automatic triage and drafts a human approves, across a 9-person support team.",
+        sector: "B2B software",
+        body: "Automatic triage and drafts a person approves, across a nine-person support team.",
       },
       {
         metric: "310 h/mo",
         metricLabel: "Manual work removed",
         sector: "Logistics",
-        body: "Delivery note and invoice extraction against the ERP, with review only on unclear cases.",
+        body: "Delivery notes read and checked against the ERP, with review only on unclear cases.",
       },
       {
         metric: "3×",
         metricLabel: "Onboarding capacity",
         sector: "Financial services",
-        body: "Customer onboarding with document verification, no extra headcount and a full audit trail.",
+        body: "Document verification with no extra headcount and a record of every decision.",
       },
     ],
-    testimonialsTitle: "Testimonials",
+    testimonialsTitle: "What they say",
     testimonials: [
       {
         quote:
@@ -247,7 +270,7 @@ export const en = {
       },
       {
         quote:
-          "It's the first AI project we've taken to production. The difference was having quality metrics from day one.",
+          "It's the first AI project we've taken to production. The difference was having metrics from day one.",
         name: "Diego Salgado",
         role: "CTO",
         company: "Quantia Seguros",
@@ -260,48 +283,49 @@ export const en = {
         company: "Belfor Retail",
       },
     ],
+    stats: [
+      { value: "24/7", label: "It works at night too" },
+      { value: "100%", label: "The system stays in your name" },
+      { value: "0", label: "Nothing ties you to us" },
+      { value: "EN · ES", label: "We work in two languages" },
+    ],
   },
 
-  /**
-   * Six questions, 40–60 word answers. FAQ rich results were deprecated in
-   * May 2026, so length is no longer tuned for the SERP but for extraction:
-   * that range fits in a single retrieval chunk, which is what answer
-   * engines actually cite.
-   */
   faq: {
-    label: "Frequently asked questions",
-    title: "What people ask before hiring us",
+    label: "Questions",
+    titleMuted: "What people ask",
+    titleBright: "before hiring us.",
     indexLabel: "Index",
     entries: [
       {
         question: "What exactly does Vantalogics do?",
         answer:
-          "Vantalogics is an AI systems agency. We automate repetitive company processes and build AI agents connected to your systems — CRM, ERP, databases and internal APIs — with evaluation and observability so they work reliably in production, not just in a demo.",
+          "We automate repetitive company work and build AI agents connected to your systems — CRM, ERP, databases and internal APIs. We measure them against real cases from your operation so they work every day in production, not just on demo day.",
       },
       {
         question: "How long does an AI automation project take?",
         answer:
-          "It depends on the process and the integrations involved, so the timeline is closed during the diagnostic. We work in short cycles: instead of a single deliverable at the end, there is something usable and measurable in every delivery, usually within the first few weeks.",
+          "It depends on the process and which systems it has to talk to, so the timeline is set during the diagnostic. We work in short cycles: instead of one delivery at the end, something usable and measurable ships each round, usually within the first few weeks.",
       },
       {
         question: "How much does it cost to automate a process with AI?",
         answer:
-          "The budget is built after the diagnostic, with a fixed scope and a per-project price instead of open-ended hours. The initial 30-minute diagnostic is free and ends with a written scope and investment range, before you commit to anything.",
+          "Pricing is built after the diagnostic, with a closed scope and a per-project price instead of open-ended hours. The initial 30-minute diagnostic is free and ends with a written scope and investment range, before you commit to anything.",
       },
       {
         question: "What happens to my company's data?",
         answer:
-          "Your data stays in your infrastructure and your provider accounts: we deploy to your cloud or whichever one you choose, under an NDA and with least-privilege access. We never use customer data to train models and work with zero-retention providers when the case requires it.",
+          "Your data stays in your infrastructure and your provider accounts: we deploy to your cloud or whichever you choose, under NDA and with least-privilege access. We don't use customer information to train models and we work with zero retention when the case requires it.",
       },
       {
-        question: "What happens if the AI agent gets it wrong?",
+        question: "What if the agent gets something wrong?",
         answer:
-          "Every agent ships with explicit limits on what it can do alone and what needs a person's approval. High-impact actions always go through human review, everything is logged with its full trace, and automatic alerts fire when quality drops below the agreed threshold.",
+          "Every agent ships with explicit limits on what it can do alone and what needs a person's approval. High-impact actions always go through human review, everything is logged step by step, and automatic alerts fire when quality drops below the agreed threshold.",
       },
       {
-        question: "Do I need an in-house technical team to work with you?",
+        question: "Do I need an internal technical team to work with you?",
         answer:
-          "No. We handle the architecture, the development and the full deployment. We do need one person on the business side who knows the process well and can validate results. If you have a technical team, we hand over the documented system so they can run and extend it.",
+          "No. We own the architecture, the development and the full deployment. We do need someone on the business side who knows the process deeply and can validate results. If you have a technical team, we hand over the documented system so they can run and extend it.",
       },
     ],
   },
@@ -309,41 +333,42 @@ export const en = {
   cta: {
     label: "Next step",
     title: "Tell us which process is eating your month.",
-    body: "Thirty minutes, no commitment. You leave with a map of the process and an estimate of how much can be automated. If we don't see a case, we'll say so on the call.",
+    body: "Thirty minutes, no commitment. You leave with a map of the process and an estimate of how much can be automated. If we don't see a case, we say so on the same call.",
     primary: "Book a free diagnostic",
     secondary: "Email us",
     emailLabel: "Email",
     responseLabel: "Response",
-    response: "Within 24 business hours",
+    response: "Under 24 business hours",
     modeLabel: "Mode",
     mode: "Remote · LATAM, Spain and the United States",
     languagesLabel: "Languages",
-    languages: "English and Spanish",
+    languages: "Spanish and English",
   },
 
   footer: {
     tagline:
-      "We automate processes and build AI agents that survive production.",
+      "We automate repetitive work and build AI agents that survive production.",
     columns: [
       {
-        title: "Services",
+        title: "What we do",
         links: [
-          { href: "#servicios", label: "Process automation" },
-          { href: "#servicios", label: "Custom AI agents" },
-          { href: "#servicios", label: "Evaluation and observability" },
-          { href: "#servicios", label: "AI Solutions" },
+          { href: "#que-hacemos", label: "Automate a process" },
+          { href: "#que-hacemos", label: "Custom agents" },
+          { href: "#que-hacemos", label: "Evaluation and monitoring" },
+          { href: "#que-hacemos", label: "AI in your product" },
         ],
       },
       {
-        title: "Company",
+        title: "The agency",
         links: [
-          { href: "#proceso", label: "Process" },
+          { href: "#proceso", label: "How we work" },
           { href: "#resultados", label: "Results" },
           { href: "#faq", label: "FAQ" },
           { href: "#contacto", label: "Contact" },
         ],
       },
     ],
+    socialTitle: "Follow us",
     tags: "Automation · AI agents · AI Solutions",
   },
 

@@ -1,5 +1,9 @@
 ---
-import SectionHeading from "@/components/site/SectionHeading.astro"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Tick02Icon } from "@hugeicons/core-free-icons"
+
+import Frame from "@/components/site/Frame.astro"
+import SectionTitle from "@/components/site/SectionTitle.astro"
 import { useTranslations, type Lang } from "@/i18n"
 
 interface Props {
@@ -10,86 +14,59 @@ const { lang } = Astro.props
 const t = useTranslations(lang).services
 ---
 
-<section
-  id="servicios"
-  aria-labelledby="servicios-titulo"
-  class="band-y rule-b"
->
-  <SectionHeading id="servicios-titulo" label={t.label} title={t.title} />
+<Frame id="que-hacemos" labelledby="servicios">
+  <SectionTitle
+    id="servicios"
+    label={t.label}
+    muted={t.titleMuted}
+    bright={t.titleBright}
+    class="max-w-[38ch]"
+  />
 
-  <!-- El índice ya no ocupa una columna propia: en una sola columna esa
-       columna se convertía en una fila suelta de 24px sobre cada título.
-       Va apoyado en la línea de base del título, que es donde se lee como
-       numeración editorial y no como dato. -->
-  <ul class="mt-[clamp(40px,6vw,80px)]">
+  <!-- Cuatro tarjetas en dos filas. Las reglas internas son del contenedor,
+       no de cada tarjeta: así la grilla se lee como una sola pieza dividida y
+       no como cuatro cajas apoyadas una al lado de la otra. -->
+  <div class="mt-[clamp(40px,5vw,64px)] grid gap-px bg-hairline md:grid-cols-2">
     {
       t.items.map((service, i) => (
-        <li
-          class:list={[
-            "group page-x py-[clamp(32px,4vw,72px)]",
-            i > 0 && "rule-t",
-          ]}
+        <article
+          class="service flex flex-col bg-canvas p-[clamp(24px,3vw,36px)]"
           data-reveal
+          style={`--reveal-delay: ${i * 90}ms;`}
         >
-          <div class="grid gap-6 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <div class="flex items-baseline gap-4">
-                <span class="shrink-0 label-untitled text-muted-ash tabular-nums">
-                  {service.index}
-                </span>
-                <h3 class="font-opx text-heading-sm text-bone lg:text-heading">
-                  {service.title}
-                </h3>
-              </div>
-              <p class="mt-4 max-w-[44ch] copy text-bone lg:mt-6">
-                {service.summary}
-              </p>
-            </div>
+          <p class="label-untitled text-muted-ash">{service.index}</p>
 
-            <ul class="flex flex-col gap-3 lg:gap-4 lg:pt-2">
-              {service.items.map((item) => (
-                <li class="flex gap-4 copy text-muted-ash lg:gap-5">
-                  <span
-                    class="mt-[0.85em] h-px w-4 shrink-0 bg-hairline transition-colors duration-(--duration-state) group-hover:bg-bone lg:w-6"
-                    aria-hidden="true"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </li>
+          <h3 class="mt-4 font-untitled text-[22px] leading-tight text-bone">
+            {service.title}
+          </h3>
+
+          <p class="copy mt-4 max-w-[44ch] text-ash">{service.summary}</p>
+
+          <ul class="mt-7 flex flex-col gap-[10px]">
+            {service.items.map((item) => (
+              <li class="flex items-start gap-[10px]">
+                <HugeiconsIcon
+                  icon={Tick02Icon}
+                  size={15}
+                  strokeWidth={2}
+                  className="mt-[3px] shrink-0 text-ash"
+                />
+                <span class="label-untitled text-bone">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
       ))
     }
-  </ul>
-
-  <!-- Principios. Antes era una sección propia de seis tarjetas con un párrafo
-       cada una; repetía argumentos que ya están en los servicios y en el
-       proceso. Reducida a cuatro líneas, cierra esta sección en vez de abrir
-       otra. -->
-  <div class="page-x pt-[clamp(32px,4vw,72px)] rule-t">
-    <h3 class="font-opx text-heading-sm text-bone lg:text-heading" data-reveal>
-      {t.principlesTitle}
-    </h3>
-
-    <ul
-      class="mt-[clamp(28px,3.5vw,50px)] grid gap-x-[50px] gap-y-8 sm:grid-cols-2 lg:grid-cols-4"
-    >
-      {
-        t.principles.map((principle, i) => (
-          <li data-reveal style={`--reveal-delay: ${(i % 4) * 80}ms;`}>
-            <span
-              class="block h-px w-full origin-left bg-hairline"
-              aria-hidden="true"
-              data-rule-draw
-            />
-            <h4 class="mt-5 max-w-[24ch] copy text-bone">{principle.title}</h4>
-            <p class="mt-2 max-w-[30ch] label-untitled text-muted-ash">
-              {principle.body}
-            </p>
-          </li>
-        ))
-      }
-    </ul>
   </div>
-</section>
+</Frame>
+
+<style>
+  .service {
+    transition: background-color var(--duration-state) var(--ease-opx);
+  }
+
+  .service:hover {
+    background-color: var(--color-surface);
+  }
+</style>

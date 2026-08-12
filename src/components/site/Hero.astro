@@ -1,6 +1,7 @@
 ---
 import Cta from "@/components/site/Cta.astro"
-import HeroTrace from "@/components/site/HeroTrace.astro"
+import Frame from "@/components/site/Frame.astro"
+import HeroFlow from "@/components/site/HeroFlow.astro"
 import { useTranslations, type Lang } from "@/i18n"
 import { SCHEDULE_URL } from "@/site"
 
@@ -12,71 +13,88 @@ const { lang } = Astro.props
 const t = useTranslations(lang)
 ---
 
-<section id="inicio" class="rule-b">
-  <!-- Un solo bloque de dos columnas: titular, propuesta, acción y la prueba
-       de producto entran juntos en la primera pantalla. El titular se
-       dimensiona para llenar su columna en dos líneas, no para comerse el
-       viewport. -->
+<Frame id="inicio" flush>
+  <!-- Dos columnas: el argumento a la izquierda, la demostración a la derecha.
+       El titular se dimensiona para caer en dos líneas y dejar aire, no para
+       comerse la primera pantalla — la ilustración tiene que entrar con él. -->
   <div
-    class="grid items-start gap-x-[50px] gap-y-10 page-x py-[clamp(40px,5vw,72px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-y-[50px]"
+    class="grid items-center gap-x-[clamp(32px,5vw,72px)] gap-y-[clamp(40px,6vw,64px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)]"
   >
     <div>
       <p class="label-untitled text-muted-ash" data-reveal>{t.hero.eyebrow}</p>
 
       <h1
-        class="mt-4 max-w-[24ch] font-opx text-bone lg:mt-6"
-        style="font-size: clamp(2.5rem, 4.6vw, 4.5rem); line-height: 1.06; letter-spacing: -0.022em;"
+        class="display-hero mt-5 max-w-[15ch] text-balance text-bone"
         data-reveal
+        style="--reveal-delay: 60ms;"
       >
         {t.hero.title}
       </h1>
 
-      <div class="mt-7 lg:mt-10" data-reveal style="--reveal-delay: 120ms;">
-        <p class="max-w-[46ch] copy text-bone">{t.hero.lead}</p>
+      <p
+        class="copy mt-6 max-w-[48ch] text-ash"
+        data-reveal
+        style="--reveal-delay: 120ms;"
+      >
+        {t.hero.lead}
+      </p>
 
-        <div
-          class="mt-7 flex flex-wrap items-center gap-3 lg:mt-[30px] lg:gap-4"
+      <div
+        class="mt-9 flex flex-wrap items-center gap-3"
+        data-reveal
+        style="--reveal-delay: 180ms;"
+      >
+        <Cta
+          href={SCHEDULE_URL}
+          variant="pill-solid"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <Cta
-            href={SCHEDULE_URL}
-            size="pill-lg"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t.hero.ctaPrimary}
-          </Cta>
-          <Cta href="#servicios" variant="pill-quiet" size="pill-lg">
-            {t.hero.ctaSecondary}
-          </Cta>
-        </div>
+          {t.hero.ctaPrimary}
+        </Cta>
 
-        <p class="mt-6 max-w-[52ch] label-untitled text-muted-ash lg:mt-[30px]">
-          {t.hero.note}
-        </p>
+        <!-- Abre el mismo panel que el botón flotante: la segunda acción del
+             hero es probar el producto, no leer más sobre él. -->
+        <button type="button" class="cta-quiet" data-agent-open-secondary>
+          {t.hero.ctaSecondary}
+        </button>
       </div>
+
+      <p
+        class="label-untitled mt-6 max-w-[46ch] text-muted-ash"
+        data-reveal
+        style="--reveal-delay: 240ms;"
+      >
+        {t.hero.note}
+      </p>
     </div>
 
-    <div class="w-full" data-reveal style="--reveal-delay: 200ms;">
-      <HeroTrace lang={lang} />
+    <div class="w-full">
+      <HeroFlow lang={lang} />
     </div>
   </div>
+</Frame>
 
-  <ul class="grid grid-cols-2 page-x rule-t lg:grid-cols-4">
-    {
-      t.hero.stats.map((stat, index) => (
-        <li
-          class="py-6 lg:py-[50px]"
-          data-reveal
-          style={`--reveal-delay: ${index * 80}ms;`}
-        >
-          <p class="font-opx text-heading-sm text-bone lg:text-heading">
-            {stat.value}
-          </p>
-          <p class="mt-2 max-w-[24ch] label-untitled text-muted-ash">
-            {stat.label}
-          </p>
-        </li>
-      ))
-    }
-  </ul>
-</section>
+<style>
+  .cta-quiet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 7px 15px;
+    border-radius: var(--radius-pill);
+    border: var(--hairline-width) solid var(--color-hairline);
+    font-family: var(--font-untitled);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-caption);
+    color: var(--color-ash);
+    transition:
+      color var(--duration-state) var(--ease-opx),
+      border-color var(--duration-state) var(--ease-opx);
+  }
+
+  .cta-quiet:hover {
+    color: var(--color-bone);
+    border-color: var(--color-bone);
+  }
+</style>

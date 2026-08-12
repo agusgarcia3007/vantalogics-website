@@ -1,0 +1,96 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Tick02Icon } from "@hugeicons/core-free-icons"
+
+import ChatMock from "@/components/site/ChatMock.astro"
+import Frame from "@/components/site/Frame.astro"
+import SectionTitle from "@/components/site/SectionTitle.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).agentDemo
+---
+
+<Frame labelledby="demo">
+  <div
+    class="grid items-center gap-x-[clamp(32px,5vw,72px)] gap-y-[clamp(36px,5vw,56px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]"
+  >
+    <div>
+      <SectionTitle
+        id="demo"
+        label={t.label}
+        muted={t.titleMuted}
+        bright={t.titleBright}
+        class="max-w-[24ch]"
+      />
+
+      <p
+        class="copy mt-6 max-w-[52ch] text-ash"
+        data-reveal
+        style="--reveal-delay: 100ms;"
+      >
+        {t.body}
+      </p>
+
+      <ul class="mt-8 flex flex-col gap-[11px]">
+        {
+          t.points.map((point, i) => (
+            <li
+              class="flex items-start gap-[10px]"
+              data-reveal
+              style={`--reveal-delay: ${180 + i * 70}ms;`}
+            >
+              <HugeiconsIcon
+                icon={Tick02Icon}
+                size={15}
+                strokeWidth={2}
+                className="mt-[3px] shrink-0 text-ash"
+              />
+              <span class="label-untitled text-bone">{point}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <button
+        type="button"
+        class="cta-solid mt-9"
+        data-agent-open-secondary
+        data-reveal
+        style="--reveal-delay: 400ms;"
+      >
+        {t.cta}
+      </button>
+    </div>
+
+    <div class="w-full" data-reveal style="--reveal-delay: 200ms;">
+      <ChatMock lang={lang} />
+    </div>
+  </div>
+</Frame>
+
+<style>
+  .cta-solid {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 7px 21px;
+    border-radius: var(--radius-pill);
+    border: var(--hairline-width) solid var(--color-bone);
+    background: var(--color-bone);
+    color: var(--color-canvas);
+    font-family: var(--font-untitled);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-caption);
+    transition: opacity var(--duration-state) var(--ease-opx);
+  }
+
+  .cta-solid:hover {
+    opacity: 0.85;
+  }
+</style>

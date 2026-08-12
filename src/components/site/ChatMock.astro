@@ -1,0 +1,107 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Sent02Icon } from "@hugeicons/core-free-icons"
+
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const lead = useTranslations(lang)
+
+// Estampa del panel del agente, dibujada con los mismos radios y tonos que el
+// panel real. No es una captura: es HTML, así que sigue el tema, escala con la
+// tipografía y no se ve borrosa en ninguna pantalla.
+const thread =
+  lang === "en"
+    ? [
+        { mine: false, text: "Tell me which process is eating your month." },
+        { mine: true, text: "orders come in over whatsapp and we retype them" },
+        { step: "taking notes on the case" },
+        { mine: false, text: "How many orders a day, and who types them in?" },
+      ]
+    : [
+        { mine: false, text: "Contame qué proceso te está comiendo el mes." },
+        { mine: true, text: "los pedidos entran por whatsapp y los recargamos" },
+        { step: "anotando el caso" },
+        { mine: false, text: "¿Cuántos pedidos por día, y quién los carga?" },
+      ]
+---
+
+<div
+  class="chat overflow-hidden rounded-[20px] border border-hairline bg-surface"
+  aria-hidden="true"
+  data-reveal
+>
+  <div class="border-b border-hairline px-[18px] py-[13px]">
+    <p class="font-untitled text-[15px] leading-tight text-bone">
+      {lead.agent.open}
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-[11px] px-[18px] py-[18px]">
+    {
+      thread.map((item, i) =>
+        item.step ? (
+          <p
+            class="chat-line label-untitled flex items-center gap-2 text-[12px] text-muted-ash"
+            style={`--line-delay: ${240 + i * 160}ms;`}
+          >
+            <span class="h-px flex-1 bg-hairline" />
+            {item.step}
+            <span class="h-px flex-1 bg-hairline" />
+          </p>
+        ) : (
+          <p
+            class:list={[
+              "chat-line max-w-[86%] rounded-[18px] px-[14px] py-[9px] font-untitled text-[14px] leading-[1.5]",
+              item.mine
+                ? "self-end rounded-br-[6px] bg-bone text-canvas"
+                : "self-start rounded-bl-[6px] border border-hairline bg-canvas text-bone",
+            ]}
+            style={`--line-delay: ${240 + i * 160}ms;`}
+          >
+            {item.text}
+          </p>
+        )
+      )
+    }
+  </div>
+
+  <div class="px-[18px] pb-[18px]">
+    <div
+      class="flex items-center justify-between gap-3 rounded-[22px] border border-hairline bg-canvas py-[7px] pr-[7px] pl-[15px]"
+    >
+      <span class="label-untitled truncate text-ash">
+        {lang === "en" ? "Type your message" : "Escribí tu mensaje"}
+      </span>
+      <span
+        class="grid size-[30px] shrink-0 place-items-center rounded-pill bg-bone text-canvas"
+      >
+        <HugeiconsIcon icon={Sent02Icon} size={15} strokeWidth={1.8} />
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .chat[data-revealed] .chat-line {
+      animation: chat-in 380ms cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+      animation-delay: var(--line-delay);
+    }
+  }
+
+  @keyframes chat-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

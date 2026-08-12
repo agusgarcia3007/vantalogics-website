@@ -16,7 +16,9 @@ const t = useTranslations(lang)
 const alt = otherLang(lang)
 ---
 
-<header class="rule-b page-x">
+<header
+  class="mx-auto w-full max-w-[1180px] border-x border-hairline px-[clamp(20px,4vw,56px)]"
+>
   <div class="flex h-16 items-center justify-between gap-6 md:h-[72px]">
     <a
       href="#inicio"
@@ -26,13 +28,13 @@ const alt = otherLang(lang)
       <Wordmark alt={t.a11y.logoAlt} />
     </a>
 
-    <div class="flex items-center gap-6 lg:gap-10">
-      <nav aria-label={t.a11y.mainNav} class="hidden items-center gap-8 lg:flex">
+    <div class="flex items-center gap-5 lg:gap-8">
+      <nav aria-label={t.a11y.mainNav} class="hidden items-center gap-7 lg:flex">
         {
           t.nav.items.map((item) => (
             <a
               href={item.href}
-              class="font-opx text-subheading text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-60"
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
             >
               {item.label}
             </a>
@@ -103,13 +105,13 @@ const alt = otherLang(lang)
     </div>
   </div>
 
-  <div id="menu-movil" class="rule-t hidden pb-8 lg:hidden" data-menu>
+  <div id="menu-movil" class="hidden border-t border-hairline pb-8 lg:hidden" data-menu>
     <nav aria-label={t.a11y.mobileNav} class="flex flex-col">
       {
         t.nav.items.map((item) => (
           <a
             href={item.href}
-            class="font-opx text-heading-sm text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-60"
+            class="font-untitled text-[22px] leading-tight text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-60"
             data-menu-link
           >
             {item.label}

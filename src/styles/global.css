@@ -307,13 +307,25 @@
   letter-spacing: -0.015em;
 }
 
-/* Mid-page section titles — 35–50px. */
+/* Titular del hero. Más chico que el display-xl anterior a propósito: la
+   escala monumental leía como póster y empujaba todo lo demás fuera de la
+   primera pantalla. Acá el titular entra en dos líneas y deja lugar a la
+   propuesta, los botones y la ilustración. */
+@utility display-hero {
+  font-family: var(--font-opx);
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(2.375rem, 4.6vw, 3.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.028em;
+}
+
+/* Titulares de sección — 28–40px, en dos tonos (ver i18n). */
 @utility display-section {
   font-family: var(--font-opx);
   font-weight: var(--font-weight-regular);
-  font-size: clamp(1.75rem, 3.6vw, 3.125rem);
-  line-height: 1.38;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.5rem, 2.4vw, 2.125rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
 }
 
 /* Small label text for pills and tag-like links — the only weight 500. */
@@ -324,12 +336,14 @@
   line-height: 1.67;
 }
 
-/* Supporting copy — relaxed leading is the counterpoint to the display type. */
+/* Supporting copy. Antes iba en Open Sans a 18px: dos familias tipográficas
+   para un sitio de una sola página era una complicación sin beneficio, y a
+   18/1.67 los párrafos ocupaban media sección. Una sola familia, 17px. */
 @utility copy {
-  font-family: var(--font-open-sans);
+  font-family: var(--font-untitled);
   font-weight: var(--font-weight-regular);
-  font-size: var(--text-body);
-  line-height: 1.67;
+  font-size: 17px;
+  line-height: 1.62;
 }
 
 /* Muted metadata — only valid on the dark canvas. */

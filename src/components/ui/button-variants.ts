@@ -25,6 +25,10 @@ export const buttonVariants = cva(
         // Pill CTA: 1px bone stroke, transparent fill. The system has no
         // filled button — the fill only exists as a hover state.
         pill: "label-untitled rounded-pill border border-bone bg-transparent text-center text-bone transition-colors duration-(--duration-state) ease-(--ease-opx) hover:bg-bone hover:text-canvas",
+        // El único botón con relleno del sistema: la acción principal de la
+        // página. Se reserva para el CTA del hero y el del cierre.
+        "pill-solid":
+          "label-untitled rounded-pill border border-bone bg-bone text-center text-canvas transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-85",
         // Same pill drawn in hairline grey — for secondary actions.
         "pill-quiet":
           "label-untitled rounded-pill border border-hairline bg-transparent text-center text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone hover:text-bone",

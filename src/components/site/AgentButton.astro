@@ -17,10 +17,11 @@ const t = useTranslations(lang)
      que el resto del sitio. React, el sheet y el cliente del agente entran con
      el primer clic y no antes.
 
-     Mismo pill que WhatsApp y apilado justo encima: el glifo identifica el
-     canal y el rótulo nace en ancho cero, así que en reposo son dos círculos
-     iguales y ninguno le compite al contenido. El sistema es monocromo
-     (design.md), de modo que la jerarquía la da la posición, no el color. -->
+     Mismo pill que WhatsApp y apilado debajo: en una pila flotante el lugar
+     de abajo es el que la mano encuentra primero, y el agente es la invitación
+     principal —WhatsApp queda arriba, a un dedo de distancia. El sistema es
+     monocromo (design.md), de modo que la jerarquía la da la posición, no el
+     color. -->
 <button
   type="button"
   data-agent-open
@@ -29,10 +30,10 @@ const t = useTranslations(lang)
   data-agent-sitekey={TURNSTILE_SITEKEY}
   aria-label={t.agent.open}
   aria-haspopup="dialog"
-  class="group fixed right-[max(20px,env(safe-area-inset-right))] bottom-[calc(max(20px,env(safe-area-inset-bottom))+60px)] z-50 flex items-center gap-0 rounded-pill border border-hairline bg-canvas/90 p-[13px] label-untitled text-bone backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none"
+  class="group fixed right-[max(20px,env(safe-area-inset-right))] bottom-[max(20px,env(safe-area-inset-bottom))] z-50 flex items-center gap-0 rounded-pill border border-hairline bg-canvas/90 p-[13px] label-untitled text-bone backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none"
 >
   <!-- Burbuja de chat: mismo trazo que el resto de los glifos del sistema, así
-       no compite con el de WhatsApp apilado justo debajo. -->
+       no compite con el de WhatsApp apilado justo arriba. -->
   <HugeiconsIcon
     icon={BubbleChatIcon}
     size={22}
@@ -78,19 +79,28 @@ const t = useTranslations(lang)
 
   // Carga bajo demanda. El primer clic trae el módulo del agente; los
   // siguientes sólo emiten el evento de apertura, que el panel ya escucha.
+  //
+  // Escuchan todos los disparadores de la página —el flotante y los botones
+  // de las secciones—, no sólo este: el que abre el panel es siempre el mismo
+  // código, y la configuración (host, sitekey, idioma) sigue viviendo acá.
   const trigger = document.querySelector("[data-agent-open]")
+  const triggers = document.querySelectorAll(
+    "[data-agent-open], [data-agent-open-secondary]"
+  )
   let loading: Promise<unknown> | null = null
 
-  trigger?.addEventListener("click", () => {
-    if (loading) {
-      window.dispatchEvent(new CustomEvent("vl:agent-open"))
-      return
-    }
+  triggers.forEach((node) => {
+    node.addEventListener("click", () => {
+      if (loading) {
+        window.dispatchEvent(new CustomEvent("vl:agent-open"))
+        return
+      }
 
-    trigger.setAttribute("data-agent-loading", "")
-    loading = installRefreshPreamble()
-      .then(() => import("@/components/agent/mount"))
-      .finally(() => trigger.removeAttribute("data-agent-loading"))
+      trigger?.setAttribute("data-agent-loading", "")
+      loading = installRefreshPreamble()
+        .then(() => import("@/components/agent/mount"))
+        .finally(() => trigger?.removeAttribute("data-agent-loading"))
+    })
   })
 </script>
 

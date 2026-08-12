@@ -1,0 +1,30 @@
+---
+interface Props {
+  label?: string
+  muted: string
+  bright: string
+  id?: string
+  class?: string
+}
+
+const { label, muted, bright, id, class: className = "" } = Astro.props
+
+// Titular a dos tonos: la premisa en gris, el remate en bone. Es la misma
+// frase —se lee de corrido y el lector de pantalla la anuncia entera—, pero el
+// contraste hace que el ojo agarre el remate antes de terminar de leer.
+---
+
+<div class:list={["max-w-[24ch]", className]} data-reveal>
+  {
+    label && (
+      <p class="label-untitled mb-5 text-muted-ash">
+        {label}
+      </p>
+    )
+  }
+  <h2 id={id} class="display-section text-bone">
+    <span class="text-ash">{muted}</span>{" "}
+    <span>{bright}</span>
+  </h2>
+  <slot />
+</div>

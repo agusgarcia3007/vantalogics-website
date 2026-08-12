@@ -1,5 +1,6 @@
 ---
-import SectionHeading from "@/components/site/SectionHeading.astro"
+import Frame from "@/components/site/Frame.astro"
+import SectionTitle from "@/components/site/SectionTitle.astro"
 import { useTranslations, type Lang } from "@/i18n"
 
 interface Props {
@@ -10,39 +11,39 @@ const { lang } = Astro.props
 const t = useTranslations(lang).process
 ---
 
-<section id="proceso" aria-labelledby="proceso-titulo" class="band-y rule-b">
-  <SectionHeading id="proceso-titulo" label={t.label} title={t.title} />
+<Frame id="proceso" labelledby="como-trabajamos">
+  <SectionTitle
+    id="como-trabajamos"
+    label={t.label}
+    muted={t.titleMuted}
+    bright={t.titleBright}
+    class="max-w-[38ch]"
+  />
 
+  <!-- Cuatro fases en una sola línea de tiempo horizontal en desktop, con el
+       número anclado a una regla: el orden se ve antes de leer nada. -->
   <ol
-    class="mt-[clamp(40px,6vw,80px)] grid gap-x-[50px] gap-y-[clamp(32px,4vw,72px)] page-x sm:grid-cols-2 lg:grid-cols-4"
+    class="mt-[clamp(40px,5vw,64px)] grid gap-x-[clamp(24px,3vw,40px)] gap-y-10 md:grid-cols-2 lg:grid-cols-4"
   >
     {
-      t.steps.map((item, i) => (
+      t.steps.map((step, i) => (
         <li data-reveal style={`--reveal-delay: ${i * 90}ms;`}>
-          <p class="label-untitled text-muted-ash">{item.step}</p>
+          <div class="flex items-center gap-3">
+            <span class="font-untitled text-[15px] font-medium text-bone">
+              {step.step}
+            </span>
+            <span class="h-px flex-1 bg-hairline" />
+          </div>
 
-          {/* El numeral grande es decorativo y repite lo que ya dice «Fase 01».
-              En una columna cuesta ~70px por paso, así que sólo aparece cuando
-              hay cuatro columnas y su escala tiene función compositiva. */}
-          <p
-            class="mt-[30px] hidden font-opx text-heading-lg text-bone lg:block"
-            aria-hidden="true"
-          >
-            {String(i + 1).padStart(2, "0")}
-          </p>
-
-          <span
-            class="mt-[15px] block h-px w-full origin-left bg-hairline"
-            aria-hidden="true"
-            data-rule-draw
-          />
-
-          <h3 class="mt-5 font-opx text-subheading text-bone lg:mt-[30px]">
-            {item.title}
+          <h3 class="mt-5 font-untitled text-[19px] leading-tight text-bone">
+            {step.title}
           </h3>
-          <p class="mt-3 copy text-muted-ash lg:mt-4">{item.body}</p>
+
+          <p class="copy mt-3 text-ash">{step.body}</p>
+
+          <p class="label-untitled mt-4 text-muted-ash">{step.meta}</p>
         </li>
       ))
     }
   </ol>
-</section>
+</Frame>

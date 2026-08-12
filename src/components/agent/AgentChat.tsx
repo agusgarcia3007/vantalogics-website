@@ -106,7 +106,19 @@ export default function AgentChat({ host, pass, copy }: Props) {
     inputRef.current?.focus()
   }, [])
 
+  // El campo crece con lo que se escribe. Va en un efecto y no en el onChange
+  // porque también tiene que encogerse cuando el borrador se vacía al enviar,
+  // que no pasa por el teclado. El tope lo pone max-height en CSS: pasado ese
+  // punto el textarea scrollea en vez de comerse la conversación.
+  useEffect(() => {
+    const field = inputRef.current
+    if (!field) return
+    field.style.height = "auto"
+    field.style.height = `${field.scrollHeight}px`
+  }, [draft])
+
   const busy = isStreaming || status === "submitted"
+  const ready = !busy && draft.trim().length > 0
 
   function submit() {
     const text = draft.trim()
@@ -307,7 +319,14 @@ export default function AgentChat({ host, pass, copy }: Props) {
           submit()
         }}
       >
-        <div className="flex items-end gap-[7px] rounded-[22px] border border-hairline bg-surface py-[7px] pr-[7px] pl-[15px] transition-colors duration-(--duration-state) focus-within:border-bone">
+        <div
+          data-ready={ready ? "" : undefined}
+          className={cn(
+            "group/prompt flex items-end gap-[7px] rounded-[22px] border border-hairline bg-surface py-[7px] pr-[7px] pl-[15px] pb-[7px]",
+            "transition-[border-color,box-shadow] duration-(--duration-state) ease-(--ease-opx)",
+            "focus-within:border-bone focus-within:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-bone)_8%,transparent)]"
+          )}
+        >
           <textarea
             ref={inputRef}
             rows={1}
@@ -322,15 +341,19 @@ export default function AgentChat({ host, pass, copy }: Props) {
             }}
             placeholder={copy.placeholder}
             aria-label={copy.placeholder}
-            className="max-h-[120px] min-h-[30px] flex-1 resize-none bg-transparent py-[4px] font-untitled text-[15px] leading-[1.5] text-bone outline-none placeholder:text-ash focus-visible:outline-none"
+            className="max-h-[132px] min-h-[30px] flex-1 resize-none overflow-y-auto bg-transparent py-[4px] font-untitled text-[15px] leading-[1.5] text-bone outline-none placeholder:text-ash focus-visible:outline-none"
           />
+          {/* El botón nace chico y apagado y crece cuando hay algo que mandar:
+              el estado del formulario se ve antes de leer nada. */}
           <button
             type="submit"
-            disabled={busy || draft.trim().length === 0}
+            disabled={!ready}
             aria-label={copy.send}
             className={cn(
-              "grid size-[32px] shrink-0 place-items-center rounded-pill bg-bone text-canvas transition-opacity duration-(--duration-state)",
-              "hover:opacity-80 disabled:pointer-events-none disabled:opacity-30"
+              "grid size-[32px] shrink-0 place-items-center rounded-pill bg-bone text-canvas",
+              "transition-[opacity,scale] duration-(--duration-state) ease-(--ease-opx)",
+              "scale-90 opacity-30 group-data-ready/prompt:scale-100 group-data-ready/prompt:opacity-100",
+              "hover:opacity-80 disabled:pointer-events-none"
             )}
           >
             <HugeiconsIcon icon={Sent02Icon} size={16} strokeWidth={1.8} />

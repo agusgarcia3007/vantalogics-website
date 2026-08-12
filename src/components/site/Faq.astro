@@ -1,5 +1,6 @@
 ---
-import SectionHeading from "@/components/site/SectionHeading.astro"
+import Frame from "@/components/site/Frame.astro"
+import SectionTitle from "@/components/site/SectionTitle.astro"
 import { useTranslations, type Lang } from "@/i18n"
 
 interface Props {
@@ -10,29 +11,16 @@ const { lang } = Astro.props
 const t = useTranslations(lang).faq
 ---
 
-<section id="faq" aria-labelledby="faq-titulo" class="band-y rule-b">
-  <SectionHeading id="faq-titulo" label={t.label} title={t.title} />
-
+<Frame id="faq" labelledby="faq-titulo">
   <div
-    class="mt-[clamp(40px,6vw,80px)] page-x lg:grid lg:grid-cols-[1fr_1.8fr] lg:gap-[50px]"
+    class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)]"
   >
-    <div class="hidden lg:block">
-      <p class="label-untitled text-muted-ash">{t.indexLabel}</p>
-      <ol class="mt-[30px] flex flex-col gap-4">
-        {
-          t.entries.map((entry, i) => (
-            <li>
-              <a
-                class="copy text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-                href={`#faq-${lang}-${i + 1}`}
-              >
-                {entry.question}
-              </a>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
+    <SectionTitle
+      id="faq-titulo"
+      label={t.label}
+      muted={t.titleMuted}
+      bright={t.titleBright}
+    />
 
     <div>
       {
@@ -40,28 +28,29 @@ const t = useTranslations(lang).faq
           <details
             id={`faq-${lang}-${i + 1}`}
             name={`faq-${lang}`}
-            class="group border-b border-hairline first:border-t"
+            class="faq group border-b border-hairline first:border-t"
             data-reveal
+            style={`--reveal-delay: ${i * 50}ms;`}
           >
-            <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-[18px] lg:gap-8 lg:py-[21px] [&::-webkit-details-marker]:hidden">
-              <h3 class="max-w-[44ch] font-opx text-subheading text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 lg:text-heading-sm">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-[18px] [&::-webkit-details-marker]:hidden">
+              <h3 class="max-w-[42ch] font-untitled text-[17px] leading-snug text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70">
                 {entry.question}
               </h3>
-              <span class="relative mt-3 size-4 shrink-0" aria-hidden="true">
-                <span class="absolute top-1/2 left-0 h-px w-4 -translate-y-1/2 bg-bone" />
-                <span class="absolute top-1/2 left-0 h-px w-4 -translate-y-1/2 rotate-90 bg-bone transition-transform duration-(--duration-state) ease-(--ease-opx) group-open:rotate-0" />
+              <span class="relative mt-[6px] size-[14px] shrink-0" aria-hidden="true">
+                <span class="absolute top-1/2 left-0 h-px w-[14px] -translate-y-1/2 bg-ash" />
+                <span class="absolute top-1/2 left-0 h-px w-[14px] -translate-y-1/2 rotate-90 bg-ash transition-transform duration-(--duration-state) ease-(--ease-opx) group-open:rotate-0" />
               </span>
             </summary>
 
-            <div class="faq-panel pb-[30px]">
-              <p class="max-w-[70ch] copy text-muted-ash">{entry.answer}</p>
+            <div class="faq-panel pb-[22px]">
+              <p class="copy max-w-[64ch] text-ash">{entry.answer}</p>
             </div>
           </details>
         ))
       }
     </div>
   </div>
-</section>
+</Frame>
 
 <style>
   @media (prefers-reduced-motion: no-preference) {

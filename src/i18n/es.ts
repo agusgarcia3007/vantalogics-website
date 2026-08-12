@@ -1,11 +1,19 @@
+/**
+ * Todo el texto del sitio, en un solo lugar.
+ *
+ * Los titulares vienen partidos en dos: `muted` es la premisa y `bright` el
+ * remate. La sección los imprime en dos tonos —gris y bone— para que el ojo
+ * agarre la idea completa antes de leerla entera. Es la única concesión
+ * tipográfica del sistema y sólo aplica a los h2.
+ */
 export const es = {
   htmlLang: "es",
   ogLocale: "es_ES",
 
   meta: {
-    title: "Vantalogics — Agencia de sistemas de IA para automatizar procesos",
+    title: "Vantalogics — Automatizamos el trabajo repetitivo de tu empresa",
     description:
-      "Automatizamos procesos de empresas y construimos agentes de IA a medida: evaluados, monitoreados y con control humano. Sistemas que aguantan producción, no demos.",
+      "Construimos agentes de IA que atienden, cargan datos y resuelven casos dentro de las herramientas que ya usás. Con control humano donde hay plata en juego.",
     imageAlt: "Vantalogics — agencia de sistemas de IA",
   },
 
@@ -19,10 +27,10 @@ export const es = {
 
   nav: {
     items: [
-      { href: "#servicios", label: "Servicios" },
-      { href: "#proceso", label: "Proceso" },
+      { href: "#que-hacemos", label: "Qué hacemos" },
+      { href: "#proceso", label: "Cómo trabajamos" },
       { href: "#resultados", label: "Resultados" },
-      { href: "#faq", label: "FAQ" },
+      { href: "#faq", label: "Preguntas" },
     ],
     cta: "Agendar diagnóstico",
     menu: "Menú",
@@ -43,211 +51,232 @@ export const es = {
 
   hero: {
     eyebrow: "Agencia de sistemas de IA",
-    tagline: "Automatización · Agentes · AI Solutions",
-    title: "Diseñamos sistemas que hacen más con menos.",
-    lead: "Automatizamos procesos y construimos agentes de IA que aguantan producción: medidos, monitoreados y con control humano donde importa.",
+    title: "Que el trabajo repetitivo lo haga un sistema.",
+    lead: "Construimos agentes de IA que atienden clientes, cargan datos y resuelven casos dentro de las herramientas que ya usás. Vos seguís decidiendo donde hay plata en juego.",
     ctaPrimary: "Agendar diagnóstico gratuito",
-    ctaSecondary: "Ver qué construimos",
-    note: "30 minutos, sin costo. Salís con un plan.",
-    trace: {
-      caption: "Un reclamo de un cliente, resuelto paso a paso",
-      runLabel: "Caso",
-      runId: "Reclamo de facturación",
-      agent: "Atención al cliente",
+    ctaSecondary: "Probar un agente ahora",
+    note: "30 minutos, sin costo. Salís con el mapa de tu proceso y una estimación.",
+    flow: {
+      caption: "Un pedido que entra por WhatsApp, resuelto solo",
+      label: "Ejemplo de flujo",
       status: "Trabajando ahora",
-      columns: { time: "Tiempo", step: "Paso", detail: "Detalle" },
-      steps: [
+      trigger: {
+        title: "Entra un mensaje",
+        detail: "«Hola, quiero pedir 20 cajas para el jueves»",
+      },
+      agent: {
+        title: "Tu agente",
+        detail: "Lee, entiende y decide qué hacer",
+      },
+      outputs: [
         {
-          time: "0,4 s",
-          kind: "Escribe un cliente",
-          detail: "«No me llegó la factura de marzo»",
-          meta: "",
+          title: "Le contesta al cliente",
+          detail: "Confirma stock y fecha de entrega",
         },
         {
-          time: "1,1 s",
-          kind: "Lo reconoce",
-          detail: "Lo encuentra en tu sistema, con su historial",
-          meta: "",
+          title: "Carga el pedido",
+          detail: "Queda en tu sistema, sin que nadie lo tipee",
         },
         {
-          time: "2,0 s",
-          kind: "Busca la factura",
-          detail: "Marzo, emitida el día 3",
-          meta: "",
-        },
-        {
-          time: "3,2 s",
-          kind: "Revisa que esté bien",
-          detail: "Los datos coinciden con lo que compró",
-          meta: "",
-        },
-        {
-          time: "4,9 s",
-          kind: "Te pide permiso",
-          detail: "El monto pasa el límite · lo aprobás vos",
-          meta: "",
-        },
-        {
-          time: "5,6 s",
-          kind: "Resuelve",
-          detail: "Factura enviada y caso cerrado",
-          meta: "",
+          title: "Te avisa si hay que decidir",
+          detail: "Descuento fuera de lo normal: lo aprobás vos",
         },
       ],
-      summary: [
-        { value: "6", label: "pasos, todos a la vista" },
-        { value: "5,6 s", label: "en resolver el caso" },
-        { value: "1", label: "decisión que sigue siendo tuya" },
-      ],
+      footnote: "Seis segundos de punta a punta. Cada paso queda registrado.",
     },
-    stats: [
-      { value: "24/7", label: "Trabaja también de noche" },
-      { value: "100%", label: "El sistema queda a tu nombre" },
-      { value: "0", label: "Nada te ata a nosotros" },
-      { value: "ES · EN", label: "Atendemos en dos idiomas" },
+  },
+
+  tools: {
+    title: "Trabaja adentro de lo que ya usás",
+    note: "Y de cualquier otra cosa que tenga API. No cambiás de sistema: le sumamos manos.",
+    items: [
+      "WhatsApp",
+      "Correo",
+      "Planillas",
+      "Slack",
+      "Notion",
+      "Tu ERP",
+      "Tu CRM",
+      "Tu web",
+    ],
+  },
+
+  problem: {
+    label: "El problema",
+    titleMuted: "Tu equipo no odia el trabajo.",
+    titleBright: "Odia hacerlo dos veces.",
+    body: [
+      "La mayoría de las empresas no tiene un problema de gente: tiene tareas que se hacen a mano tres veces por semana porque nadie las sistematizó nunca.",
+      "Eso es exactamente lo que hacemos. Miramos el proceso real, no la presentación del proceso, y automatizamos la parte que se repite.",
+    ],
+    items: [
+      {
+        title: "Pedidos por mensaje.",
+        detail: "Alguien los copia al sistema a mano, y cada tanto se pierde uno.",
+      },
+      {
+        title: "Facturas y remitos.",
+        detail: "Se leen, se cargan y se revisan de a uno, todos los días.",
+      },
+      {
+        title: "Las mismas preguntas.",
+        detail: "El mismo mensaje contestado veinte veces, todos los días.",
+      },
+      {
+        title: "El reporte del lunes.",
+        detail: "Media mañana armando lo mismo que la semana pasada.",
+      },
     ],
   },
 
   services: {
-    label: "Servicios",
-    title: "Cuatro formas de poner IA a trabajar",
+    label: "Qué hacemos",
+    titleMuted: "Cuatro formas de poner IA a trabajar.",
+    titleBright: "Todas terminan en algo funcionando.",
     items: [
       {
         index: "01",
-        title: "Automatización de procesos",
+        title: "Automatizar un proceso",
         summary:
-          "El trabajo repetitivo pasa a un sistema que corre solo y deja traza de cada paso.",
+          "El trabajo que hoy hace una persona copiando y pegando pasa a un sistema que corre solo y deja registro de cada paso.",
         items: [
-          "Onboarding de clientes y alta de proveedores",
-          "Extracción y validación de documentos",
-          "Conciliaciones y cargas entre sistemas",
+          "Alta de clientes y proveedores",
+          "Lectura y carga de documentos",
+          "Cruces entre sistemas que hoy son manuales",
           "Triage y respuesta de tickets",
         ],
       },
       {
         index: "02",
-        title: "Agentes de IA a medida",
+        title: "Un agente a medida",
         summary:
-          "Agentes que usan tus herramientas reales, con permisos acotados y un humano donde el error sale caro.",
+          "Atiende, consulta tus datos reales y ejecuta acciones concretas. Con permisos acotados y un humano donde el error sale caro.",
         items: [
-          "Soporte y ventas con contexto propio",
-          "Copilotos internos sobre tus datos",
-          "Orquestación multi-paso con aprobaciones",
-          "Slack, WhatsApp, correo o tu producto",
+          "Soporte y ventas con tu información",
+          "Copilotos internos para tu equipo",
+          "Tareas de varios pasos con aprobación",
+          "En WhatsApp, correo, Slack o tu producto",
         ],
       },
       {
         index: "03",
-        title: "Agentes robustos y medibles",
+        title: "Que funcione siempre igual",
         summary:
-          "Definimos qué significa que el agente funcione bien y lo medimos en cada release.",
+          "Acordamos qué significa que el agente ande bien y lo medimos en cada cambio. Si baja la calidad, salta una alerta antes de que te enteres por un cliente.",
         items: [
-          "Evaluación con casos reales de tu operación",
-          "Guardrails, límites y planes de fallback",
-          "Trazas, costos y latencia por ejecución",
-          "Alertas cuando la calidad se degrada",
+          "Pruebas con casos reales de tu operación",
+          "Límites explícitos de qué puede hacer solo",
+          "Registro, costo y tiempo de cada ejecución",
+          "Alertas cuando algo se degrada",
         ],
       },
       {
         index: "04",
-        title: "AI Solutions e integración",
+        title: "IA adentro de tu producto",
         summary:
-          "Cuando la IA vive dentro de tu producto, nos hacemos cargo de la arquitectura completa.",
+          "Si vendés software y la IA tiene que vivir adentro, nos hacemos cargo de la arquitectura completa y se la dejamos andando a tu equipo.",
         items: [
-          "Búsqueda semántica y RAG sobre datos propios",
-          "Features de IA embebidas en tu producto",
-          "Selección de modelos y control de costos",
-          "Traspaso al equipo interno",
+          "Búsqueda sobre tus propios datos",
+          "Funciones de IA embebidas en tu producto",
+          "Elección de modelos y control de costos",
+          "Traspaso documentado al equipo interno",
         ],
-      },
-    ],
-    principlesTitle: "Ingeniería, no entusiasmo",
-    principles: [
-      {
-        title: "Se mide o no se entrega",
-        body: "Cada automatización arranca con una métrica: horas, tiempo de respuesta o tasa de error.",
-      },
-      {
-        title: "Primero el proceso, después el modelo",
-        body: "La mayor parte de la ganancia está en rediseñar el flujo. El modelo es una pieza más.",
-      },
-      {
-        title: "Humano en el loop donde importa",
-        body: "Los casos de alto riesgo pasan por aprobación explícita y quedan registrados.",
-      },
-      {
-        title: "Sin dependencia del proveedor",
-        body: "El código, los prompts y la infraestructura quedan en tus repos y tus cuentas.",
       },
     ],
   },
 
+  agentDemo: {
+    label: "Probalo ahora",
+    titleMuted: "Este sitio tiene un agente adentro.",
+    titleBright: "Contale tu caso y respondé dos preguntas.",
+    body: "Es el mismo tipo de agente que construimos para clientes: consulta información real, anota lo que le contás y pide permiso antes de pasarle tu contacto a una persona. No es un video, no es una demo grabada.",
+    cta: "Abrir el agente",
+    points: [
+      "Cada paso que da queda escrito en el chat",
+      "No manda nada sin que vos lo apruebes",
+      "Si no entiende, lo dice en vez de inventar",
+    ],
+  },
+
   process: {
-    label: "Proceso",
-    title: "De la conversación al sistema funcionando",
+    label: "Cómo trabajamos",
+    titleMuted: "De la primera charla",
+    titleBright: "a un sistema andando.",
     steps: [
       {
-        step: "Fase 01",
+        step: "01",
         title: "Diagnóstico",
-        body: "Media hora con quien conoce el proceso. Salís con el mapa del flujo y qué conviene automatizar.",
+        body: "Media hora con quien conoce el proceso de verdad. Salís con el mapa del flujo y qué conviene automatizar primero.",
+        meta: "30 minutos · gratis",
       },
       {
-        step: "Fase 02",
+        step: "02",
         title: "Diseño y prueba",
-        body: "Definimos la métrica de éxito y construimos la versión más chica que resuelve el problema completo.",
+        body: "Definimos la métrica de éxito y construimos la versión más chica que resuelve el problema completo, no una maqueta.",
+        meta: "Primeras semanas",
       },
       {
-        step: "Fase 03",
+        step: "03",
         title: "Producción",
-        body: "Integración, permisos, guardrails y observabilidad. Se abre a más usuarios cuando los números aguantan.",
+        body: "Integración, permisos, límites y monitoreo. Se abre a más gente cuando los números aguantan, no antes.",
+        meta: "Con tus datos reales",
       },
       {
-        step: "Continuo",
+        step: "04",
         title: "Operación y traspaso",
-        body: "Monitoreo y control de costos. Documentamos y capacitamos para que tu equipo siga sin nosotros.",
+        body: "Monitoreamos, controlamos el costo y documentamos. Si tenés equipo técnico, queda en condiciones de seguir sin nosotros.",
+        meta: "Continuo",
       },
     ],
   },
 
   proof: {
-    clientsLabel: "Ya operan con nuestros sistemas",
-    clientsAria: "Clientes de Vantalogics",
     label: "Resultados",
-    title: "Lo que cambia en producción",
+    titleMuted: "Lo que cambia",
+    titleBright: "cuando el sistema entra en producción.",
     intro:
-      "En los tres casos la métrica se acordó antes de empezar y se midió sobre la operación real.",
+      "En los tres casos la métrica se acordó antes de empezar y se midió sobre la operación real, no sobre una prueba de laboratorio.",
+    headline: {
+      value: "310 h",
+      unit: "por mes",
+      title: "de trabajo manual que dejó de hacerse",
+      body: "Una distribuidora con tres personas cargando remitos a mano. Hoy el sistema los lee, los carga y sólo levanta los casos dudosos.",
+      chartLabel: "Horas manuales por mes",
+      chartFrom: "Antes",
+      chartTo: "Hoy",
+    },
     results: [
       {
         metric: "−72%",
         metricLabel: "Tiempo de respuesta",
-        sector: "SaaS B2B",
-        body: "Triage automático y borradores que un humano aprueba, en un equipo de soporte de 9 personas.",
+        sector: "Software B2B",
+        body: "Triage automático y borradores que una persona aprueba, en un equipo de soporte de nueve.",
       },
       {
         metric: "310 h/mes",
         metricLabel: "Trabajo manual eliminado",
         sector: "Logística",
-        body: "Extracción y validación de remitos contra el ERP, con revisión sólo en los casos dudosos.",
+        body: "Lectura y validación de remitos contra el ERP, con revisión sólo en los casos dudosos.",
       },
       {
         metric: "3×",
-        metricLabel: "Capacidad de onboarding",
+        metricLabel: "Capacidad de alta de clientes",
         sector: "Servicios financieros",
-        body: "Alta de clientes con verificación documental, sin sumar headcount y con auditoría de cada decisión.",
+        body: "Verificación de documentación sin sumar gente y con registro de cada decisión.",
       },
     ],
-    testimonialsTitle: "Testimonios",
+    testimonialsTitle: "Lo que dicen",
     testimonials: [
       {
         quote:
           "Vinieron a mirar el proceso antes de hablar de tecnología. Esa conversación nos ahorró meses de construir lo equivocado.",
         name: "María Fernanda Ruiz",
-        role: "Directora de Operaciones",
+        role: "Head of Operations",
         company: "Altamar Logística",
       },
       {
         quote:
-          "Es el primer proyecto de IA que llegamos a producción. La diferencia fueron las métricas desde el arranque.",
+          "Es el primer proyecto de IA que llevamos a producción. La diferencia fue tener métricas desde el arranque.",
         name: "Diego Salgado",
         role: "CTO",
         company: "Quantia Seguros",
@@ -260,6 +289,12 @@ export const es = {
         company: "Belfor Retail",
       },
     ],
+    stats: [
+      { value: "24/7", label: "Trabaja también de noche" },
+      { value: "100%", label: "El sistema queda a tu nombre" },
+      { value: "0", label: "Nada te ata a nosotros" },
+      { value: "ES · EN", label: "Atendemos en dos idiomas" },
+    ],
   },
 
   /**
@@ -269,19 +304,20 @@ export const es = {
    * chunk de retrieval y es el que citan los motores de respuesta.
    */
   faq: {
-    label: "Preguntas frecuentes",
-    title: "Lo que preguntan antes de contratarnos",
+    label: "Preguntas",
+    titleMuted: "Lo que preguntan",
+    titleBright: "antes de contratarnos.",
     indexLabel: "Índice",
     entries: [
       {
         question: "¿Qué hace exactamente Vantalogics?",
         answer:
-          "Vantalogics es una agencia de sistemas de IA. Automatizamos procesos repetitivos de empresas y construimos agentes de IA conectados a tus sistemas —CRM, ERP, bases de datos y APIs internas—, con evaluación y observabilidad para que funcionen de forma confiable en producción y no sólo en una demo.",
+          "Automatizamos trabajo repetitivo de empresas y construimos agentes de IA conectados a tus sistemas —CRM, ERP, bases de datos y APIs internas—. Los medimos con casos reales de tu operación para que funcionen todos los días en producción, y no sólo el día de la demo.",
       },
       {
         question: "¿Cuánto tarda un proyecto de automatización con IA?",
         answer:
-          "Depende del proceso y de las integraciones que involucre, así que el plazo se cierra durante el diagnóstico. Trabajamos en ciclos cortos: en lugar de un único entregable al final, hay algo usable y medible en cada entrega, normalmente desde las primeras semanas.",
+          "Depende del proceso y de con qué sistemas hay que hablar, así que el plazo se cierra durante el diagnóstico. Trabajamos en ciclos cortos: en lugar de un único entregable al final, hay algo usable y medible en cada entrega, normalmente desde las primeras semanas.",
       },
       {
         question: "¿Cuánto cuesta automatizar un proceso con IA?",
@@ -294,13 +330,12 @@ export const es = {
           "Los datos quedan en tu infraestructura y tus cuentas de proveedor: desplegamos en tu nube o en la que definas, con acuerdo de confidencialidad y acceso mínimo necesario. No usamos información de clientes para entrenar modelos y trabajamos con retención cero cuando el caso lo exige.",
       },
       {
-        question: "¿Qué pasa si el agente de IA se equivoca?",
+        question: "¿Qué pasa si el agente se equivoca?",
         answer:
-          "Cada agente se despliega con límites explícitos de qué puede hacer solo y qué requiere aprobación de una persona. Las acciones de alto impacto pasan siempre por revisión humana, todo queda registrado con su traza completa, y hay alertas automáticas cuando la calidad baja del umbral acordado.",
+          "Cada agente se despliega con límites explícitos de qué puede hacer solo y qué requiere aprobación de una persona. Las acciones de alto impacto pasan siempre por revisión humana, todo queda registrado paso por paso, y hay alertas automáticas cuando la calidad baja del umbral acordado.",
       },
       {
-        question:
-          "¿Necesito un equipo técnico interno para trabajar con ustedes?",
+        question: "¿Necesito un equipo técnico interno para trabajar con ustedes?",
         answer:
           "No. Nos hacemos cargo de la arquitectura, el desarrollo y el despliegue completo. Sí necesitamos una persona del lado del negocio que conozca el proceso a fondo y pueda validar los resultados. Si tenés equipo técnico, le transferimos el sistema documentado para que pueda operarlo y extenderlo.",
       },
@@ -324,27 +359,28 @@ export const es = {
 
   footer: {
     tagline:
-      "Automatizamos procesos y construimos agentes de IA que aguantan producción.",
+      "Automatizamos trabajo repetitivo y construimos agentes de IA que aguantan producción.",
     columns: [
       {
-        title: "Servicios",
+        title: "Qué hacemos",
         links: [
-          { href: "#servicios", label: "Automatización de procesos" },
-          { href: "#servicios", label: "Agentes de IA a medida" },
-          { href: "#servicios", label: "Evaluación y observabilidad" },
-          { href: "#servicios", label: "AI Solutions" },
+          { href: "#que-hacemos", label: "Automatizar un proceso" },
+          { href: "#que-hacemos", label: "Agentes a medida" },
+          { href: "#que-hacemos", label: "Evaluación y monitoreo" },
+          { href: "#que-hacemos", label: "IA en tu producto" },
         ],
       },
       {
-        title: "Empresa",
+        title: "La agencia",
         links: [
-          { href: "#proceso", label: "Proceso" },
+          { href: "#proceso", label: "Cómo trabajamos" },
           { href: "#resultados", label: "Resultados" },
           { href: "#faq", label: "Preguntas frecuentes" },
           { href: "#contacto", label: "Contacto" },
         ],
       },
     ],
+    socialTitle: "Seguinos",
     tags: "Automatización · Agentes de IA · AI Solutions",
   },
 
