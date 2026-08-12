@@ -1,6 +1,7 @@
 ---
 import Wordmark from "@/components/site/Wordmark.astro"
 import { localizePath, otherLang, useTranslations, type Lang } from "@/i18n"
+import { CONTACT_EMAIL } from "@/site"
 
 interface Props {
   lang: Lang
@@ -10,10 +11,12 @@ const { lang } = Astro.props
 const t = useTranslations(lang)
 const alt = otherLang(lang)
 const year = new Date().getFullYear()
-const email = "hola@vantalogics.com"
+const email = CONTACT_EMAIL
 ---
 
-<footer class="band-y">
+<!-- Sin padding inferior: la marca a sangre tiene que apoyar contra el borde
+     de la página, sin aire debajo. -->
+<footer class="pt-(--spacing-band)">
   <div class="page-x grid gap-x-[50px] gap-y-[clamp(40px,5vw,80px)] md:grid-cols-3">
     <div>
       <Wordmark alt={t.a11y.logoAlt} />

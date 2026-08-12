@@ -2,6 +2,7 @@
 import Cta from "@/components/site/Cta.astro"
 import HeroDiagram from "@/components/site/HeroDiagram.astro"
 import { useTranslations, type Lang } from "@/i18n"
+import { SCHEDULE_URL } from "@/site"
 
 interface Props {
   lang: Lang
@@ -24,7 +25,14 @@ const t = useTranslations(lang)
         <p class="copy max-w-[52ch] text-bone">{t.hero.lead}</p>
 
         <div class="mt-[30px] flex flex-wrap items-center gap-4">
-          <Cta href="#contacto" size="pill-lg">{t.hero.ctaPrimary}</Cta>
+          <Cta
+            href={SCHEDULE_URL}
+            size="pill-lg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t.hero.ctaPrimary}
+          </Cta>
           <Cta href="#servicios" variant="pill-quiet" size="pill-lg">
             {t.hero.ctaSecondary}
           </Cta>

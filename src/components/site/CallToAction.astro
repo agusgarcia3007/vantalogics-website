@@ -1,6 +1,7 @@
 ---
 import Cta from "@/components/site/Cta.astro"
 import { useTranslations, type Lang } from "@/i18n"
+import { CONTACT_EMAIL, SCHEDULE_URL } from "@/site"
 
 interface Props {
   lang: Lang
@@ -9,9 +10,8 @@ interface Props {
 const { lang } = Astro.props
 const t = useTranslations(lang).cta
 
-// PLACEHOLDER: reemplazar por los canales reales de contacto.
-const email = "hola@vantalogics.com"
-const scheduleUrl = "https://cal.com/vantalogics/diagnostico"
+const email = CONTACT_EMAIL
+const scheduleUrl = SCHEDULE_URL
 ---
 
 <section
@@ -29,7 +29,14 @@ const scheduleUrl = "https://cal.com/vantalogics/diagnostico"
     <p class="copy mt-[30px] max-w-[54ch] text-bone" data-reveal>{t.body}</p>
 
     <div class="mt-[50px] flex flex-wrap items-center gap-4" data-reveal>
-      <Cta href={scheduleUrl} size="pill-lg">{t.primary}</Cta>
+      <Cta
+        href={scheduleUrl}
+        size="pill-lg"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {t.primary}
+      </Cta>
       <Cta href={`mailto:${email}`} variant="pill-quiet" size="pill-lg">
         {t.secondary}
       </Cta>

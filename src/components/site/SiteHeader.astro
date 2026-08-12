@@ -2,6 +2,7 @@
 import Cta from "@/components/site/Cta.astro"
 import Wordmark from "@/components/site/Wordmark.astro"
 import { localizePath, otherLang, useTranslations, type Lang } from "@/i18n"
+import { SCHEDULE_URL } from "@/site"
 
 interface Props {
   lang: Lang
@@ -59,7 +60,14 @@ const alt = otherLang(lang)
         <span data-theme-label aria-hidden="true">Light</span>
       </button>
 
-      <Cta href="#contacto" class="hidden sm:inline-flex">{t.nav.cta}</Cta>
+      <Cta
+        href={SCHEDULE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden sm:inline-flex"
+      >
+        {t.nav.cta}
+      </Cta>
 
       <button
         type="button"
@@ -88,7 +96,13 @@ const alt = otherLang(lang)
           </a>
         ))
       }
-      <Cta href="#contacto" class="mt-6 self-start sm:hidden" data-menu-link>
+      <Cta
+        href={SCHEDULE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-6 self-start sm:hidden"
+        data-menu-link
+      >
         {t.nav.cta}
       </Cta>
     </nav>
