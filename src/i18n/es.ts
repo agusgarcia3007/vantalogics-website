@@ -101,10 +101,10 @@ export const es = {
       ],
     },
     stats: [
-      { value: "24/7", label: "Monitoreo de agentes" },
-      { value: "100%", label: "Código y datos en tus cuentas" },
-      { value: "0", label: "Dependencia del proveedor" },
-      { value: "ES · EN", label: "Equipo bilingüe" },
+      { value: "24/7", label: "Trabaja también de noche" },
+      { value: "100%", label: "El sistema queda a tu nombre" },
+      { value: "0", label: "Nada te ata a nosotros" },
+      { value: "ES · EN", label: "Atendemos en dos idiomas" },
     ],
   },
 
@@ -349,7 +349,7 @@ export const es = {
   },
 
   agent: {
-    open: "Probá el agente",
+    open: "Probá un agente de ejemplo",
   },
 
   whatsapp: {

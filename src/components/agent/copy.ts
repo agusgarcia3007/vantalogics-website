@@ -30,10 +30,10 @@ export interface AgentCopy {
 }
 
 const ES: AgentCopy = {
-  title: "Agente de Vantalogics",
-  subtitle: "Cada paso queda a la vista",
+  title: "Agente de ejemplo",
+  subtitle: "Es de verdad: preguntale lo que quieras",
   close: "Cerrar",
-  placeholder: "Contame qué proceso te está comiendo el mes",
+  placeholder: "Escribí tu mensaje",
   send: "Enviar",
   greeting:
     "Soy el agente de Vantalogics. Contame qué proceso te está comiendo el mes y vemos si tiene sentido automatizarlo.",
@@ -60,10 +60,10 @@ const ES: AgentCopy = {
 }
 
 const EN: AgentCopy = {
-  title: "Vantalogics agent",
-  subtitle: "Every step stays visible",
+  title: "Sample agent",
+  subtitle: "It is the real thing: ask it anything",
   close: "Close",
-  placeholder: "Tell me which process is eating your month",
+  placeholder: "Type your message",
   send: "Send",
   greeting:
     "I'm the Vantalogics agent. Tell me which process is eating your month and we'll see whether automating it makes sense.",

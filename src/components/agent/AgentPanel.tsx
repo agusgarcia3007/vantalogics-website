@@ -111,15 +111,19 @@ export default function AgentPanel({
   if (isDesktop) {
     return (
       <Sheet open={open} onOpenChange={setOpen}>
+        {/* El sheet base se pega a los cuatro bordes; desde md se despega y
+            queda como una tarjeta flotante con esquinas redondeadas. Los `!`
+            son necesarios: las clases del primitivo llevan el selector
+            [data-side=right] y ganan por especificidad. */}
         <SheetContent
           side="right"
-          className="flex w-full flex-col gap-0 border-hairline bg-canvas p-0 sm:max-w-[420px]"
+          className="flex w-full flex-col gap-0 overflow-hidden border-hairline bg-canvas p-0 sm:max-w-[420px] md:top-[16px]! md:right-[16px]! md:bottom-[16px]! md:h-[calc(100svh-32px)]! md:rounded-[24px] md:border"
         >
-          <SheetHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px]">
-            <SheetTitle className="label-untitled text-bone">
+          <SheetHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px] pr-[52px]">
+            <SheetTitle className="font-untitled text-[16px] leading-tight text-bone">
               {copy.title}
             </SheetTitle>
-            <SheetDescription className="label-untitled text-[12px] text-ash">
+            <SheetDescription className="label-untitled text-[13px] text-ash">
               {copy.subtitle}
             </SheetDescription>
           </SheetHeader>
@@ -131,12 +135,12 @@ export default function AgentPanel({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent className="flex h-[82svh] flex-col gap-0 border-hairline bg-canvas p-0">
-        <DrawerHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px]">
-          <DrawerTitle className="label-untitled text-bone">
+      <DrawerContent className="flex h-[82svh] flex-col gap-0 overflow-hidden rounded-t-[24px] border-hairline bg-canvas p-0">
+        <DrawerHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px] pr-[52px]">
+          <DrawerTitle className="font-untitled text-[16px] leading-tight text-bone">
             {copy.title}
           </DrawerTitle>
-          <DrawerDescription className="label-untitled text-[12px] text-ash">
+          <DrawerDescription className="label-untitled text-[13px] text-ash">
             {copy.subtitle}
           </DrawerDescription>
         </DrawerHeader>

@@ -1,4 +1,7 @@
 ---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Moon02Icon, Sun03Icon } from "@hugeicons/core-free-icons"
+
 import Cta from "@/components/site/Cta.astro"
 import Wordmark from "@/components/site/Wordmark.astro"
 import { localizePath, otherLang, useTranslations, type Lang } from "@/i18n"
@@ -49,16 +52,33 @@ const alt = otherLang(lang)
         <span aria-hidden="true">{alt.toUpperCase()}</span>
       </a>
 
-      <button
-        type="button"
-        class="label-untitled rounded-pill border border-hairline px-[15px] py-[7px] text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone hover:text-bone"
-        data-theme-toggle
-        aria-label={t.theme.toLight}
-        data-label-light={t.theme.toLight}
-        data-label-dark={t.theme.toDark}
+      <!-- Los dos temas a la vista, no un botón que se alterna: se ve dónde
+           estás parado y adónde podés ir sin tener que interpretar un glifo
+           solo. El activo se marca con aria-pressed —el estado real del
+           control, y de paso el que estiliza Tailwind— y lo escribe el script
+           inline de abajo, que corre en el parseo: no hay parpadeo. -->
+      <div
+        class="flex shrink-0 items-center gap-[2px] rounded-pill border border-hairline p-[2px]"
+        role="group"
+        aria-label={t.theme.label}
       >
-        <span data-theme-label aria-hidden="true">Light</span>
-      </button>
+        <button
+          type="button"
+          class="grid size-[28px] place-items-center rounded-pill text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone aria-pressed:bg-bone aria-pressed:text-canvas"
+          data-set-theme="light"
+          aria-label={t.theme.toLight}
+        >
+          <HugeiconsIcon icon={Sun03Icon} size={16} strokeWidth={1.5} />
+        </button>
+        <button
+          type="button"
+          class="grid size-[28px] place-items-center rounded-pill text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone aria-pressed:bg-bone aria-pressed:text-canvas"
+          data-set-theme="dark"
+          aria-label={t.theme.toDark}
+        >
+          <HugeiconsIcon icon={Moon02Icon} size={16} strokeWidth={1.5} />
+        </button>
+      </div>
 
       <Cta
         href={SCHEDULE_URL}
@@ -147,35 +167,38 @@ const alt = otherLang(lang)
     }
 
     // Tema: oscuro por defecto, elección persistida.
-    const themeToggle = document.querySelector("[data-theme-toggle]")
-    const themeLabel = document.querySelector("[data-theme-label]")
-    if (!themeToggle || !themeLabel) return
-
     const root = document.documentElement
+    const options = document.querySelectorAll("[data-set-theme]")
+
     const sync = () => {
-      const isLight = root.getAttribute("data-theme") === "light"
-      themeLabel.textContent = isLight ? "Dark" : "Light"
-      themeToggle.setAttribute(
-        "aria-label",
-        isLight ? themeToggle.dataset.labelDark : themeToggle.dataset.labelLight
-      )
+      const current =
+        root.getAttribute("data-theme") === "light" ? "light" : "dark"
+      options.forEach((option) => {
+        option.setAttribute(
+          "aria-pressed",
+          String(option.dataset.setTheme === current)
+        )
+      })
     }
 
     sync()
 
-    themeToggle.addEventListener("click", () => {
-      const isLight = root.getAttribute("data-theme") === "light"
-      if (isLight) {
-        root.removeAttribute("data-theme")
-      } else {
-        root.setAttribute("data-theme", "light")
-      }
-      try {
-        localStorage.setItem("vl-theme", isLight ? "dark" : "light")
-      } catch {
-        /* almacenamiento bloqueado */
-      }
-      sync()
+    options.forEach((option) => {
+      option.addEventListener("click", () => {
+        const next = option.dataset.setTheme
+        if (next === "light") {
+          root.setAttribute("data-theme", "light")
+        } else {
+          root.removeAttribute("data-theme")
+        }
+        try {
+          localStorage.setItem("vl-theme", next)
+        } catch {
+          /* almacenamiento bloqueado */
+        }
+        sync()
+      })
     })
   })()
 </script>
+
