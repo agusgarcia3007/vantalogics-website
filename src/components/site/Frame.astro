@@ -23,7 +23,9 @@ const { id, flush = false, class: className = "", labelledby } = Astro.props
   id={id}
   aria-labelledby={labelledby}
   class:list={[
-    "mx-auto w-full max-w-[1180px] scroll-mt-4 border-x border-hairline",
+        // El encabezado queda pegado arriba: los anclas del menú tienen que
+    // frenar por debajo de él y no detrás.
+    "mx-auto w-full max-w-[1180px] scroll-mt-[104px] border-x border-hairline",
     className,
   ]}
 >

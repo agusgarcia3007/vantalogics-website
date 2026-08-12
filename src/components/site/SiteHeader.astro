@@ -1,6 +1,11 @@
 ---
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Moon02Icon, Sun03Icon } from "@hugeicons/core-free-icons"
+import {
+  Cancel01Icon,
+  Menu08Icon,
+  Moon02Icon,
+  Sun03Icon,
+} from "@hugeicons/core-free-icons"
 
 import Cta from "@/components/site/Cta.astro"
 import Wordmark from "@/components/site/Wordmark.astro"
@@ -16,74 +21,97 @@ const t = useTranslations(lang)
 const alt = otherLang(lang)
 ---
 
-<header
-  class="mx-auto w-full max-w-[1180px] border-x border-hairline px-[clamp(20px,4vw,56px)]"
->
-  <div class="flex h-16 items-center justify-between gap-6 md:h-[72px]">
-    <a
-      href="#inicio"
-      class="text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
-      aria-label={t.a11y.home}
-    >
-      <Wordmark alt={t.a11y.logoAlt} />
-    </a>
+<!-- El encabezado.
+     Métrica tomada de los headers de Tailark (dusk): 24px de aire arriba y
+     abajo, 48px entre la marca y la navegación, 32px entre ítems. La versión
+     anterior apretaba todo contra 64px de alto y 20px de separación, y con
+     cinco grupos de controles seguidos el ojo no encontraba dónde termina uno
+     y empieza el otro.
 
-    <div class="flex items-center gap-5 lg:gap-8">
-      <nav aria-label={t.a11y.mainNav} class="hidden items-center gap-7 lg:flex">
+     Queda pegado arriba al scrollear —el CTA es la acción principal del sitio
+     y no tiene por qué desaparecer— pero recién ahí aparece el fondo y la
+     regla inferior: contra el hero no dibuja nada. -->
+<header
+  class="sticky top-0 z-40 mx-auto w-full max-w-[1180px] border-x border-hairline bg-canvas/92 backdrop-blur-md transition-[border-color] duration-(--duration-state) ease-(--ease-opx) data-scrolled:border-b-hairline data-scrolled:border-b"
+  data-header
+>
+  <div
+    class="flex items-center justify-between gap-8 px-[clamp(20px,4vw,56px)] py-[18px] lg:py-6"
+  >
+    <div class="flex items-center gap-12">
+      <a
+        href="#inicio"
+        class="shrink-0 text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
+        aria-label={t.a11y.home}
+      >
+        <Wordmark alt={t.a11y.logoAlt} />
+      </a>
+
+      <nav aria-label={t.a11y.mainNav} class="hidden items-center gap-8 lg:flex">
         {
           t.nav.items.map((item) => (
             <a
               href={item.href}
-              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+              class="label-untitled py-2 text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
             >
               {item.label}
             </a>
           ))
         }
       </nav>
+    </div>
 
-      <!-- Selector de idioma: un enlace a la ruta prerenderizada del otro
-           idioma. Sin JavaScript, sin cookies, sin redirecciones. -->
-      <a
-        href={localizePath(alt)}
-        hreflang={alt}
-        lang={alt}
-        class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-        aria-label={t.language.switchTo}
-      >
-        <span aria-hidden="true">{alt.toUpperCase()}</span>
-      </a>
+    <div class="flex items-center gap-4 lg:gap-6">
+      <!-- Idioma y tema son utilidades, no navegación: van juntos, separados
+           del CTA por una regla vertical para que se lean como un grupo. -->
+      <div class="flex items-center gap-3">
+        <!-- Selector de idioma: un enlace a la ruta prerenderizada del otro
+             idioma. Sin JavaScript, sin cookies, sin redirecciones. -->
+        <a
+          href={localizePath(alt)}
+          hreflang={alt}
+          lang={alt}
+          class="label-untitled px-1 py-2 text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+          aria-label={t.language.switchTo}
+        >
+          <span aria-hidden="true">{alt.toUpperCase()}</span>
+        </a>
 
-      <!-- Los dos temas a la vista, no un botón que se alterna: se ve dónde
-           estás parado y adónde podés ir sin tener que interpretar un glifo
-           solo. El activo se marca con aria-pressed —el estado real del
-           control, y de paso el que estiliza Tailwind— y lo escribe el script
-           inline de abajo, que corre en el parseo: no hay parpadeo. -->
-      <div
-        class="flex shrink-0 items-center gap-[2px] rounded-pill border border-hairline p-[2px]"
-        role="group"
-        aria-label={t.theme.label}
-      >
-        <button
-          type="button"
-          class="grid size-[28px] place-items-center rounded-pill text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone aria-pressed:bg-bone aria-pressed:text-canvas"
-          data-set-theme="light"
-          aria-label={t.theme.toLight}
+        <!-- Los dos temas a la vista, no un botón que se alterna: se ve dónde
+             estás parado y adónde podés ir sin tener que interpretar un glifo
+             solo. El activo se marca con aria-pressed —el estado real del
+             control, y de paso el que estiliza Tailwind— y lo escribe el
+             script inline de abajo, que corre en el parseo: no hay parpadeo. -->
+        <div
+          class="flex shrink-0 items-center gap-[2px] rounded-pill border border-hairline p-[3px]"
+          role="group"
+          aria-label={t.theme.label}
         >
-          <HugeiconsIcon icon={Sun03Icon} size={16} strokeWidth={1.5} />
-        </button>
-        <button
-          type="button"
-          class="grid size-[28px] place-items-center rounded-pill text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone aria-pressed:bg-bone aria-pressed:text-canvas"
-          data-set-theme="dark"
-          aria-label={t.theme.toDark}
-        >
-          <HugeiconsIcon icon={Moon02Icon} size={16} strokeWidth={1.5} />
-        </button>
+          <button
+            type="button"
+            class="grid size-[28px] place-items-center rounded-pill text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone aria-pressed:bg-bone aria-pressed:text-canvas"
+            data-set-theme="light"
+            aria-label={t.theme.toLight}
+          >
+            <HugeiconsIcon icon={Sun03Icon} size={15} strokeWidth={1.5} />
+          </button>
+          <button
+            type="button"
+            class="grid size-[28px] place-items-center rounded-pill text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone aria-pressed:bg-bone aria-pressed:text-canvas"
+            data-set-theme="dark"
+            aria-label={t.theme.toDark}
+          >
+            <HugeiconsIcon icon={Moon02Icon} size={15} strokeWidth={1.5} />
+          </button>
+        </div>
       </div>
+
+      <span class="hidden h-6 w-px bg-hairline sm:block" aria-hidden="true"
+      ></span>
 
       <Cta
         href={SCHEDULE_URL}
+        variant="pill-solid"
         target="_blank"
         rel="noopener noreferrer"
         class="hidden sm:inline-flex"
@@ -91,27 +119,39 @@ const alt = otherLang(lang)
         {t.nav.cta}
       </Cta>
 
+      <!-- Hamburguesa: dos trazos que se vuelven una cruz. El rótulo escrito
+           ocupaba ancho y competía con el CTA. -->
       <button
         type="button"
-        class="label-untitled text-bone lg:hidden"
+        class="relative -mr-1 grid size-9 shrink-0 place-items-center text-bone lg:hidden"
         aria-expanded="false"
         aria-controls="menu-movil"
         data-menu-toggle
         data-label-menu={t.nav.menu}
         data-label-close={t.nav.close}
+        aria-label={t.nav.menu}
       >
-        <span data-menu-label>{t.nav.menu}</span>
+        <span data-menu-icon="open" class="grid place-items-center">
+          <HugeiconsIcon icon={Menu08Icon} size={22} strokeWidth={1.5} />
+        </span>
+        <span data-menu-icon="close" class="hidden place-items-center">
+          <HugeiconsIcon icon={Cancel01Icon} size={22} strokeWidth={1.5} />
+        </span>
       </button>
     </div>
   </div>
 
-  <div id="menu-movil" class="hidden border-t border-hairline pb-8 lg:hidden" data-menu>
+  <div
+    id="menu-movil"
+    class="hidden border-t border-hairline px-[clamp(20px,4vw,56px)] pt-2 pb-8 lg:hidden"
+    data-menu
+  >
     <nav aria-label={t.a11y.mobileNav} class="flex flex-col">
       {
         t.nav.items.map((item) => (
           <a
             href={item.href}
-            class="font-untitled text-[22px] leading-tight text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-60"
+            class="border-b border-hairline py-4 font-untitled text-[20px] leading-tight text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-60"
             data-menu-link
           >
             {item.label}
@@ -120,6 +160,7 @@ const alt = otherLang(lang)
       }
       <Cta
         href={SCHEDULE_URL}
+        variant="pill-solid"
         target="_blank"
         rel="noopener noreferrer"
         class="mt-6 self-start sm:hidden"
@@ -135,15 +176,22 @@ const alt = otherLang(lang)
   ;(() => {
     const toggle = document.querySelector("[data-menu-toggle]")
     const menu = document.querySelector("[data-menu]")
-    const label = document.querySelector("[data-menu-label]")
 
-    if (toggle && menu && label) {
+    if (toggle && menu) {
+      const openIcon = toggle.querySelector('[data-menu-icon="open"]')
+      const closeIcon = toggle.querySelector('[data-menu-icon="close"]')
+
       const setOpen = (isOpen) => {
         menu.classList.toggle("hidden", !isOpen)
         toggle.setAttribute("aria-expanded", String(isOpen))
-        label.textContent = isOpen
-          ? toggle.dataset.labelClose
-          : toggle.dataset.labelMenu
+        toggle.setAttribute(
+          "aria-label",
+          isOpen ? toggle.dataset.labelClose : toggle.dataset.labelMenu
+        )
+        openIcon.classList.toggle("hidden", isOpen)
+        openIcon.classList.toggle("grid", !isOpen)
+        closeIcon.classList.toggle("hidden", !isOpen)
+        closeIcon.classList.toggle("grid", isOpen)
       }
 
       toggle.addEventListener("click", () => {
@@ -166,6 +214,20 @@ const alt = otherLang(lang)
         .addEventListener("change", (e) => {
           if (e.matches) setOpen(false)
         })
+    }
+
+    // La regla inferior aparece sólo cuando hay contenido pasando por debajo.
+    const header = document.querySelector("[data-header]")
+    if (header) {
+      const syncScrolled = () => {
+        if (window.scrollY > 8) {
+          header.setAttribute("data-scrolled", "")
+        } else {
+          header.removeAttribute("data-scrolled")
+        }
+      }
+      syncScrolled()
+      window.addEventListener("scroll", syncScrolled, { passive: true })
     }
 
     // Tema: oscuro por defecto, elección persistida.
@@ -203,4 +265,3 @@ const alt = otherLang(lang)
     })
   })()
 </script>
-
