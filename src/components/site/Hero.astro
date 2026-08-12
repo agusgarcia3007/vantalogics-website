@@ -44,12 +44,11 @@ const t = useTranslations(lang)
       <!-- El titular deja libre el flanco derecho: el diagrama sube hasta esa
            altura y se alinea contra el margen para ocuparlo. -->
       <div
-        class="lg:-mt-[90px] lg:text-right xl:-mt-[clamp(150px,15vw,260px)]"
+        class="lg:-mt-[30px] lg:text-right xl:-mt-[clamp(90px,11vw,200px)]"
         data-reveal
         style="--reveal-delay: 200ms;"
       >
-        <p class="label-untitled text-muted-ash">{t.hero.diagramLabel}</p>
-        <div class="mt-[30px] ml-auto w-full max-w-[520px]">
+        <div class="ml-auto w-full max-w-[520px]">
           <HeroDiagram lang={lang} />
         </div>
       </div>
