@@ -1,0 +1,63 @@
+---
+import Cta from "@/components/site/Cta.astro"
+import HeroDiagram from "@/components/site/HeroDiagram.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+---
+
+<section id="inicio" class="rule-b">
+  <div class="page-x pt-[clamp(56px,10vw,200px)] pb-[clamp(56px,9vw,150px)]">
+    <p class="label-untitled text-muted-ash" data-reveal>{t.hero.eyebrow}</p>
+
+    <h1 class="display-xl mt-8 max-w-[14ch] text-bone" data-reveal>
+      {t.hero.title}
+    </h1>
+
+    <div class="mt-12 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
+      <div data-reveal style="--reveal-delay: 120ms;">
+        <p class="copy max-w-[52ch] text-bone">{t.hero.lead}</p>
+
+        <div class="mt-[30px] flex flex-wrap items-center gap-4">
+          <Cta href="#contacto" size="pill-lg">{t.hero.ctaPrimary}</Cta>
+          <Cta href="#servicios" variant="pill-quiet" size="pill-lg">
+            {t.hero.ctaSecondary}
+          </Cta>
+        </div>
+
+        <p class="label-untitled mt-[30px] text-muted-ash">{t.hero.note}</p>
+      </div>
+
+      <div data-reveal style="--reveal-delay: 200ms;">
+        <p class="label-untitled text-muted-ash">{t.hero.diagramLabel}</p>
+        <div class="mt-[30px]">
+          <HeroDiagram lang={lang} />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ul class="rule-t page-x grid grid-cols-2 lg:grid-cols-4">
+    {
+      t.hero.stats.map((stat, index) => (
+        <li
+          class="py-8 lg:py-[50px]"
+          data-reveal
+          style={`--reveal-delay: ${index * 80}ms;`}
+        >
+          <p class="font-opx text-heading-sm text-bone lg:text-heading">
+            {stat.value}
+          </p>
+          <p class="label-untitled mt-2 max-w-[24ch] text-muted-ash">
+            {stat.label}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

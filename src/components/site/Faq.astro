@@ -1,0 +1,89 @@
+---
+import SectionHeading from "@/components/site/SectionHeading.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).faq
+---
+
+<section id="faq" aria-labelledby="faq-titulo" class="rule-b band-y">
+  <SectionHeading
+    id="faq-titulo"
+    label={t.label}
+    title={t.title}
+    intro={t.intro}
+  />
+
+  <div
+    class="page-x mt-[clamp(48px,7vw,100px)] lg:grid lg:grid-cols-[1fr_1.8fr] lg:gap-[50px]"
+  >
+    <div class="hidden lg:block">
+      <p class="label-untitled text-muted-ash">{t.indexLabel}</p>
+      <ol class="mt-[30px] flex flex-col gap-4">
+        {
+          t.entries.map((entry, i) => (
+            <li>
+              <a
+                class="copy text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                href={`#faq-${lang}-${i + 1}`}
+              >
+                {entry.question}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div>
+      {
+        t.entries.map((entry, i) => (
+          <details
+            id={`faq-${lang}-${i + 1}`}
+            name={`faq-${lang}`}
+            class="group border-b border-hairline first:border-t"
+            open={i === 0}
+            data-reveal
+          >
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-8 py-[21px] [&::-webkit-details-marker]:hidden">
+              <h3 class="max-w-[44ch] font-opx text-subheading text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 lg:text-heading-sm">
+                {entry.question}
+              </h3>
+              <span class="relative mt-3 size-4 shrink-0" aria-hidden="true">
+                <span class="absolute top-1/2 left-0 h-px w-4 -translate-y-1/2 bg-bone" />
+                <span class="absolute top-1/2 left-0 h-px w-4 -translate-y-1/2 rotate-90 bg-bone transition-transform duration-(--duration-state) ease-(--ease-opx) group-open:rotate-0" />
+              </span>
+            </summary>
+
+            <div class="faq-panel pb-[30px]">
+              <p class="copy max-w-[70ch] text-muted-ash">{entry.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    details[open] .faq-panel {
+      animation: faq-in 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+    }
+  }
+
+  @keyframes faq-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

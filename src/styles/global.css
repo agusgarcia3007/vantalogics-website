@@ -2,76 +2,80 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* NH  -> Inter (substitute per design.md) */
+/* OPX-Medium / Untitled -> Inter (substitute per design.md) */
 @import "@fontsource-variable/inter";
-/* S-Condensed -> Roboto Condensed (substitute per design.md) */
-@import "@fontsource-variable/roboto-condensed";
+/* Open Sans -> supporting copy face */
+@import "@fontsource-variable/open-sans";
 
 @custom-variant dark (&:is(.dark *));
 
 /* ---------------------------------------------------------------------------
-   mono — design system tokens (design.md)
-   Brutalist editorial: paper ground, ink rules, zero radius, no elevation.
+   OPX Studio — design system tokens (design.md)
+   Dark gallery monolith: void-black canvas, bone-white type, #292a2c
+   hairlines, pill outlines, monumental display type. No shadows, no color.
 --------------------------------------------------------------------------- */
 @theme {
-  /* Colors */
-  --color-ink: #292929;
-  --color-paper: #ffffff;
-  --color-carbon: #000000;
+  /* Colors — literal palette from design.md */
+  --color-void-black: #020202;
+  --color-surface-black: #000000;
+  --color-charcoal-hairline: #292a2c;
+  --color-bone-white: #ffffff;
+  --color-ash-gray: #9b9b9b;
+
+  /* Semantic aliases. Every component uses these, so the light theme is a
+     value swap rather than a rewrite. */
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-hairline: var(--hairline);
+  --color-bone: var(--bone);
+  --color-ash: var(--ash);
 
   /* Font families */
-  --font-nh:
-    "Inter Variable", Inter, "Helvetica Neue", Arial, ui-sans-serif, system-ui,
-    sans-serif;
-  --font-s-condensed:
-    "Roboto Condensed Variable", "Roboto Condensed", "Barlow Condensed",
-    "Univers Condensed", ui-sans-serif, system-ui, sans-serif;
-  --font-ev: "Times New Roman", Times, serif;
-  --font-s-works:
-    "Söhne", "GT America", "Inter Variable", Inter, ui-sans-serif, system-ui,
-    sans-serif;
+  --font-opx:
+    "Inter Variable", Inter, "Söhne", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-open-sans:
+    "Open Sans Variable", "Open Sans", "Source Sans 3", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-untitled:
+    "Inter Variable", Inter, "Söhne", ui-sans-serif, system-ui, sans-serif;
+  --font-helvetica: Helvetica, ui-sans-serif, system-ui, Arial, sans-serif;
 
-  /* Type scale */
-  --text-caption: 12px;
-  --text-caption--line-height: 1.34;
-  --text-caption--letter-spacing: 0.12px;
-  --text-body-sm: 14px;
-  --text-body-sm--line-height: 0.9;
-  --text-body-sm--letter-spacing: 0.14px;
-  --text-body: 16px;
-  --text-body--line-height: 1.34;
-  --text-body--letter-spacing: -0.32px;
-  --text-body-lg: 18px;
-  --text-body-lg--line-height: 1.5;
-  --text-body-lg--letter-spacing: -0.36px;
-  --text-subheading: 25px;
-  --text-subheading--line-height: 1.27;
-  --text-subheading--letter-spacing: -0.5px;
-  --text-heading-sm: 32px;
-  --text-heading-sm--line-height: 1.25;
-  --text-heading-sm--letter-spacing: -0.64px;
-  --text-heading: 40px;
-  --text-heading--line-height: 1.34;
-  --text-heading--letter-spacing: -0.8px;
-  --text-display: 43px;
-  --text-display--line-height: 1.34;
-  --text-display--letter-spacing: -0.86px;
+  /* Type scale — leading tightens inversely with size */
+  --text-caption: 14px;
+  --text-caption--line-height: 1.67;
+  --text-body: 18px;
+  --text-body--line-height: 1.67;
+  --text-subheading: 20px;
+  --text-subheading--line-height: 1.67;
+  --text-heading-sm: 26px;
+  --text-heading-sm--line-height: 1.42;
+  --text-heading: 35px;
+  --text-heading--line-height: 1.4;
+  --text-heading-lg: 50px;
+  --text-heading-lg--line-height: 1.38;
+  --text-display: 80px;
+  --text-display--line-height: 1.07;
+  --text-display-xl: 111px;
+  --text-display-xl--line-height: 1;
 
-  /* Tracking */
-  --tracking-label: 0.1em;
-  --tracking-label-wide: 0.2em;
+  /* Spacing steps from design.md (the 4px scale stays intact underneath) */
+  --spacing-7: 7px;
+  --spacing-15: 15px;
+  --spacing-21: 21px;
+  --spacing-30: 30px;
+  --spacing-99: 99px;
+  --spacing-150: 150px;
+  --spacing-200: 200px;
+  /* Fluid page inset: 20px on phones, up to the 100px editorial margin. */
+  --spacing-page: clamp(20px, 6vw, 100px);
+  /* Fluid section rhythm inside the 100–200px band. */
+  --spacing-band: clamp(64px, 11vw, 150px);
 
-  /* Off-scale spacing steps from design.md (base 4px scale stays intact:
-       p-1=4 p-2=8 p-3=12 p-5=20 ...). Named so common utilities keep working. */
-  --spacing-cell: 20px; /* card padding / element inset */
-  --spacing-cell-y: 43px; /* heading cell vertical padding */
-  --spacing-cell-x: 45px; /* heading cell horizontal padding */
-  --spacing-gap: 8px; /* element gap */
-  --spacing-23: 23px;
-  --spacing-25: 25px;
-  --spacing-50: 50px;
+  /* Radii — pills for interactive elements, 0 everywhere else */
+  --radius-pill: 45px;
 
-  /* Elevation: the system is flat — shadows are neutralized on purpose. */
+  /* Elevation: the system deliberately avoids shadows. */
   --shadow-2xs: 0 0 #0000;
   --shadow-xs: 0 0 #0000;
   --shadow-sm: 0 0 #0000;
@@ -81,14 +85,13 @@
   --shadow-xl: 0 0 #0000;
   --shadow-2xl: 0 0 #0000;
 
-  /* Motion — classic ease-in-out, no bounce or spring */
-  --ease-mono: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-opx: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 @theme inline {
-  --font-heading: var(--font-nh);
-  --font-sans: var(--font-nh);
-  --font-serif: var(--font-ev);
+  --font-heading: var(--font-opx);
+  --font-sans: var(--font-opx);
+  --font-serif: var(--font-open-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -120,73 +123,113 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  /* Every radius resolves to 0 — no rounded corners anywhere. */
   --radius-sm: var(--radius);
   --radius-md: var(--radius);
   --radius-lg: var(--radius);
   --radius-xl: var(--radius);
   --radius-2xl: var(--radius);
-  --radius-3xl: var(--radius);
-  --radius-4xl: var(--radius);
+  --radius-3xl: var(--radius-pill);
+  --radius-4xl: var(--radius-pill);
 }
 
-/* Light-only system: design.md defines a single light theme. */
+/* ---------------------------------------------------------------------------
+   Temas. El sistema es nativamente oscuro (design.md: theme dark) y ese es el
+   predeterminado. `data-theme="light"` invierte canvas y tipografía
+   manteniendo las mismas relaciones: hairline apenas visible, texto apagado
+   con contraste suficiente (nunca #9b9b9b sobre blanco — falla 2.8:1).
+--------------------------------------------------------------------------- */
 :root {
+  color-scheme: dark;
+
+  --canvas: #020202;
+  --surface: #000000;
+  --hairline: #292a2c;
+  --bone: #ffffff;
+  --ash: #9b9b9b;
+
+  --background: #020202;
+  --foreground: #ffffff;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --popover: #000000;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #020202;
+  --secondary: #000000;
+  --secondary-foreground: #ffffff;
+  --muted: #000000;
+  --muted-foreground: #9b9b9b;
+  --accent: #ffffff;
+  --accent-foreground: #020202;
+  --destructive: #ffffff;
+  --border: #292a2c;
+  --input: #292a2c;
+  --ring: #ffffff;
+  --chart-1: #ffffff;
+  --chart-2: #9b9b9b;
+  --chart-3: #6d6d6d;
+  --chart-4: #4a4a4a;
+  --chart-5: #292a2c;
+  --sidebar: #020202;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #020202;
+  --sidebar-accent: #ffffff;
+  --sidebar-accent-foreground: #020202;
+  --sidebar-border: #292a2c;
+  --sidebar-ring: #ffffff;
+}
+
+:root[data-theme="light"] {
   color-scheme: light;
 
+  --canvas: #ffffff;
+  --surface: #fafafa;
+  --hairline: #d8d9da;
+  --bone: #020202;
+  /* #9b9b9b falla contraste sobre blanco; se oscurece a 4.6:1. */
+  --ash: #6b6b6b;
+
   --background: #ffffff;
-  --foreground: #292929;
-  --card: #ffffff;
-  --card-foreground: #292929;
+  --foreground: #020202;
+  --card: #fafafa;
+  --card-foreground: #020202;
   --popover: #ffffff;
-  --popover-foreground: #292929;
-  --primary: #292929;
+  --popover-foreground: #020202;
+  --primary: #020202;
   --primary-foreground: #ffffff;
-  --secondary: #ffffff;
-  --secondary-foreground: #292929;
-  --muted: #ffffff;
-  /* Only tonal step allowed: ink mixed into paper, no hue introduced. */
-  --muted-foreground: color-mix(in srgb, #292929 60%, #ffffff);
-  --accent: #292929;
+  --secondary: #fafafa;
+  --secondary-foreground: #020202;
+  --muted: #fafafa;
+  --muted-foreground: #6b6b6b;
+  --accent: #020202;
   --accent-foreground: #ffffff;
-  /* No brand accent exists in this system; destructive reads as carbon. */
-  --destructive: #000000;
-  --border: #292929;
-  --input: #292929;
-  --ring: #292929;
-  --chart-1: #292929;
-  --chart-2: color-mix(in srgb, #292929 75%, #ffffff);
-  --chart-3: color-mix(in srgb, #292929 55%, #ffffff);
-  --chart-4: color-mix(in srgb, #292929 35%, #ffffff);
-  --chart-5: color-mix(in srgb, #292929 15%, #ffffff);
-  --radius: 0px;
+  --destructive: #020202;
+  --border: #d8d9da;
+  --input: #d8d9da;
+  --ring: #020202;
+  --chart-1: #020202;
+  --chart-2: #4a4a4a;
+  --chart-3: #6b6b6b;
+  --chart-4: #9b9b9b;
+  --chart-5: #d8d9da;
   --sidebar: #ffffff;
-  --sidebar-foreground: #292929;
-  --sidebar-primary: #292929;
+  --sidebar-foreground: #020202;
+  --sidebar-primary: #020202;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #292929;
+  --sidebar-accent: #020202;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #292929;
-  --sidebar-ring: #292929;
+  --sidebar-border: #d8d9da;
+  --sidebar-ring: #020202;
+}
 
-  /* Surfaces */
-  --surface-paper: #ffffff;
-  --surface-ink-block: #292929;
-
-  /* Weights */
-  --font-weight-thin: 100;
-  --font-weight-light: 300;
-  --font-weight-w350: 350;
+/* Tokens independientes del tema. */
+:root {
+  --radius: 0px;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
-
-  /* Layout */
-  --card-padding: 20px;
-  --element-gap: 8px;
-  --rule-width: 2px;
+  --element-gap: 30px;
   --hairline-width: 1px;
-
-  /* Motion — 0.3s state changes, 0.6s geometry changes */
   --duration-state: 300ms;
   --duration-geometry: 600ms;
 }
@@ -196,14 +239,11 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background font-nh text-body font-normal text-foreground;
-  }
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
+    @apply bg-canvas font-opx text-body font-normal text-bone;
+    -webkit-font-smoothing: antialiased;
   }
   html {
-    @apply font-nh;
+    @apply font-opx;
   }
   h1,
   h2,
@@ -211,90 +251,141 @@
   h4,
   h5,
   h6 {
-    @apply font-nh font-light;
+    /* Authority comes from scale, never from weight. */
+    @apply font-opx font-normal;
   }
-  /* S-Condensed is never set lowercase. */
-  .font-s-condensed {
-    text-transform: uppercase;
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
   ::selection {
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--bone);
+    color: var(--canvas);
   }
 }
 
-/* --------------------------------------------------------------------------
-   System utilities — the grid vocabulary from design.md
+/* ---------------------------------------------------------------------------
+   System utilities — the OPX vocabulary
 --------------------------------------------------------------------------- */
 
-/* Fundamental layout unit: white cell, 2px ink rule, zero radius. */
-@utility cell {
-  background-color: var(--color-paper);
-  border: var(--rule-width) solid var(--color-ink);
-  border-radius: 0;
-  padding: var(--card-padding);
+/* Editorial page inset: type holds a generous left margin, canvas bleeds. */
+@utility page-x {
+  padding-inline: var(--spacing-page);
 }
 
-/* Heading cell: 43px vertical / 45px horizontal inset. */
-@utility cell-heading {
-  padding: var(--spacing-cell-y) var(--spacing-cell-x);
+/* Monolithic vertical rhythm between bands. */
+@utility band-y {
+  padding-block: var(--spacing-band);
 }
 
-/* Dark inverse cell — used sparingly for contrast panels. */
-@utility cell-inverse {
-  background-color: var(--surface-ink-block);
-  color: var(--color-paper);
-  border: var(--rule-width) solid var(--color-ink);
-  border-radius: 0;
+/* The only structural separator in the system. */
+@utility rule-t {
+  border-top: var(--hairline-width) solid var(--color-hairline);
 }
 
-/* Museum-plaque metadata label. */
-@utility label-caps {
-  font-family: var(--font-s-condensed);
+@utility rule-b {
+  border-bottom: var(--hairline-width) solid var(--color-hairline);
+}
+
+/* Monumental display type — 80–111px, weight 400, leading locked at ~1. */
+@utility display-xl {
+  font-family: var(--font-opx);
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(2.75rem, 8.4vw, 6.9375rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+@utility display-lg {
+  font-family: var(--font-opx);
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(2.125rem, 5.6vw, 5rem);
+  line-height: 1.07;
+  letter-spacing: -0.015em;
+}
+
+/* Mid-page section titles — 35–50px. */
+@utility display-section {
+  font-family: var(--font-opx);
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(1.75rem, 3.6vw, 3.125rem);
+  line-height: 1.38;
+  letter-spacing: -0.01em;
+}
+
+/* Small label text for pills and tag-like links — the only weight 500. */
+@utility label-untitled {
+  font-family: var(--font-untitled);
   font-weight: var(--font-weight-medium);
   font-size: var(--text-caption);
-  line-height: 1.34;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  line-height: 1.67;
 }
 
-/* In-flow text link / language toggle — wider tracking, lighter weight. */
-@utility label-caps-wide {
-  font-family: var(--font-s-condensed);
-  font-weight: var(--font-weight-light);
-  font-size: var(--text-caption);
-  line-height: 1.34;
-  letter-spacing: var(--tracking-label-wide);
-  text-transform: uppercase;
+/* Supporting copy — relaxed leading is the counterpoint to the display type. */
+@utility copy {
+  font-family: var(--font-open-sans);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-body);
+  line-height: 1.67;
 }
 
-/* Hero copy: whisper weight, tight tracking. */
-@utility display-headline {
-  font-family: var(--font-nh);
-  font-weight: var(--font-weight-light);
-  font-size: var(--text-display);
-  line-height: 1.34;
-  letter-spacing: -0.02em;
-  color: var(--color-ink);
+/* Muted metadata — only valid on the dark canvas. */
+@utility text-muted-ash {
+  color: var(--color-ash);
 }
 
-/* Hairline-bottom-only form field. */
-@utility underline-input {
-  background-color: var(--color-paper);
-  color: var(--color-carbon);
-  border: 0;
-  border-bottom: var(--hairline-width) solid var(--color-carbon);
-  border-radius: 0;
-  padding: var(--spacing-gap) 0;
-}
+/* ---------------------------------------------------------------------------
+   Motion — slow, editorial, geometry only.
+--------------------------------------------------------------------------- */
 
-/* Page-edge rotated marker. */
-@utility sidebar-label {
-  font-family: var(--font-s-condensed);
-  font-weight: var(--font-weight-light);
-  font-size: var(--text-caption);
-  letter-spacing: var(--tracking-label-wide);
-  text-transform: uppercase;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+@layer utilities {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity var(--duration-geometry) var(--ease-opx),
+      transform var(--duration-geometry) var(--ease-opx);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Hairlines that draw themselves in as their band enters the viewport. */
+  .js [data-rule-draw] {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-geometry) var(--ease-opx);
+  }
+
+  .js [data-revealed] [data-rule-draw],
+  .js [data-rule-draw][data-revealed] {
+    transform: scaleX(1);
+  }
+
+  :where(a, button, summary, input, textarea, [tabindex]):focus-visible {
+    outline: var(--hairline-width) solid var(--color-bone);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }

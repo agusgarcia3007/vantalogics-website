@@ -1,0 +1,57 @@
+---
+import SectionHeading from "@/components/site/SectionHeading.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).services
+---
+
+<section id="servicios" aria-labelledby="servicios-titulo" class="rule-b band-y">
+  <SectionHeading
+    id="servicios-titulo"
+    label={t.label}
+    title={t.title}
+    intro={t.intro}
+  />
+
+  <ul class="mt-[clamp(48px,7vw,100px)]">
+    {
+      t.items.map((service, i) => (
+        <li
+          class:list={[
+            "page-x group py-[clamp(40px,5vw,80px)]",
+            i > 0 && "rule-t",
+          ]}
+          data-reveal
+        >
+          <div class="grid gap-8 lg:grid-cols-[8ch_1fr_1fr] lg:gap-16">
+            <p class="label-untitled text-muted-ash">{service.index}</p>
+
+            <div>
+              <h3 class="font-opx text-heading-sm text-bone lg:text-heading">
+                {service.title}
+              </h3>
+              <p class="copy mt-6 max-w-[44ch] text-bone">{service.summary}</p>
+            </div>
+
+            <ul class="flex flex-col gap-4 lg:pt-2">
+              {service.items.map((item) => (
+                <li class="copy flex gap-5 text-muted-ash">
+                  <span
+                    class="mt-[0.85em] h-px w-6 shrink-0 bg-hairline transition-colors duration-(--duration-state) group-hover:bg-bone"
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>

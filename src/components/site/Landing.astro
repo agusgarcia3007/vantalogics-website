@@ -1,0 +1,127 @@
+---
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site/SiteHeader.astro"
+import Hero from "@/components/site/Hero.astro"
+import Services from "@/components/site/Services.astro"
+import Benefits from "@/components/site/Benefits.astro"
+import Process from "@/components/site/Process.astro"
+import SocialProof from "@/components/site/SocialProof.astro"
+import Faq from "@/components/site/Faq.astro"
+import CallToAction from "@/components/site/CallToAction.astro"
+import SiteFooter from "@/components/site/SiteFooter.astro"
+import { localizePath, useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const SITE = "https://vantalogics.com"
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const pageUrl = new URL(localizePath(lang), SITE).href
+
+/**
+ * Datos estructurados. Sólo hechos declarables sobre la empresa y su oferta:
+ * no se incluyen Review ni AggregateRating, que exigen reseñas reales y
+ * verificables para ser válidos ante Google y los motores de respuesta.
+ */
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": `${SITE}/#organization`,
+  name: "Vantalogics",
+  url: SITE,
+  logo: `${SITE}/logo-va@2x.png`,
+  image: `${SITE}/og-${lang}.png`,
+  description: t.meta.description,
+  email: "hola@vantalogics.com",
+  slogan: t.hero.title,
+  knowsAbout:
+    lang === "es"
+      ? [
+          "Automatización de procesos empresariales",
+          "Agentes de IA",
+          "Evaluación de modelos de lenguaje",
+          "Observabilidad de sistemas de IA",
+          "Retrieval Augmented Generation",
+          "Integración de IA en producto",
+        ]
+      : [
+          "Business process automation",
+          "AI agents",
+          "Large language model evaluation",
+          "AI systems observability",
+          "Retrieval Augmented Generation",
+          "AI product integration",
+        ],
+  areaServed: [
+    { "@type": "Place", name: "Latin America" },
+    { "@type": "Country", name: "Spain" },
+    { "@type": "Country", name: "United States" },
+  ],
+  availableLanguage: ["es", "en"],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: t.services.title,
+    itemListElement: t.services.items.map((service) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: service.title,
+        description: service.summary,
+      },
+    })),
+  },
+}
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE}/#website`,
+  url: SITE,
+  name: "Vantalogics",
+  inLanguage: lang,
+  description: t.meta.description,
+  publisher: { "@id": `${SITE}/#organization` },
+}
+
+const webPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${pageUrl}#webpage`,
+  url: pageUrl,
+  name: t.meta.title,
+  description: t.meta.description,
+  inLanguage: lang,
+  isPartOf: { "@id": `${SITE}/#website` },
+  about: { "@id": `${SITE}/#organization` },
+}
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  inLanguage: lang,
+  mainEntity: t.faq.entries.map((entry) => ({
+    "@type": "Question",
+    name: entry.question,
+    acceptedAnswer: { "@type": "Answer", text: entry.answer },
+  })),
+}
+---
+
+<Layout lang={lang} jsonLd={[organization, website, webPage, faqPage]}>
+  <SiteHeader lang={lang} />
+
+  <main id="contenido">
+    <Hero lang={lang} />
+    <Services lang={lang} />
+    <Benefits lang={lang} />
+    <Process lang={lang} />
+    <SocialProof lang={lang} />
+    <Faq lang={lang} />
+    <CallToAction lang={lang} />
+  </main>
+
+  <SiteFooter lang={lang} />
+</Layout>

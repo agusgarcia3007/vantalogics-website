@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string
+  title: string
+  intro?: string
+  id?: string
+}
+
+const { label, title, intro, id } = Astro.props
+---
+
+<div class="page-x" data-reveal>
+  <p class="label-untitled text-muted-ash">{label}</p>
+  <h2 id={id} class="display-section mt-6 max-w-[18ch] text-bone">
+    {title}
+  </h2>
+  {intro && <p class="copy mt-8 max-w-[58ch] text-bone">{intro}</p>}
+</div>

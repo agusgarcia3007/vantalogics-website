@@ -1,0 +1,47 @@
+---
+import SectionHeading from "@/components/site/SectionHeading.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).process
+---
+
+<section id="proceso" aria-labelledby="proceso-titulo" class="rule-b band-y">
+  <SectionHeading
+    id="proceso-titulo"
+    label={t.label}
+    title={t.title}
+    intro={t.intro}
+  />
+
+  <ol
+    class="page-x mt-[clamp(48px,7vw,100px)] grid gap-x-[50px] gap-y-[clamp(40px,5vw,80px)] sm:grid-cols-2 lg:grid-cols-4"
+  >
+    {
+      t.steps.map((item, i) => (
+        <li data-reveal style={`--reveal-delay: ${i * 90}ms;`}>
+          <p class="label-untitled text-muted-ash">{item.step}</p>
+
+          <p class="mt-[30px] font-opx text-heading-lg text-bone" aria-hidden="true">
+            {String(i + 1).padStart(2, "0")}
+          </p>
+
+          <span
+            class="mt-[15px] block h-px w-full origin-left bg-hairline"
+            aria-hidden="true"
+            data-rule-draw
+          />
+
+          <h3 class="mt-[30px] font-opx text-subheading text-bone">
+            {item.title}
+          </h3>
+          <p class="copy mt-4 text-muted-ash">{item.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>

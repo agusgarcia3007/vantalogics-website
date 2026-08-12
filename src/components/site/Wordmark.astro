@@ -1,0 +1,26 @@
+---
+interface Props {
+  class?: string
+  alt: string
+}
+
+const { class: className = "", alt } = Astro.props
+---
+
+<span class={`flex items-center gap-3 ${className}`}>
+  <!-- El logo es un PNG negro con fondo transparente; sobre el canvas oscuro
+       se invierte a blanco, y vuelve a su negro original en tema claro. -->
+  <img
+    src="/logo-va.png"
+    srcset="/logo-va.png 340w, /logo-va@2x.png 681w"
+    sizes="34px"
+    width="340"
+    height="256"
+    alt={alt}
+    decoding="async"
+    class="h-[26px] w-auto invert-100 [:root[data-theme=light]_&]:invert-0"
+  />
+  <span class="font-opx text-subheading leading-none tracking-[-0.01em]">
+    Vantalogics
+  </span>
+</span>

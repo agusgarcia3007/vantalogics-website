@@ -1,15 +1,118 @@
 ---
 import "@/styles/global.css"
+import { localizePath, type Lang } from "@/i18n"
+import { useTranslations } from "@/i18n"
+
+interface Props {
+  lang: Lang
+  jsonLd?: unknown[]
+}
+
+const SITE = "https://vantalogics.com"
+
+const { lang, jsonLd = [] } = Astro.props
+const t = useTranslations(lang)
+
+const canonicalUrl = new URL(localizePath(lang), SITE).href
+const imageUrl = new URL(`/og-${lang}.png`, SITE).href
 ---
 
-<html lang="en">
+<!doctype html>
+<html lang={t.htmlLang}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Astro App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/logo-va-192.png" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <link rel="alternate" hreflang="es" href={new URL("/", SITE).href} />
+    <link rel="alternate" hreflang="en" href={new URL("/en/", SITE).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL("/", SITE).href} />
+
+    <!-- Tema antes del primer pintado: evita el flash de tema equivocado.
+         El sistema es oscuro por defecto (design.md). -->
+    <script is:inline>
+      document.documentElement.classList.add("js")
+      try {
+        const stored = localStorage.getItem("vl-theme")
+        if (stored === "light") {
+          document.documentElement.setAttribute("data-theme", "light")
+        }
+      } catch {
+        /* almacenamiento bloqueado: se queda en oscuro */
+      }
+    </script>
+
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Vantalogics" />
+    <meta name="theme-color" content="#020202" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vantalogics" />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.imageAlt} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={t.meta.imageAlt} />
+
+    {
+      jsonLd.map((schema) => (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(schema)}
+        />
+      ))
+    }
   </head>
   <body>
+    <a
+      href="#contenido"
+      class="label-untitled sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-pill focus:border focus:border-bone focus:bg-canvas focus:px-[15px] focus:py-[7px] focus:text-bone"
+    >
+      {t.a11y.skip}
+    </a>
+
     <slot />
+
+    <script is:inline>
+      // Reveal al hacer scroll — una sola vez, desactivado con reduced motion.
+      ;(() => {
+        const nodes = document.querySelectorAll("[data-reveal]")
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
+
+        if (reduced.matches || !("IntersectionObserver" in window)) {
+          nodes.forEach((n) => n.setAttribute("data-revealed", ""))
+          return
+        }
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return
+              entry.target.setAttribute("data-revealed", "")
+              io.unobserve(entry.target)
+            })
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
+        )
+
+        nodes.forEach((n) => io.observe(n))
+      })()
+    </script>
   </body>
 </html>

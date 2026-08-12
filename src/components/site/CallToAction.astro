@@ -1,0 +1,69 @@
+---
+import Cta from "@/components/site/Cta.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).cta
+
+// PLACEHOLDER: reemplazar por los canales reales de contacto.
+const email = "hola@vantalogics.com"
+const scheduleUrl = "https://cal.com/vantalogics/diagnostico"
+---
+
+<section
+  id="contacto"
+  aria-labelledby="contacto-titulo"
+  class="rule-b bg-surface band-y"
+>
+  <div class="page-x">
+    <p class="label-untitled text-muted-ash" data-reveal>{t.label}</p>
+
+    <h2 id="contacto-titulo" class="display-lg mt-8 max-w-[16ch] text-bone" data-reveal>
+      {t.title}
+    </h2>
+
+    <p class="copy mt-[30px] max-w-[54ch] text-bone" data-reveal>{t.body}</p>
+
+    <div class="mt-[50px] flex flex-wrap items-center gap-4" data-reveal>
+      <Cta href={scheduleUrl} size="pill-lg">{t.primary}</Cta>
+      <Cta href={`mailto:${email}`} variant="pill-quiet" size="pill-lg">
+        {t.secondary}
+      </Cta>
+    </div>
+
+    <dl
+      class="mt-[clamp(48px,7vw,100px)] grid gap-x-[50px] gap-y-[30px] sm:grid-cols-2 lg:grid-cols-4"
+    >
+      <div data-reveal>
+        <dt class="label-untitled text-muted-ash">{t.emailLabel}</dt>
+        <dd class="mt-2">
+          <a
+            class="copy text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
+            href={`mailto:${email}`}
+          >
+            {email}
+          </a>
+        </dd>
+      </div>
+
+      <div data-reveal style="--reveal-delay: 80ms;">
+        <dt class="label-untitled text-muted-ash">{t.responseLabel}</dt>
+        <dd class="copy mt-2 text-bone">{t.response}</dd>
+      </div>
+
+      <div data-reveal style="--reveal-delay: 160ms;">
+        <dt class="label-untitled text-muted-ash">{t.modeLabel}</dt>
+        <dd class="copy mt-2 text-bone">{t.mode}</dd>
+      </div>
+
+      <div data-reveal style="--reveal-delay: 240ms;">
+        <dt class="label-untitled text-muted-ash">{t.languagesLabel}</dt>
+        <dd class="copy mt-2 text-bone">{t.languages}</dd>
+      </div>
+    </dl>
+  </div>
+</section>

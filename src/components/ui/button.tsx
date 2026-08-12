@@ -18,6 +18,16 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        // --- OPX system (design.md) --------------------------------------
+        // Pill CTA: 1px bone stroke, transparent fill. The system has no
+        // filled button — the fill only exists as a hover state.
+        pill: "label-untitled rounded-pill border border-bone bg-transparent text-center text-bone transition-colors duration-(--duration-state) ease-(--ease-opx) hover:bg-bone hover:text-canvas",
+        // Same pill drawn in hairline grey — for secondary actions.
+        "pill-quiet":
+          "label-untitled rounded-pill border border-hairline bg-transparent text-center text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone hover:text-bone",
+        // Tag-like inline link: type only, hairline underline on hover.
+        "opx-link":
+          "label-untitled relative rounded-none px-0 text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone",
       },
       size: {
         default:
@@ -31,6 +41,11 @@ const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
+        // --- OPX pills: 7px/15px padding, growing to a 44px touch target ---
+        pill: "min-h-11 max-w-full gap-2 px-[15px] py-[7px] whitespace-normal [&_svg:not([class*='size-'])]:size-3.5",
+        "pill-lg":
+          "min-h-[54px] max-w-full gap-2 px-[30px] py-[15px] whitespace-normal [&_svg:not([class*='size-'])]:size-4",
+        "opx-link": "min-h-11 max-w-full py-2 whitespace-normal",
       },
     },
     defaultVariants: {

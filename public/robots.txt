@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Rastreadores de motores de respuesta / IA — acceso explícito para que el
+# contenido pueda ser leído y citado.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://vantalogics.com/sitemap.xml

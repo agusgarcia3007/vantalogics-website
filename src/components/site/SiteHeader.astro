@@ -1,0 +1,167 @@
+---
+import Cta from "@/components/site/Cta.astro"
+import Wordmark from "@/components/site/Wordmark.astro"
+import { localizePath, otherLang, useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const alt = otherLang(lang)
+---
+
+<header class="rule-b page-x">
+  <div class="flex h-20 items-center justify-between gap-6 md:h-[99px]">
+    <a
+      href="#inicio"
+      class="text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
+      aria-label={t.a11y.home}
+    >
+      <Wordmark alt={t.a11y.logoAlt} />
+    </a>
+
+    <div class="flex items-center gap-6 lg:gap-10">
+      <nav aria-label={t.a11y.mainNav} class="hidden items-center gap-8 lg:flex">
+        {
+          t.nav.items.map((item) => (
+            <a
+              href={item.href}
+              class="font-opx text-subheading text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-60"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <!-- Selector de idioma: un enlace a la ruta prerenderizada del otro
+           idioma. Sin JavaScript, sin cookies, sin redirecciones. -->
+      <a
+        href={localizePath(alt)}
+        hreflang={alt}
+        lang={alt}
+        class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+        aria-label={t.language.switchTo}
+      >
+        <span aria-hidden="true">{alt.toUpperCase()}</span>
+      </a>
+
+      <button
+        type="button"
+        class="label-untitled rounded-pill border border-hairline px-[15px] py-[7px] text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone hover:text-bone"
+        data-theme-toggle
+        aria-label={t.theme.toLight}
+        data-label-light={t.theme.toLight}
+        data-label-dark={t.theme.toDark}
+      >
+        <span data-theme-label aria-hidden="true">Light</span>
+      </button>
+
+      <Cta href="#contacto" class="hidden sm:inline-flex">{t.nav.cta}</Cta>
+
+      <button
+        type="button"
+        class="label-untitled text-bone lg:hidden"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        data-menu-toggle
+        data-label-menu={t.nav.menu}
+        data-label-close={t.nav.close}
+      >
+        <span data-menu-label>{t.nav.menu}</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="menu-movil" class="rule-t hidden pb-8 lg:hidden" data-menu>
+    <nav aria-label={t.a11y.mobileNav} class="flex flex-col">
+      {
+        t.nav.items.map((item) => (
+          <a
+            href={item.href}
+            class="font-opx text-heading-sm text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-60"
+            data-menu-link
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <Cta href="#contacto" class="mt-6 self-start sm:hidden" data-menu-link>
+        {t.nav.cta}
+      </Cta>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  ;(() => {
+    const toggle = document.querySelector("[data-menu-toggle]")
+    const menu = document.querySelector("[data-menu]")
+    const label = document.querySelector("[data-menu-label]")
+
+    if (toggle && menu && label) {
+      const setOpen = (isOpen) => {
+        menu.classList.toggle("hidden", !isOpen)
+        toggle.setAttribute("aria-expanded", String(isOpen))
+        label.textContent = isOpen
+          ? toggle.dataset.labelClose
+          : toggle.dataset.labelMenu
+      }
+
+      toggle.addEventListener("click", () => {
+        setOpen(toggle.getAttribute("aria-expanded") !== "true")
+      })
+
+      menu.querySelectorAll("[data-menu-link]").forEach((link) => {
+        link.addEventListener("click", () => setOpen(false))
+      })
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return
+        if (toggle.getAttribute("aria-expanded") !== "true") return
+        setOpen(false)
+        toggle.focus()
+      })
+
+      window
+        .matchMedia("(min-width: 1024px)")
+        .addEventListener("change", (e) => {
+          if (e.matches) setOpen(false)
+        })
+    }
+
+    // Tema: oscuro por defecto, elección persistida.
+    const themeToggle = document.querySelector("[data-theme-toggle]")
+    const themeLabel = document.querySelector("[data-theme-label]")
+    if (!themeToggle || !themeLabel) return
+
+    const root = document.documentElement
+    const sync = () => {
+      const isLight = root.getAttribute("data-theme") === "light"
+      themeLabel.textContent = isLight ? "Dark" : "Light"
+      themeToggle.setAttribute(
+        "aria-label",
+        isLight ? themeToggle.dataset.labelDark : themeToggle.dataset.labelLight
+      )
+    }
+
+    sync()
+
+    themeToggle.addEventListener("click", () => {
+      const isLight = root.getAttribute("data-theme") === "light"
+      if (isLight) {
+        root.removeAttribute("data-theme")
+      } else {
+        root.setAttribute("data-theme", "light")
+      }
+      try {
+        localStorage.setItem("vl-theme", isLight ? "dark" : "light")
+      } catch {
+        /* almacenamiento bloqueado */
+      }
+      sync()
+    })
+  })()
+</script>

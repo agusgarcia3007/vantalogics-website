@@ -1,0 +1,44 @@
+# Vantalogics
+
+> Agencia de sistemas de IA. Automatizamos procesos de empresas y construimos
+> agentes de IA a medida —evaluados, monitoreados y con control humano— que
+> aguantan producción.
+
+- Sitio (ES): https://vantalogics.com
+- Site (EN): https://vantalogics.com/en/
+- Contacto: hola@vantalogics.com
+- Idiomas: español, inglés
+- Cobertura: América Latina, España y Estados Unidos (remoto)
+
+## Servicios
+
+- **Automatización de procesos**: onboarding de clientes, extracción y validación de documentos, conciliaciones y reportes, triage de tickets y correo.
+- **Agentes de IA a medida**: agentes conectados a CRM, ERP, bases de datos y APIs internas, con permisos acotados, aprobaciones humanas e integración con Slack, WhatsApp, correo o el producto del cliente.
+- **Agentes robustos y medibles**: sets de evaluación con casos reales, guardrails, límites de acción, trazas de ejecución, control de costos y alertas de degradación de calidad.
+- **AI Solutions e integración**: búsqueda semántica y RAG sobre datos propios, features de IA embebidas en el producto, selección de modelos y traspaso al equipo interno.
+
+## Cómo trabajamos
+
+1. **Diagnóstico**: 30 minutos sin costo; mapa del proceso actual y estimación de qué conviene automatizar.
+2. **Diseño y prueba**: métrica de éxito acordada, set de evaluación con casos reales y primera versión funcional.
+3. **Producción**: integración, permisos, guardrails y observabilidad; salida gradual a producción.
+4. **Operación y traspaso**: monitoreo, ajuste de calidad, control de costos, documentación y capacitación del equipo interno.
+
+El alcance, el ritmo y los plazos se definen con cada cliente durante el
+diagnóstico: dependen del proceso y de las integraciones involucradas.
+
+## Datos clave
+
+- Trabajo por ciclos cortos: hay algo usable y medible en cada entrega.
+- Presupuesto por proyecto con alcance cerrado, definido después del diagnóstico.
+- Los datos y el código quedan en la infraestructura y las cuentas del cliente; no se usan datos de clientes para entrenar modelos.
+- Agnósticos de proveedor de modelos: la elección se hace por costo, latencia y precisión en cada caso.
+- Las acciones de alto impacto siempre pasan por revisión humana y quedan registradas.
+
+## Enlaces
+
+- [Servicios](https://vantalogics.com/#servicios)
+- [Proceso](https://vantalogics.com/#proceso)
+- [Resultados](https://vantalogics.com/#resultados)
+- [Preguntas frecuentes](https://vantalogics.com/#faq)
+- [Contacto](https://vantalogics.com/#contacto)

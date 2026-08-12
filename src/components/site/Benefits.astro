@@ -1,0 +1,40 @@
+---
+import SectionHeading from "@/components/site/SectionHeading.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).benefits
+---
+
+<section aria-labelledby="beneficios-titulo" class="rule-b band-y">
+  <SectionHeading
+    id="beneficios-titulo"
+    label={t.label}
+    title={t.title}
+    intro={t.intro}
+  />
+
+  <ul
+    class="page-x mt-[clamp(48px,7vw,100px)] grid gap-x-[50px] gap-y-[clamp(40px,5vw,80px)] sm:grid-cols-2 lg:grid-cols-3"
+  >
+    {
+      t.items.map((benefit, i) => (
+        <li data-reveal style={`--reveal-delay: ${(i % 3) * 80}ms;`}>
+          <span
+            class="block h-px w-full origin-left bg-hairline"
+            aria-hidden="true"
+            data-rule-draw
+          />
+          <h3 class="mt-[30px] font-opx text-subheading text-bone lg:text-heading-sm">
+            {benefit.title}
+          </h3>
+          <p class="copy mt-5 max-w-[40ch] text-muted-ash">{benefit.body}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

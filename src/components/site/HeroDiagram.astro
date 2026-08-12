@@ -1,0 +1,62 @@
+---
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const d = useTranslations(lang).hero.diagram
+
+// Diagrama de línea: entradas → agente → acción, con revisión humana y
+// observabilidad. Es contenido informativo, así que se expone como imagen
+// accesible (role="img" + title/desc) en lugar de ocultarse.
+---
+
+<svg
+  viewBox="0 0 400 236"
+  class="h-auto w-full max-w-[520px] text-bone"
+  role="img"
+  aria-labelledby={`diagrama-titulo-${lang} diagrama-desc-${lang}`}
+  data-reveal
+>
+  <title id={`diagrama-titulo-${lang}`}>{d.title}</title>
+  <desc id={`diagrama-desc-${lang}`}>{d.desc}</desc>
+
+  <g fill="none" stroke="currentColor" stroke-width="1">
+    <rect x="0.5" y="14.5" width="104" height="36"></rect>
+    <rect x="0.5" y="80.5" width="104" height="36"></rect>
+    <rect x="0.5" y="146.5" width="104" height="36"></rect>
+    <rect x="147.5" y="52.5" width="104" height="92"></rect>
+    <rect x="294.5" y="32.5" width="104" height="36"></rect>
+    <rect x="294.5" y="128.5" width="104" height="36"></rect>
+    <rect x="147.5" y="198.5" width="104" height="36"></rect>
+  </g>
+
+  <g fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4">
+    <path d="M105 32.5 H126 V98.5 H147"></path>
+    <path d="M105 98.5 H147"></path>
+    <path d="M105 164.5 H126 V98.5 H147"></path>
+    <path d="M252 98.5 H273 V50.5 H294"></path>
+    <path d="M252 98.5 H273 V146.5 H294"></path>
+    <path d="M199.5 144 V198"></path>
+  </g>
+
+  <g
+    class="font-untitled"
+    fill="currentColor"
+    font-size="10"
+    text-anchor="middle"
+  >
+    <text x="53" y="36">{d.email}</text>
+    <text x="53" y="102">{d.crm}</text>
+    <text x="53" y="168">{d.docs}</text>
+    <text x="200" y="92">{d.agent}</text>
+    <text x="200" y="112" font-size="9" fill="var(--color-ash)">
+      {d.agentSub}
+    </text>
+    <text x="347" y="54">{d.action}</text>
+    <text x="347" y="150">{d.review}</text>
+    <text x="200" y="220">{d.observability}</text>
+  </g>
+</svg>
