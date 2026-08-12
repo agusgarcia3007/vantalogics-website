@@ -28,3 +28,7 @@ User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://vantalogics.com/sitemap.xml
+
+# Índice legible por modelos: qué hace la empresa, las notas y las páginas de
+# solución, cada una con su respuesta corta ya extraída.
+# https://vantalogics.com/llms.txt
