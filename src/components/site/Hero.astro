@@ -13,7 +13,7 @@ const t = useTranslations(lang)
 ---
 
 <section id="inicio" class="rule-b">
-  <div class="page-x pt-[clamp(56px,10vw,200px)] pb-[clamp(56px,9vw,150px)]">
+  <div class="page-x pt-[clamp(40px,5vw,90px)] pb-[clamp(56px,9vw,150px)]">
     <p class="label-untitled text-muted-ash" data-reveal>{t.hero.eyebrow}</p>
 
     <h1 class="display-xl mt-8 max-w-[14ch] text-bone" data-reveal>
@@ -41,9 +41,15 @@ const t = useTranslations(lang)
         <p class="label-untitled mt-[30px] text-muted-ash">{t.hero.note}</p>
       </div>
 
-      <div data-reveal style="--reveal-delay: 200ms;">
+      <!-- El titular deja libre el flanco derecho: el diagrama sube hasta esa
+           altura y se alinea contra el margen para ocuparlo. -->
+      <div
+        class="lg:-mt-[90px] lg:text-right xl:-mt-[clamp(150px,15vw,260px)]"
+        data-reveal
+        style="--reveal-delay: 200ms;"
+      >
         <p class="label-untitled text-muted-ash">{t.hero.diagramLabel}</p>
-        <div class="mt-[30px]">
+        <div class="mt-[30px] ml-auto w-full max-w-[520px]">
           <HeroDiagram lang={lang} />
         </div>
       </div>
