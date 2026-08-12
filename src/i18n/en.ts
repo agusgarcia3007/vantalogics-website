@@ -23,7 +23,7 @@ export const en: Dictionary = {
     items: [
       { href: "#que-hacemos", label: "What we do" },
       { href: "#proceso", label: "How we work" },
-      { href: "#resultados", label: "Results" },
+      { href: "/blog/", label: "Notes" },
       { href: "#faq", label: "Questions" },
     ],
     cta: "Book a diagnostic",
@@ -355,14 +355,14 @@ export const en: Dictionary = {
           { href: "#que-hacemos", label: "Automate a process" },
           { href: "#que-hacemos", label: "Custom agents" },
           { href: "#que-hacemos", label: "Evaluation and monitoring" },
-          { href: "#que-hacemos", label: "AI in your product" },
+          { href: "/solutions/", label: "Solutions by industry" },
         ],
       },
       {
         title: "The agency",
         links: [
+          { href: "/blog/", label: "Notes" },
           { href: "#proceso", label: "How we work" },
-          { href: "#resultados", label: "Results" },
           { href: "#faq", label: "FAQ" },
           { href: "#contacto", label: "Contact" },
         ],
@@ -370,6 +370,60 @@ export const en: Dictionary = {
     ],
     socialTitle: "Follow us",
     tags: "Automation · AI agents · AI Solutions",
+  },
+
+  blog: {
+    label: "Notes",
+    rssTitle: "Notes",
+    meta: {
+      title: "Notes — Vantalogics",
+      description:
+        "Real costs, decision criteria and the production failures we keep running into on AI automation projects. Working notes, not lead-gen articles.",
+    },
+    titleMuted: "What we learned",
+    titleBright: "shipping agents to production.",
+    intro:
+      "Real costs, criteria for deciding, and the failures that only show up once the agent is handling actual customers. We publish what we wish we had read first.",
+    empty: "No notes published yet.",
+    readMore: "Read the note",
+    backToIndex: "All notes",
+    updatedOn: "Updated",
+    publishedOn: "Published",
+    readingTime: "min read",
+    tocLabel: "In this note",
+    answerLabel: "Short answer",
+    faqLabel: "Related questions",
+    relatedLabel: "Keep reading",
+    shareLabel: "Share",
+    authorLabel: "Written by",
+    author: "The Vantalogics team",
+    authorBio:
+      "An AI systems agency. We automate processes and build evaluated, monitored agents for companies across Latin America, Spain and the United States.",
+    ctaTitle: "Sound like your operation?",
+    ctaBody:
+      "Thirty minutes, free. You leave with a map of your process and an estimate of what is worth automating first.",
+    ctaButton: "Book a free diagnostic",
+    clusters: {
+      costos: "Costs",
+      decision: "How to decide",
+      confiabilidad: "Reliability",
+      casos: "Use cases",
+    },
+  },
+
+  solutions: {
+    label: "Solutions",
+    breadcrumb: "Solutions",
+    indexTitle: "AI automation, by industry",
+    indexDescription:
+      "How AI automation works in each industry: which processes to attack first, what it integrates with, and what stays under human approval.",
+    indexIntro:
+      "The process changes with the industry. These pages are the starting point for each one: what we automate first, which systems we talk to, and where a person stays in the loop.",
+    processesLabel: "What we automate first",
+    stackLabel: "What it integrates with",
+    humanLabel: "What stays under human approval",
+    startLabel: "Where to start",
+    notThisLabel: "When it isn't worth it",
   },
 
   agent: {

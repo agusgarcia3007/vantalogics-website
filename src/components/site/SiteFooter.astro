@@ -3,7 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { Github01Icon, InstagramIcon } from "@hugeicons/core-free-icons"
 
 import Wordmark from "@/components/site/Wordmark.astro"
-import { localizePath, otherLang, useTranslations, type Lang } from "@/i18n"
+import { localizePath, navHref, otherLang, useTranslations, type Lang } from "@/i18n"
 import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/site"
 
 interface Props {
@@ -74,7 +74,7 @@ const socials = [
               <li>
                 <a
                   class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-                  href={link.href}
+                  href={navHref(lang, link.href)}
                 >
                   {link.label}
                 </a>

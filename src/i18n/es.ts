@@ -29,7 +29,7 @@ export const es = {
     items: [
       { href: "#que-hacemos", label: "Qué hacemos" },
       { href: "#proceso", label: "Cómo trabajamos" },
-      { href: "#resultados", label: "Resultados" },
+      { href: "/blog/", label: "Notas" },
       { href: "#faq", label: "Preguntas" },
     ],
     cta: "Agendar diagnóstico",
@@ -367,14 +367,14 @@ export const es = {
           { href: "#que-hacemos", label: "Automatizar un proceso" },
           { href: "#que-hacemos", label: "Agentes a medida" },
           { href: "#que-hacemos", label: "Evaluación y monitoreo" },
-          { href: "#que-hacemos", label: "IA en tu producto" },
+          { href: "/soluciones/", label: "Soluciones por sector" },
         ],
       },
       {
         title: "La agencia",
         links: [
+          { href: "/blog/", label: "Notas" },
           { href: "#proceso", label: "Cómo trabajamos" },
-          { href: "#resultados", label: "Resultados" },
           { href: "#faq", label: "Preguntas frecuentes" },
           { href: "#contacto", label: "Contacto" },
         ],
@@ -382,6 +382,69 @@ export const es = {
     ],
     socialTitle: "Seguinos",
     tags: "Automatización · Agentes de IA · AI Solutions",
+  },
+
+  /**
+   * El blog.
+   *
+   * Se llama «Notas» y no «Blog» a propósito: lo que se publica son apuntes de
+   * trabajo —costos reales, fallas que vemos, criterios de decisión—, no
+   * artículos de captación. La diferencia importa porque es exactamente lo que
+   * las otras agencias no pueden copiar sin haberlo hecho.
+   */
+  blog: {
+    label: "Notas",
+    rssTitle: "Notas",
+    meta: {
+      title: "Notas — Vantalogics",
+      description:
+        "Costos reales, criterios de decisión y fallas de producción en proyectos de automatización con IA. Apuntes de trabajo, no artículos de captación.",
+    },
+    titleMuted: "Lo que aprendimos",
+    titleBright: "poniendo agentes en producción.",
+    intro:
+      "Costos reales, criterios para decidir y las fallas que aparecen recién cuando el agente atiende clientes de verdad. Publicamos lo que nos hubiera servido leer antes de empezar.",
+    empty: "Todavía no hay notas publicadas.",
+    readMore: "Leer la nota",
+    backToIndex: "Todas las notas",
+    updatedOn: "Actualizado el",
+    publishedOn: "Publicado el",
+    readingTime: "min de lectura",
+    tocLabel: "En esta nota",
+    answerLabel: "Respuesta corta",
+    faqLabel: "Preguntas relacionadas",
+    relatedLabel: "Seguí por acá",
+    shareLabel: "Compartir",
+    authorLabel: "Escrito por",
+    author: "Equipo Vantalogics",
+    authorBio:
+      "Agencia de sistemas de IA. Automatizamos procesos y construimos agentes evaluados y monitoreados para empresas de LATAM, España y Estados Unidos.",
+    ctaTitle: "¿Te suena a tu operación?",
+    ctaBody:
+      "Treinta minutos, sin costo. Salís con el mapa de tu proceso y una estimación de qué conviene automatizar primero.",
+    ctaButton: "Agendar diagnóstico gratuito",
+    clusters: {
+      costos: "Costos",
+      decision: "Cómo decidir",
+      confiabilidad: "Confiabilidad",
+      casos: "Casos de uso",
+    },
+  },
+
+  /** Páginas de solución por sector. Ver `src/data/solutions.ts`. */
+  solutions: {
+    label: "Soluciones",
+    breadcrumb: "Soluciones",
+    indexTitle: "Automatización con IA, por sector",
+    indexDescription:
+      "Cómo se automatiza con IA en cada sector: qué procesos conviene atacar primero, qué se integra y qué queda con aprobación humana.",
+    indexIntro:
+      "El proceso cambia según el rubro. Estas páginas son el punto de partida por sector: qué automatizamos primero, con qué sistemas hablamos y dónde dejamos a una persona decidiendo.",
+    processesLabel: "Qué automatizamos primero",
+    stackLabel: "Con qué se integra",
+    humanLabel: "Qué queda con aprobación humana",
+    startLabel: "Por dónde se empieza",
+    notThisLabel: "Cuándo no conviene",
   },
 
   agent: {

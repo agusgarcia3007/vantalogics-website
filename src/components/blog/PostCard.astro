@@ -1,0 +1,62 @@
+---
+import { useTranslations } from "@/i18n"
+import {
+  formatDate,
+  postLang,
+  postPath,
+  readingTime,
+  type Post,
+} from "@/lib/blog"
+
+interface Props {
+  post: Post
+  /** La primera de la lista se imprime más grande. */
+  featured?: boolean
+}
+
+const { post, featured = false } = Astro.props
+const lang = postLang(post)
+const t = useTranslations(lang)
+const minutes = readingTime(post.body)
+
+// La tarjeta entera es el enlace, pero el nombre accesible sale sólo del
+// titular: si el enlace envolviera fecha, cluster y bajada, el lector de
+// pantalla anunciaría el bloque completo de corrido. El truco es el
+// pseudo-elemento estirado sobre la tarjeta —el área clicable es toda, el
+// texto del enlace es únicamente el titular.
+---
+
+<article
+  class="group relative flex flex-col border-t border-hairline py-[clamp(28px,3.4vw,44px)] first:border-t-0 first:pt-0"
+  data-reveal
+>
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+    <span class="label-untitled text-muted-ash">
+      {t.blog.clusters[post.data.cluster]}
+    </span>
+    <span class="label-untitled text-muted-ash" aria-hidden="true">·</span>
+    <time class="label-untitled text-muted-ash" datetime={post.data.date.toISOString()}>
+      {formatDate(post.data.date, lang)}
+    </time>
+    <span class="label-untitled text-muted-ash" aria-hidden="true">·</span>
+    <span class="label-untitled text-muted-ash">
+      {minutes} {t.blog.readingTime}
+    </span>
+  </div>
+
+  <h3
+    class:list={[
+      "mt-4 max-w-[26ch] text-balance text-bone",
+      featured ? "display-section" : "text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em]",
+    ]}
+  >
+    <a
+      href={postPath(post)}
+      class="transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 before:absolute before:inset-0 before:content-['']"
+    >
+      {post.data.title}
+    </a>
+  </h3>
+
+  <p class="copy mt-4 max-w-[58ch] text-ash">{post.data.description}</p>
+</article>

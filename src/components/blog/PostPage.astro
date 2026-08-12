@@ -1,0 +1,313 @@
+---
+import { render } from "astro:content"
+
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site/SiteHeader.astro"
+import SiteFooter from "@/components/site/SiteFooter.astro"
+import Frame from "@/components/site/Frame.astro"
+import Cta from "@/components/site/Cta.astro"
+import PostCard from "@/components/blog/PostCard.astro"
+import { localizePath, useTranslations } from "@/i18n"
+import {
+  formatDate,
+  getRelated,
+  getTranslation,
+  postLang,
+  postPath,
+  readingTime,
+  type Post,
+} from "@/lib/blog"
+import { SCHEDULE_URL } from "@/site"
+
+interface Props {
+  post: Post
+}
+
+const SITE = "https://vantalogics.com"
+const { post } = Astro.props
+const lang = postLang(post)
+const t = useTranslations(lang)
+
+const { Content, headings } = await render(post)
+const related = await getRelated(post)
+const translation = await getTranslation(post)
+
+const path = postPath(post)
+const pageUrl = new URL(path, SITE).href
+const minutes = readingTime(post.body)
+const blogPath = localizePath(lang, "/blog/")
+
+// Sólo se declara `hreflang` cuando la traducción existe de verdad. Un
+// alternate que devuelve 404 hace que Google descarte el par entero.
+const alternates = translation
+  ? { [lang]: path, [postLang(translation)]: postPath(translation) }
+  : { [lang]: path }
+
+// Índice con los h2. Los h3 quedan afuera a propósito: un índice de dos
+// niveles en una nota de mil palabras es más ruido que ayuda.
+const toc = headings.filter((heading) => heading.depth === 2)
+
+const article = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `${pageUrl}#article`,
+  headline: post.data.title,
+  description: post.data.description,
+  /**
+   * `abstract` lleva la respuesta corta y no la bajada. Es el campo que los
+   * motores de respuesta usan como resumen citable, y la respuesta de 40–60
+   * palabras es exactamente lo que queremos que citen.
+   */
+  abstract: post.data.answer,
+  articleSection: t.blog.clusters[post.data.cluster],
+  keywords: post.data.tags.join(", "),
+  inLanguage: lang,
+  datePublished: post.data.date.toISOString(),
+  dateModified: (post.data.updated ?? post.data.date).toISOString(),
+  url: pageUrl,
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  wordCount: (post.body ?? "").trim().split(/\s+/).filter(Boolean).length,
+  isPartOf: { "@id": `${new URL(blogPath, SITE).href}#blog` },
+  author: { "@id": `${SITE}/#organization` },
+  publisher: { "@id": `${SITE}/#organization` },
+  image: new URL(`/og-${lang}.png`, SITE).href,
+  /**
+   * `speakable` marca qué leería en voz alta un asistente. Apunta al titular y
+   * al bloque de respuesta corta, que es la unidad que tiene sentido leer
+   * suelta.
+   */
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["[data-speakable]"],
+  },
+}
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Vantalogics",
+      item: new URL(localizePath(lang), SITE).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: t.blog.label,
+      item: new URL(blogPath, SITE).href,
+    },
+    { "@type": "ListItem", position: 3, name: post.data.title, item: pageUrl },
+  ],
+}
+
+const faqPage =
+  post.data.faq.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        inLanguage: lang,
+        mainEntity: post.data.faq.map((entry) => ({
+          "@type": "Question",
+          name: entry.question,
+          acceptedAnswer: { "@type": "Answer", text: entry.answer },
+        })),
+      }
+    : null
+
+const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
+---
+
+<Layout
+  lang={lang}
+  path={path}
+  title={post.data.seoTitle ?? `${post.data.title} — Vantalogics`}
+  description={post.data.description}
+  ogType="article"
+  alternates={alternates}
+  jsonLd={jsonLd}
+>
+  <SiteHeader lang={lang} />
+
+  <main id="contenido">
+    <Frame flush>
+      <nav aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li>
+            <a
+              href={localizePath(lang)}
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+            >
+              Vantalogics
+            </a>
+          </li>
+          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
+          <li>
+            <a
+              href={blogPath}
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+            >
+              {t.blog.label}
+            </a>
+          </li>
+        </ol>
+      </nav>
+
+      <header class="mt-[clamp(32px,5vw,64px)]">
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <span class="label-untitled text-muted-ash">
+            {t.blog.clusters[post.data.cluster]}
+          </span>
+          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span>
+          <time
+            class="label-untitled text-muted-ash"
+            datetime={post.data.date.toISOString()}
+          >
+            {formatDate(post.data.date, lang)}
+          </time>
+          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span>
+          <span class="label-untitled text-muted-ash">
+            {minutes} {t.blog.readingTime}
+          </span>
+        </div>
+
+        <h1
+          class="display-lg mt-6 max-w-[20ch] text-balance text-bone"
+          data-speakable
+        >
+          {post.data.title}
+        </h1>
+
+        {
+          post.data.updated && (
+            <p class="label-untitled mt-6 text-muted-ash">
+              {t.blog.updatedOn} {formatDate(post.data.updated, lang)}
+            </p>
+          )
+        }
+      </header>
+    </Frame>
+
+    <!-- Respuesta corta.
+         Va antes que el cuerpo y encuadrada: es la unidad que extraen los
+         motores de respuesta, y el lector que sólo vino a saber el número se
+         va con el número sin tener que leer mil palabras. -->
+    <Frame>
+      <div
+        class="max-w-[62ch] border-l border-hairline pl-[clamp(20px,2.5vw,32px)]"
+        data-reveal
+      >
+        <p class="label-untitled text-muted-ash">{t.blog.answerLabel}</p>
+        <p
+          class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.55] text-bone"
+          data-speakable
+        >
+          {post.data.answer}
+        </p>
+      </div>
+    </Frame>
+
+    <Frame>
+      <div
+        class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-[clamp(40px,5vw,64px)] lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start"
+      >
+        <div class="typeset typeset-nota min-w-0">
+          <Content />
+        </div>
+
+        {
+          toc.length > 1 && (
+            <nav
+              aria-labelledby="indice-nota"
+              class="order-first lg:sticky lg:top-[104px] lg:order-none"
+            >
+              <p id="indice-nota" class="label-untitled text-muted-ash">
+                {t.blog.tocLabel}
+              </p>
+              <ol class="mt-4 flex flex-col gap-[10px] border-l border-hairline pl-4">
+                {toc.map((heading) => (
+                  <li>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )
+        }
+      </div>
+    </Frame>
+
+    {
+      post.data.faq.length > 0 && (
+        <Frame labelledby="faq-nota">
+          <h2 id="faq-nota" class="display-section max-w-[20ch] text-bone">
+            {t.blog.faqLabel}
+          </h2>
+          <dl class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[68ch] flex-col">
+            {post.data.faq.map((entry) => (
+              <div class="border-t border-hairline py-7 first:border-t-0 first:pt-0">
+                <dt class="text-[clamp(17px,1.5vw,19px)] leading-[1.4] text-bone">
+                  {entry.question}
+                </dt>
+                <dd class="copy mt-3 text-ash">{entry.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </Frame>
+      )
+    }
+
+    <Frame>
+      <div
+        class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between"
+      >
+        <div>
+          <p class="label-untitled text-muted-ash">{t.blog.authorLabel}</p>
+          <p class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.4] text-bone">
+            {t.blog.author}
+          </p>
+          <p class="copy mt-3 max-w-[52ch] text-ash">{t.blog.authorBio}</p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 lg:shrink-0">
+          <Cta
+            href={SCHEDULE_URL}
+            variant="pill-solid"
+            size="pill-lg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t.blog.ctaButton}
+          </Cta>
+          <Cta href={blogPath} variant="pill-quiet" size="pill-lg">
+            {t.blog.backToIndex}
+          </Cta>
+        </div>
+      </div>
+    </Frame>
+
+    {
+      related.length > 0 && (
+        <Frame labelledby="relacionadas">
+          <h2 id="relacionadas" class="display-section max-w-[20ch] text-bone">
+            {t.blog.relatedLabel}
+          </h2>
+          <div class="mt-[clamp(28px,3.5vw,48px)] flex flex-col">
+            {related.map((item) => (
+              <PostCard post={item} />
+            ))}
+          </div>
+        </Frame>
+      )
+    }
+  </main>
+
+  <SiteFooter lang={lang} />
+</Layout>

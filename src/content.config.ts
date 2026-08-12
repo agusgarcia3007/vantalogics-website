@@ -1,0 +1,48 @@
+import { defineCollection } from "astro:content"
+import { glob } from "astro/loaders"
+// zod directamente y no el `z` reexportado por `astro:content`, que quedó
+// deprecado: el proyecto ya trae zod 4 como dependencia.
+import { z } from "zod"
+
+/**
+ * El blog.
+ *
+ * Una sola colección con los dos idiomas adentro (`es/…`, `en/…`) en vez de
+ * dos colecciones paralelas: así el `id` que genera el loader ya trae el
+ * idioma y el par traducido se resuelve por `slug` compartido, sin tener que
+ * mantener un mapa aparte.
+ *
+ * `translationOf` sólo se completa cuando el post existe en los dos idiomas.
+ * Sin eso, el `hreflang` apuntaría a una URL 404 y Google descarta el par
+ * entero, así que se prefiere no declararlo antes que declararlo mal.
+ */
+const blog = defineCollection({
+  loader: glob({ base: "./src/content/blog", pattern: "**/*.md" }),
+  schema: z.object({
+    title: z.string(),
+    /** El `<title>` del documento, si conviene que difieran. */
+    seoTitle: z.string().optional(),
+    /** Meta description. 140–160 caracteres. */
+    description: z.string(),
+    /**
+     * Respuesta directa de 40–60 palabras a la pregunta del título. Va arriba
+     * de todo y es lo que extraen los motores de respuesta: si no está, el
+     * modelo cita el primer párrafo que encuentre, que casi nunca es el bueno.
+     */
+    answer: z.string(),
+    date: z.coerce.date(),
+    updated: z.coerce.date().optional(),
+    /** Cluster temático: agrupa el silo y arma los enlaces internos. */
+    cluster: z.enum(["costos", "decision", "confiabilidad", "casos"]),
+    tags: z.array(z.string()).default([]),
+    /** Slug compartido con la traducción, si existe. */
+    translationOf: z.string().optional(),
+    /** Preguntas y respuestas al pie — alimentan el FAQPage del post. */
+    faq: z
+      .array(z.object({ question: z.string(), answer: z.string() }))
+      .default([]),
+    draft: z.boolean().default(false),
+  }),
+})
+
+export const collections = { blog }

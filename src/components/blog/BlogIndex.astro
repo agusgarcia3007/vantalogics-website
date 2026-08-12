@@ -1,0 +1,117 @@
+---
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site/SiteHeader.astro"
+import SiteFooter from "@/components/site/SiteFooter.astro"
+import CallToAction from "@/components/site/CallToAction.astro"
+import Frame from "@/components/site/Frame.astro"
+import PostCard from "@/components/blog/PostCard.astro"
+import { localizePath, useTranslations, type Lang } from "@/i18n"
+import { getPosts, postPath } from "@/lib/blog"
+
+interface Props {
+  lang: Lang
+}
+
+const SITE = "https://vantalogics.com"
+const { lang } = Astro.props
+const t = useTranslations(lang)
+
+const posts = await getPosts(lang)
+const path = localizePath(lang, "/blog/")
+const pageUrl = new URL(path, SITE).href
+
+/**
+ * `Blog` + `ItemList`. El `ItemList` es lo que da el orden explícito: sin él,
+ * un motor de respuesta que lee la portada del blog tiene que inferir cuál es
+ * la nota más relevante por posición en el DOM.
+ */
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": `${pageUrl}#blog`,
+  url: pageUrl,
+  name: t.blog.meta.title,
+  description: t.blog.meta.description,
+  inLanguage: lang,
+  publisher: { "@id": `${SITE}/#organization` },
+  blogPost: posts.map((post) => ({
+    "@type": "BlogPosting",
+    "@id": `${new URL(postPath(post), SITE).href}#article`,
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.date.toISOString(),
+    url: new URL(postPath(post), SITE).href,
+  })),
+}
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Vantalogics",
+      item: new URL(localizePath(lang), SITE).href,
+    },
+    { "@type": "ListItem", position: 2, name: t.blog.label, item: pageUrl },
+  ],
+}
+---
+
+<Layout
+  lang={lang}
+  path={path}
+  title={t.blog.meta.title}
+  description={t.blog.meta.description}
+  alternates={{ es: "/blog/", en: "/en/blog/" }}
+  jsonLd={[blogSchema, breadcrumb]}
+>
+  <SiteHeader lang={lang} />
+
+  <main id="contenido">
+    <Frame flush>
+      <nav aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li>
+            <a
+              href={localizePath(lang)}
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+            >
+              Vantalogics
+            </a>
+          </li>
+          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
+          <li class="label-untitled text-muted-ash" aria-current="page">
+            {t.blog.label}
+          </li>
+        </ol>
+      </nav>
+
+      <h1 class="display-lg mt-[clamp(32px,5vw,64px)] max-w-[18ch] text-balance text-bone">
+        <span class="text-ash">{t.blog.titleMuted}</span>{" "}
+        <span>{t.blog.titleBright}</span>
+      </h1>
+
+      <p class="copy mt-[30px] max-w-[56ch] text-ash">{t.blog.intro}</p>
+    </Frame>
+
+    <Frame>
+      {
+        posts.length === 0 ? (
+          <p class="copy text-ash">{t.blog.empty}</p>
+        ) : (
+          <div class="flex flex-col">
+            {posts.map((post, index) => (
+              <PostCard post={post} featured={index === 0} />
+            ))}
+          </div>
+        )
+      }
+    </Frame>
+
+    <CallToAction lang={lang} />
+  </main>
+
+  <SiteFooter lang={lang} />
+</Layout>

@@ -9,7 +9,7 @@ import {
 
 import Cta from "@/components/site/Cta.astro"
 import Wordmark from "@/components/site/Wordmark.astro"
-import { localizePath, otherLang, useTranslations, type Lang } from "@/i18n"
+import { localizePath, navHref, otherLang, useTranslations, type Lang } from "@/i18n"
 import { SCHEDULE_URL } from "@/site"
 
 interface Props {
@@ -40,7 +40,7 @@ const alt = otherLang(lang)
   >
     <div class="flex items-center gap-12">
       <a
-        href="#inicio"
+        href={localizePath(lang)}
         class="shrink-0 text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
         aria-label={t.a11y.home}
       >
@@ -51,7 +51,7 @@ const alt = otherLang(lang)
         {
           t.nav.items.map((item) => (
             <a
-              href={item.href}
+              href={navHref(lang, item.href)}
               class="label-untitled py-2 text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
             >
               {item.label}
@@ -150,7 +150,7 @@ const alt = otherLang(lang)
       {
         t.nav.items.map((item) => (
           <a
-            href={item.href}
+            href={navHref(lang, item.href)}
             class="border-b border-hairline py-4 font-untitled text-[20px] leading-tight text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-60"
             data-menu-link
           >

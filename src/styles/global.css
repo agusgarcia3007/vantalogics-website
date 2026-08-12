@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+/* shadcn/typeset — tipografía de contenido renderizado (las notas del blog).
+   Se configura abajo, en `.typeset-nota`. */
+@import "./typeset.css";
 
 /* OPX-Medium / Untitled -> Inter (substitute per design.md) */
 @import "@fontsource-variable/inter";
@@ -349,6 +352,84 @@
 /* Muted metadata — only valid on the dark canvas. */
 @utility text-muted-ash {
   color: var(--color-ash);
+}
+
+/* ---------------------------------------------------------------------------
+   Preset de typeset para las notas.
+
+   shadcn/typeset trae la tipografía de contenido renderizado; acá sólo se lo
+   ata al sistema de la casa. Son dos ajustes y nada más:
+
+   1. Color. Typeset lee `--color-foreground`, `--color-muted-foreground` y
+      `--color-border`, y en este proyecto esos tokens quedaron con los valores
+      claros de shadcn en `:root` —el sitio nunca los usó, pinta todo con
+      `bone`/`ash`/`hairline`—. Sin redefinirlos acá, el cuerpo de la nota
+      saldría casi negro sobre el canvas negro. Se redefinen sobre el
+      contenedor, así que valen para todo lo que cuelgue de él y siguen el
+      cambio de tema solos.
+
+   2. Peso de los titulares. Typeset los pone en 600; design.md es explícito en
+      que la autoridad viene de la escala y nunca del peso. Van en 400.
+--------------------------------------------------------------------------- */
+
+@layer components {
+  .typeset-nota {
+    --typeset-font-body: var(--font-untitled);
+    --typeset-font-heading: var(--font-opx);
+    --typeset-size: 17px;
+    --typeset-leading: 1.68;
+    --typeset-flow: 1.35em;
+
+    --color-foreground: var(--bone);
+    --color-muted-foreground: var(--ash);
+    --color-border: var(--hairline);
+    --color-muted: var(--surface);
+    --color-primary: var(--bone);
+    --color-ring: var(--bone);
+  }
+
+  /* La medida va en los bloques, no en el contenedor.
+     Si el ancho de 68ch lo lleva el contenedor, la tabla queda encerrada en la
+     medida de lectura y se corta a los tres cuartos incluso en un monitor
+     grande, con scroll horizontal donde había lugar de sobra. Poniéndola en
+     los hijos, el texto conserva su renglón corto y las tablas —que no se leen
+     renglón por renglón— usan todo el ancho de la columna. */
+  .typeset-nota > * {
+    max-width: 68ch;
+  }
+
+  .typeset-nota > .typeset-scroll {
+    max-width: 100%;
+  }
+
+  .typeset-nota :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: var(--font-weight-regular);
+    letter-spacing: -0.02em;
+    /* El encabezado pegajoso mide 104px: sin esto, un ancla del índice deja el
+       titular escondido detrás. */
+    scroll-margin-block-start: 104px;
+  }
+
+  /* La regla de arriba de cada h2 es el mismo hairline que separa las
+     secciones de la portada: hace que la nota se lea como parte del sitio y no
+     como una plantilla de blog pegada encima. */
+  .typeset-nota :is(h2) {
+    border-block-start: var(--hairline-width) solid var(--color-hairline);
+    padding-block-start: var(--typeset-flow);
+    margin-block-start: calc(var(--typeset-flow) * 2.2);
+  }
+
+  /* Enlaces: subrayado en hairline que se enciende al pasar. El subrayado
+     lleno competía con el texto en una nota con veinte enlaces internos. */
+  .typeset-nota :is(a) {
+    text-decoration-color: var(--color-hairline);
+    text-underline-offset: 4px;
+    transition: text-decoration-color var(--duration-state) var(--ease-opx);
+  }
+
+  .typeset-nota :is(a):hover {
+    text-decoration-color: var(--bone);
+  }
 }
 
 /* ---------------------------------------------------------------------------
