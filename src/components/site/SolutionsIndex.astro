@@ -1,0 +1,115 @@
+---
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site/SiteHeader.astro"
+import SiteFooter from "@/components/site/SiteFooter.astro"
+import CallToAction from "@/components/site/CallToAction.astro"
+import Frame from "@/components/site/Frame.astro"
+import { localizePath, useTranslations, type Lang } from "@/i18n"
+import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
+
+interface Props {
+  lang: Lang
+}
+
+const SITE = "https://vantalogics.com"
+const { lang } = Astro.props
+const t = useTranslations(lang)
+
+const path = solutionsIndexPath(lang)
+const pageUrl = new URL(path, SITE).href
+
+const itemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": `${pageUrl}#list`,
+  name: t.solutions.indexTitle,
+  itemListElement: SOLUTIONS.map((solution, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: solution.title[lang],
+    url: new URL(solutionPath(lang, solution), SITE).href,
+  })),
+}
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Vantalogics",
+      item: new URL(localizePath(lang), SITE).href,
+    },
+    { "@type": "ListItem", position: 2, name: t.solutions.breadcrumb, item: pageUrl },
+  ],
+}
+---
+
+<Layout
+  lang={lang}
+  path={path}
+  title={`${t.solutions.indexTitle} — Vantalogics`}
+  description={t.solutions.indexDescription}
+  alternates={{ es: solutionsIndexPath("es"), en: solutionsIndexPath("en") }}
+  jsonLd={[itemList, breadcrumb]}
+>
+  <SiteHeader lang={lang} />
+
+  <main id="contenido">
+    <Frame flush>
+      <nav aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li>
+            <a
+              href={localizePath(lang)}
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+            >
+              Vantalogics
+            </a>
+          </li>
+          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
+          <li class="label-untitled text-muted-ash" aria-current="page">
+            {t.solutions.breadcrumb}
+          </li>
+        </ol>
+      </nav>
+
+      <h1 class="display-lg mt-[clamp(32px,5vw,64px)] max-w-[18ch] text-balance text-bone">
+        {t.solutions.indexTitle}
+      </h1>
+
+      <p class="copy mt-[30px] max-w-[56ch] text-ash">{t.solutions.indexIntro}</p>
+    </Frame>
+
+    <Frame>
+      <ul class="grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2">
+        {
+          SOLUTIONS.map((solution, index) => (
+            <li
+              class="group relative border-t border-hairline py-8 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
+              data-reveal
+              style={`--reveal-delay: ${index * 50}ms;`}
+            >
+              <h2 class="text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em] text-bone">
+                <a
+                  href={solutionPath(lang, solution)}
+                  class="transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 before:absolute before:inset-0 before:content-['']"
+                >
+                  {solution.sector[lang]}
+                </a>
+              </h2>
+              <p class="copy mt-3 max-w-[44ch] text-ash">
+                {solution.description[lang]}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </Frame>
+
+    <CallToAction lang={lang} />
+  </main>
+
+  <SiteFooter lang={lang} />
+</Layout>

@@ -1,0 +1,287 @@
+---
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site/SiteHeader.astro"
+import SiteFooter from "@/components/site/SiteFooter.astro"
+import CallToAction from "@/components/site/CallToAction.astro"
+import Frame from "@/components/site/Frame.astro"
+import Cta from "@/components/site/Cta.astro"
+import { localizePath, useTranslations, type Lang } from "@/i18n"
+import {
+  solutionPath,
+  solutionsIndexPath,
+  type Solution,
+} from "@/data/solutions"
+import { SCHEDULE_URL } from "@/site"
+
+interface Props {
+  lang: Lang
+  solution: Solution
+}
+
+const SITE = "https://vantalogics.com"
+const { lang, solution } = Astro.props
+const t = useTranslations(lang)
+
+const path = solutionPath(lang, solution)
+const pageUrl = new URL(path, SITE).href
+const indexPath = solutionsIndexPath(lang)
+
+const service = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: solution.title[lang],
+  description: solution.answer[lang],
+  serviceType: solution.title[lang],
+  provider: { "@id": `${SITE}/#organization` },
+  audience: { "@type": "BusinessAudience", name: solution.sector[lang] },
+  areaServed: [
+    { "@type": "Place", name: "Latin America" },
+    { "@type": "Country", name: "Spain" },
+    { "@type": "Country", name: "United States" },
+  ],
+  inLanguage: lang,
+  url: pageUrl,
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: t.solutions.processesLabel,
+    itemListElement: solution.processes.map((process) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: process.title[lang],
+        description: process.detail[lang],
+      },
+    })),
+  },
+}
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Vantalogics",
+      item: new URL(localizePath(lang), SITE).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: t.solutions.breadcrumb,
+      item: new URL(indexPath, SITE).href,
+    },
+    { "@type": "ListItem", position: 3, name: solution.sector[lang], item: pageUrl },
+  ],
+}
+
+const faqPage = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${pageUrl}#faq`,
+  inLanguage: lang,
+  mainEntity: solution.faq.map((entry) => ({
+    "@type": "Question",
+    name: entry.question[lang],
+    acceptedAnswer: { "@type": "Answer", text: entry.answer[lang] },
+  })),
+}
+
+// Bloques de lista con el mismo tratamiento: rótulo, regla y guiones.
+const lists = [
+  { label: t.solutions.stackLabel, items: solution.stack[lang] },
+  { label: t.solutions.humanLabel, items: solution.human[lang] },
+]
+---
+
+<Layout
+  lang={lang}
+  path={path}
+  title={`${solution.title[lang]} — Vantalogics`}
+  description={solution.description[lang]}
+  alternates={{
+    es: solutionPath("es", solution),
+    en: solutionPath("en", solution),
+  }}
+  jsonLd={[service, breadcrumb, faqPage]}
+>
+  <SiteHeader lang={lang} />
+
+  <main id="contenido">
+    <Frame flush>
+      <nav aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li>
+            <a
+              href={localizePath(lang)}
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+            >
+              Vantalogics
+            </a>
+          </li>
+          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
+          <li>
+            <a
+              href={indexPath}
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+            >
+              {t.solutions.breadcrumb}
+            </a>
+          </li>
+        </ol>
+      </nav>
+
+      <h1 class="display-lg mt-[clamp(32px,5vw,64px)] max-w-[20ch] text-balance text-bone">
+        {solution.title[lang]}
+      </h1>
+
+      <div class="mt-[30px] flex max-w-[62ch] flex-col gap-5">
+        {solution.intro[lang].map((paragraph) => (
+          <p class="copy text-ash">{paragraph}</p>
+        ))}
+      </div>
+    </Frame>
+
+    <Frame>
+      <div
+        class="max-w-[62ch] border-l border-hairline pl-[clamp(20px,2.5vw,32px)]"
+        data-reveal
+      >
+        <p class="label-untitled text-muted-ash">{t.blog.answerLabel}</p>
+        <p class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.55] text-bone">
+          {solution.answer[lang]}
+        </p>
+      </div>
+    </Frame>
+
+    <Frame labelledby="procesos">
+      <h2 id="procesos" class="display-section max-w-[20ch] text-bone" data-reveal>
+        {t.solutions.processesLabel}
+      </h2>
+
+      <ol class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] gap-y-0 md:grid-cols-2">
+        {
+          solution.processes.map((process, index) => (
+            <li
+              class="border-t border-hairline py-7 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
+              data-reveal
+              style={`--reveal-delay: ${index * 60}ms;`}
+            >
+              <p class="label-untitled text-muted-ash">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h3 class="mt-3 text-[clamp(18px,1.7vw,21px)] leading-[1.3] text-bone">
+                {process.title[lang]}
+              </h3>
+              <p class="copy mt-3 max-w-[46ch] text-ash">{process.detail[lang]}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </Frame>
+
+    <Frame>
+      <div class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-[clamp(40px,5vw,64px)] md:grid-cols-2">
+        {
+          lists.map((list) => (
+            <div data-reveal>
+              <h2 class="label-untitled text-muted-ash">{list.label}</h2>
+              <ul class="mt-5 flex flex-col gap-3">
+                {list.items.map((item) => (
+                  <li class="copy flex gap-3 text-ash">
+                    <span aria-hidden="true" class="text-muted-ash">
+                      —
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </Frame>
+
+    <Frame labelledby="empezar">
+      <h2 id="empezar" class="display-section max-w-[20ch] text-bone" data-reveal>
+        {t.solutions.startLabel}
+      </h2>
+      <ol class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[62ch] flex-col">
+        {
+          solution.start[lang].map((step, index) => (
+            <li
+              class="flex gap-5 border-t border-hairline py-6 first:border-t-0 first:pt-0"
+              data-reveal
+            >
+              <span class="label-untitled shrink-0 text-muted-ash">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="copy text-ash">{step}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </Frame>
+
+    <!-- Cuándo no conviene.
+         Es la sección que hace que la página valga algo. Una página por sector
+         que sólo dice que todo se puede automatizar es indistinguible de las
+         otras mil, y un motor de respuesta no tiene motivo para citarla. -->
+    <Frame labelledby="cuando-no">
+      <h2 id="cuando-no" class="display-section max-w-[20ch] text-bone" data-reveal>
+        {t.solutions.notThisLabel}
+      </h2>
+      <ul class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[62ch] flex-col">
+        {
+          solution.notThis[lang].map((item) => (
+            <li class="copy border-t border-hairline py-6 text-ash first:border-t-0 first:pt-0">
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </Frame>
+
+    <Frame labelledby="faq-solucion">
+      <h2
+        id="faq-solucion"
+        class="display-section max-w-[20ch] text-bone"
+        data-reveal
+      >
+        {t.blog.faqLabel}
+      </h2>
+      <dl class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[68ch] flex-col">
+        {
+          solution.faq.map((entry) => (
+            <div class="border-t border-hairline py-7 first:border-t-0 first:pt-0">
+              <dt class="text-[clamp(17px,1.5vw,19px)] leading-[1.4] text-bone">
+                {entry.question[lang]}
+              </dt>
+              <dd class="copy mt-3 text-ash">{entry.answer[lang]}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <div class="mt-[clamp(32px,4vw,56px)] flex flex-wrap gap-3">
+        <Cta
+          href={SCHEDULE_URL}
+          variant="pill-solid"
+          size="pill-lg"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t.blog.ctaButton}
+        </Cta>
+        <Cta href={indexPath} variant="pill-quiet" size="pill-lg">
+          {t.solutions.breadcrumb}
+        </Cta>
+      </div>
+    </Frame>
+
+    <CallToAction lang={lang} />
+  </main>
+
+  <SiteFooter lang={lang} />
+</Layout>
