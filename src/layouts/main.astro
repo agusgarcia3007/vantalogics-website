@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css"
+import WhatsAppButton from "@/components/site/WhatsAppButton.astro"
 import { localizePath, type Lang } from "@/i18n"
 import { useTranslations } from "@/i18n"
 
@@ -88,6 +89,8 @@ const imageUrl = new URL(`/og-${lang}.png`, SITE).href
     </a>
 
     <slot />
+
+    <WhatsAppButton lang={lang} />
 
     <script is:inline>
       // Reveal al hacer scroll — una sola vez, desactivado con reduced motion.

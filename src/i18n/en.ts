@@ -62,7 +62,7 @@ export const en: Dictionary = {
         {
           time: "00.4",
           kind: "Input",
-          detail: "Email: “I never got my March invoice”",
+          detail: "“I never got my March invoice”",
           meta: "",
         },
         {
@@ -74,7 +74,7 @@ export const en: Dictionary = {
         {
           time: "02.0",
           kind: "Tool",
-          detail: "find_invoice(customer, period)",
+          detail: "find_invoice()",
           meta: "340 ms",
         },
         {
@@ -84,26 +84,20 @@ export const en: Dictionary = {
           meta: "0.98",
         },
         {
-          time: "04.0",
-          kind: "Guardrail",
-          detail: "Amount over the limit → human review",
-          meta: "",
-        },
-        {
-          time: "05.1",
-          kind: "Human",
-          detail: "Approved by a person on the team",
+          time: "04.9",
+          kind: "Human review",
+          detail: "Amount over the limit · approved",
           meta: "",
         },
         {
           time: "05.6",
           kind: "Action",
-          detail: "Invoice resent and ticket closed",
+          detail: "Invoice resent, ticket closed",
           meta: "",
         },
       ],
       summary: [
-        { value: "7", label: "logged steps" },
+        { value: "6", label: "logged steps" },
         { value: "5.6 s", label: "end to end" },
         { value: "1", label: "human approval" },
       ],
@@ -377,5 +371,12 @@ export const en: Dictionary = {
       },
     ],
     tags: "Automation · AI agents · AI Solutions",
+  },
+
+  whatsapp: {
+    label: "Message us on WhatsApp",
+    aria: "Message us on WhatsApp, opens in a new tab",
+    prefill:
+      "Hi Vantalogics, I'd like to automate a process at my company. Can we talk?",
   },
 }

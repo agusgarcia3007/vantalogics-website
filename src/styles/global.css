@@ -291,9 +291,11 @@
 @utility display-xl {
   font-family: var(--font-opx);
   font-weight: var(--font-weight-regular);
-  font-size: clamp(2.75rem, 8.4vw, 6.9375rem);
+  /* Calibrado para que el titular del hero caiga en tres líneas limpias
+     desde 1024px hasta 1920px. */
+  font-size: clamp(2.75rem, 7.4vw, 6.9375rem);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 @utility display-lg {

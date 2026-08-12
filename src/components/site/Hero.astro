@@ -13,24 +13,26 @@ const t = useTranslations(lang)
 ---
 
 <section id="inicio" class="rule-b">
-  <!-- Dos columnas reales: el titular y la traza arrancan en la misma línea
-       superior, sin desplazamientos negativos que dependan del alto del texto. -->
+  <!-- Un solo bloque de dos columnas: titular, propuesta, acción y la prueba
+       de producto entran juntos en la primera pantalla. El titular se
+       dimensiona para llenar su columna en dos líneas, no para comerse el
+       viewport. -->
   <div
-    class="page-x grid items-start gap-x-[50px] gap-y-12 pt-[clamp(40px,5vw,80px)] pb-[clamp(56px,9vw,150px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)]"
+    class="page-x grid items-start gap-x-[50px] gap-y-[50px] py-[clamp(40px,5vw,72px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]"
   >
     <div>
       <p class="label-untitled text-muted-ash" data-reveal>{t.hero.eyebrow}</p>
 
       <h1
-        class="mt-6 max-w-[13ch] font-opx text-bone"
-        style="font-size: clamp(2.75rem, 5.8vw, 5rem); line-height: 1.04; letter-spacing: -0.02em;"
+        class="mt-6 max-w-[24ch] font-opx text-bone"
+        style="font-size: clamp(2.5rem, 4.6vw, 4.5rem); line-height: 1.06; letter-spacing: -0.022em;"
         data-reveal
       >
         {t.hero.title}
       </h1>
 
       <div class="mt-10" data-reveal style="--reveal-delay: 120ms;">
-        <p class="copy max-w-[52ch] text-bone">{t.hero.lead}</p>
+        <p class="copy max-w-[46ch] text-bone">{t.hero.lead}</p>
 
         <div class="mt-[30px] flex flex-wrap items-center gap-4">
           <Cta
@@ -46,7 +48,9 @@ const t = useTranslations(lang)
           </Cta>
         </div>
 
-        <p class="label-untitled mt-[30px] text-muted-ash">{t.hero.note}</p>
+        <p class="label-untitled mt-[30px] max-w-[52ch] text-muted-ash">
+          {t.hero.note}
+        </p>
       </div>
     </div>
 

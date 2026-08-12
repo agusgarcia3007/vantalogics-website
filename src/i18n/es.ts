@@ -60,7 +60,7 @@ export const es = {
         {
           time: "00.4",
           kind: "Entrada",
-          detail: "Correo: «no me llegó la factura de marzo»",
+          detail: "«No me llegó la factura de marzo»",
           meta: "",
         },
         {
@@ -72,7 +72,7 @@ export const es = {
         {
           time: "02.0",
           kind: "Herramienta",
-          detail: "buscar_factura(cliente, período)",
+          detail: "buscar_factura()",
           meta: "340 ms",
         },
         {
@@ -82,26 +82,20 @@ export const es = {
           meta: "0.98",
         },
         {
-          time: "04.0",
-          kind: "Guardrail",
-          detail: "Monto sobre el límite → revisión humana",
-          meta: "",
-        },
-        {
-          time: "05.1",
-          kind: "Humano",
-          detail: "Aprobado por una persona del equipo",
+          time: "04.9",
+          kind: "Revisión humana",
+          detail: "Monto sobre el límite · aprobado",
           meta: "",
         },
         {
           time: "05.6",
           kind: "Acción",
-          detail: "Factura reenviada y ticket cerrado",
+          detail: "Factura reenviada, ticket cerrado",
           meta: "",
         },
       ],
       summary: [
-        { value: "7", label: "pasos registrados" },
+        { value: "6", label: "pasos registrados" },
         { value: "5,6 s", label: "de punta a punta" },
         { value: "1", label: "aprobación humana" },
       ],
@@ -375,6 +369,13 @@ export const es = {
       },
     ],
     tags: "Automatización · Agentes de IA · AI Solutions",
+  },
+
+  whatsapp: {
+    label: "Escribinos por WhatsApp",
+    aria: "Escribinos por WhatsApp, abre en una pestaña nueva",
+    prefill:
+      "Hola Vantalogics, quiero automatizar un proceso de mi empresa. ¿Podemos hablar?",
   },
 }
 
