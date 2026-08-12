@@ -373,6 +373,10 @@ export const en: Dictionary = {
     tags: "Automation · AI agents · AI Solutions",
   },
 
+  agent: {
+    open: "Talk to the agent",
+  },
+
   whatsapp: {
     label: "Message us on WhatsApp",
     aria: "Message us on WhatsApp, opens in a new tab",

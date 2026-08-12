@@ -1,0 +1,93 @@
+---
+import { useTranslations, type Lang } from "@/i18n"
+import { AGENT_HOST } from "@/site"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+---
+
+<!-- El disparador del agente. Es HTML: no cuesta un byte de JavaScript, igual
+     que el resto del sitio. React, el sheet y el cliente del agente entran con
+     el primer clic y no antes.
+
+     Mismo pill de contorno que WhatsApp, apilado encima: el sistema es
+     monocromo (design.md), así que la jerarquía la da la posición, no el color. -->
+<button
+  type="button"
+  data-agent-open
+  data-agent-lang={lang}
+  data-agent-host={AGENT_HOST}
+  aria-label={t.agent.open}
+  aria-haspopup="dialog"
+  class="label-untitled rounded-pill border-hairline bg-canvas/90 text-bone fixed right-[max(20px,env(safe-area-inset-right))] bottom-[calc(max(20px,env(safe-area-inset-bottom))+59px)] z-50 flex items-center gap-[9px] border px-[15px] py-[11px] backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none"
+>
+  <!-- Dos nodos que convergen en uno: la marca del agente, sin color. -->
+  <svg
+    viewBox="0 0 22 22"
+    class="h-[18px] w-[18px] shrink-0"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <circle cx="4" cy="6" r="2" fill="currentColor"></circle>
+    <circle cx="4" cy="16" r="2" fill="currentColor"></circle>
+    <circle cx="17" cy="11" r="2.5" fill="currentColor"></circle>
+    <path
+      d="M6 6.6 14.8 10.3M6 15.4 14.8 11.7"
+      stroke="currentColor"
+      stroke-width="1.2"
+      fill="none"></path>
+  </svg>
+  {t.agent.open}
+</button>
+
+<script>
+  /**
+   * En desarrollo, React se monta fuera de una isla de Astro, así que nadie
+   * inyecta el preámbulo de React Refresh y el plugin aborta con "can't detect
+   * preamble". Lo instalamos nosotros. En producción no existe Fast Refresh y
+   * la rama entera desaparece del bundle.
+   */
+  async function installRefreshPreamble() {
+    if (!import.meta.env.DEV) return
+    // El especificador va en una variable a propósito: es un módulo virtual de
+    // Vite que sólo existe en desarrollo y TypeScript no puede resolverlo.
+    const specifier = "/@react-refresh"
+    const runtime = (await import(/* @vite-ignore */ specifier)) as {
+      injectIntoGlobalHook(window: Window): void
+    }
+    runtime.injectIntoGlobalHook(window)
+    // @ts-expect-error — globales que espera el plugin en desarrollo
+    window.$RefreshReg$ = () => {}
+    // @ts-expect-error — idem
+    window.$RefreshSig$ = () => (type: unknown) => type
+    // @ts-expect-error — idem
+    window.__vite_plugin_react_preamble_installed__ = true
+  }
+
+  // Carga bajo demanda. El primer clic trae el módulo del agente; los
+  // siguientes sólo emiten el evento de apertura, que el panel ya escucha.
+  const trigger = document.querySelector("[data-agent-open]")
+  let loading: Promise<unknown> | null = null
+
+  trigger?.addEventListener("click", () => {
+    if (loading) {
+      window.dispatchEvent(new CustomEvent("vl:agent-open"))
+      return
+    }
+
+    trigger.setAttribute("data-agent-loading", "")
+    loading = installRefreshPreamble()
+      .then(() => import("@/components/agent/mount"))
+      .finally(() => trigger.removeAttribute("data-agent-loading"))
+  })
+</script>
+
+<style>
+  [data-agent-loading] {
+    opacity: 0.6;
+  }
+</style>

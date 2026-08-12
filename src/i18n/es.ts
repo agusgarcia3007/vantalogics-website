@@ -371,6 +371,10 @@ export const es = {
     tags: "Automatización · Agentes de IA · AI Solutions",
   },
 
+  agent: {
+    open: "Hablar con el agente",
+  },
+
   whatsapp: {
     label: "Escribinos por WhatsApp",
     aria: "Escribinos por WhatsApp, abre en una pestaña nueva",

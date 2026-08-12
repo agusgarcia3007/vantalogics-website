@@ -6,7 +6,7 @@
 
 - Sitio (ES): https://vantalogics.com
 - Site (EN): https://vantalogics.com/en/
-- Contacto: hola@vantalogics.com
+- Contacto: hello@vantalogics.com
 - Idiomas: español, inglés
 - Cobertura: América Latina, España y Estados Unidos (remoto)
 
