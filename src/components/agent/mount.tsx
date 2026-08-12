@@ -23,12 +23,15 @@ function mount() {
   const trigger = document.querySelector<HTMLElement>("[data-agent-open]")
   const lang = (trigger?.dataset.agentLang as Lang) ?? "es"
   const host = trigger?.dataset.agentHost ?? ""
+  const sitekey = trigger?.dataset.agentSitekey ?? ""
 
   const container = document.createElement("div")
   container.id = CONTAINER_ID
   document.body.appendChild(container)
 
-  createRoot(container).render(<AgentPanel lang={lang} host={host} initialOpen />)
+  createRoot(container).render(
+    <AgentPanel lang={lang} host={host} sitekey={sitekey} initialOpen />
+  )
 }
 
 mount()

@@ -10,39 +10,47 @@ const { lang } = Astro.props
 const t = useTranslations(lang).services
 ---
 
-<section id="servicios" aria-labelledby="servicios-titulo" class="rule-b band-y">
-  <SectionHeading
-    id="servicios-titulo"
-    label={t.label}
-    title={t.title}
-    intro={t.intro}
-  />
+<section
+  id="servicios"
+  aria-labelledby="servicios-titulo"
+  class="band-y rule-b"
+>
+  <SectionHeading id="servicios-titulo" label={t.label} title={t.title} />
 
-  <ul class="mt-[clamp(48px,7vw,100px)]">
+  <!-- El índice ya no ocupa una columna propia: en una sola columna esa
+       columna se convertía en una fila suelta de 24px sobre cada título.
+       Va apoyado en la línea de base del título, que es donde se lee como
+       numeración editorial y no como dato. -->
+  <ul class="mt-[clamp(40px,6vw,80px)]">
     {
       t.items.map((service, i) => (
         <li
           class:list={[
-            "page-x group py-[clamp(40px,5vw,80px)]",
+            "group page-x py-[clamp(32px,4vw,72px)]",
             i > 0 && "rule-t",
           ]}
           data-reveal
         >
-          <div class="grid gap-8 lg:grid-cols-[8ch_1fr_1fr] lg:gap-16">
-            <p class="label-untitled text-muted-ash">{service.index}</p>
-
+          <div class="grid gap-6 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h3 class="font-opx text-heading-sm text-bone lg:text-heading">
-                {service.title}
-              </h3>
-              <p class="copy mt-6 max-w-[44ch] text-bone">{service.summary}</p>
+              <div class="flex items-baseline gap-4">
+                <span class="shrink-0 label-untitled text-muted-ash tabular-nums">
+                  {service.index}
+                </span>
+                <h3 class="font-opx text-heading-sm text-bone lg:text-heading">
+                  {service.title}
+                </h3>
+              </div>
+              <p class="mt-4 max-w-[44ch] copy text-bone lg:mt-6">
+                {service.summary}
+              </p>
             </div>
 
-            <ul class="flex flex-col gap-4 lg:pt-2">
+            <ul class="flex flex-col gap-3 lg:gap-4 lg:pt-2">
               {service.items.map((item) => (
-                <li class="copy flex gap-5 text-muted-ash">
+                <li class="flex gap-4 copy text-muted-ash lg:gap-5">
                   <span
-                    class="mt-[0.85em] h-px w-6 shrink-0 bg-hairline transition-colors duration-(--duration-state) group-hover:bg-bone"
+                    class="mt-[0.85em] h-px w-4 shrink-0 bg-hairline transition-colors duration-(--duration-state) group-hover:bg-bone lg:w-6"
                     aria-hidden="true"
                   />
                   <span>{item}</span>
@@ -54,4 +62,34 @@ const t = useTranslations(lang).services
       ))
     }
   </ul>
+
+  <!-- Principios. Antes era una sección propia de seis tarjetas con un párrafo
+       cada una; repetía argumentos que ya están en los servicios y en el
+       proceso. Reducida a cuatro líneas, cierra esta sección en vez de abrir
+       otra. -->
+  <div class="page-x pt-[clamp(32px,4vw,72px)] rule-t">
+    <h3 class="font-opx text-heading-sm text-bone lg:text-heading" data-reveal>
+      {t.principlesTitle}
+    </h3>
+
+    <ul
+      class="mt-[clamp(28px,3.5vw,50px)] grid gap-x-[50px] gap-y-8 sm:grid-cols-2 lg:grid-cols-4"
+    >
+      {
+        t.principles.map((principle, i) => (
+          <li data-reveal style={`--reveal-delay: ${(i % 4) * 80}ms;`}>
+            <span
+              class="block h-px w-full origin-left bg-hairline"
+              aria-hidden="true"
+              data-rule-draw
+            />
+            <h4 class="mt-5 max-w-[24ch] copy text-bone">{principle.title}</h4>
+            <p class="mt-2 max-w-[30ch] label-untitled text-muted-ash">
+              {principle.body}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </section>

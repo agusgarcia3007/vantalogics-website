@@ -10,23 +10,24 @@ const { lang } = Astro.props
 const t = useTranslations(lang).process
 ---
 
-<section id="proceso" aria-labelledby="proceso-titulo" class="rule-b band-y">
-  <SectionHeading
-    id="proceso-titulo"
-    label={t.label}
-    title={t.title}
-    intro={t.intro}
-  />
+<section id="proceso" aria-labelledby="proceso-titulo" class="band-y rule-b">
+  <SectionHeading id="proceso-titulo" label={t.label} title={t.title} />
 
   <ol
-    class="page-x mt-[clamp(48px,7vw,100px)] grid gap-x-[50px] gap-y-[clamp(40px,5vw,80px)] sm:grid-cols-2 lg:grid-cols-4"
+    class="mt-[clamp(40px,6vw,80px)] grid gap-x-[50px] gap-y-[clamp(32px,4vw,72px)] page-x sm:grid-cols-2 lg:grid-cols-4"
   >
     {
       t.steps.map((item, i) => (
         <li data-reveal style={`--reveal-delay: ${i * 90}ms;`}>
           <p class="label-untitled text-muted-ash">{item.step}</p>
 
-          <p class="mt-[30px] font-opx text-heading-lg text-bone" aria-hidden="true">
+          {/* El numeral grande es decorativo y repite lo que ya dice «Fase 01».
+              En una columna cuesta ~70px por paso, así que sólo aparece cuando
+              hay cuatro columnas y su escala tiene función compositiva. */}
+          <p
+            class="mt-[30px] hidden font-opx text-heading-lg text-bone lg:block"
+            aria-hidden="true"
+          >
             {String(i + 1).padStart(2, "0")}
           </p>
 
@@ -36,10 +37,10 @@ const t = useTranslations(lang).process
             data-rule-draw
           />
 
-          <h3 class="mt-[30px] font-opx text-subheading text-bone">
+          <h3 class="mt-5 font-opx text-subheading text-bone lg:mt-[30px]">
             {item.title}
           </h3>
-          <p class="copy mt-4 text-muted-ash">{item.body}</p>
+          <p class="mt-3 copy text-muted-ash lg:mt-4">{item.body}</p>
         </li>
       ))
     }

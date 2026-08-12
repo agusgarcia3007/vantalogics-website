@@ -18,23 +18,25 @@ const t = useTranslations(lang)
        dimensiona para llenar su columna en dos líneas, no para comerse el
        viewport. -->
   <div
-    class="page-x grid items-start gap-x-[50px] gap-y-[50px] py-[clamp(40px,5vw,72px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]"
+    class="grid items-start gap-x-[50px] gap-y-10 page-x py-[clamp(40px,5vw,72px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-y-[50px]"
   >
     <div>
       <p class="label-untitled text-muted-ash" data-reveal>{t.hero.eyebrow}</p>
 
       <h1
-        class="mt-6 max-w-[24ch] font-opx text-bone"
+        class="mt-4 max-w-[24ch] font-opx text-bone lg:mt-6"
         style="font-size: clamp(2.5rem, 4.6vw, 4.5rem); line-height: 1.06; letter-spacing: -0.022em;"
         data-reveal
       >
         {t.hero.title}
       </h1>
 
-      <div class="mt-10" data-reveal style="--reveal-delay: 120ms;">
-        <p class="copy max-w-[46ch] text-bone">{t.hero.lead}</p>
+      <div class="mt-7 lg:mt-10" data-reveal style="--reveal-delay: 120ms;">
+        <p class="max-w-[46ch] copy text-bone">{t.hero.lead}</p>
 
-        <div class="mt-[30px] flex flex-wrap items-center gap-4">
+        <div
+          class="mt-7 flex flex-wrap items-center gap-3 lg:mt-[30px] lg:gap-4"
+        >
           <Cta
             href={SCHEDULE_URL}
             size="pill-lg"
@@ -48,7 +50,7 @@ const t = useTranslations(lang)
           </Cta>
         </div>
 
-        <p class="label-untitled mt-[30px] max-w-[52ch] text-muted-ash">
+        <p class="mt-6 max-w-[52ch] label-untitled text-muted-ash lg:mt-[30px]">
           {t.hero.note}
         </p>
       </div>
@@ -59,18 +61,18 @@ const t = useTranslations(lang)
     </div>
   </div>
 
-  <ul class="rule-t page-x grid grid-cols-2 lg:grid-cols-4">
+  <ul class="grid grid-cols-2 page-x rule-t lg:grid-cols-4">
     {
       t.hero.stats.map((stat, index) => (
         <li
-          class="py-8 lg:py-[50px]"
+          class="py-6 lg:py-[50px]"
           data-reveal
           style={`--reveal-delay: ${index * 80}ms;`}
         >
           <p class="font-opx text-heading-sm text-bone lg:text-heading">
             {stat.value}
           </p>
-          <p class="label-untitled mt-2 max-w-[24ch] text-muted-ash">
+          <p class="mt-2 max-w-[24ch] label-untitled text-muted-ash">
             {stat.label}
           </p>
         </li>

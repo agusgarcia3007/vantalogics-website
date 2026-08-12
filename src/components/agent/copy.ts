@@ -17,6 +17,7 @@ export interface AgentCopy {
   greeting: string
   thinking: string
   error: string
+  blocked: string
   retry: string
   approval: {
     question: string
@@ -38,6 +39,8 @@ const ES: AgentCopy = {
     "Soy el agente de Vantalogics. Contame qué proceso te está comiendo el mes y vemos si tiene sentido automatizarlo.",
   thinking: "pensando",
   error: "Se cortó la conexión. Probá de nuevo o escribinos por WhatsApp.",
+  blocked:
+    "No pude verificar el navegador, así que no abro el chat. Escribinos por WhatsApp o a hello@vantalogics.com.",
   retry: "Reintentar",
   approval: {
     question: "¿Le paso este contacto al equipo?",
@@ -66,6 +69,8 @@ const EN: AgentCopy = {
     "I'm the Vantalogics agent. Tell me which process is eating your month and we'll see whether automating it makes sense.",
   thinking: "thinking",
   error: "The connection dropped. Try again or reach us on WhatsApp.",
+  blocked:
+    "I could not verify this browser, so I am not opening the chat. Reach us on WhatsApp or at hello@vantalogics.com.",
   retry: "Retry",
   approval: {
     question: "Should I pass this contact to the team?",

@@ -1,6 +1,6 @@
 ---
 import { useTranslations, type Lang } from "@/i18n"
-import { AGENT_HOST } from "@/site"
+import { AGENT_HOST, TURNSTILE_SITEKEY } from "@/site"
 
 interface Props {
   lang: Lang
@@ -14,34 +14,41 @@ const t = useTranslations(lang)
      que el resto del sitio. React, el sheet y el cliente del agente entran con
      el primer clic y no antes.
 
-     Mismo pill de contorno que WhatsApp, apilado encima: el sistema es
-     monocromo (design.md), así que la jerarquía la da la posición, no el color. -->
+     Mismo pill que WhatsApp y apilado justo encima: el glifo identifica el
+     canal y el rótulo nace en ancho cero, así que en reposo son dos círculos
+     iguales y ninguno le compite al contenido. El sistema es monocromo
+     (design.md), de modo que la jerarquía la da la posición, no el color. -->
 <button
   type="button"
   data-agent-open
   data-agent-lang={lang}
   data-agent-host={AGENT_HOST}
+  data-agent-sitekey={TURNSTILE_SITEKEY}
   aria-label={t.agent.open}
   aria-haspopup="dialog"
-  class="label-untitled rounded-pill border-hairline bg-canvas/90 text-bone fixed right-[max(20px,env(safe-area-inset-right))] bottom-[calc(max(20px,env(safe-area-inset-bottom))+59px)] z-50 flex items-center gap-[9px] border px-[15px] py-[11px] backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none"
+  class="group fixed right-[max(20px,env(safe-area-inset-right))] bottom-[calc(max(20px,env(safe-area-inset-bottom))+60px)] z-50 flex items-center gap-0 rounded-pill border border-hairline bg-canvas/90 p-[13px] label-untitled text-bone backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none"
 >
-  <!-- Dos nodos que convergen en uno: la marca del agente, sin color. -->
+  <!-- Burbuja de chat con los tres puntos calados: se lee al instante y no
+       necesita relleno de color para distinguirse del glifo de WhatsApp. -->
   <svg
-    viewBox="0 0 22 22"
-    class="h-[18px] w-[18px] shrink-0"
+    viewBox="0 0 24 24"
+    class="h-[22px] w-[22px] shrink-0 fill-current"
     aria-hidden="true"
     focusable="false"
   >
-    <circle cx="4" cy="6" r="2" fill="currentColor"></circle>
-    <circle cx="4" cy="16" r="2" fill="currentColor"></circle>
-    <circle cx="17" cy="11" r="2.5" fill="currentColor"></circle>
     <path
-      d="M6 6.6 14.8 10.3M6 15.4 14.8 11.7"
-      stroke="currentColor"
-      stroke-width="1.2"
-      fill="none"></path>
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M12 2.75c-5.1 0-9.25 3.63-9.25 8.15 0 2.2 1 4.19 2.6 5.65.14.13.21.32.18.51l-.62 3.62a.75.75 0 0 0 1.1.79l3.9-2.1c.14-.08.3-.1.45-.06.53.1 1.08.15 1.64.15 5.1 0 9.25-3.63 9.25-8.56 0-4.52-4.15-8.15-9.25-8.15Zm-4.4 9.4a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Zm4.4 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Zm4.4 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Z"
+    ></path>
   </svg>
-  {t.agent.open}
+
+  <!-- El rótulo nace en 0px y crece: sólo aparece con intención (hover/foco). -->
+  <span
+    class="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity,margin] duration-(--duration-geometry) ease-(--ease-opx) group-hover:ml-[11px] group-hover:max-w-[22ch] group-hover:opacity-100 group-focus-visible:ml-[11px] group-focus-visible:max-w-[22ch] group-focus-visible:opacity-100"
+  >
+    {t.agent.open}
+  </span>
 </button>
 
 <script>

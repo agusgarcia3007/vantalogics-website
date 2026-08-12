@@ -17,18 +17,27 @@ const scheduleUrl = SCHEDULE_URL
 <section
   id="contacto"
   aria-labelledby="contacto-titulo"
-  class="rule-b bg-surface band-y"
+  class="bg-surface band-y rule-b"
 >
   <div class="page-x">
     <p class="label-untitled text-muted-ash" data-reveal>{t.label}</p>
 
-    <h2 id="contacto-titulo" class="display-lg mt-8 max-w-[16ch] text-bone" data-reveal>
+    <h2
+      id="contacto-titulo"
+      class="mt-5 max-w-[16ch] display-lg text-bone lg:mt-8"
+      data-reveal
+    >
       {t.title}
     </h2>
 
-    <p class="copy mt-[30px] max-w-[54ch] text-bone" data-reveal>{t.body}</p>
+    <p class="mt-6 max-w-[54ch] copy text-bone lg:mt-[30px]" data-reveal>
+      {t.body}
+    </p>
 
-    <div class="mt-[50px] flex flex-wrap items-center gap-4" data-reveal>
+    <div
+      class="mt-8 flex flex-wrap items-center gap-3 lg:mt-[50px] lg:gap-4"
+      data-reveal
+    >
       <Cta
         href={scheduleUrl}
         size="pill-lg"
@@ -43,7 +52,7 @@ const scheduleUrl = SCHEDULE_URL
     </div>
 
     <dl
-      class="mt-[clamp(48px,7vw,100px)] grid gap-x-[50px] gap-y-[30px] sm:grid-cols-2 lg:grid-cols-4"
+      class="mt-[clamp(40px,6vw,80px)] grid gap-x-[50px] gap-y-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-y-[30px]"
     >
       <div data-reveal>
         <dt class="label-untitled text-muted-ash">{t.emailLabel}</dt>
@@ -59,17 +68,17 @@ const scheduleUrl = SCHEDULE_URL
 
       <div data-reveal style="--reveal-delay: 80ms;">
         <dt class="label-untitled text-muted-ash">{t.responseLabel}</dt>
-        <dd class="copy mt-2 text-bone">{t.response}</dd>
+        <dd class="mt-2 copy text-bone">{t.response}</dd>
       </div>
 
       <div data-reveal style="--reveal-delay: 160ms;">
         <dt class="label-untitled text-muted-ash">{t.modeLabel}</dt>
-        <dd class="copy mt-2 text-bone">{t.mode}</dd>
+        <dd class="mt-2 copy text-bone">{t.mode}</dd>
       </div>
 
       <div data-reveal style="--reveal-delay: 240ms;">
         <dt class="label-untitled text-muted-ash">{t.languagesLabel}</dt>
-        <dd class="copy mt-2 text-bone">{t.languages}</dd>
+        <dd class="mt-2 copy text-bone">{t.languages}</dd>
       </div>
     </dl>
   </div>

@@ -10,16 +10,11 @@ const { lang } = Astro.props
 const t = useTranslations(lang).faq
 ---
 
-<section id="faq" aria-labelledby="faq-titulo" class="rule-b band-y">
-  <SectionHeading
-    id="faq-titulo"
-    label={t.label}
-    title={t.title}
-    intro={t.intro}
-  />
+<section id="faq" aria-labelledby="faq-titulo" class="band-y rule-b">
+  <SectionHeading id="faq-titulo" label={t.label} title={t.title} />
 
   <div
-    class="page-x mt-[clamp(48px,7vw,100px)] lg:grid lg:grid-cols-[1fr_1.8fr] lg:gap-[50px]"
+    class="mt-[clamp(40px,6vw,80px)] page-x lg:grid lg:grid-cols-[1fr_1.8fr] lg:gap-[50px]"
   >
     <div class="hidden lg:block">
       <p class="label-untitled text-muted-ash">{t.indexLabel}</p>
@@ -46,10 +41,9 @@ const t = useTranslations(lang).faq
             id={`faq-${lang}-${i + 1}`}
             name={`faq-${lang}`}
             class="group border-b border-hairline first:border-t"
-            open={i === 0}
             data-reveal
           >
-            <summary class="flex cursor-pointer list-none items-start justify-between gap-8 py-[21px] [&::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-[18px] lg:gap-8 lg:py-[21px] [&::-webkit-details-marker]:hidden">
               <h3 class="max-w-[44ch] font-opx text-subheading text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 lg:text-heading-sm">
                 {entry.question}
               </h3>
@@ -60,7 +54,7 @@ const t = useTranslations(lang).faq
             </summary>
 
             <div class="faq-panel pb-[30px]">
-              <p class="copy max-w-[70ch] text-muted-ash">{entry.answer}</p>
+              <p class="max-w-[70ch] copy text-muted-ash">{entry.answer}</p>
             </div>
           </details>
         ))

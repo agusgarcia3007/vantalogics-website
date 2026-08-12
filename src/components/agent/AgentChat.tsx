@@ -30,6 +30,8 @@ import { stepLabel } from "./copy"
 
 interface Props {
   host: string
+  /** Pase firmado del desafío de Turnstile; sin él el worker rechaza el socket. */
+  pass: string
   copy: AgentCopy
 }
 
@@ -50,7 +52,7 @@ function sessionId(): string {
 type StepData = { name: string }
 type ApprovalData = { contact: string; name?: string }
 
-export default function AgentChat({ host, copy }: Props) {
+export default function AgentChat({ host, pass, copy }: Props) {
   const [id] = useState(sessionId)
   const [draft, setDraft] = useState("")
   const [resolved, setResolved] = useState<
@@ -58,7 +60,12 @@ export default function AgentChat({ host, copy }: Props) {
   >({})
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  const agent = useAgent({ agent: "VantaAgent", name: id, host })
+  const agent = useAgent({
+    agent: "VantaAgent",
+    name: id,
+    host,
+    query: { pass },
+  })
   const { messages, sendMessage, status, isStreaming, error } = useAgentChat({
     agent,
   })

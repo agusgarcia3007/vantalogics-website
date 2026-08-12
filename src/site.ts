@@ -9,6 +9,9 @@ export const CONTACT_EMAIL = "hello@vantalogics.com"
 /** Worker del agente conversacional (repo vantalogics/agent). */
 export const AGENT_HOST = "agent.vantalogics.com"
 
+/** Clave publica del widget de Turnstile que protege el chat del agente. */
+export const TURNSTILE_SITEKEY = "0x4AAAAAAEOBkPwvwXeWiT-L"
+
 /** WhatsApp de contacto, en formato E.164 sin signos ni espacios. */
 export const WHATSAPP_NUMBER = "541178296140"
 
