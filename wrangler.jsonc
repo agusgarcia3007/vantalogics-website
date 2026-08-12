@@ -1,0 +1,15 @@
+{
+  // El sitio es estático: se despliega como Worker de assets, sin adapter ni
+  // código de servidor. Tener este archivo evita que `wrangler deploy` entre
+  // en auto-configuración y agregue @astrojs/cloudflare por su cuenta.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vantalogics-website",
+  // Fija a una fecha ya soportada por el runtime: la auto-configuración usaba
+  // la fecha del día y el binario de workerd del runner la rechazaba.
+  "compatibility_date": "2025-06-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

@@ -1,0 +1,112 @@
+---
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).hero.trace
+
+// Traza de una ejecución de agente: contexto, herramienta, evaluación,
+// guardrail, aprobación humana y acción. Es texto real —no una imagen— así
+// que se lee con lector de pantalla y lo indexan los buscadores.
+---
+
+<figure class="w-full border border-hairline" data-reveal>
+  <!-- Cabecera de la ejecución -->
+  <div
+    class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-hairline px-5 py-4 text-left"
+  >
+    <p class="label-untitled text-bone">
+      <span class="text-muted-ash">{t.runLabel}</span>
+      {" "}
+      <span class="tabular-nums">{t.runId}</span>
+      <span class="text-muted-ash"> · </span>
+      {t.agent}
+    </p>
+
+    <p class="label-untitled flex items-center gap-2 text-muted-ash">
+      <span class="trace-pulse size-1.5 shrink-0 rounded-full bg-bone" aria-hidden="true"
+      ></span>
+      {t.status}
+    </p>
+  </div>
+
+  <!-- Pasos -->
+  <ol class="text-left">
+    {
+      t.steps.map((step, i) => (
+        <li
+          class="trace-row grid grid-cols-[4.5ch_1fr] items-baseline gap-x-4 gap-y-1 border-b border-hairline px-5 py-3 sm:grid-cols-[4.5ch_11ch_1fr_auto]"
+          style={`--row-delay: ${240 + i * 110}ms;`}
+        >
+          <span class="label-untitled tabular-nums text-ash">{step.time}</span>
+          <span class="label-untitled text-bone">{step.kind}</span>
+          <span class="col-span-2 text-caption leading-[1.5] text-ash sm:col-span-1">
+            {step.detail}
+          </span>
+          {step.meta && (
+            <span class="label-untitled hidden tabular-nums text-ash sm:inline">
+              {step.meta}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+
+  <!-- Resumen -->
+  <div class="grid grid-cols-3 gap-4 px-5 py-5 text-left">
+    {
+      t.summary.map((item) => (
+        <p>
+          <span class="block font-opx text-subheading tabular-nums text-bone">
+            {item.value}
+          </span>
+          <span class="label-untitled mt-1 block text-muted-ash">
+            {item.label}
+          </span>
+        </p>
+      ))
+    }
+  </div>
+
+  <figcaption class="sr-only">{t.caption}</figcaption>
+</figure>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    /* Las filas se encadenan una tras otra, como una ejecución que avanza. */
+    [data-revealed] .trace-row {
+      animation: trace-in 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+      animation-delay: var(--row-delay);
+    }
+
+    .trace-pulse {
+      animation: trace-pulse 2.4s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+        infinite;
+    }
+  }
+
+  @keyframes trace-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes trace-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.25;
+    }
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+import Layout from "@/layouts/main.astro"
+import Cta from "@/components/site/Cta.astro"
+import Wordmark from "@/components/site/Wordmark.astro"
+---
+
+<Layout lang="es">
+  <main
+    id="contenido"
+    class="page-x flex min-h-svh flex-col justify-center py-[clamp(56px,9vw,150px)]"
+  >
+    <a href="/" class="text-bone" aria-label="Vantalogics, ir al inicio">
+      <Wordmark alt="Logotipo de Vantalogics" />
+    </a>
+
+    <p class="label-untitled mt-[clamp(48px,7vw,100px)] text-muted-ash">Error 404</p>
+
+    <h1 class="display-lg mt-8 max-w-[16ch] text-bone">
+      Esta página no existe.
+    </h1>
+
+    <p class="copy mt-[30px] max-w-[48ch] text-muted-ash">
+      El enlace puede estar roto o la página haberse movido. Desde el inicio
+      llegás a servicios, proceso, resultados y contacto.
+      <span lang="en">
+        This page doesn’t exist — head back to the homepage.
+      </span>
+    </p>
+
+    <div class="mt-[50px] flex flex-wrap gap-4">
+      <Cta href="/" size="pill-lg">Volver al inicio</Cta>
+      <Cta href="/en/" variant="pill-quiet" size="pill-lg" hreflang="en" lang="en">
+        English version
+      </Cta>
+    </div>
+  </main>
+</Layout>
