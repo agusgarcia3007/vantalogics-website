@@ -184,7 +184,6 @@ export const en: Dictionary = {
     titleMuted: "This site has an agent inside it.",
     titleBright: "Tell it your case and answer two questions.",
     body: "It's the same kind of agent we build for clients: it looks up real information, takes notes on what you tell it and asks permission before passing your contact to a person. Not a video, not a recorded demo.",
-    cta: "Open the agent",
     points: [
       "Every step it takes is written in the chat",
       "It sends nothing without your approval",

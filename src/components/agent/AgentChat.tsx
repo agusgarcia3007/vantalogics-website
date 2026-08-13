@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react"
 import { useAgent } from "agents/react"
 import { useAgentChat } from "@cloudflare/ai-chat/react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Sent02Icon, Tick02Icon } from "@hugeicons/core-free-icons"
+import {
+  BubbleChatIcon,
+  Calendar03Icon,
+  Sent02Icon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons"
 
 import {
   MessageScroller,
@@ -35,6 +40,16 @@ interface Props {
   /** Pase firmado del desafío de Turnstile; sin él el worker rechaza el socket. */
   pass: string
   copy: AgentCopy
+  /**
+   * Lo que la persona ya había escrito antes de que esto existiera.
+   *
+   * La demostración de la landing es HTML estático con un campo de verdad: el
+   * chat recién se descarga cuando alguien lo toca. Lo que llegó a tipear en el
+   * campo estático entra por acá, así no tiene que escribirlo de nuevo.
+   */
+  initialDraft?: string
+  /** Idem, pero ya lo había mandado: se envía solo al abrir el socket. */
+  openingMessage?: string
 }
 
 /** Una conversación por pestaña, estable entre recargas. */
@@ -53,6 +68,7 @@ function sessionId(): string {
 
 type StepData = { name: string }
 type ApprovalData = { contact: string; name?: string }
+type CtaData = { channel: "booking" | "whatsapp"; url: string }
 
 /**
  * La burbuja.
@@ -84,9 +100,55 @@ const SKIN_MINE =
 const SKIN_THEIRS =
   "*:data-[slot=bubble-content]:border-hairline *:data-[slot=bubble-content]:bg-canvas *:data-[slot=bubble-content]:text-bone"
 
-export default function AgentChat({ host, pass, copy }: Props) {
+/**
+ * URLs, mails y teléfonos sueltos en el texto.
+ *
+ * El agente cierra pasando un enlace de agenda o de WhatsApp, así que el enlace
+ * es la última cosa que hace en toda la conversación: dejarlo como texto plano
+ * obliga a copiarlo a mano y ahí se termina el embudo. No es markdown —el
+ * validador prohíbe markdown en las respuestas— así que se detecta sobre el
+ * texto crudo.
+ *
+ * El paréntesis y el punto finales quedan afuera a propósito: "escribime a
+ * wa.me/54… (o por mail)" cerraría el enlace con el paréntesis adentro.
+ */
+const LINKISH =
+  /(https?:\/\/[^\s<>()]+[^\s<>().,;:!?]|(?:www\.|wa\.me\/|cal\.com\/)[^\s<>()]+[^\s<>().,;:!?]|[\w.+-]+@[\w-]+\.[\w.]*[\w])/g
+
+function href(match: string): string {
+  if (match.includes("@") && !match.startsWith("http")) return `mailto:${match}`
+  return match.startsWith("http") ? match : `https://${match}`
+}
+
+function withLinks(text: string) {
+  return text.split(LINKISH).map((piece, index) =>
+    // split() con un grupo de captura intercala los separadores en los índices
+    // impares, así que la paridad alcanza para saber qué es enlace y qué no.
+    index % 2 === 1 ? (
+      <a
+        key={index}
+        href={href(piece)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline decoration-current/40 underline-offset-[3px] transition-[text-decoration-color] duration-(--duration-state) hover:decoration-current"
+      >
+        {piece}
+      </a>
+    ) : (
+      piece
+    )
+  )
+}
+
+export default function AgentChat({
+  host,
+  pass,
+  copy,
+  initialDraft = "",
+  openingMessage,
+}: Props) {
   const [id] = useState(sessionId)
-  const [draft, setDraft] = useState("")
+  const [draft, setDraft] = useState(initialDraft)
   const [resolved, setResolved] = useState<
     Record<string, "sent" | "dismissed">
   >({})
@@ -105,6 +167,30 @@ export default function AgentChat({ host, pass, copy }: Props) {
   useEffect(() => {
     inputRef.current?.focus()
   }, [])
+
+  // El mensaje que la persona mandó desde el campo estático, apenas el socket
+  // esté listo. Va contra el evento y no contra un `status` porque en el
+  // instante del montaje el socket todavía se está abriendo, y un envío ahí se
+  // pierde sin que nadie se entere.
+  const opened = useRef(false)
+  useEffect(() => {
+    if (!openingMessage || opened.current) return
+
+    const send = () => {
+      if (opened.current) return
+      opened.current = true
+      void sendMessage({ text: openingMessage })
+    }
+
+    const socket = agent as unknown as WebSocket
+    if (socket.readyState === WebSocket.OPEN) {
+      send()
+      return
+    }
+
+    socket.addEventListener("open", send)
+    return () => socket.removeEventListener("open", send)
+  }, [agent, openingMessage, sendMessage])
 
   // El campo crece con lo que se escribe. Va en un efecto y no en el onChange
   // porque también tiene que encogerse cuando el borrador se vacía al enviar,
@@ -174,7 +260,9 @@ export default function AgentChat({ host, pass, copy }: Props) {
                 const visible = message.parts.filter((part) =>
                   part.type === "text"
                     ? part.text.trim().length > 0
-                    : part.type === "data-step" || part.type === "data-approval"
+                    : part.type === "data-step" ||
+                      part.type === "data-approval" ||
+                      part.type === "data-cta"
                 )
                 if (visible.length === 0) return null
 
@@ -200,7 +288,7 @@ export default function AgentChat({ host, pass, copy }: Props) {
                                     mine ? BUBBLE_MINE : BUBBLE_THEIRS
                                   )}
                                 >
-                                  {part.text}
+                                  {withLinks(part.text)}
                                 </BubbleContent>
                               </Bubble>
                             )
@@ -219,6 +307,35 @@ export default function AgentChat({ host, pass, copy }: Props) {
                                   {stepLabel(copy, data.name)}
                                 </MarkerContent>
                               </Marker>
+                            )
+                          }
+
+                          // El cierre. Llega como dato y no dentro del texto:
+                          // la URL de la agenda va prefilleada con el caso y es
+                          // demasiado larga para que el modelo la copie sin
+                          // romperla. Acá es un botón, y como tal no se puede
+                          // escribir mal.
+                          if (part.type === "data-cta") {
+                            const data = part.data as CtaData
+                            return (
+                              <a
+                                key={key}
+                                href={data.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex w-fit items-center gap-[7px] rounded-pill bg-bone px-[15px] py-[9px] label-untitled text-canvas transition-opacity duration-(--duration-state) hover:opacity-80"
+                              >
+                                <HugeiconsIcon
+                                  icon={
+                                    data.channel === "booking"
+                                      ? Calendar03Icon
+                                      : BubbleChatIcon
+                                  }
+                                  size={15}
+                                  strokeWidth={1.8}
+                                />
+                                {copy.cta[data.channel]}
+                              </a>
                             )
                           }
 

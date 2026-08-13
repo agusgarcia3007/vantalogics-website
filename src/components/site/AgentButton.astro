@@ -54,28 +54,7 @@ const t = useTranslations(lang)
 </button>
 
 <script>
-  /**
-   * En desarrollo, React se monta fuera de una isla de Astro, así que nadie
-   * inyecta el preámbulo de React Refresh y el plugin aborta con "can't detect
-   * preamble". Lo instalamos nosotros. En producción no existe Fast Refresh y
-   * la rama entera desaparece del bundle.
-   */
-  async function installRefreshPreamble() {
-    if (!import.meta.env.DEV) return
-    // El especificador va en una variable a propósito: es un módulo virtual de
-    // Vite que sólo existe en desarrollo y TypeScript no puede resolverlo.
-    const specifier = "/@react-refresh"
-    const runtime = (await import(/* @vite-ignore */ specifier)) as {
-      injectIntoGlobalHook(window: Window): void
-    }
-    runtime.injectIntoGlobalHook(window)
-    // @ts-expect-error — globales que espera el plugin en desarrollo
-    window.$RefreshReg$ = () => {}
-    // @ts-expect-error — idem
-    window.$RefreshSig$ = () => (type: unknown) => type
-    // @ts-expect-error — idem
-    window.__vite_plugin_react_preamble_installed__ = true
-  }
+  import { installRefreshPreamble } from "@/lib/react-preamble"
 
   // Carga bajo demanda. El primer clic trae el módulo del agente; los
   // siguientes sólo emiten el evento de apertura, que el panel ya escucha.

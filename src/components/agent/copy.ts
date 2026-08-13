@@ -26,6 +26,11 @@ export interface AgentCopy {
     sent: string
     dismissed: string
   }
+  /** Botón de cierre. El agente manda el enlace; el rótulo lo pone el sitio. */
+  cta: {
+    booking: string
+    whatsapp: string
+  }
   steps: Record<string, string>
 }
 
@@ -49,12 +54,15 @@ const ES: AgentCopy = {
     sent: "Listo, se lo pasé al equipo",
     dismissed: "No se envió nada",
   },
+  cta: {
+    booking: "Agendar los 30 minutos",
+    whatsapp: "Escribir por WhatsApp",
+  },
   steps: {
     search: "buscando en la base de conocimiento",
     qualify: "anotando el caso",
     next_step: "preparando el siguiente paso",
     hand_off: "pidiendo permiso para pasar el contacto",
-    rewrite: "reescribiendo la respuesta",
     recover: "reintentando la generación",
   },
 }
@@ -79,12 +87,15 @@ const EN: AgentCopy = {
     sent: "Done, passed to the team",
     dismissed: "Nothing was sent",
   },
+  cta: {
+    booking: "Book the 30 minutes",
+    whatsapp: "Message on WhatsApp",
+  },
   steps: {
     search: "searching the knowledge base",
     qualify: "noting the case",
     next_step: "preparing the next step",
     hand_off: "asking permission to pass the contact",
-    rewrite: "rewriting the reply",
     recover: "retrying generation",
   },
 }

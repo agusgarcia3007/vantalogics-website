@@ -2,7 +2,7 @@
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Tick02Icon } from "@hugeicons/core-free-icons"
 
-import ChatMock from "@/components/site/ChatMock.astro"
+import AgentInline from "@/components/site/AgentInline.astro"
 import Frame from "@/components/site/Frame.astro"
 import SectionTitle from "@/components/site/SectionTitle.astro"
 import { useTranslations, type Lang } from "@/i18n"
@@ -56,41 +56,13 @@ const t = useTranslations(lang).agentDemo
         }
       </ul>
 
-      <button
-        type="button"
-        class="cta-solid mt-9"
-        data-agent-open-secondary
-        data-reveal
-        style="--reveal-delay: 400ms;"
-      >
-        {t.cta}
-      </button>
     </div>
 
-    <div class="w-full" data-reveal style="--reveal-delay: 200ms;">
-      <ChatMock lang={lang} />
+    {/* El agente, embebido y funcionando. Ya no hay botón que abra un panel:
+        la sección dice "probalo ahora" y lo que sigue es el campo donde se
+        prueba. Un CTA acá sería un paso de más para llegar al mismo chat. */}
+    <div class="w-full" style="--reveal-delay: 200ms;">
+      <AgentInline lang={lang} />
     </div>
   </div>
 </Frame>
-
-<style>
-  .cta-solid {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    padding: 7px 21px;
-    border-radius: var(--radius-pill);
-    border: var(--hairline-width) solid var(--color-bone);
-    background: var(--color-bone);
-    color: var(--color-canvas);
-    font-family: var(--font-untitled);
-    font-weight: var(--font-weight-medium);
-    font-size: var(--text-caption);
-    transition: opacity var(--duration-state) var(--ease-opx);
-  }
-
-  .cta-solid:hover {
-    opacity: 0.85;
-  }
-</style>

@@ -17,7 +17,7 @@ import {
 import type { Lang } from "@/i18n"
 import { agentCopy } from "./copy"
 import AgentChat from "./AgentChat"
-import { getPass } from "./turnstile"
+import { usePass } from "./usePass"
 
 /**
  * El panel del agente: sheet lateral en desktop, drawer desde abajo en mobile.
@@ -67,26 +67,9 @@ export default function AgentPanel({
   // Nace abierto en el montaje inicial; los clics siguientes llegan por evento.
   // Esperar el evento para el primer clic sería una carrera contra el commit.
   const [open, setOpen] = useState(initialOpen)
-  const [pass, setPass] = useState<string | null>(null)
-  const [blocked, setBlocked] = useState(false)
+  const { pass, blocked } = usePass(host, sitekey)
   const isDesktop = useIsDesktop()
   const copy = agentCopy(lang)
-
-  // El desafío arranca junto con el panel, no cuando la persona escribe: para
-  // cuando termine de leer el saludo, el socket ya está habilitado.
-  useEffect(() => {
-    let cancelled = false
-    getPass(host, sitekey)
-      .then((value) => {
-        if (!cancelled) setPass(value)
-      })
-      .catch(() => {
-        if (!cancelled) setBlocked(true)
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [host, sitekey])
 
   useEffect(() => {
     const openPanel = () => setOpen(true)

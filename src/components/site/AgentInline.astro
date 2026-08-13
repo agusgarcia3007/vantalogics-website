@@ -1,0 +1,137 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Sent02Icon } from "@hugeicons/core-free-icons"
+
+import { agentCopy } from "@/components/agent/copy"
+import type { Lang } from "@/i18n"
+import { AGENT_HOST, TURNSTILE_SITEKEY } from "@/site"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const copy = agentCopy(lang)
+---
+
+{/*
+  El agente, en la página.
+
+  Lo que se ve de entrada es HTML: la caja, el saludo y un campo de verdad. No
+  cuesta un byte de JavaScript, igual que el resto del sitio. React, Turnstile y
+  el cliente del agente entran cuando alguien toca el campo — y no antes.
+
+  El truco es que el campo estático es el mismo campo: lo que se llegó a
+  escribir viaja en data-attributes y el chat vivo lo recibe montado. Quien
+  escribe una pregunta y aprieta enviar ve su mensaje salir, no un formulario
+  que se vacía.
+
+  Alto fijo, igual que el chat que lo reemplaza, para que el reemplazo no
+  mueva la página.
+*/}
+<div
+  id="vl-agent-inline"
+  data-agent-lang={lang}
+  data-agent-host={AGENT_HOST}
+  data-agent-sitekey={TURNSTILE_SITEKEY}
+  class="flex h-[clamp(420px,58svh,560px)] flex-col overflow-hidden rounded-[20px] border border-hairline bg-surface"
+  data-reveal
+>
+  <div
+    class="flex flex-col gap-[3px] border-b border-hairline px-[18px] py-[13px]"
+  >
+    <p class="font-untitled text-[15px] leading-tight text-bone">
+      {copy.title}
+    </p>
+    <p class="label-untitled text-[12px] text-ash">{copy.subtitle}</p>
+  </div>
+
+  <div class="flex flex-1 flex-col justify-end gap-[11px] px-[18px] py-[18px]">
+    <p
+      class="max-w-[86%] self-start rounded-[20px] rounded-bl-[6px] border border-hairline bg-canvas px-[15px] py-[10px] font-untitled text-[15px] leading-[1.55] text-bone"
+    >
+      {copy.greeting}
+    </p>
+  </div>
+
+  <form data-agent-inline-form class="border-t border-hairline px-[18px] py-[15px]">
+    <div
+      class="flex items-end gap-[7px] rounded-[22px] border border-hairline bg-canvas py-[7px] pr-[7px] pl-[15px] transition-[border-color] duration-(--duration-state) ease-(--ease-opx) focus-within:border-bone"
+    >
+      <textarea
+        rows="1"
+        data-agent-inline-input
+        placeholder={copy.placeholder}
+        aria-label={copy.placeholder}
+        class="max-h-[132px] min-h-[30px] flex-1 resize-none bg-transparent py-[4px] font-untitled text-[15px] leading-[1.5] text-bone outline-none placeholder:text-ash"
+      ></textarea>
+      <button
+        type="submit"
+        aria-label={copy.send}
+        class="grid size-[32px] shrink-0 place-items-center rounded-pill bg-bone text-canvas transition-opacity duration-(--duration-state) hover:opacity-80"
+      >
+        <HugeiconsIcon icon={Sent02Icon} size={16} strokeWidth={1.8} />
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  import { installRefreshPreamble } from "@/lib/react-preamble"
+
+  const host = document.getElementById("vl-agent-inline")
+  const input = host?.querySelector<HTMLTextAreaElement>(
+    "[data-agent-inline-input]"
+  )
+  const form = host?.querySelector<HTMLFormElement>("[data-agent-inline-form]")
+
+  if (host && input && form) {
+    let loading: Promise<unknown> | null = null
+
+    // Una sola vez. El módulo se monta al importarse y reemplaza esta maqueta
+    // entera, así que un segundo import no haría nada — pero pedirlo dos veces
+    // sí duplicaría la petición de red.
+    function hydrate() {
+      if (loading) return loading
+      loading = installRefreshPreamble().then(
+        () => import("@/components/agent/mountInline")
+      )
+      return loading
+    }
+
+    // Tocar el campo alcanza para empezar a bajar el chat: para cuando termine
+    // de escribir la primera frase, ya está montado y el desafío resuelto.
+    input.addEventListener("focus", () => void hydrate(), { once: true })
+
+    input.addEventListener("input", () => {
+      host!.dataset.agentDraft = input!.value
+      // El campo crece con lo que se escribe, igual que el del chat vivo.
+      input!.style.height = "auto"
+      input!.style.height = `${input!.scrollHeight}px`
+    })
+
+    function send() {
+      const text = input!.value.trim()
+      if (!text) return
+      host!.dataset.agentSent = text
+      delete host!.dataset.agentDraft
+      // El campo queda deshabilitado y con el texto puesto hasta que el chat
+      // vivo lo reemplace: vaciarlo acá lo haría parpadear en blanco.
+      input!.disabled = true
+      void hydrate()
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault()
+      send()
+    })
+
+    // Enter manda, Shift+Enter salta de línea. Mismo trato que en el chat.
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault()
+        send()
+      }
+    })
+  }
+</script>

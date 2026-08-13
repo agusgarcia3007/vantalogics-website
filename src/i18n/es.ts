@@ -190,7 +190,6 @@ export const es = {
     titleMuted: "Este sitio tiene un agente adentro.",
     titleBright: "Contale tu caso y respondé dos preguntas.",
     body: "Es el mismo tipo de agente que construimos para clientes: consulta información real, anota lo que le contás y pide permiso antes de pasarle tu contacto a una persona. No es un video, no es una demo grabada.",
-    cta: "Abrir el agente",
     points: [
       "Cada paso que da queda escrito en el chat",
       "No manda nada sin que vos lo apruebes",
