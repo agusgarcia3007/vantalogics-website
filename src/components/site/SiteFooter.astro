@@ -3,14 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { Github01Icon, InstagramIcon } from "@hugeicons/core-free-icons"
 
 import Wordmark from "@/components/site/Wordmark.astro"
-import {
-  dictionaries,
-  localizePath,
-  navHref,
-  otherLangs,
-  useTranslations,
-  type Lang,
-} from "@/i18n"
+import { navHref, useTranslations, type Lang } from "@/i18n"
 import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/site"
 
 interface Props {
@@ -19,7 +12,6 @@ interface Props {
 
 const { lang } = Astro.props
 const t = useTranslations(lang)
-const alts = otherLangs(lang)
 const year = new Date().getFullYear()
 const email = CONTACT_EMAIL
 
@@ -102,25 +94,6 @@ const socials = [
          el mismo orden. -->
     <p dir="ltr" class="label-untitled text-muted-ash">© Vantalogics {year}</p>
     <p class="label-untitled text-muted-ash">{t.footer.tags}</p>
-    <!-- Acá sí entra el nombre completo del idioma, escrito en ese idioma:
-         es la forma en que un lector árabe reconoce su versión sin tener que
-         leer español. -->
-    <ul class="flex flex-wrap items-center gap-x-4 gap-y-1">
-      {
-        alts.map((alt) => (
-          <li>
-            <a
-              href={localizePath(alt)}
-              hreflang={alt}
-              lang={alt}
-              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-            >
-              {dictionaries[alt].language.switchTo}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
   </div>
 
   <!-- Marca a sangre: el nombre ocupa el ancho de la columna y se corta por la
