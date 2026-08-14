@@ -1,15 +1,23 @@
 {
-  // El sitio es estático: se despliega como Worker de assets, sin adapter ni
-  // código de servidor. Tener este archivo evita que `wrangler deploy` entre
-  // en auto-configuración y agregue @astrojs/cloudflare por su cuenta.
+  // El sitio es estático: se despliega como Worker de assets, sin adapter de
+  // Astro. Tener este archivo evita que `wrangler deploy` entre en
+  // auto-configuración y agregue @astrojs/cloudflare por su cuenta.
+  //
+  // El único código de servidor es el redirect de www al apex (ver
+  // worker/index.ts); todo lo demás lo sirve el binding de assets.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "vantalogics-website",
+  "main": "./worker/index.ts",
   // Fija a una fecha ya soportada por el runtime: la auto-configuración usaba
   // la fecha del día y el binario de workerd del runner la rechazaba.
   "compatibility_date": "2025-06-01",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // El redirect de www depende del hostname, no del path: si los assets se
+    // resolvieran primero, `www./` devolvería el index en vez de redirigir.
+    "run_worker_first": true
   }
 }
