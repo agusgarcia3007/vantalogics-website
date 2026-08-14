@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro"
 
-import { LANGS, localizePath } from "@/i18n"
-import { getAllPosts, getTranslation, postLang, postPath } from "@/lib/blog"
+import { DEFAULT_LANG, LANGS, localizePath } from "@/i18n"
+import { getAllPosts, getTranslations, postLang, postPath } from "@/lib/blog"
 import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
 
 const SITE = "https://vantalogics.com"
@@ -30,35 +30,35 @@ export const GET: APIRoute = async () => {
   const entries: Entry[] = []
 
   // Portadas.
-  entries.push({
-    path: "/",
-    priority: "1.0",
-    changefreq: "weekly",
-    alternates: { es: "/", en: "/en/" },
-  })
-  entries.push({
-    path: "/en/",
-    priority: "0.9",
-    changefreq: "weekly",
-    alternates: { es: "/", en: "/en/" },
-  })
+  const homes = Object.fromEntries(
+    LANGS.map((lang) => [lang, localizePath(lang)])
+  )
+  for (const lang of LANGS) {
+    entries.push({
+      path: localizePath(lang),
+      priority: lang === DEFAULT_LANG ? "1.0" : "0.9",
+      changefreq: "weekly",
+      alternates: homes,
+    })
+  }
 
   // Índices del blog y de soluciones.
   for (const lang of LANGS) {
     entries.push({
       path: localizePath(lang, "/blog/"),
-      priority: lang === "es" ? "0.8" : "0.7",
+      priority: lang === DEFAULT_LANG ? "0.8" : "0.7",
       changefreq: "weekly",
-      alternates: { es: "/blog/", en: "/en/blog/" },
+      alternates: Object.fromEntries(
+        LANGS.map((code) => [code, localizePath(code, "/blog/")])
+      ),
     })
     entries.push({
       path: solutionsIndexPath(lang),
-      priority: lang === "es" ? "0.8" : "0.7",
+      priority: lang === DEFAULT_LANG ? "0.8" : "0.7",
       changefreq: "monthly",
-      alternates: {
-        es: solutionsIndexPath("es"),
-        en: solutionsIndexPath("en"),
-      },
+      alternates: Object.fromEntries(
+        LANGS.map((code) => [code, solutionsIndexPath(code)])
+      ),
     })
   }
 
@@ -69,10 +69,9 @@ export const GET: APIRoute = async () => {
         path: solutionPath(lang, solution),
         priority: "0.7",
         changefreq: "monthly",
-        alternates: {
-          es: solutionPath("es", solution),
-          en: solutionPath("en", solution),
-        },
+        alternates: Object.fromEntries(
+          LANGS.map((code) => [code, solutionPath(code, solution)])
+        ),
       })
     }
   }
@@ -80,17 +79,19 @@ export const GET: APIRoute = async () => {
   // Notas.
   const posts = await getAllPosts()
   for (const post of posts) {
-    const translation = await getTranslation(post)
+    const translations = await getTranslations(post)
     const lang = postLang(post)
     entries.push({
       path: postPath(post),
       priority: "0.6",
       changefreq: "monthly",
       lastmod: (post.data.updated ?? post.data.date).toISOString(),
-      alternates: translation
+      alternates: translations.length
         ? {
             [lang]: postPath(post),
-            [postLang(translation)]: postPath(translation),
+            ...Object.fromEntries(
+              translations.map((other) => [postLang(other), postPath(other)])
+            ),
           }
         : {},
     })
@@ -110,11 +111,13 @@ ${entries
           `    <xhtml:link rel="alternate" hreflang="${code}" href="${escape(new URL(href!, SITE).href)}" />`
       )
       .join("\n")
-    const xDefault = entry.alternates.es ?? entry.alternates.en
+    const xDefault = entry.alternates[DEFAULT_LANG] ?? entry.alternates.en
     const defaultLink = xDefault
       ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${escape(new URL(xDefault, SITE).href)}" />`
       : ""
-    const lastmod = entry.lastmod ? `\n    <lastmod>${entry.lastmod}</lastmod>` : ""
+    const lastmod = entry.lastmod
+      ? `\n    <lastmod>${entry.lastmod}</lastmod>`
+      : ""
 
     return `  <url>
     <loc>${escape(new URL(entry.path, SITE).href)}</loc>${links ? `\n${links}${defaultLink}` : ""}${lastmod}

@@ -7,11 +7,11 @@ import SiteFooter from "@/components/site/SiteFooter.astro"
 import Frame from "@/components/site/Frame.astro"
 import Cta from "@/components/site/Cta.astro"
 import PostCard from "@/components/blog/PostCard.astro"
-import { localizePath, useTranslations } from "@/i18n"
+import { localizePath, ogImage, useTranslations } from "@/i18n"
 import {
   formatDate,
   getRelated,
-  getTranslation,
+  getTranslations,
   postLang,
   postPath,
   readingTime,
@@ -30,7 +30,7 @@ const t = useTranslations(lang)
 
 const { Content, headings } = await render(post)
 const related = await getRelated(post)
-const translation = await getTranslation(post)
+const translations = await getTranslations(post)
 
 const path = postPath(post)
 const pageUrl = new URL(path, SITE).href
@@ -39,9 +39,12 @@ const blogPath = localizePath(lang, "/blog/")
 
 // Sólo se declara `hreflang` cuando la traducción existe de verdad. Un
 // alternate que devuelve 404 hace que Google descarte el par entero.
-const alternates = translation
-  ? { [lang]: path, [postLang(translation)]: postPath(translation) }
-  : { [lang]: path }
+const alternates = {
+  [lang]: path,
+  ...Object.fromEntries(
+    translations.map((other) => [postLang(other), postPath(other)])
+  ),
+}
 
 // Índice con los h2. Los h3 quedan afuera a propósito: un índice de dos
 // niveles en una nota de mil palabras es más ruido que ayuda.
@@ -70,7 +73,7 @@ const article = {
   isPartOf: { "@id": `${new URL(blogPath, SITE).href}#blog` },
   author: { "@id": `${SITE}/#organization` },
   publisher: { "@id": `${SITE}/#organization` },
-  image: new URL(`/og-${lang}.png`, SITE).href,
+  image: new URL(ogImage(lang), SITE).href,
   /**
    * `speakable` marca qué leería en voz alta un asistente. Apunta al titular y
    * al bloque de respuesta corta, que es la unidad que tiene sentido leer
@@ -160,21 +163,24 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
           <span class="label-untitled text-muted-ash">
             {t.blog.clusters[post.data.cluster]}
           </span>
-          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span>
+          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span
+          >
           <time
             class="label-untitled text-muted-ash"
             datetime={post.data.date.toISOString()}
           >
             {formatDate(post.data.date, lang)}
           </time>
-          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span>
+          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span
+          >
           <span class="label-untitled text-muted-ash">
-            {minutes} {t.blog.readingTime}
+            {minutes}
+            {t.blog.readingTime}
           </span>
         </div>
 
         <h1
-          class="display-lg mt-6 max-w-[20ch] text-balance text-bone"
+          class="mt-6 max-w-[20ch] display-lg text-balance text-bone"
           data-speakable
         >
           {post.data.title}
@@ -182,7 +188,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
 
         {
           post.data.updated && (
-            <p class="label-untitled mt-6 text-muted-ash">
+            <p class="mt-6 label-untitled text-muted-ash">
               {t.blog.updatedOn} {formatDate(post.data.updated, lang)}
             </p>
           )
@@ -196,7 +202,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
          va con el número sin tener que leer mil palabras. -->
     <Frame>
       <div
-        class="max-w-[62ch] border-l border-hairline pl-[clamp(20px,2.5vw,32px)]"
+        class="max-w-[62ch] border-l border-hairline ps-[clamp(20px,2.5vw,32px)]"
         data-reveal
       >
         <p class="label-untitled text-muted-ash">{t.blog.answerLabel}</p>
@@ -226,7 +232,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
               <p id="indice-nota" class="label-untitled text-muted-ash">
                 {t.blog.tocLabel}
               </p>
-              <ol class="mt-4 flex flex-col gap-[10px] border-l border-hairline pl-4">
+              <ol class="mt-4 flex flex-col gap-[10px] border-l border-hairline ps-4">
                 {toc.map((heading) => (
                   <li>
                     <a
@@ -247,7 +253,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
     {
       post.data.faq.length > 0 && (
         <Frame labelledby="faq-nota">
-          <h2 id="faq-nota" class="display-section max-w-[20ch] text-bone">
+          <h2 id="faq-nota" class="max-w-[20ch] display-section text-bone">
             {t.blog.faqLabel}
           </h2>
           <dl class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[68ch] flex-col">
@@ -256,7 +262,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
                 <dt class="text-[clamp(17px,1.5vw,19px)] leading-[1.4] text-bone">
                   {entry.question}
                 </dt>
-                <dd class="copy mt-3 text-ash">{entry.answer}</dd>
+                <dd class="mt-3 copy text-ash">{entry.answer}</dd>
               </div>
             ))}
           </dl>
@@ -273,7 +279,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
           <p class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.4] text-bone">
             {t.blog.author}
           </p>
-          <p class="copy mt-3 max-w-[52ch] text-ash">{t.blog.authorBio}</p>
+          <p class="mt-3 max-w-[52ch] copy text-ash">{t.blog.authorBio}</p>
         </div>
 
         <div class="flex flex-wrap gap-3 lg:shrink-0">
@@ -296,7 +302,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
     {
       related.length > 0 && (
         <Frame labelledby="relacionadas">
-          <h2 id="relacionadas" class="display-section max-w-[20ch] text-bone">
+          <h2 id="relacionadas" class="max-w-[20ch] display-section text-bone">
             {t.blog.relatedLabel}
           </h2>
           <div class="mt-[clamp(28px,3.5vw,48px)] flex flex-col">

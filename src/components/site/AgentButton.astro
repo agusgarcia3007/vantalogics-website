@@ -30,7 +30,7 @@ const t = useTranslations(lang)
   data-agent-sitekey={TURNSTILE_SITEKEY}
   aria-label={t.agent.open}
   aria-haspopup="dialog"
-  class="group fixed right-[max(20px,env(safe-area-inset-right))] bottom-[max(20px,env(safe-area-inset-bottom))] z-50 flex items-center gap-0 rounded-pill border border-hairline bg-canvas/90 p-[13px] label-untitled text-bone backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none"
+  class="group fixed end-[max(20px,env(safe-area-inset-right))] bottom-[max(20px,env(safe-area-inset-bottom))] z-50 flex items-center gap-0 rounded-pill border border-hairline bg-canvas/90 p-[13px] label-untitled text-bone backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none rtl:end-[max(20px,env(safe-area-inset-left))]"
 >
   <!-- Burbuja de chat: mismo trazo que el resto de los glifos del sistema, así
        no compite con el de WhatsApp apilado justo arriba. -->
@@ -47,7 +47,7 @@ const t = useTranslations(lang)
        el pill le comería el ancho al contenido, el rótulo sigue naciendo en
        cero y sólo aparece con intención (hover/foco). -->
   <span
-    class="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity,margin] duration-(--duration-geometry) ease-(--ease-opx) group-hover:ml-[11px] group-hover:max-w-[30ch] group-hover:opacity-100 group-focus-visible:ml-[11px] group-focus-visible:max-w-[30ch] group-focus-visible:opacity-100 sm:ml-[11px] sm:max-w-[30ch] sm:opacity-100"
+    class="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity,margin] duration-(--duration-geometry) ease-(--ease-opx) group-hover:ms-[11px] group-hover:max-w-[30ch] group-hover:opacity-100 group-focus-visible:ms-[11px] group-focus-visible:max-w-[30ch] group-focus-visible:opacity-100 sm:ms-[11px] sm:max-w-[30ch] sm:opacity-100"
   >
     {t.agent.open}
   </span>

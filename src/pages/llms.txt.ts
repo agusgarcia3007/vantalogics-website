@@ -23,6 +23,7 @@ const url = (path: string) => new URL(path, SITE).href
 export const GET: APIRoute = async () => {
   const postsEs = await getPosts("es")
   const postsEn = await getPosts("en")
+  const postsAr = await getPosts("ar")
 
   const preamble = `# Vantalogics
 
@@ -32,9 +33,10 @@ export const GET: APIRoute = async () => {
 
 - Sitio (ES): ${SITE}
 - Site (EN): ${url("/en/")}
+- الموقع (AR): ${url("/ar/")}
 - Contacto: hello@vantalogics.com
-- Idiomas: español, inglés
-- Cobertura: América Latina, España y Estados Unidos (remoto)
+- Idiomas: español, inglés, árabe
+- Cobertura: América Latina, España, Estados Unidos y el Golfo (remoto)
 
 ## Servicios
 
@@ -69,10 +71,10 @@ conviene automatizar.
 
 ${SOLUTIONS.map(
   (solution) =>
-    `- [${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))})\n  ${solution.answer.es}`
+    `- [${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))}) · [AR](${url(solutionPath("ar", solution))})\n  ${solution.answer.es}`
 ).join("\n")}
 
-Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))}`
+Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))} · ${url(solutionsIndexPath("ar"))}`
 
   const notes = `## Notas
 
@@ -93,6 +95,15 @@ ${postsEn
     (post) =>
       `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}\n  ${post.data.answer}`
   )
+  .join("\n")}
+
+### ملاحظات (AR)
+
+${postsAr
+  .map(
+    (post) =>
+      `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}\n  ${post.data.answer}`
+  )
   .join("\n")}`
 
   const links = `## Enlaces
@@ -102,9 +113,9 @@ ${postsEn
 - [Resultados](${url("/#resultados")})
 - [Preguntas frecuentes](${url("/#faq")})
 - [Contacto](${url("/#contacto")})
-- [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")})
-- [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))})
-- RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")}`
+- [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")}) · [ملاحظات](${url("/ar/blog/")})
+- [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))}) · [الحلول](${url(solutionsIndexPath("ar"))})
+- RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")} · ${url("/ar/rss.xml")}`
 
   const body = [preamble, solutions, notes, links].join("\n\n") + "\n"
 

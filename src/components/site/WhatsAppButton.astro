@@ -25,7 +25,7 @@ const href = whatsappUrl(t.whatsapp.prefill)
   rel="noopener"
   aria-label={t.whatsapp.aria}
   data-whatsapp
-  class="group label-untitled fixed right-[max(20px,env(safe-area-inset-right))] bottom-[calc(max(20px,env(safe-area-inset-bottom))+60px)] z-50 flex items-center gap-0 rounded-pill border border-hairline bg-canvas/90 p-[13px] text-bone backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none"
+  class="group fixed end-[max(20px,env(safe-area-inset-right))] bottom-[calc(max(20px,env(safe-area-inset-bottom))+60px)] z-50 flex items-center gap-0 rounded-pill border border-hairline bg-canvas/90 p-[13px] label-untitled text-bone backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none rtl:end-[max(20px,env(safe-area-inset-left))]"
 >
   <HugeiconsIcon
     icon={WhatsappIcon}
@@ -38,7 +38,7 @@ const href = whatsappUrl(t.whatsapp.prefill)
   <!-- El rótulo nace en 0px y crece: sólo aparece con intención (hover/foco).
        Con reduced motion la transición se apaga desde global.css. -->
   <span
-    class="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity,margin] duration-(--duration-geometry) ease-(--ease-opx) group-hover:ml-[11px] group-hover:max-w-[22ch] group-hover:opacity-100 group-focus-visible:ml-[11px] group-focus-visible:max-w-[22ch] group-focus-visible:opacity-100"
+    class="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity,margin] duration-(--duration-geometry) ease-(--ease-opx) group-hover:ms-[11px] group-hover:max-w-[22ch] group-hover:opacity-100 group-focus-visible:ms-[11px] group-focus-visible:max-w-[22ch] group-focus-visible:opacity-100"
   >
     {t.whatsapp.label}
   </span>

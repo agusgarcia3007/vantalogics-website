@@ -1,30 +1,42 @@
 import { es } from "./es"
 import { en } from "./en"
+import { ar } from "./ar"
 import type { Dictionary } from "./es"
 
 export type { Dictionary }
 
-export type Lang = "es" | "en"
+export type Lang = "es" | "en" | "ar"
 
 /**
- * i18n estático: cada idioma es una ruta prerenderizada (`/` y `/en/`), sin
- * JavaScript de cliente, sin diccionarios en el bundle y sin redirecciones.
- * El selector es un enlace entre ambas rutas.
+ * i18n estático: cada idioma es una ruta prerenderizada (`/`, `/en/`, `/ar/`),
+ * sin JavaScript de cliente, sin diccionarios en el bundle y sin
+ * redirecciones. El selector son enlaces entre las rutas.
  */
 export const DEFAULT_LANG: Lang = "es"
 
-export const LANGS: Lang[] = ["es", "en"]
+export const LANGS: Lang[] = ["es", "en", "ar"]
 
-export const dictionaries: Record<Lang, Dictionary> = { es, en }
+export const dictionaries: Record<Lang, Dictionary> = { es, en, ar }
 
 export function useTranslations(lang: Lang): Dictionary {
   return dictionaries[lang]
 }
 
+/**
+ * Dirección de escritura. El árabe se escribe de derecha a izquierda, así que
+ * el documento entero se voltea con `dir="rtl"` y el layout se apoya en
+ * propiedades lógicas (`ps-`, `me-`, `text-start`) en vez de físicas.
+ */
+export function langDir(lang: Lang): "ltr" | "rtl" {
+  return lang === "ar" ? "rtl" : "ltr"
+}
+
 /** Ruta de una página en un idioma dado. El idioma por defecto vive en la raíz. */
 export function localizePath(lang: Lang, path = "/"): string {
   const clean = path.startsWith("/") ? path : `/${path}`
-  return lang === DEFAULT_LANG ? clean : `/${lang}${clean === "/" ? "/" : clean}`
+  return lang === DEFAULT_LANG
+    ? clean
+    : `/${lang}${clean === "/" ? "/" : clean}`
 }
 
 /**
@@ -44,6 +56,18 @@ export function navHref(lang: Lang, href: string): string {
   return localizePath(lang, href)
 }
 
-export function otherLang(lang: Lang): Lang {
-  return lang === "es" ? "en" : "es"
+/** Los demás idiomas, en el orden de `LANGS`. Para el selector. */
+export function otherLangs(lang: Lang): Lang[] {
+  return LANGS.filter((candidate) => candidate !== lang)
+}
+
+/**
+ * Imagen de Open Graph del idioma.
+ *
+ * Todavía no hay una pieza en árabe, y una tarjeta en español para un lector
+ * árabe es peor que una en inglés: hasta que exista `og-ar.png`, el árabe cae
+ * en la inglesa.
+ */
+export function ogImage(lang: Lang): string {
+  return lang === "ar" ? "/og-en.png" : `/og-${lang}.png`
 }

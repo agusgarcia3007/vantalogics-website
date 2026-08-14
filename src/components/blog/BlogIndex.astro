@@ -5,7 +5,7 @@ import SiteFooter from "@/components/site/SiteFooter.astro"
 import CallToAction from "@/components/site/CallToAction.astro"
 import Frame from "@/components/site/Frame.astro"
 import PostCard from "@/components/blog/PostCard.astro"
-import { localizePath, useTranslations, type Lang } from "@/i18n"
+import { LANGS, localizePath, useTranslations, type Lang } from "@/i18n"
 import { getPosts, postPath } from "@/lib/blog"
 
 interface Props {
@@ -64,7 +64,9 @@ const breadcrumb = {
   path={path}
   title={t.blog.meta.title}
   description={t.blog.meta.description}
-  alternates={{ es: "/blog/", en: "/en/blog/" }}
+  alternates={Object.fromEntries(
+    LANGS.map((code) => [code, localizePath(code, "/blog/")])
+  )}
   jsonLd={[blogSchema, breadcrumb]}
 >
   <SiteHeader lang={lang} />
@@ -88,12 +90,14 @@ const breadcrumb = {
         </ol>
       </nav>
 
-      <h1 class="display-lg mt-[clamp(32px,5vw,64px)] max-w-[18ch] text-balance text-bone">
+      <h1
+        class="mt-[clamp(32px,5vw,64px)] max-w-[18ch] display-lg text-balance text-bone"
+      >
         <span class="text-ash">{t.blog.titleMuted}</span>{" "}
         <span>{t.blog.titleBright}</span>
       </h1>
 
-      <p class="copy mt-[30px] max-w-[56ch] text-ash">{t.blog.intro}</p>
+      <p class="mt-[30px] max-w-[56ch] copy text-ash">{t.blog.intro}</p>
     </Frame>
 
     <Frame>

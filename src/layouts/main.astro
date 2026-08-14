@@ -2,7 +2,7 @@
 import "@/styles/global.css"
 import WhatsAppButton from "@/components/site/WhatsAppButton.astro"
 import AgentButton from "@/components/site/AgentButton.astro"
-import { localizePath, type Lang } from "@/i18n"
+import { langDir, localizePath, ogImage, type Lang } from "@/i18n"
 import { useTranslations } from "@/i18n"
 
 interface Props {
@@ -38,19 +38,19 @@ const t = useTranslations(lang)
 
 const pagePath = path ?? localizePath(lang)
 const canonicalUrl = new URL(pagePath, SITE).href
-const imageUrl = new URL(image ?? `/og-${lang}.png`, SITE).href
+const imageUrl = new URL(image ?? ogImage(lang), SITE).href
 const pageTitle = title ?? t.meta.title
 const pageDescription = description ?? t.meta.description
 
-const hreflangs = alternates ?? { es: "/", en: "/en/" }
+const hreflangs = alternates ?? { es: "/", en: "/en/", ar: "/ar/" }
 const hreflangEntries = (Object.entries(hreflangs) as [Lang, string][]).filter(
   ([, href]) => Boolean(href)
 )
-const xDefault = hreflangs.es ?? hreflangs.en
+const xDefault = hreflangs.es ?? hreflangs.en ?? hreflangs.ar
 ---
 
 <!doctype html>
-<html lang={t.htmlLang}>
+<html lang={t.htmlLang} dir={langDir(lang)}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -79,7 +79,7 @@ const xDefault = hreflangs.es ?? hreflangs.en
       rel="alternate"
       type="application/rss+xml"
       title={`Vantalogics — ${t.blog.rssTitle}`}
-      href={new URL(lang === "es" ? "/rss.xml" : "/en/rss.xml", SITE).href}
+      href={new URL(localizePath(lang, "/rss.xml"), SITE).href}
     />
 
     <!-- Tema antes del primer pintado: evita el flash de tema equivocado.
@@ -134,7 +134,7 @@ const xDefault = hreflangs.es ?? hreflangs.en
   <body>
     <a
       href="#contenido"
-      class="label-untitled sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-pill focus:border focus:border-bone focus:bg-canvas focus:px-[15px] focus:py-[7px] focus:text-bone"
+      class="sr-only label-untitled focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-pill focus:border focus:border-bone focus:bg-canvas focus:px-[15px] focus:py-[7px] focus:text-bone"
     >
       {t.a11y.skip}
     </a>

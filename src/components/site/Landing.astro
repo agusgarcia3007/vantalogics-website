@@ -11,7 +11,13 @@ import Proof from "@/components/site/Proof.astro"
 import Faq from "@/components/site/Faq.astro"
 import CallToAction from "@/components/site/CallToAction.astro"
 import SiteFooter from "@/components/site/SiteFooter.astro"
-import { localizePath, useTranslations, type Lang } from "@/i18n"
+import {
+  LANGS,
+  localizePath,
+  ogImage,
+  useTranslations,
+  type Lang,
+} from "@/i18n"
 import { GITHUB_URL, INSTAGRAM_URL } from "@/site"
 
 interface Props {
@@ -22,6 +28,33 @@ const SITE = "https://vantalogics.com"
 const { lang } = Astro.props
 const t = useTranslations(lang)
 const pageUrl = new URL(localizePath(lang), SITE).href
+
+const KNOWS_ABOUT: Record<Lang, string[]> = {
+  es: [
+    "Automatización de procesos empresariales",
+    "Agentes de IA",
+    "Evaluación de modelos de lenguaje",
+    "Observabilidad de sistemas de IA",
+    "Retrieval Augmented Generation",
+    "Integración de IA en producto",
+  ],
+  en: [
+    "Business process automation",
+    "AI agents",
+    "Large language model evaluation",
+    "AI systems observability",
+    "Retrieval Augmented Generation",
+    "AI product integration",
+  ],
+  ar: [
+    "أتمتة العمليات في الشركات",
+    "وكلاء الذكاء الاصطناعي",
+    "تقييم النماذج اللغوية الكبيرة",
+    "مراقبة أنظمة الذكاء الاصطناعي",
+    "التوليد المعزَّز بالاسترجاع",
+    "دمج الذكاء الاصطناعي في المنتجات",
+  ],
+}
 
 /**
  * Datos estructurados. Sólo hechos declarables sobre la empresa y su oferta:
@@ -35,36 +68,26 @@ const organization = {
   name: "Vantalogics",
   url: SITE,
   logo: `${SITE}/logo-va@2x.png`,
-  image: `${SITE}/og-${lang}.png`,
+  image: `${SITE}${ogImage(lang)}`,
   description: t.meta.description,
   email: "hello@vantalogics.com",
   telephone: "+541178296140",
   slogan: t.hero.title,
   sameAs: [GITHUB_URL, INSTAGRAM_URL],
-  knowsAbout:
-    lang === "es"
-      ? [
-          "Automatización de procesos empresariales",
-          "Agentes de IA",
-          "Evaluación de modelos de lenguaje",
-          "Observabilidad de sistemas de IA",
-          "Retrieval Augmented Generation",
-          "Integración de IA en producto",
-        ]
-      : [
-          "Business process automation",
-          "AI agents",
-          "Large language model evaluation",
-          "AI systems observability",
-          "Retrieval Augmented Generation",
-          "AI product integration",
-        ],
+  /**
+   * `knowsAbout` va en el idioma de la página: es el texto que un motor de
+   * respuesta cita cuando resume a la empresa, y una lista en español dentro
+   * de la página árabe se cita en español.
+   */
+  knowsAbout: KNOWS_ABOUT[lang],
   areaServed: [
     { "@type": "Place", name: "Latin America" },
     { "@type": "Country", name: "Spain" },
     { "@type": "Country", name: "United States" },
+    { "@type": "Country", name: "United Arab Emirates" },
+    { "@type": "Place", name: "Gulf Cooperation Council" },
   ],
-  availableLanguage: ["es", "en"],
+  availableLanguage: LANGS,
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: t.services.titleBright,

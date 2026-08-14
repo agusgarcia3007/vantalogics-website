@@ -1,0 +1,99 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ArrowDown01Icon, Tick02Icon } from "@hugeicons/core-free-icons"
+
+import {
+  dictionaries,
+  LANGS,
+  localizePath,
+  useTranslations,
+  type Lang,
+} from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+---
+
+<!-- Selector de idioma.
+     Con dos idiomas alcanzaba un enlace al otro; con tres, tres enlaces
+     sueltos compiten con la navegación y no dicen cuál está activo. Es un
+     desplegable, y está hecho con `details`/`summary` —igual que las preguntas
+     frecuentes— porque así no cuesta JavaScript: el navegador ya sabe abrir y
+     cerrar esto, y anunciarlo como control expandible. El script de abajo sólo
+     agrega lo que el elemento no trae: cerrar al hacer clic afuera o con Esc.
+
+     El rótulo del botón es el código ISO del idioma actual. Los nombres
+     completos van adentro, cada uno escrito en su propio idioma: es como un
+     lector árabe reconoce su versión sin tener que leer español. -->
+<details class="group relative" data-lang-menu>
+  <summary
+    class="flex h-[36px] cursor-pointer list-none items-center gap-[6px] rounded-pill border border-hairline px-[12px] label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) group-open:border-bone group-open:text-bone hover:border-bone hover:text-bone [&::-webkit-details-marker]:hidden"
+    aria-label={t.language.label}
+  >
+    <span aria-hidden="true">{lang.toUpperCase()}</span>
+    <HugeiconsIcon
+      icon={ArrowDown01Icon}
+      size={13}
+      strokeWidth={1.5}
+      className="shrink-0 transition-transform duration-(--duration-state) ease-(--ease-opx) group-open:rotate-180"
+    />
+  </summary>
+
+  <!-- `end-0`: el panel se alinea con el borde por el que termina de leerse la
+       página, así que en árabe cuelga del otro lado sin una regla aparte. -->
+  <div
+    class="absolute end-0 top-[calc(100%+10px)] z-50 min-w-[170px] rounded-[16px] border border-hairline bg-canvas/95 p-[5px] backdrop-blur-md"
+  >
+    <ul class="flex flex-col">
+      {
+        LANGS.map((code) => (
+          <li>
+            <a
+              href={localizePath(code)}
+              hreflang={code}
+              lang={code}
+              aria-current={code === lang ? "true" : undefined}
+              class="flex items-center justify-between gap-5 rounded-pill px-[11px] py-[8px] label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone aria-[current]:text-bone"
+            >
+              <span>{dictionaries[code].language.name}</span>
+              {code === lang ? (
+                <HugeiconsIcon
+                  icon={Tick02Icon}
+                  size={14}
+                  strokeWidth={1.5}
+                  className="shrink-0"
+                />
+              ) : (
+                <span class="text-muted-ash" aria-hidden="true">
+                  {code.toUpperCase()}
+                </span>
+              )}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</details>
+
+<script is:inline>
+  ;(() => {
+    const menu = document.querySelector("[data-lang-menu]")
+    if (!menu) return
+
+    document.addEventListener("click", (event) => {
+      if (!menu.open || menu.contains(event.target)) return
+      menu.open = false
+    })
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !menu.open) return
+      menu.open = false
+      menu.querySelector("summary").focus()
+    })
+  })()
+</script>

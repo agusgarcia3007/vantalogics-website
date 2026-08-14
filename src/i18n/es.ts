@@ -44,9 +44,18 @@ export const es = {
     toLight: "Activar modo claro",
   },
 
+  /**
+   * El selector de idioma.
+   *
+   * `switchTo` es la invitación a ver el sitio *en este* idioma, escrita en
+   * este idioma: es la etiqueta que muestran los otros idiomas cuando enlazan
+   * acá. Con dos idiomas alcanzaba con guardar la del contrario; con tres, cada
+   * diccionario tiene que traer la suya.
+   */
   language: {
     label: "Idioma",
-    switchTo: "Switch to English",
+    name: "Español",
+    switchTo: "Ver en español",
   },
 
   hero: {
@@ -112,7 +121,8 @@ export const es = {
     items: [
       {
         title: "Pedidos por mensaje.",
-        detail: "Alguien los copia al sistema a mano, y cada tanto se pierde uno.",
+        detail:
+          "Alguien los copia al sistema a mano, y cada tanto se pierde uno.",
       },
       {
         title: "Facturas y remitos.",
@@ -292,7 +302,7 @@ export const es = {
       { value: "24/7", label: "Trabaja también de noche" },
       { value: "100%", label: "El sistema queda a tu nombre" },
       { value: "0", label: "Nada te ata a nosotros" },
-      { value: "ES · EN", label: "Atendemos en dos idiomas" },
+      { value: "ES · EN · AR", label: "Atendemos en tres idiomas" },
     ],
   },
 
@@ -334,7 +344,8 @@ export const es = {
           "Cada agente se despliega con límites explícitos de qué puede hacer solo y qué requiere aprobación de una persona. Las acciones de alto impacto pasan siempre por revisión humana, todo queda registrado paso por paso, y hay alertas automáticas cuando la calidad baja del umbral acordado.",
       },
       {
-        question: "¿Necesito un equipo técnico interno para trabajar con ustedes?",
+        question:
+          "¿Necesito un equipo técnico interno para trabajar con ustedes?",
         answer:
           "No. Nos hacemos cargo de la arquitectura, el desarrollo y el despliegue completo. Sí necesitamos una persona del lado del negocio que conozca el proceso a fondo y pueda validar los resultados. Si tenés equipo técnico, le transferimos el sistema documentado para que pueda operarlo y extenderlo.",
       },
@@ -351,9 +362,9 @@ export const es = {
     responseLabel: "Respuesta",
     response: "En menos de 24 horas hábiles",
     modeLabel: "Modalidad",
-    mode: "Remoto · LATAM, España y Estados Unidos",
+    mode: "Remoto · LATAM, España, Estados Unidos y Golfo",
     languagesLabel: "Idiomas",
-    languages: "Español e inglés",
+    languages: "Español, inglés y árabe",
   },
 
   footer: {
@@ -417,7 +428,7 @@ export const es = {
     authorLabel: "Escrito por",
     author: "Equipo Vantalogics",
     authorBio:
-      "Agencia de sistemas de IA. Automatizamos procesos y construimos agentes evaluados y monitoreados para empresas de LATAM, España y Estados Unidos.",
+      "Agencia de sistemas de IA. Automatizamos procesos y construimos agentes evaluados y monitoreados para empresas de LATAM, España, Estados Unidos y el Golfo.",
     ctaTitle: "¿Te suena a tu operación?",
     ctaBody:
       "Treinta minutos, sin costo. Salís con el mapa de tu proceso y una estimación de qué conviene automatizar primero.",

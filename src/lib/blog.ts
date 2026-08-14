@@ -1,16 +1,17 @@
 import { getCollection, type CollectionEntry } from "astro:content"
 
-import { localizePath, type Lang } from "@/i18n"
+import { LANGS, localizePath, type Lang } from "@/i18n"
 
 export type Post = CollectionEntry<"blog">
 
 /** El `id` que genera el loader es `<idioma>/<slug>`. */
 export function postLang(post: Post): Lang {
-  return post.id.startsWith("en/") ? "en" : "es"
+  const prefix = post.id.split("/")[0]
+  return LANGS.includes(prefix as Lang) ? (prefix as Lang) : "es"
 }
 
 export function postSlug(post: Post): string {
-  return post.id.replace(/^(es|en)\//, "")
+  return post.id.replace(/^(es|en|ar)\//, "")
 }
 
 export function postPath(post: Post): string {
@@ -43,23 +44,42 @@ export async function getAllPosts(): Promise<Post[]> {
 }
 
 /**
- * El par traducido, si existe y está publicado.
+ * Las traducciones publicadas de una nota, en los demás idiomas.
  *
- * Se busca por `translationOf` en cualquiera de las dos direcciones: alcanza
- * con declararlo de un lado. Devuelve `undefined` cuando no hay par, y ahí la
- * página no emite `hreflang` en vez de emitir uno roto.
+ * Se busca por `translationOf` en cualquiera de las direcciones: alcanza con
+ * declararlo de un lado. Devuelve sólo las que existen de verdad —una nota
+ * puede estar en español y árabe pero no en inglés—, porque un `hreflang` que
+ * apunta a un 404 hace que Google descarte el grupo entero.
  */
-export async function getTranslation(post: Post): Promise<Post | undefined> {
-  const key = post.data.translationOf
-  if (!key) return undefined
+export async function getTranslations(post: Post): Promise<Post[]> {
+  const lang = postLang(post)
+  const own = identifiers(post)
+  const found: Post[] = []
 
-  const other = postLang(post) === "es" ? "en" : "es"
-  const candidates = await getPosts(other)
+  for (const other of LANGS) {
+    if (other === lang) continue
+    const candidate = (await getPosts(other)).find((c) =>
+      identifiers(c).some((id) => own.includes(id))
+    )
+    if (candidate) found.push(candidate)
+  }
 
-  return candidates.find(
-    (candidate) =>
-      postSlug(candidate) === key || candidate.data.translationOf === postSlug(post)
-  )
+  return found
+}
+
+/**
+ * Los nombres con los que una nota participa del grupo de traducciones: el
+ * suyo propio y el que declara apuntando a otra.
+ *
+ * Comparar los dos conjuntos —y no sólo `translationOf` contra el slug— es lo
+ * que hace que el grupo funcione con más de dos idiomas. La nota en árabe
+ * apunta al slug en español, la inglesa también, y así las tres se encuentran
+ * entre sí sin que ninguna tenga que enumerar a las demás.
+ */
+function identifiers(post: Post): string[] {
+  const own = [postSlug(post)]
+  if (post.data.translationOf) own.push(post.data.translationOf)
+  return own
 }
 
 /**
@@ -86,8 +106,20 @@ export function readingTime(body: string | undefined): number {
   return Math.max(1, Math.round(words / 200))
 }
 
+/**
+ * `ar-AE-u-nu-latn` y no `ar-AE` a secas: por defecto el árabe formatea con
+ * dígitos índicos orientales (٢٠٢٦) y el resto del sitio —métricas, precios,
+ * porcentajes— está escrito en dígitos occidentales. Mezclar los dos sistemas
+ * en la misma página se lee como un error de codificación.
+ */
+const LOCALES: Record<Lang, string> = {
+  es: "es-AR",
+  en: "en-US",
+  ar: "ar-AE-u-nu-latn",
+}
+
 export function formatDate(date: Date, lang: Lang): string {
-  return new Intl.DateTimeFormat(lang === "es" ? "es-AR" : "en-US", {
+  return new Intl.DateTimeFormat(LOCALES[lang], {
     day: "numeric",
     month: "long",
     year: "numeric",

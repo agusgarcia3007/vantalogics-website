@@ -40,7 +40,8 @@ export const en: Dictionary = {
 
   language: {
     label: "Language",
-    switchTo: "Ver en español",
+    name: "English",
+    switchTo: "View in English",
   },
 
   hero: {
@@ -106,7 +107,8 @@ export const en: Dictionary = {
     items: [
       {
         title: "Orders over chat.",
-        detail: "Someone retypes them into the system, and now and then one slips.",
+        detail:
+          "Someone retypes them into the system, and now and then one slips.",
       },
       {
         title: "Invoices and delivery notes.",
@@ -286,7 +288,7 @@ export const en: Dictionary = {
       { value: "24/7", label: "It works at night too" },
       { value: "100%", label: "The system stays in your name" },
       { value: "0", label: "Nothing ties you to us" },
-      { value: "EN · ES", label: "We work in two languages" },
+      { value: "EN · ES · AR", label: "We work in three languages" },
     ],
   },
 
@@ -339,9 +341,9 @@ export const en: Dictionary = {
     responseLabel: "Response",
     response: "Under 24 business hours",
     modeLabel: "Mode",
-    mode: "Remote · LATAM, Spain and the United States",
+    mode: "Remote · LATAM, Spain, the United States and the Gulf",
     languagesLabel: "Languages",
-    languages: "Spanish and English",
+    languages: "Spanish, English and Arabic",
   },
 
   footer: {
@@ -397,7 +399,7 @@ export const en: Dictionary = {
     authorLabel: "Written by",
     author: "The Vantalogics team",
     authorBio:
-      "An AI systems agency. We automate processes and build evaluated, monitored agents for companies across Latin America, Spain and the United States.",
+      "An AI systems agency. We automate processes and build evaluated, monitored agents for companies across Latin America, Spain, the United States and the Gulf.",
     ctaTitle: "Sound like your operation?",
     ctaBody:
       "Thirty minutes, free. You leave with a map of your process and an estimate of what is worth automating first.",

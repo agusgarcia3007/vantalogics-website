@@ -439,7 +439,7 @@ export default function AgentChat({
         <div
           data-ready={ready ? "" : undefined}
           className={cn(
-            "group/prompt flex items-end gap-[7px] rounded-[22px] border border-hairline bg-surface py-[7px] pr-[7px] pl-[15px] pb-[7px]",
+            "group/prompt flex items-end gap-[7px] rounded-[22px] border border-hairline bg-surface py-[7px] ps-[15px] pe-[7px] pb-[7px]",
             "transition-[border-color,box-shadow] duration-(--duration-state) ease-(--ease-opx)",
             "focus-within:border-bone focus-within:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-bone)_8%,transparent)]"
           )}

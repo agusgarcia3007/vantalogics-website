@@ -100,8 +100,43 @@ const EN: AgentCopy = {
   },
 }
 
+const AR: AgentCopy = {
+  title: "وكيل تجريبي",
+  subtitle: "حقيقي تمامًا: اسأله ما شئت",
+  close: "إغلاق",
+  placeholder: "اكتب رسالتك",
+  send: "إرسال",
+  greeting:
+    "أنا وكيل Vantalogics. أخبرني أي عملية تلتهم شهرك، ولنرَ إن كان من المنطقي أتمتتها.",
+  thinking: "يفكّر",
+  error: "انقطع الاتصال. حاول مرة أخرى أو راسلنا على واتساب.",
+  blocked:
+    "لم أتمكن من التحقق من المتصفح، لذلك لن أفتح المحادثة. راسلنا على واتساب أو على hello@vantalogics.com.",
+  retry: "إعادة المحاولة",
+  approval: {
+    question: "هل أمرّر بيانات التواصل هذه إلى الفريق؟",
+    approve: "تفضّل",
+    reject: "ليس الآن",
+    sent: "تم، مرّرتها إلى الفريق",
+    dismissed: "لم يُرسَل شيء",
+  },
+  cta: {
+    booking: "احجز الثلاثين دقيقة",
+    whatsapp: "راسلنا على واتساب",
+  },
+  steps: {
+    search: "يبحث في قاعدة المعرفة",
+    qualify: "يدوّن الحالة",
+    next_step: "يجهّز الخطوة التالية",
+    hand_off: "يطلب الإذن بتمرير بيانات التواصل",
+    recover: "يعيد محاولة التوليد",
+  },
+}
+
 export function agentCopy(lang: Lang): AgentCopy {
-  return lang === "en" ? EN : ES
+  if (lang === "en") return EN
+  if (lang === "ar") return AR
+  return ES
 }
 
 /** Nombre legible de una herramienta; si es una desconocida, se muestra cruda. */

@@ -1,4 +1,4 @@
-import { dictionaries, type Lang } from "@/i18n"
+import { dictionaries, localizePath, type Lang } from "@/i18n"
 import { getPosts, postPath } from "@/lib/blog"
 
 const SITE = "https://vantalogics.com"
@@ -22,8 +22,8 @@ export async function renderFeed(lang: Lang): Promise<Response> {
   // regla de hooks de React trate a esta función como componente.
   const t = dictionaries[lang]
   const posts = await getPosts(lang)
-  const feedPath = lang === "es" ? "/rss.xml" : "/en/rss.xml"
-  const blogPath = lang === "es" ? "/blog/" : "/en/blog/"
+  const feedPath = localizePath(lang, "/rss.xml")
+  const blogPath = localizePath(lang, "/blog/")
 
   const items = posts
     .map((post) => {

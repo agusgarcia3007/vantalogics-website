@@ -14,7 +14,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
-import type { Lang } from "@/i18n"
+import { langDir, type Lang } from "@/i18n"
 import { agentCopy } from "./copy"
 import AgentChat from "./AgentChat"
 import { usePass } from "./usePass"
@@ -70,6 +70,10 @@ export default function AgentPanel({
   const { pass, blocked } = usePass(host, sitekey)
   const isDesktop = useIsDesktop()
   const copy = agentCopy(lang)
+  // En árabe el panel entra por el lado del botón flotante, que en RTL es el
+  // izquierdo. El primitivo posiciona con propiedades físicas, así que el lado
+  // se elige acá y los ajustes de md quedan en lógicas (`end-`).
+  const side = langDir(lang) === "rtl" ? "left" : "right"
 
   useEffect(() => {
     const openPanel = () => setOpen(true)
@@ -99,10 +103,10 @@ export default function AgentPanel({
             son necesarios: las clases del primitivo llevan el selector
             [data-side=right] y ganan por especificidad. */}
         <SheetContent
-          side="right"
-          className="flex w-full flex-col gap-0 overflow-hidden border-hairline bg-canvas p-0 sm:max-w-[420px] md:top-[16px]! md:right-[16px]! md:bottom-[16px]! md:h-[calc(100svh-32px)]! md:rounded-[24px] md:border"
+          side={side}
+          className="flex w-full flex-col gap-0 overflow-hidden border-hairline bg-canvas p-0 sm:max-w-[420px] md:end-[16px]! md:top-[16px]! md:bottom-[16px]! md:h-[calc(100svh-32px)]! md:rounded-[24px] md:border"
         >
-          <SheetHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px] pr-[52px]">
+          <SheetHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px] pe-[52px]">
             <SheetTitle className="font-untitled text-[16px] leading-tight text-bone">
               {copy.title}
             </SheetTitle>
@@ -119,7 +123,7 @@ export default function AgentPanel({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent className="flex h-[82svh] flex-col gap-0 overflow-hidden rounded-t-[24px] border-hairline bg-canvas p-0">
-        <DrawerHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px] pr-[52px]">
+        <DrawerHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px] pe-[52px]">
           <DrawerTitle className="font-untitled text-[16px] leading-tight text-bone">
             {copy.title}
           </DrawerTitle>

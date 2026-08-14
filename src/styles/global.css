@@ -9,6 +9,10 @@
 @import "@fontsource-variable/inter";
 /* Open Sans -> supporting copy face */
 @import "@fontsource-variable/open-sans";
+/* Árabe: Inter no trae glifos árabes y el fallback del sistema cambia de
+   máquina en máquina (Geeza Pro en macOS, Segoe UI en Windows). Noto Sans
+   Arabic es la contraparte neutra de Inter y sostiene el mismo gris de página. */
+@import "@fontsource-variable/noto-sans-arabic";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -520,4 +524,56 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* ---------------------------------------------------------------------------
+   Árabe — tipografía y dirección
+   El documento entero se voltea con `dir="rtl"` desde el layout. Acá van las
+   tres cosas que la propiedad lógica no resuelve sola.
+--------------------------------------------------------------------------- */
+
+/* 1. La familia. Se sustituyen las variables del tema en vez de tocar cada
+      utilidad: `font-opx`, `font-untitled` y compañía leen estas variables, así
+      que el sitio entero cambia de tipografía con la cascada. Inter queda
+      detrás para los tramos latinos —«WhatsApp», «ERP», el propio nombre de la
+      marca—, que no deben caer en la árabe. */
+html[lang="ar"] {
+  --font-opx:
+    "Noto Sans Arabic Variable", "Inter Variable", Inter, ui-sans-serif,
+    system-ui, sans-serif;
+  --font-untitled:
+    "Noto Sans Arabic Variable", "Inter Variable", Inter, ui-sans-serif,
+    system-ui, sans-serif;
+  --font-open-sans:
+    "Noto Sans Arabic Variable", "Open Sans Variable", "Open Sans",
+    ui-sans-serif, system-ui, sans-serif;
+  --font-helvetica:
+    "Noto Sans Arabic Variable", Helvetica, ui-sans-serif, system-ui, sans-serif;
+  --typeset-font-body: var(--font-open-sans);
+  --typeset-font-heading: var(--font-opx);
+}
+
+/* 2. El tracking. La escala display del sistema aprieta las letras hasta
+      −0.025em, que en latín es lo que la vuelve monumental y en árabe separa
+      glifos que van unidos: la palabra se lee cortada. El árabe no lleva
+      tracking, nunca. El selector gana por especificidad a las utilidades de
+      una clase; lo que va en `style=` —la marca a sangre del pie, que es
+      latina— sigue mandando por encima. Las islas marcadas `dir="ltr"` —el
+      lockup de la marca— quedan afuera: ahí el texto es latino y el tracking
+      es parte del logo. */
+html[lang="ar"] *:not([dir="ltr"], [dir="ltr"] *) {
+  letter-spacing: normal;
+}
+
+/* 3. El interlineado de los titulares. La display latina baja hasta 1 porque
+      no hay descendentes que choquen; el árabe sí las tiene, y a 1 los puntos
+      de una línea tocan las astas de la siguiente. */
+html[lang="ar"] :is(h1, h2, h3) {
+  line-height: 1.28;
+}
+
+/* Las reglas que se dibujan solas nacen del borde por el que empieza a leerse
+   la página. `transform-origin` no tiene variante lógica. */
+[dir="rtl"] .js [data-rule-draw] {
+  transform-origin: right;
 }

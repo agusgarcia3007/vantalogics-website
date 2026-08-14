@@ -14,7 +14,8 @@ const { lang } = Astro.props
 const copy = agentCopy(lang)
 ---
 
-{/*
+{
+  /*
   El agente, en la página.
 
   Lo que se ve de entrada es HTML: la caja, el saludo y un campo de verdad. No
@@ -28,7 +29,8 @@ const copy = agentCopy(lang)
 
   Alto fijo, igual que el chat que lo reemplaza, para que el reemplazo no
   mueva la página.
-*/}
+*/
+}
 <div
   id="vl-agent-inline"
   data-agent-lang={lang}
@@ -54,9 +56,12 @@ const copy = agentCopy(lang)
     </p>
   </div>
 
-  <form data-agent-inline-form class="border-t border-hairline px-[18px] py-[15px]">
+  <form
+    data-agent-inline-form
+    class="border-t border-hairline px-[18px] py-[15px]"
+  >
     <div
-      class="flex items-end gap-[7px] rounded-[22px] border border-hairline bg-canvas py-[7px] pr-[7px] pl-[15px] transition-[border-color] duration-(--duration-state) ease-(--ease-opx) focus-within:border-bone"
+      class="flex items-end gap-[7px] rounded-[22px] border border-hairline bg-canvas py-[7px] ps-[15px] pe-[7px] transition-[border-color] duration-(--duration-state) ease-(--ease-opx) focus-within:border-bone"
     >
       <textarea
         rows="1"

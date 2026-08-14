@@ -36,14 +36,17 @@ const t = useTranslations(lang).faq
               <h3 class="max-w-[42ch] font-untitled text-[17px] leading-snug text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70">
                 {entry.question}
               </h3>
-              <span class="relative mt-[6px] size-[14px] shrink-0" aria-hidden="true">
-                <span class="absolute top-1/2 left-0 h-px w-[14px] -translate-y-1/2 bg-ash" />
-                <span class="absolute top-1/2 left-0 h-px w-[14px] -translate-y-1/2 rotate-90 bg-ash transition-transform duration-(--duration-state) ease-(--ease-opx) group-open:rotate-0" />
+              <span
+                class="relative mt-[6px] size-[14px] shrink-0"
+                aria-hidden="true"
+              >
+                <span class="absolute start-0 top-1/2 h-px w-[14px] -translate-y-1/2 bg-ash" />
+                <span class="absolute start-0 top-1/2 h-px w-[14px] -translate-y-1/2 rotate-90 bg-ash transition-transform duration-(--duration-state) ease-(--ease-opx) group-open:rotate-0" />
               </span>
             </summary>
 
             <div class="faq-panel pb-[22px]">
-              <p class="copy max-w-[64ch] text-ash">{entry.answer}</p>
+              <p class="max-w-[64ch] copy text-ash">{entry.answer}</p>
             </div>
           </details>
         ))
