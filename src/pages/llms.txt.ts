@@ -140,7 +140,7 @@ ${postsAr
 
 - [Servicios](${url("/#servicios")})
 - [Proceso](${url("/#proceso")})
-- [Resultados](${url("/#resultados")})
+- [Garantías](${url("/#garantias")})
 - [Preguntas frecuentes](${url("/#faq")})
 - [Contacto](${url("/#contacto")})
 - [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")}) · [ملاحظات](${url("/ar/blog/")})

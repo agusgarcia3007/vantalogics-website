@@ -53,14 +53,12 @@ const email = CONTACT_EMAIL
   </p>
 
   <dl
-    class="mt-[clamp(40px,5vw,64px)] grid gap-x-[clamp(24px,3vw,40px)] gap-y-8 sm:grid-cols-2 lg:grid-cols-4"
+    class="mt-[clamp(40px,5vw,64px)] grid gap-x-[clamp(24px,3vw,40px)] gap-y-8 sm:grid-cols-2"
   >
     {
       [
         { label: t.emailLabel, value: email, href: `mailto:${email}` },
         { label: t.responseLabel, value: t.response },
-        { label: t.modeLabel, value: t.mode },
-        { label: t.languagesLabel, value: t.languages },
       ].map((item, i) => (
         <div
           class="border-t border-hairline pt-5"

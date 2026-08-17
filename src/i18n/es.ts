@@ -239,70 +239,37 @@ export const es = {
     ],
   },
 
-  proof: {
-    label: "Resultados",
-    titleMuted: "Lo que cambia",
-    titleBright: "cuando el sistema entra en producción.",
+  /**
+   * Lo que se puede verificar, en lugar de casos de éxito.
+   *
+   * La sección anterior mostraba métricas y testimonios de clientes que no
+   * existen. Un caso de éxito ajeno no se puede comprobar; estas cuatro cosas
+   * sí, y son las mismas que después aparecen en el contrato. Cuando haya
+   * casos reales con permiso para publicarlos, van acá.
+   */
+  guarantees: {
+    label: "Garantías",
+    titleMuted: "No te pedimos que nos creas.",
+    titleBright: "Te dejamos con qué comprobarlo.",
     intro:
-      "En los tres casos la métrica se acordó antes de empezar y se midió sobre la operación real, no sobre una prueba de laboratorio.",
-    headline: {
-      value: "310 h",
-      unit: "por mes",
-      title: "de trabajo manual que dejó de hacerse",
-      body: "Una distribuidora con tres personas cargando remitos a mano. Hoy el sistema los lee, los carga y sólo levanta los casos dudosos.",
-      chartLabel: "Horas manuales por mes",
-      chartFrom: "Antes",
-      chartTo: "Hoy",
-    },
-    results: [
+      "Cualquiera puede mostrarte una demo que sale bien y un caso de éxito que no podés verificar. Preferimos que nos midas por lo que sí podés controlar vos, desde la primera semana.",
+    items: [
       {
-        metric: "−72%",
-        metricLabel: "Tiempo de respuesta",
-        sector: "Software B2B",
-        body: "Triage automático y borradores que una persona aprueba, en un equipo de soporte de nueve.",
+        title: "La métrica se acuerda antes",
+        body: "Antes de escribir una línea definimos qué número tiene que moverse y cómo se mide. Si no se mueve, quedó por escrito que no se movió.",
       },
       {
-        metric: "310 h/mes",
-        metricLabel: "Trabajo manual eliminado",
-        sector: "Logística",
-        body: "Lectura y validación de remitos contra el ERP, con revisión sólo en los casos dudosos.",
+        title: "El sistema es tuyo",
+        body: "Repositorios, cuentas de proveedor e infraestructura a tu nombre desde el primer día. Si nos querés echar, sigue funcionando sin nosotros.",
       },
       {
-        metric: "3×",
-        metricLabel: "Capacidad de alta de clientes",
-        sector: "Servicios financieros",
-        body: "Verificación de documentación sin sumar gente y con registro de cada decisión.",
-      },
-    ],
-    testimonialsTitle: "Lo que dicen",
-    testimonials: [
-      {
-        quote:
-          "Vinieron a mirar el proceso antes de hablar de tecnología. Esa conversación nos ahorró meses de construir lo equivocado.",
-        name: "María Fernanda Ruiz",
-        role: "Head of Operations",
-        company: "Altamar Logística",
+        title: "Cada ejecución deja rastro",
+        body: "Qué hizo el agente, con qué datos, cuánto tardó y cuánto costó. No hay que creerle al resumen mensual: está el detalle de cada caso.",
       },
       {
-        quote:
-          "Es el primer proyecto de IA que llevamos a producción. La diferencia fue tener métricas desde el arranque.",
-        name: "Diego Salgado",
-        role: "CTO",
-        company: "Quantia Seguros",
+        title: "La demo es este sitio",
+        body: "El agente de esta página es el mismo tipo de sistema que entregamos, corriendo en producción. Probalo y juzgá con eso, no con una grabación.",
       },
-      {
-        quote:
-          "Nos dejaron todo en nuestros repos. Hoy mi equipo extiende el agente sin depender de nadie.",
-        name: "Laura Benítez",
-        role: "Head of Engineering",
-        company: "Belfor Retail",
-      },
-    ],
-    stats: [
-      { value: "24/7", label: "Trabaja también de noche" },
-      { value: "100%", label: "El sistema queda a tu nombre" },
-      { value: "0", label: "Nada te ata a nosotros" },
-      { value: "ES · EN", label: "Atendemos en dos idiomas" },
     ],
   },
 
@@ -361,10 +328,6 @@ export const es = {
     emailLabel: "Correo",
     responseLabel: "Respuesta",
     response: "En menos de 24 horas hábiles",
-    modeLabel: "Modalidad",
-    mode: "Remoto · LATAM, España, Estados Unidos y Golfo",
-    languagesLabel: "Idiomas",
-    languages: "Español e inglés",
   },
 
   footer: {
@@ -434,7 +397,7 @@ export const es = {
     authorLabel: "Escrito por",
     author: "Equipo Vantalogics",
     authorBio:
-      "Agencia de sistemas de IA. Automatizamos procesos y construimos agentes evaluados y monitoreados para empresas de LATAM, España, Estados Unidos y el Golfo.",
+      "Agencia de sistemas de IA. Automatizamos procesos repetitivos y construimos agentes evaluados y monitoreados que aguantan producción.",
     ctaTitle: "¿Te suena a tu operación?",
     ctaBody:
       "Treinta minutos, sin costo. Salís con el mapa de tu proceso y una estimación de qué conviene automatizar primero.",

@@ -225,70 +225,29 @@ export const en: Dictionary = {
     ],
   },
 
-  proof: {
-    label: "Results",
-    titleMuted: "What changes",
-    titleBright: "once the system is in production.",
+  guarantees: {
+    label: "Guarantees",
+    titleMuted: "We're not asking you to trust us.",
+    titleBright: "We're giving you a way to check.",
     intro:
-      "In all three, the metric was agreed before we started and measured on the real operation, not on a lab test.",
-    headline: {
-      value: "310 h",
-      unit: "a month",
-      title: "of manual work that stopped happening",
-      body: "A distributor with three people filing delivery notes by hand. Today the system reads them, files them and only raises the unclear ones.",
-      chartLabel: "Manual hours per month",
-      chartFrom: "Before",
-      chartTo: "Today",
-    },
-    results: [
+      "Anyone can show you a demo that goes well and a success story you can't verify. We'd rather be judged on what stays under your control, from the first week.",
+    items: [
       {
-        metric: "−72%",
-        metricLabel: "Response time",
-        sector: "B2B software",
-        body: "Automatic triage and drafts a person approves, across a nine-person support team.",
+        title: "The metric is agreed up front",
+        body: "Before we write a line of code we define which number has to move and how it's measured. If it doesn't move, it's on record that it didn't.",
       },
       {
-        metric: "310 h/mo",
-        metricLabel: "Manual work removed",
-        sector: "Logistics",
-        body: "Delivery notes read and checked against the ERP, with review only on unclear cases.",
+        title: "The system is yours",
+        body: "Repositories, provider accounts and infrastructure in your name from day one. If you fire us, it keeps running without us.",
       },
       {
-        metric: "3×",
-        metricLabel: "Onboarding capacity",
-        sector: "Financial services",
-        body: "Document verification with no extra headcount and a record of every decision.",
-      },
-    ],
-    testimonialsTitle: "What they say",
-    testimonials: [
-      {
-        quote:
-          "They looked at the process before talking about technology. That conversation saved us months of building the wrong thing.",
-        name: "María Fernanda Ruiz",
-        role: "Head of Operations",
-        company: "Altamar Logística",
+        title: "Every run leaves a trace",
+        body: "What the agent did, on which data, how long it took and what it cost. You don't have to trust the monthly summary — the detail is there, case by case.",
       },
       {
-        quote:
-          "It's the first AI project we've taken to production. The difference was having metrics from day one.",
-        name: "Diego Salgado",
-        role: "CTO",
-        company: "Quantia Seguros",
+        title: "This site is the demo",
+        body: "The agent on this page is the same kind of system we hand over, running in production. Try it and judge us on that, not on a recording.",
       },
-      {
-        quote:
-          "They left everything in our repos. Today my team extends the agent without depending on anyone.",
-        name: "Laura Benítez",
-        role: "Head of Engineering",
-        company: "Belfor Retail",
-      },
-    ],
-    stats: [
-      { value: "24/7", label: "It works at night too" },
-      { value: "100%", label: "The system stays in your name" },
-      { value: "0", label: "Nothing ties you to us" },
-      { value: "EN · ES", label: "We work in two languages" },
     ],
   },
 
@@ -340,10 +299,6 @@ export const en: Dictionary = {
     emailLabel: "Email",
     responseLabel: "Response",
     response: "Under 24 business hours",
-    modeLabel: "Mode",
-    mode: "Remote · LATAM, Spain, the United States and the Gulf",
-    languagesLabel: "Languages",
-    languages: "Spanish and English",
   },
 
   footer: {
@@ -405,7 +360,7 @@ export const en: Dictionary = {
     authorLabel: "Written by",
     author: "The Vantalogics team",
     authorBio:
-      "An AI systems agency. We automate processes and build evaluated, monitored agents for companies across Latin America, Spain, the United States and the Gulf.",
+      "An AI systems agency. We automate repetitive processes and build evaluated, monitored agents that survive production.",
     ctaTitle: "Sound like your operation?",
     ctaBody:
       "Thirty minutes, free. You leave with a map of your process and an estimate of what is worth automating first.",
