@@ -47,7 +47,7 @@ const blog = defineCollection({
      * notas generales no lo declaran y siguen funcionando igual.
      */
     industry: z
-      .enum(["inmobiliarias", "edtech-y-plataformas-educativas"])
+      .enum(["real-estate-developers", "edtech-y-plataformas-educativas"])
       .optional(),
     tags: z.array(z.string()).default([]),
     /** Slug compartido con la traducción, si existe. */

@@ -288,7 +288,7 @@ export const en: Dictionary = {
       { value: "24/7", label: "It works at night too" },
       { value: "100%", label: "The system stays in your name" },
       { value: "0", label: "Nothing ties you to us" },
-      { value: "EN · ES · AR", label: "We work in three languages" },
+      { value: "EN · ES", label: "We work in two languages" },
     ],
   },
 
@@ -343,7 +343,7 @@ export const en: Dictionary = {
     modeLabel: "Mode",
     mode: "Remote · LATAM, Spain, the United States and the Gulf",
     languagesLabel: "Languages",
-    languages: "Spanish, English and Arabic",
+    languages: "Spanish and English",
   },
 
   footer: {
@@ -353,7 +353,10 @@ export const en: Dictionary = {
       {
         title: "Industries",
         links: [
-          { href: "/solutions/real-estate-agencies/", label: "Real estate" },
+          {
+            href: "/solutions/real-estate-developers/",
+            label: "Real estate developers",
+          },
           {
             href: "/solutions/edtech-and-learning-platforms/",
             label: "EdTech and education",
@@ -419,7 +422,7 @@ export const en: Dictionary = {
     label: "Focus industries",
     titleMuted: "We automate in any industry.",
     titleBright: "These two we know from the inside.",
-    body: "In real estate and in learning platforms we already know which process pays first, which systems have to be talked to, and when the honest answer is no. That shortens the diagnostic and avoids building what we already know doesn't work.",
+    body: "With real estate developers and learning platforms we already know which process pays first, which systems have to be talked to, and when the honest answer is no. That shortens the diagnostic and avoids building what we already know doesn't work.",
     casesLabel: "Use cases",
     cta: "See the full industry page",
     moreLabel: "Different industry?",

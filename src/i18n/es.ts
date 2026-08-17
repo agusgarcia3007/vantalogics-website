@@ -302,7 +302,7 @@ export const es = {
       { value: "24/7", label: "Trabaja también de noche" },
       { value: "100%", label: "El sistema queda a tu nombre" },
       { value: "0", label: "Nada te ata a nosotros" },
-      { value: "ES · EN · AR", label: "Atendemos en tres idiomas" },
+      { value: "ES · EN", label: "Atendemos en dos idiomas" },
     ],
   },
 
@@ -364,7 +364,7 @@ export const es = {
     modeLabel: "Modalidad",
     mode: "Remoto · LATAM, España, Estados Unidos y Golfo",
     languagesLabel: "Idiomas",
-    languages: "Español, inglés y árabe",
+    languages: "Español e inglés",
   },
 
   footer: {
@@ -374,7 +374,10 @@ export const es = {
       {
         title: "Industrias",
         links: [
-          { href: "/soluciones/inmobiliarias/", label: "Inmobiliarias" },
+          {
+            href: "/soluciones/real-estate-developers/",
+            label: "Real estate developers",
+          },
           {
             href: "/soluciones/edtech-y-plataformas-educativas/",
             label: "EdTech y educación",
@@ -457,7 +460,7 @@ export const es = {
     label: "Industrias foco",
     titleMuted: "Automatizamos en cualquier rubro.",
     titleBright: "Estos dos los conocemos por dentro.",
-    body: "En inmobiliarias y en plataformas educativas ya sabemos qué proceso paga primero, con qué sistemas hay que hablar y en qué casos conviene decir que no. Eso acorta el diagnóstico y evita construir lo que ya sabemos que no funciona.",
+    body: "En real estate developers y en plataformas educativas ya sabemos qué proceso paga primero, con qué sistemas hay que hablar y en qué casos conviene decir que no. Eso acorta el diagnóstico y evita construir lo que ya sabemos que no funciona.",
     casesLabel: "Casos de uso",
     cta: "Ver el sector completo",
     moreLabel: "¿Otro rubro?",

@@ -41,7 +41,7 @@ export const GET: APIRoute = async () => {
 - Site (EN): ${url("/en/")}
 - الموقع (AR): ${url("/ar/")}
 - Contacto: hello@vantalogics.com
-- Idiomas: español, inglés, árabe
+- Idiomas de trabajo: español e inglés (el sitio además está publicado en árabe)
 - Cobertura: América Latina, España, Estados Unidos y el Golfo (remoto)
 
 ## Servicios
@@ -74,7 +74,7 @@ diagnóstico: dependen del proceso y de las integraciones involucradas.
    *
    * Un modelo que resume esta empresa a partir del archivo tiene que salir
    * sabiendo dos cosas en este orden: que es una agencia especializada en
-   * inmobiliarias y EdTech, y que además trabaja otros rubros. Una lista
+   * real estate developers y EdTech, y que además trabaja otros rubros. Una lista
    * plana de seis sectores produce el resumen contrario —«agencia generalista
    * de automatización»— que es exactamente el posicionamiento del que se está
    * saliendo.

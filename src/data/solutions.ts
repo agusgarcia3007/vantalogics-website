@@ -7,7 +7,7 @@ import { localizePath, type Lang } from "@/i18n"
  * probados: el volumen no está en «automatización de procesos» —término que
  * además compite con automatización de portones y persianas— sino en la
  * combinación sector + tarea: «IA para clínicas dentales», «agente IA para
- * inmobiliarias», «IA para estudios contables». Son consultas de intención
+ * real estate developers», «IA para estudios contables». Son consultas de intención
  * comercial alta y casi nadie las responde con contenido específico: se
  * resuelven con una landing genérica a la que le cambiaron el sustantivo.
  *
@@ -43,7 +43,7 @@ export interface Solution {
   /**
    * Industria foco de la agencia.
    *
-   * Las dos industrias foco —inmobiliarias y EdTech— son las que reciben
+   * Las dos industrias foco —real estate developers y EdTech— son las que reciben
    * tratamiento distinto: entran a la portada con su propio bloque, tienen
    * casos de uso propios (`src/data/use-cases.ts`) y son el destino de los
    * silos del blog. El resto de los sectores sigue existiendo porque captan
@@ -278,193 +278,212 @@ export const SOLUTIONS: Solution[] = [
   {
     focus: true,
     slug: {
-      es: "inmobiliarias",
-      en: "real-estate-agencies",
-      ar: "real-estate-agencies",
+      es: "real-estate-developers",
+      en: "real-estate-developers",
+      ar: "real-estate-developers",
     },
-    sector: { es: "Inmobiliarias", en: "Real estate", ar: "الشركات العقارية" },
+    sector: {
+      es: "Real estate developers",
+      en: "Real estate developers",
+      ar: "المطوّرون العقاريون",
+    },
     title: {
-      es: "Automatización con IA para inmobiliarias",
-      en: "AI automation for real estate agencies",
-      ar: "الأتمتة بالذكاء الاصطناعي للشركات العقارية",
+      es: "Automatización con IA para real estate developers",
+      en: "AI automation for real estate developers",
+      ar: "الأتمتة بالذكاء الاصطناعي للمطوّرين العقاريين",
     },
     description: {
-      es: "Cómo se automatiza con IA la calificación de consultas, la coordinación de visitas y el seguimiento de interesados en una inmobiliaria, sin perder el contacto humano donde decide la venta.",
-      en: "How AI automates lead qualification, viewing coordination and follow-up at a real estate agency, without losing the human contact where the deal is decided.",
-      ar: "كيف تُؤتمت بالذكاء الاصطناعي تصفية الاستفسارات وتنسيق المعاينات ومتابعة المهتمين في شركة عقارية، دون فقدان اللمسة الإنسانية حيث تُحسم الصفقة.",
+      es: "Cómo se centralizan los procesos de un real estate developer y se automatiza lo tedioso: precalificación de prospectos, planillas, integraciones, correos y visitas a las unidades.",
+      en: "How a real estate developer's processes get centralized and the tedious parts automated: prospect pre-qualification, spreadsheets, integrations, emails and unit visits.",
+      ar: "كيف تُمركَز عمليات المطوّر العقاري ويُؤتمت الجزء الممل منها: التصفية المسبقة للعملاء المحتملين، والجداول، والتكاملات، والرسائل، وزيارات الوحدات.",
     },
     answer: {
-      es: "En una inmobiliaria lo que se automatiza primero es la respuesta y calificación de consultas: contestar en minutos, entender qué busca la persona, cruzarlo con la cartera y coordinar la visita. El seguimiento posterior también. La negociación y el cierre quedan íntegramente del lado del asesor.",
-      en: "At a real estate agency, the first thing to automate is responding to and qualifying enquiries: replying within minutes, understanding what the person wants, matching it against inventory and booking the viewing. Follow-up too. Negotiation and closing stay entirely with the agent.",
-      ar: "في الشركة العقارية، أول ما يُؤتمت هو الرد على الاستفسارات وتصفيتها: الرد خلال دقائق، وفهم ما يبحث عنه العميل، ومطابقته مع المحفظة المتاحة، وتنسيق المعاينة. وكذلك المتابعة اللاحقة. أما التفاوض والإغلاق فيبقيان كاملًا لدى المستشار العقاري.",
+      es: "Un real estate developer corre veinte procesos en paralelo —prospectos por cinco canales, planillas de disponibilidad, cadenas de correo con brokers y estudios, avance de obra— y ninguno se habla con el otro. Lo que hacemos es centralizarlos en un solo lugar y automatizar la parte tediosa: precalificación, carga de datos, correos de rutina y coordinación de visitas a las unidades.",
+      en: "A real estate developer runs twenty processes in parallel — prospects across five channels, availability spreadsheets, email threads with brokers and law firms, construction progress — and none of them talk to each other. We centralize them in one place and automate the tedious part: pre-qualification, data entry, routine emails and unit visit coordination.",
+      ar: "يدير المطوّر العقاري عشرين عملية بالتوازي — عملاء محتملون عبر خمس قنوات، وجداول توافر، وسلاسل بريد مع الوسطاء والمكاتب القانونية، وتقدّم البناء — ولا تتحدث أي منها مع الأخرى. وما نفعله هو تجميعها في مكان واحد وأتمتة الجزء الممل: التصفية المسبقة، وإدخال البيانات، ورسائل البريد الروتينية، وتنسيق زيارات الوحدات.",
     },
     intro: {
       es: [
-        "El dato que ordena todo el rubro es el tiempo de respuesta. Una consulta contestada en los primeros cinco minutos tiene varias veces más probabilidad de convertirse en visita que la misma consulta contestada a las cuatro horas, y las consultas entran a toda hora y por cinco canales distintos.",
-        "El segundo problema es de volumen y de calidad de datos: la mayoría de las consultas no califican, pero averiguarlo consume el tiempo del asesor que debería estar mostrando propiedades. Y lo que sí calificó se pierde en un seguimiento que nadie sostiene después de la segunda semana.",
+        "El problema de un developer no es que le falte software: es que tiene demasiado y ninguno se habla. Los prospectos entran por cinco canales, la disponibilidad vive en una planilla que actualiza una persona, el precio en otra, el avance de obra en el sistema de la constructora y el resto en cadenas de correo. Nadie tiene la foto completa, y armarla a mano lleva medio día.",
+        "Lo que se automatiza no es «la venta»: es lo tedioso que hay alrededor. Precalificar al prospecto antes de que le llegue al asesor, copiar el mismo dato de la planilla al CRM y del CRM al correo, coordinar la visita a la unidad, perseguir al que no contestó. Es trabajo que nadie defiende y que igual se come la semana del equipo comercial.",
       ],
       en: [
-        "The number that organizes this whole industry is response time. An enquiry answered within five minutes is several times more likely to become a viewing than the same enquiry answered four hours later — and enquiries arrive at all hours through five different channels.",
-        "The second problem is volume and data quality: most enquiries don't qualify, but finding that out consumes the time of the agent who should be showing properties. And the ones that do qualify get lost in a follow-up nobody sustains past week two.",
+        "A developer's problem isn't a lack of software: it's having too much of it and none of it talking. Prospects arrive through five channels, availability lives in a spreadsheet one person updates, pricing in another, construction progress in the builder's system, and the rest in email threads. Nobody has the full picture, and assembling it by hand takes half a day.",
+        "What gets automated isn't \"the sale\": it's the tedium around it. Pre-qualifying the prospect before it reaches a salesperson, copying the same figure from spreadsheet to CRM and from CRM to email, coordinating the unit visit, chasing whoever didn't reply. It's work nobody defends and it still eats the sales team's week.",
       ],
       ar: [
-        "الرقم الذي ينظّم هذا القطاع كله هو زمن الاستجابة. استفسار يُجاب خلال أول خمس دقائق تزيد احتمالات تحوّله إلى معاينة أضعافًا عن الاستفسار نفسه بعد أربع ساعات، والاستفسارات تصل في كل ساعة وعبر خمس قنوات مختلفة.",
-        "والمشكلة الثانية في الحجم وجودة البيانات: معظم الاستفسارات لا تجتاز التصفية، لكن اكتشاف ذلك يلتهم وقت المستشار الذي يُفترض أن يكون في المعاينات. وما اجتاز التصفية يضيع في متابعة لا يواصلها أحد بعد الأسبوع الثاني.",
+        "مشكلة المطوّر ليست نقص البرمجيات، بل كثرتها وعدم تحدّث أي منها مع الأخرى. العملاء المحتملون يصلون عبر خمس قنوات، والتوافر يعيش في جدول يحدّثه شخص واحد، والأسعار في جدول آخر، وتقدّم البناء في نظام المقاول، والباقي في سلاسل بريد. لا أحد لديه الصورة الكاملة، وتجميعها يدويًا يستغرق نصف يوم.",
+        "وما يُؤتمت ليس «البيع» بل الممل الذي حوله: تصفية العميل المحتمل قبل أن يصل إلى البائع، ونسخ الرقم نفسه من الجدول إلى نظام CRM ومن CRM إلى البريد، وتنسيق زيارة الوحدة، وملاحقة من لم يردّ. عمل لا يدافع عنه أحد، ومع ذلك يلتهم أسبوع الفريق التجاري.",
       ],
     },
     processes: [
       {
         title: {
-          es: "Respuesta y calificación de consultas",
-          en: "Enquiry response and qualification",
-          ar: "الرد على الاستفسارات وتصفيتها",
+          es: "Precalificación de prospectos",
+          en: "Prospect pre-qualification",
+          ar: "التصفية المسبقة للعملاء المحتملين",
         },
         detail: {
-          es: "Responde en minutos por el canal por el que entró, entiende presupuesto, zona, plazo y forma de pago, y cruza contra la cartera disponible.",
-          en: "Replies within minutes on the channel it arrived on, establishes budget, area, timeline and payment method, and matches against available inventory.",
-          ar: "يردّ خلال دقائق على القناة التي وصل منها، ويحدّد الميزانية والمنطقة والمهلة وطريقة السداد، ويطابقها مع المعروض المتاح.",
+          es: "Responde en minutos por el canal por el que entró, establece capacidad de pago, anticipo, plazo y si es usuario final o inversor, y lo cruza contra las unidades que quedan. Al asesor le llega el prospecto con la ficha ya completa.",
+          en: "Replies within minutes on the channel it arrived on, establishes payment capacity, down payment, timeline and whether it's an end user or an investor, and matches it against the units still available. The salesperson gets the prospect with the record already complete.",
+          ar: "يردّ خلال دقائق على القناة التي وصل منها، ويحدّد القدرة على السداد والدفعة الأولى والمهلة وما إذا كان مستخدمًا نهائيًا أم مستثمرًا، ويطابقه مع الوحدات المتبقية. فيصل العميل إلى البائع ببطاقة مكتملة.",
         },
       },
       {
         title: {
-          es: "Coordinación de visitas",
-          en: "Viewing coordination",
-          ar: "تنسيق المعاينات",
+          es: "Una sola fuente de disponibilidad y precios",
+          en: "A single source for availability and pricing",
+          ar: "مصدر واحد للتوافر والأسعار",
         },
         detail: {
-          es: "Propone horarios sobre la agenda real del asesor y la disponibilidad del inmueble, confirma y recuerda. Las visitas fallidas caen fuerte.",
-          en: "Proposes times against the agent's real calendar and property availability, confirms and reminds. No-show viewings drop sharply.",
-          ar: "يقترح مواعيد وفق مفكرة المستشار الحقيقية وتوافر العقار، ثم يؤكّد ويذكّر. فتتراجع المعاينات الفائتة بوضوح.",
+          es: "Las planillas de unidades, la lista de precios y los estados de reserva se consolidan en un lugar consultable. Deja de haber dos versiones del stock y el equipo deja de ofrecer lo que ya está reservado.",
+          en: "Unit spreadsheets, the price list and reservation statuses get consolidated into one queryable place. There stop being two versions of the stock, and the team stops offering what's already reserved.",
+          ar: "تُدمج جداول الوحدات وقائمة الأسعار وحالات الحجز في مكان واحد قابل للاستعلام. فتنتهي النسختان المتضاربتان للمخزون، ويكفّ الفريق عن عرض ما هو محجوز أصلًا.",
         },
       },
       {
         title: {
-          es: "Seguimiento de interesados",
-          en: "Lead follow-up",
-          ar: "متابعة المهتمين",
+          es: "Integraciones y correo entre sistemas",
+          en: "Integrations and cross-system email",
+          ar: "التكاملات والبريد بين الأنظمة",
         },
         detail: {
-          es: "Retoma al que visitó y no volvió a escribir, y avisa cuando entra a la cartera algo que encaja con lo que había pedido meses atrás.",
-          en: "Re-engages someone who viewed and went quiet, and pings them when something matching what they asked for months ago comes into inventory.",
-          ar: "يعاود التواصل مع من عاين ثم انقطع، ويُنبّهه حين يدخل إلى المحفظة عقار يطابق ما طلبه قبل أشهر.",
+          es: "El CRM, el ERP o el sistema de obra, la planilla y la casilla dejan de sincronizarse a mano: el dato entra una vez, y los correos de rutina —confirmaciones, actualizaciones a brokers, pedidos de documentación— se arman y se mandan solos.",
+          en: "The CRM, the ERP or construction system, the spreadsheet and the inbox stop being synced by hand: data is entered once, and routine emails — confirmations, broker updates, document requests — get drafted and sent on their own.",
+          ar: "يتوقف المزامنة اليدوية بين نظام CRM ونظام ERP أو نظام الإنشاء والجدول وصندوق البريد: تُدخل البيانات مرة واحدة، وتُصاغ رسائل البريد الروتينية — التأكيدات، وتحديثات الوسطاء، وطلبات المستندات — وتُرسل من تلقائها.",
         },
       },
       {
         title: {
-          es: "Carga y enriquecimiento de fichas",
-          en: "Listing creation and enrichment",
-          ar: "إنشاء بطاقات العقارات وإثراؤها",
+          es: "Coordinación de visitas a las unidades",
+          en: "Unit visit coordination",
+          ar: "تنسيق زيارات الوحدات",
         },
         detail: {
-          es: "Toma fotos, medidas y notas del asesor y arma la ficha completa para los portales, con el texto adaptado a cada uno.",
-          en: "Takes photos, measurements and the agent's notes and builds the full listing for each portal, with copy adapted to each.",
-          ar: "يأخذ الصور والمساحات وملاحظات المستشار ويبني البطاقة الكاملة لكل بوابة إعلانية، بنص مكيَّف لكل واحدة منها.",
+          es: "Showroom, departamento modelo y obra: propone horarios sobre la agenda real, resuelve los requisitos de ingreso, confirma el día anterior y reofrece el hueco cuando alguien cancela.",
+          en: "Showroom, model unit and site: it proposes times against the real calendar, resolves access requirements, confirms the day before and re-offers the slot when someone cancels.",
+          ar: "صالة العرض والوحدة النموذجية والموقع: يقترح مواعيد وفق المفكرة الحقيقية، ويحلّ اشتراطات الدخول، ويؤكّد قبل يوم، ويعيد عرض الفراغ حين يلغي أحدهم.",
         },
       },
     ],
     stack: {
       es: [
-        "CRM inmobiliario",
-        "Portales de publicación",
+        "CRM del developer",
+        "Planillas de unidades y lista de precios",
+        "Sistema de gestión de obra o ERP",
+        "Casilla de correo del equipo comercial",
         "WhatsApp Business API",
-        "Google Calendar",
-        "Formularios del sitio web",
+        "Portales, campañas de lanzamiento y Google Calendar",
       ],
       en: [
-        "Real estate CRM",
-        "Listing portals",
+        "Developer CRM",
+        "Unit spreadsheets and price list",
+        "Construction management system or ERP",
+        "The sales team's shared inbox",
         "WhatsApp Business API",
-        "Google Calendar",
-        "Website forms",
+        "Listing portals, launch campaigns and Google Calendar",
       ],
       ar: [
-        "نظام CRM عقاري",
-        "بوابات الإعلانات العقارية",
+        "نظام CRM الخاص بالمطوّر",
+        "جداول الوحدات وقائمة الأسعار",
+        "نظام إدارة الإنشاء أو ERP",
+        "صندوق بريد الفريق التجاري",
         "واجهة واتساب للأعمال (WhatsApp Business API)",
-        "تقويم Google",
-        "نماذج الموقع الإلكتروني",
+        "البوابات العقارية وحملات الإطلاق وتقويم Google",
       ],
     },
     human: {
       es: [
-        "Toda negociación de precio y condiciones.",
+        "Todo precio final, descuento y condición del plan de pago.",
+        "Cualquier compromiso sobre fecha de entrega o avance de obra.",
+        "La reserva, el boleto y la escrituración.",
         "La visita en sí y todo lo que se conversa en ella.",
-        "Documentación, reserva y firma.",
-        "Cualquier consulta de un propietario sobre su propia propiedad.",
       ],
       en: [
-        "All price and terms negotiation.",
-        "The viewing itself and everything discussed in it.",
-        "Paperwork, reservation and signing.",
-        "Any owner enquiry about their own property.",
+        "Every final price, discount and payment-plan term.",
+        "Any commitment about delivery date or construction progress.",
+        "Reservation, purchase agreement and deed.",
+        "The visit itself and everything discussed in it.",
       ],
       ar: [
-        "كل تفاوض على السعر والشروط.",
-        "المعاينة نفسها وكل ما يُبحث فيها.",
-        "الأوراق والحجز والتوقيع.",
-        "أي استفسار من مالك عن عقاره هو.",
+        "كل سعر نهائي وخصم وشرط في خطة السداد.",
+        "أي التزام بشأن موعد التسليم أو نسبة الإنجاز.",
+        "الحجز وعقد البيع والتسجيل العقاري.",
+        "الزيارة نفسها وكل ما يُبحث فيها.",
       ],
     },
     start: {
       es: [
-        "Medir el tiempo de respuesta real por canal durante dos semanas. Suele ser peor de lo que el equipo cree.",
-        "Automatizar la primera respuesta y la calificación. Es el cambio con el efecto más inmediato sobre visitas agendadas.",
-        "Sumar la coordinación de visitas contra la agenda real.",
-        "Al final, el seguimiento de la base histórica, que es donde está el volumen dormido.",
+        "Mapear dónde vive hoy cada dato: qué planilla, qué sistema, qué casilla y quién lo actualiza. Es medio día de trabajo y define el resto del proyecto.",
+        "Unificar disponibilidad y precios en una única fuente consultable. Sin esto no se automatiza el proceso: se automatiza el error.",
+        "Automatizar la precalificación de prospectos y la carga al CRM. Es el cambio con el efecto más inmediato sobre visitas agendadas.",
+        "Al final, los correos de rutina y el seguimiento del ciclo largo, que es donde está el volumen dormido.",
       ],
       en: [
-        "Measure real response time by channel for two weeks. It's usually worse than the team believes.",
-        "Automate first response and qualification. Biggest immediate effect on viewings booked.",
-        "Add viewing coordination against the real calendar.",
-        "Last, follow-up on the historical database, where the dormant volume sits.",
+        "Map where each piece of data lives today: which spreadsheet, which system, which inbox, and who updates it. It's half a day of work and it defines the rest of the project.",
+        "Unify availability and pricing into a single queryable source. Without it you don't automate the process — you automate the error.",
+        "Automate prospect pre-qualification and the write into the CRM. Biggest immediate effect on visits booked.",
+        "Last, the routine emails and long-cycle follow-up, where the dormant volume sits.",
       ],
       ar: [
-        "قياس زمن الاستجابة الحقيقي لكل قناة على مدى أسبوعين. وهو عادةً أسوأ مما يعتقد الفريق.",
-        "أتمتة الرد الأول والتصفية. وهو التغيير الأكبر أثرًا وأسرعها ظهورًا في عدد المعاينات المحجوزة.",
-        "إضافة تنسيق المعاينات وفق المفكرة الحقيقية.",
-        "وأخيرًا، متابعة قاعدة البيانات التاريخية، وفيها الحجم النائم.",
+        "رسم خريطة لمكان كل بيانات اليوم: أي جدول، وأي نظام، وأي صندوق بريد، ومن يحدّثه. نصف يوم عمل، وهو ما يحدّد بقية المشروع.",
+        "توحيد التوافر والأسعار في مصدر واحد قابل للاستعلام. بدونه لا تُؤتمت العملية، بل يُؤتمت الخطأ.",
+        "أتمتة التصفية المسبقة للعملاء المحتملين وإدخالهم إلى نظام CRM. وهو التغيير الأسرع أثرًا في عدد الزيارات المحجوزة.",
+        "وأخيرًا، رسائل البريد الروتينية ومتابعة الدورة الطويلة، وفيها الحجم النائم.",
       ],
     },
     notThis: {
       es: [
-        "Si la cartera no está actualizada en el CRM, el agente va a ofrecer propiedades ya vendidas. Eso quema más consultas de las que recupera.",
-        "Si operás menos de treinta consultas por mes, el asesor contesta más rápido y mejor que cualquier sistema.",
-        "En operaciones de alto ticket con cartera muy chica, la relación personal desde el primer mensaje es el producto. Automatizar ahí resta.",
+        "Si la disponibilidad y el precio vigente no están en ningún lado más que en la cabeza de una persona, primero hay un trabajo de ordenar datos que no es automatización y hay que pagarlo como lo que es.",
+        "Si lanzás un proyecto cada tres años y son veinte unidades, el equipo comercial resuelve a mano más rápido y mejor que cualquier sistema.",
+        "Si vendés todo a través de una red de brokers exclusiva, el cuello de botella está en el broker y no en tu proceso interno. Centralizar de tu lado no lo mueve.",
       ],
       en: [
-        "If inventory isn't current in the CRM, the agent will offer properties already sold. That burns more enquiries than it recovers.",
-        "If you handle fewer than thirty enquiries a month, an agent answers faster and better than any system.",
-        "In high-ticket operations with a small portfolio, the personal relationship from the first message is the product. Automating there subtracts.",
+        "If availability and current pricing exist nowhere but in one person's head, there's a data cleanup job first. That isn't automation and it has to be paid for as what it is.",
+        "If you launch one project every three years and it's twenty units, the sales team handles it by hand faster and better than any system.",
+        "If you sell entirely through an exclusive broker network, the bottleneck is the broker, not your internal process. Centralizing on your side doesn't move it.",
       ],
       ar: [
-        "إذا لم تكن المحفظة محدَّثة في نظام CRM، فسيعرض الوكيل عقارات مباعة أصلًا. وهذا يحرق من الاستفسارات أكثر مما يستعيد.",
-        "إذا كنت تتعامل مع أقل من ثلاثين استفسارًا شهريًا، فالمستشار يردّ أسرع وأفضل من أي نظام.",
-        "في الصفقات مرتفعة القيمة بمحفظة صغيرة جدًا، تكون العلاقة الشخصية من الرسالة الأولى هي المنتج نفسه. والأتمتة هنا تنتقص منه.",
+        "إذا لم يكن التوافر والسعر الساري موجودين إلا في رأس شخص واحد، فهناك أولًا عمل ترتيب بيانات ليس أتمتةً، وينبغي دفع ثمنه على حقيقته.",
+        "إذا كنت تطلق مشروعًا كل ثلاث سنوات وبعشرين وحدة، فالفريق التجاري يتدبّرها يدويًا أسرع وأفضل من أي نظام.",
+        "إذا كنت تبيع بالكامل عبر شبكة وسطاء حصرية، فالاختناق عند الوسيط لا في عمليتك الداخلية. والمركزة من جهتك لا تحرّكه.",
       ],
     },
     faq: [
       {
         question: {
-          es: "¿El interesado se da cuenta de que le contesta un sistema?",
-          en: "Do leads realize a system is answering them?",
-          ar: "هل يدرك المهتم أن الذي يردّ عليه نظام؟",
+          es: "¿Hay que cambiar el CRM y las planillas que ya usamos?",
+          en: "Do we have to replace the CRM and spreadsheets we already use?",
+          ar: "هل يجب استبدال نظام CRM والجداول التي نستخدمها أصلًا؟",
         },
         answer: {
-          es: "Sí, y lo declaramos en el primer mensaje. En la práctica no baja la conversión: lo que la baja es tardar cuatro horas en contestar. El interesado que quiere hablar con una persona lo pide, y el traspaso es inmediato y con todo el contexto.",
-          en: "Yes, and we say so in the first message. In practice it doesn't hurt conversion — what hurts conversion is taking four hours to reply. A lead who wants a person asks for one, and the handoff is immediate and carries full context.",
-          ar: "نعم، ونعلن ذلك في الرسالة الأولى. وعمليًا لا يخفض هذا معدل التحويل — الذي يخفضه هو التأخر أربع ساعات في الرد. ومن أراد التحدث إلى شخص يطلب ذلك، فيتم التحويل فورًا ومع كامل السياق.",
+          es: "No. Centralizar no es migrar todo a un sistema nuevo: es que los que ya tenés se hablen y que el dato entre una sola vez. Si el CRM tiene API, se integra; si la disponibilidad vive en una planilla, se lee de ahí. Cambiar de herramienta es una decisión aparte, y casi nunca es la primera.",
+          en: "No. Centralizing isn't migrating everything to a new system: it's making the ones you already have talk to each other, and entering data once. If the CRM has an API, we integrate it; if availability lives in a spreadsheet, we read it from there. Switching tools is a separate decision, and it's almost never the first one.",
+          ar: "لا. المركزة ليست ترحيل كل شيء إلى نظام جديد، بل جعل ما لديك أصلًا يتحدث بعضه إلى بعض وإدخال البيانات مرة واحدة. فإن كان لنظام CRM واجهة برمجية دمجناه، وإن كان التوافر في جدول قرأناه منه. أما تغيير الأدوات فقرار منفصل، ونادرًا ما يكون الأول.",
         },
       },
       {
         question: {
-          es: "¿Puede publicar en los portales por su cuenta?",
-          en: "Can it publish to portals on its own?",
-          ar: "هل يستطيع النشر على البوابات من تلقاء نفسه؟",
+          es: "¿Puede dar precios y armar el plan de pago?",
+          en: "Can it quote prices and build the payment plan?",
+          ar: "هل يستطيع إعطاء الأسعار وبناء خطة السداد؟",
         },
         answer: {
-          es: "Puede armar la ficha completa y dejarla lista, pero la publicación la aprueba una persona. Un error de precio o de metros publicado en cinco portales es caro de corregir y afecta la reputación de la inmobiliaria, así que ese paso queda con revisión humana.",
-          en: "It can build the complete listing and stage it, but a person approves publication. A price or square-footage error published across five portals is expensive to correct and damages the agency's reputation, so that step stays under human review.",
-          ar: "يستطيع بناء البطاقة كاملة وتجهيزها، لكن النشر يعتمده شخص. فخطأ في السعر أو المساحة منشور على خمس بوابات مكلف التصحيح ويضرّ بسمعة الشركة، لذلك تبقى هذه الخطوة تحت مراجعة بشرية.",
+          es: "Puede leer y explicar la lista de precios vigente y el plan publicado, con la unidad concreta. Lo que no hace es cotizar fuera de esa lista, aplicar un descuento ni comprometer una condición de financiación: eso lo decide una persona, porque un número mal dado en preventa se termina discutiendo en la reserva.",
+          en: "It can read and explain the current price list and the published plan for a specific unit. What it won't do is quote outside that list, apply a discount or commit to a financing term: a person decides that, because a wrong figure quoted pre-construction ends up being argued about at reservation.",
+          ar: "يستطيع قراءة وشرح قائمة الأسعار السارية والخطة المنشورة لوحدة بعينها. أما ما لا يفعله فهو التسعير خارج تلك القائمة، أو منح خصم، أو الالتزام بشرط تمويلي: هذا يقرّره شخص، لأن رقمًا خاطئًا يُعطى في مرحلة البيع على الخارطة ينتهي بنقاش عند الحجز.",
+        },
+      },
+      {
+        question: {
+          es: "¿Qué contesta sobre la fecha de entrega?",
+          en: "What does it say about the delivery date?",
+          ar: "بماذا يجيب عن موعد التسليم؟",
+        },
+        answer: {
+          es: "Lo que esté publicado, y nada más. La fecha de entrega es la afirmación con más consecuencia legal de todo el proceso comercial, así que el agente repite el dato oficial —no lo estima ni lo ajusta— y deriva al equipo cualquier pregunta sobre atrasos o avance de obra.",
+          en: "Whatever is published, and nothing more. The delivery date is the statement with the most legal consequence in the entire sales process, so the agent repeats the official figure — it doesn't estimate or adjust it — and routes any question about delays or construction progress to the team.",
+          ar: "ما هو منشور، لا أكثر. فموعد التسليم هو أكثر التصريحات أثرًا قانونيًا في العملية التجارية كلها، لذلك يكرّر الوكيل البيان الرسمي — لا يقدّره ولا يعدّله — ويحيل إلى الفريق أي سؤال عن التأخير أو نسبة الإنجاز.",
         },
       },
     ],
