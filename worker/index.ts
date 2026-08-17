@@ -8,7 +8,10 @@
  * `www.vantalogics.com/` matchearía `index.html` y nunca llegaría acá.
  */
 interface Env {
-  ASSETS: Fetcher
+  // El binding se tipa a mano en vez de usar `Fetcher`: los tipos del runtime
+  // de Workers no están cargados (el tsconfig es el de Astro, con lib DOM) y
+  // meterlos acá choca con `Request`/`Response` del DOM en el resto del sitio.
+  ASSETS: { fetch(request: Request): Promise<Response> }
 }
 
 export default {
