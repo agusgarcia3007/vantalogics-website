@@ -34,6 +34,21 @@ const blog = defineCollection({
     updated: z.coerce.date().optional(),
     /** Cluster temático: agrupa el silo y arma los enlaces internos. */
     cluster: z.enum(["costos", "decision", "confiabilidad", "casos"]),
+    /**
+     * Industria foco a la que pertenece la nota, si pertenece a alguna.
+     *
+     * El cluster agrupa por tipo de pregunta —costos, decisión, confiabilidad—
+     * y sirve para el lector que ya está leyendo. Esto agrupa por rubro y sirve
+     * para otra cosa: es lo que ata cada nota a su página de sector en las dos
+     * direcciones, que es la estructura que hace que un conjunto de notas
+     * sueltas se lea como autoridad sobre una industria y no como un blog.
+     *
+     * El valor es el slug español del sector en `src/data/solutions.ts`. Las
+     * notas generales no lo declaran y siguen funcionando igual.
+     */
+    industry: z
+      .enum(["inmobiliarias", "edtech-y-plataformas-educativas"])
+      .optional(),
     tags: z.array(z.string()).default([]),
     /** Slug compartido con la traducción, si existe. */
     translationOf: z.string().optional(),

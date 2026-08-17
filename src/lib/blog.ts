@@ -83,15 +83,48 @@ function identifiers(post: Post): string[] {
 }
 
 /**
- * Notas relacionadas: primero las del mismo cluster, después las más nuevas
- * del idioma. Nunca menos de `limit` mientras haya con qué llenar, porque un
- * bloque de relacionadas a medio llenar se lee como un error de la página.
+ * Las notas de una industria foco, en un idioma.
+ *
+ * Alimenta el bloque «notas sobre este sector» de la página de solución. Es el
+ * enlace que faltaba: sin él, las notas de rubro dependen de que alguien llegue
+ * al índice del blog y las reconozca, y la página de sector —que es la que se
+ * quiere posicionar— no recibe nada del contenido que se escribe para
+ * sostenerla.
+ */
+export async function getPostsByIndustry(
+  lang: Lang,
+  industry: string
+): Promise<Post[]> {
+  return (await getPosts(lang)).filter(
+    (post) => post.data.industry === industry
+  )
+}
+
+/**
+ * Notas relacionadas, ordenadas por cercanía: misma industria y mismo cluster,
+ * después misma industria, después mismo cluster, y el resto por fecha.
+ *
+ * Siempre devuelve `limit` mientras haya con qué llenar, porque un bloque de
+ * relacionadas a medio llenar se lee como un error de la página.
  */
 export async function getRelated(post: Post, limit = 3): Promise<Post[]> {
   const pool = (await getPosts(postLang(post))).filter((p) => p.id !== post.id)
-  const sameCluster = pool.filter((p) => p.data.cluster === post.data.cluster)
-  const rest = pool.filter((p) => p.data.cluster !== post.data.cluster)
-  return [...sameCluster, ...rest].slice(0, limit)
+
+  /**
+   * La industria pesa más que el cluster.
+   *
+   * Antes el orden era sólo por cluster, que es lo correcto cuando todas las
+   * notas hablan de lo mismo. Con notas de rubro no: alguien que está leyendo
+   * sobre costos de un tutor de IA tiene mucho más que ganar con otra nota de
+   * EdTech que con otra nota de costos de un rubro que no es el suyo. El
+   * cluster sigue desempatando dentro de la industria.
+   */
+  const score = (other: Post) =>
+    (other.data.industry && other.data.industry === post.data.industry
+      ? 2
+      : 0) + (other.data.cluster === post.data.cluster ? 1 : 0)
+
+  return [...pool].sort((a, b) => score(b) - score(a)).slice(0, limit)
 }
 
 /**

@@ -5,6 +5,7 @@ import Hero from "@/components/site/Hero.astro"
 import Tools from "@/components/site/Tools.astro"
 import Problem from "@/components/site/Problem.astro"
 import Services from "@/components/site/Services.astro"
+import Industries from "@/components/site/Industries.astro"
 import AgentDemo from "@/components/site/AgentDemo.astro"
 import Process from "@/components/site/Process.astro"
 import Proof from "@/components/site/Proof.astro"
@@ -19,6 +20,7 @@ import {
   type Lang,
 } from "@/i18n"
 import { GITHUB_URL, INSTAGRAM_URL } from "@/site"
+import { FOCUS_SOLUTIONS, solutionPath } from "@/data/solutions"
 
 interface Props {
   lang: Lang
@@ -125,6 +127,29 @@ const webPage = {
   about: { "@id": `${SITE}/#organization` },
 }
 
+/**
+ * Las industrias foco, como lista enlazada desde la portada.
+ *
+ * `ItemList` y no cuatro `Service` sueltos: lo que se declara acá es que la
+ * portada es el índice de esas dos páginas, que es la relación que hace que un
+ * motor de respuesta las trate como el contenido canónico de la empresa sobre
+ * cada rubro en vez de como dos páginas más del sitio.
+ */
+const industriesList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": `${pageUrl}#industrias`,
+  name: t.industries.label,
+  description: t.industries.body,
+  itemListElement: FOCUS_SOLUTIONS.map((solution, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: solution.title[lang],
+    description: solution.answer[lang],
+    url: new URL(solutionPath(lang, solution), SITE).href,
+  })),
+}
+
 const faqPage = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -138,7 +163,10 @@ const faqPage = {
 }
 ---
 
-<Layout lang={lang} jsonLd={[organization, website, webPage, faqPage]}>
+<Layout
+  lang={lang}
+  jsonLd={[organization, website, webPage, industriesList, faqPage]}
+>
   <SiteHeader lang={lang} />
 
   <main id="contenido">
@@ -146,6 +174,7 @@ const faqPage = {
     <Tools lang={lang} />
     <Problem lang={lang} />
     <Services lang={lang} />
+    <Industries lang={lang} />
     <AgentDemo lang={lang} />
     <Process lang={lang} />
     <Proof lang={lang} />

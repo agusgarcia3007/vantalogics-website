@@ -3,6 +3,7 @@ import type { APIRoute } from "astro"
 import { DEFAULT_LANG, LANGS, localizePath } from "@/i18n"
 import { getAllPosts, getTranslations, postLang, postPath } from "@/lib/blog"
 import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
+import { USE_CASE_ROUTES, casePath } from "@/data/use-cases"
 
 const SITE = "https://vantalogics.com"
 
@@ -67,10 +68,28 @@ export const GET: APIRoute = async () => {
     for (const lang of LANGS) {
       entries.push({
         path: solutionPath(lang, solution),
-        priority: "0.7",
+        priority: solution.focus ? "0.9" : "0.7",
         changefreq: "monthly",
         alternates: Object.fromEntries(
           LANGS.map((code) => [code, solutionPath(code, solution)])
+        ),
+      })
+    }
+  }
+
+  // Casos de uso de las industrias foco.
+  //
+  // Prioridad más alta que el resto de las páginas de solución, y no más baja
+  // por estar un nivel más abajo en la ruta: son las páginas con intención
+  // comercial del sitio y las que la agencia quiere que se indexen primero.
+  for (const { solution, useCase } of USE_CASE_ROUTES) {
+    for (const lang of LANGS) {
+      entries.push({
+        path: casePath(lang, solution, useCase),
+        priority: "0.8",
+        changefreq: "monthly",
+        alternates: Object.fromEntries(
+          LANGS.map((code) => [code, casePath(code, solution, useCase)])
         ),
       })
     }

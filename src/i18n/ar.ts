@@ -36,9 +36,9 @@ export const ar: Dictionary = {
   nav: {
     items: [
       { href: "#que-hacemos", label: "ما نقدّمه" },
+      { href: "#industrias", label: "القطاعات" },
       { href: "#proceso", label: "كيف نعمل" },
       { href: "/blog/", label: "ملاحظات" },
-      { href: "#faq", label: "أسئلة" },
     ],
     cta: "احجز جلسة تشخيص",
     menu: "القائمة",
@@ -364,12 +364,18 @@ export const ar: Dictionary = {
       "نؤتمت العمل المتكرر ونبني وكلاء ذكاء اصطناعي يصمدون في بيئة التشغيل.",
     columns: [
       {
-        title: "ما نقدّمه",
+        title: "القطاعات",
         links: [
-          { href: "#que-hacemos", label: "أتمتة عملية" },
-          { href: "#que-hacemos", label: "وكلاء مُصمَّمون لك" },
-          { href: "#que-hacemos", label: "التقييم والمراقبة" },
-          { href: "/solutions/", label: "حلول حسب القطاع" },
+          {
+            href: "/solutions/real-estate-agencies/",
+            label: "الشركات العقارية",
+          },
+          {
+            href: "/solutions/edtech-and-learning-platforms/",
+            label: "التقنيات التعليمية",
+          },
+          { href: "/solutions/", label: "كل القطاعات" },
+          { href: "#que-hacemos", label: "ما نقدّمه" },
         ],
       },
       {
@@ -425,6 +431,17 @@ export const ar: Dictionary = {
     },
   },
 
+  industries: {
+    label: "القطاعات المحورية",
+    titleMuted: "نؤتمت في أي قطاع.",
+    titleBright: "وهذان القطاعان نعرفهما من الداخل.",
+    body: "في الشركات العقارية وفي منصات التعلّم نعرف مسبقًا أي عملية تسدّد كلفتها أولًا، وبأي أنظمة ينبغي التحدث، ومتى تكون الإجابة الصادقة هي «لا». وهذا يختصر التشخيص ويجنّب بناء ما نعلم سلفًا أنه لا ينفع.",
+    casesLabel: "حالات الاستخدام",
+    cta: "اطّلع على صفحة القطاع كاملة",
+    moreLabel: "قطاع آخر؟",
+    more: "اطّلع على القطاعات الستة",
+  },
+
   solutions: {
     label: "الحلول",
     breadcrumb: "الحلول",
@@ -433,11 +450,21 @@ export const ar: Dictionary = {
       "كيف تعمل الأتمتة بالذكاء الاصطناعي في كل قطاع: أي العمليات يُبدأ بها، وبماذا تُربط، وما الذي يبقى باعتماد بشري.",
     indexIntro:
       "العملية تختلف باختلاف القطاع. هذه الصفحات نقطة البداية لكل قطاع: ما الذي نؤتمته أولًا، وبأي أنظمة نتحدث، وأين نُبقي إنسانًا يقرّر.",
+    focusLabel: "القطاعات المحورية",
+    othersLabel: "قطاعات أخرى",
     processesLabel: "ما الذي نؤتمته أولًا",
     stackLabel: "بماذا يُربط",
     humanLabel: "ما الذي يبقى باعتماد بشري",
     startLabel: "من أين تبدأ",
     notThisLabel: "متى لا يستحق الأمر",
+    useCasesLabel: "حالات الاستخدام في هذا القطاع",
+    useCasesIntro:
+      "كل صفحة تشرح تطبيقًا محدّدًا: كيف يعمل من البداية إلى النهاية، وأي رقم يتحرّك، وما الذي يجب أن يكون موجودًا لديك قبل البدء.",
+    stepsLabel: "كيف يعمل",
+    measuresLabel: "ما الذي يُقاس",
+    requiresLabel: "ما الذي يلزم من جهتك",
+    backToSector: "اطّلع على القطاع كاملًا",
+    notesLabel: "ملاحظات عن هذا القطاع",
   },
 
   agent: {

@@ -17,6 +17,7 @@ import {
   readingTime,
   type Post,
 } from "@/lib/blog"
+import { findSolution, solutionPath } from "@/data/solutions"
 import { SCHEDULE_URL } from "@/site"
 
 interface Props {
@@ -36,6 +37,17 @@ const path = postPath(post)
 const pageUrl = new URL(path, SITE).href
 const minutes = readingTime(post.body)
 const blogPath = localizePath(lang, "/blog/")
+
+/**
+ * El sector del que habla la nota, si declara uno.
+ *
+ * `findSolution` busca por slug español porque es el identificador estable del
+ * sector: la nota en inglés y la nota en árabe declaran el mismo valor, y cada
+ * una resuelve el enlace a la página de sector de su propio idioma.
+ */
+const industrySolution = post.data.industry
+  ? findSolution("es", post.data.industry)
+  : undefined
 
 // Sólo se declara `hreflang` cuando la traducción existe de verdad. Un
 // alternate que devuelve 404 hace que Google descarte el par entero.
@@ -63,6 +75,21 @@ const article = {
    */
   abstract: post.data.answer,
   articleSection: t.blog.clusters[post.data.cluster],
+  /**
+   * `about` apuntando al servicio del sector.
+   *
+   * Es la mitad que faltaba del silo: la página de sector lista sus notas y
+   * cada nota declara de qué sector habla. Un motor de respuesta que llega a
+   * una nota por una consulta de rubro puede seguir el enlace hasta la página
+   * canónica de la empresa sobre ese rubro sin depender de la navegación.
+   */
+  ...(industrySolution
+    ? {
+        about: {
+          "@id": `${new URL(solutionPath(lang, industrySolution), SITE).href}#service`,
+        },
+      }
+    : {}),
   keywords: post.data.tags.join(", "),
   inLanguage: lang,
   datePublished: post.data.date.toISOString(),
@@ -160,6 +187,21 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
 
       <header class="mt-[clamp(32px,5vw,64px)]">
         <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+          {
+            industrySolution && (
+              <>
+                <a
+                  href={solutionPath(lang, industrySolution)}
+                  class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                >
+                  {industrySolution.sector[lang]}
+                </a>
+                <span class="label-untitled text-muted-ash" aria-hidden="true">
+                  ·
+                </span>
+              </>
+            )
+          }
           <span class="label-untitled text-muted-ash">
             {t.blog.clusters[post.data.cluster]}
           </span>

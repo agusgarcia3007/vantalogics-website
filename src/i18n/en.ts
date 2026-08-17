@@ -22,9 +22,9 @@ export const en: Dictionary = {
   nav: {
     items: [
       { href: "#que-hacemos", label: "What we do" },
+      { href: "#industrias", label: "Industries" },
       { href: "#proceso", label: "How we work" },
       { href: "/blog/", label: "Notes" },
-      { href: "#faq", label: "Questions" },
     ],
     cta: "Book a diagnostic",
     menu: "Menu",
@@ -351,12 +351,15 @@ export const en: Dictionary = {
       "We automate repetitive work and build AI agents that survive production.",
     columns: [
       {
-        title: "What we do",
+        title: "Industries",
         links: [
-          { href: "#que-hacemos", label: "Automate a process" },
-          { href: "#que-hacemos", label: "Custom agents" },
-          { href: "#que-hacemos", label: "Evaluation and monitoring" },
-          { href: "/solutions/", label: "Solutions by industry" },
+          { href: "/solutions/real-estate-agencies/", label: "Real estate" },
+          {
+            href: "/solutions/edtech-and-learning-platforms/",
+            label: "EdTech and education",
+          },
+          { href: "/solutions/", label: "All industries" },
+          { href: "#que-hacemos", label: "What we do" },
         ],
       },
       {
@@ -412,6 +415,17 @@ export const en: Dictionary = {
     },
   },
 
+  industries: {
+    label: "Focus industries",
+    titleMuted: "We automate in any industry.",
+    titleBright: "These two we know from the inside.",
+    body: "In real estate and in learning platforms we already know which process pays first, which systems have to be talked to, and when the honest answer is no. That shortens the diagnostic and avoids building what we already know doesn't work.",
+    casesLabel: "Use cases",
+    cta: "See the full industry page",
+    moreLabel: "Different industry?",
+    more: "See all six",
+  },
+
   solutions: {
     label: "Solutions",
     breadcrumb: "Solutions",
@@ -420,11 +434,21 @@ export const en: Dictionary = {
       "How AI automation works in each industry: which processes to attack first, what it integrates with, and what stays under human approval.",
     indexIntro:
       "The process changes with the industry. These pages are the starting point for each one: what we automate first, which systems we talk to, and where a person stays in the loop.",
+    focusLabel: "Focus industries",
+    othersLabel: "Other industries",
     processesLabel: "What we automate first",
     stackLabel: "What it integrates with",
     humanLabel: "What stays under human approval",
     startLabel: "Where to start",
     notThisLabel: "When it isn't worth it",
+    useCasesLabel: "Use cases in this industry",
+    useCasesIntro:
+      "Each one explains a concrete implementation: how it works end to end, which number moves, and what has to exist on your side before starting.",
+    stepsLabel: "How it works",
+    measuresLabel: "What gets measured",
+    requiresLabel: "What's needed on your side",
+    backToSector: "See the whole industry",
+    notesLabel: "Notes on this industry",
   },
 
   agent: {

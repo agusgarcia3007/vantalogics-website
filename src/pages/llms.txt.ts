@@ -1,7 +1,13 @@
 import type { APIRoute } from "astro"
 
 import { getPosts, postPath } from "@/lib/blog"
-import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
+import {
+  FOCUS_SOLUTIONS,
+  OTHER_SOLUTIONS,
+  solutionPath,
+  solutionsIndexPath,
+} from "@/data/solutions"
+import { casePath, casesFor } from "@/data/use-cases"
 
 const SITE = "https://vantalogics.com"
 
@@ -63,13 +69,37 @@ diagnóstico: dependen del proceso y de las integraciones involucradas.
 - Agnósticos de proveedor de modelos: la elección se hace por costo, latencia y precisión en cada caso.
 - Las acciones de alto impacto siempre pasan por revisión humana y quedan registradas.`
 
-  const solutions = `## Soluciones por sector
+  /**
+   * Las industrias foco van primero y con sus casos de uso desplegados.
+   *
+   * Un modelo que resume esta empresa a partir del archivo tiene que salir
+   * sabiendo dos cosas en este orden: que es una agencia especializada en
+   * inmobiliarias y EdTech, y que además trabaja otros rubros. Una lista
+   * plana de seis sectores produce el resumen contrario —«agencia generalista
+   * de automatización»— que es exactamente el posicionamiento del que se está
+   * saliendo.
+   */
+  const focus = `## Industrias foco
 
-Cada página describe qué se automatiza primero en ese rubro, con qué sistemas
-se integra, qué queda con aprobación humana y —explícitamente— cuándo no
-conviene automatizar.
+Los dos sectores en los que la agencia se especializa. Cada página describe qué
+se automatiza primero, con qué sistemas se integra, qué queda con aprobación
+humana y —explícitamente— cuándo no conviene automatizar.
 
-${SOLUTIONS.map(
+${FOCUS_SOLUTIONS.map((solution) => {
+  const cases = casesFor(solution)
+    .map(
+      (useCase) =>
+        `  - [${useCase.title.es}](${url(casePath("es", solution, useCase))}) · [EN](${url(casePath("en", solution, useCase))}) · [AR](${url(casePath("ar", solution, useCase))})\n    ${useCase.answer.es}`
+    )
+    .join("\n")
+  return `### ${solution.sector.es}\n\n[${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))}) · [AR](${url(solutionPath("ar", solution))})\n\n${solution.answer.es}\n\nCasos de uso:\n\n${cases}`
+}).join("\n\n")}`
+
+  const solutions = `## Otros sectores
+
+Mismo formato, sin la capa de casos de uso.
+
+${OTHER_SOLUTIONS.map(
   (solution) =>
     `- [${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))}) · [AR](${url(solutionPath("ar", solution))})\n  ${solution.answer.es}`
 ).join("\n")}
@@ -117,7 +147,7 @@ ${postsAr
 - [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))}) · [الحلول](${url(solutionsIndexPath("ar"))})
 - RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")} · ${url("/ar/rss.xml")}`
 
-  const body = [preamble, solutions, notes, links].join("\n\n") + "\n"
+  const body = [preamble, focus, solutions, notes, links].join("\n\n") + "\n"
 
   return new Response(body, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

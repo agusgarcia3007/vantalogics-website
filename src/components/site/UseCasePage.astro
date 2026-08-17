@@ -11,79 +11,63 @@ import {
   solutionsIndexPath,
   type Solution,
 } from "@/data/solutions"
-import { casePath, casesFor } from "@/data/use-cases"
-import { getPostsByIndustry } from "@/lib/blog"
-import PostCard from "@/components/blog/PostCard.astro"
+import { casePath, casesFor, type UseCase } from "@/data/use-cases"
 import { SCHEDULE_URL } from "@/site"
 
 interface Props {
   lang: Lang
   solution: Solution
+  useCase: UseCase
 }
 
 const SITE = "https://vantalogics.com"
-const { lang, solution } = Astro.props
+const { lang, solution, useCase } = Astro.props
 const t = useTranslations(lang)
 
-const path = solutionPath(lang, solution)
+const path = casePath(lang, solution, useCase)
 const pageUrl = new URL(path, SITE).href
+const sectorPath = solutionPath(lang, solution)
 const indexPath = solutionsIndexPath(lang)
 
-/**
- * Los casos de uso del sector, si es una industria foco.
- *
- * Es el enlace de arriba hacia abajo del silo: la página general responde la
- * consulta de investigación —«cómo se automatiza con IA en mi rubro»— y desde
- * ahí baja a la consulta comercial, que es donde está la intención de compra.
- * Los sectores que no son foco no tienen casos y el bloque no se imprime.
- */
-const useCases = casesFor(solution)
-
-/** Las notas escritas para este rubro. La otra mitad del silo. */
-const posts = await getPostsByIndustry(lang, solution.slug.es)
+/** Los otros casos del mismo sector. El enlace lateral del silo. */
+const siblings = casesFor(solution).filter(
+  (other) => other.slug.es !== useCase.slug.es
+)
 
 const service = {
   "@context": "https://schema.org",
   "@type": "Service",
   "@id": `${pageUrl}#service`,
-  name: solution.title[lang],
-  description: solution.answer[lang],
-  serviceType: solution.title[lang],
+  name: useCase.title[lang],
+  description: useCase.answer[lang],
+  serviceType: useCase.title[lang],
   provider: { "@id": `${SITE}/#organization` },
   audience: { "@type": "BusinessAudience", name: solution.sector[lang] },
-  areaServed: [
-    { "@type": "Place", name: "Latin America" },
-    { "@type": "Country", name: "Spain" },
-    { "@type": "Country", name: "United States" },
-  ],
   inLanguage: lang,
   url: pageUrl,
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: t.solutions.processesLabel,
-    itemListElement: solution.processes.map((process) => ({
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: process.title[lang],
-        description: process.detail[lang],
-      },
-    })),
-  },
-  // La contraparte del `isPartOf` que declara cada caso de uso. Las dos
-  // direcciones explícitas: es lo que hace legible el silo sin depender de que
-  // el rastreador infiera la jerarquía de la forma de la URL.
-  ...(useCases.length
-    ? {
-        hasPart: useCases.map((useCase) => ({
-          "@type": "Service",
-          "@id": `${new URL(casePath(lang, solution, useCase), SITE).href}#service`,
-          name: useCase.title[lang],
-          description: useCase.answer[lang],
-          url: new URL(casePath(lang, solution, useCase), SITE).href,
-        })),
-      }
-    : {}),
+  /**
+   * `isPartOf` apuntando a la página de sector.
+   *
+   * Es la declaración que convierte ocho páginas sueltas en dos silos. Sin
+   * ella, un motor de respuesta que llega por «agente de whatsapp para
+   * inmobiliarias» no tiene forma de saber que existe una página más general
+   * del mismo autor sobre el mismo rubro.
+   */
+  isPartOf: { "@id": `${new URL(sectorPath, SITE).href}#service` },
+}
+
+const steps = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": `${pageUrl}#pasos`,
+  name: t.solutions.stepsLabel,
+  itemListOrder: "https://schema.org/ItemListOrderAscending",
+  itemListElement: useCase.steps.map((step, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: step.title[lang],
+    description: step.detail[lang],
+  })),
 }
 
 const breadcrumb = {
@@ -106,6 +90,12 @@ const breadcrumb = {
       "@type": "ListItem",
       position: 3,
       name: solution.sector[lang],
+      item: new URL(sectorPath, SITE).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 4,
+      name: useCase.title[lang],
       item: pageUrl,
     },
   ],
@@ -116,29 +106,29 @@ const faqPage = {
   "@type": "FAQPage",
   "@id": `${pageUrl}#faq`,
   inLanguage: lang,
-  mainEntity: solution.faq.map((entry) => ({
+  mainEntity: useCase.faq.map((entry) => ({
     "@type": "Question",
     name: entry.question[lang],
     acceptedAnswer: { "@type": "Answer", text: entry.answer[lang] },
   })),
 }
 
-// Bloques de lista con el mismo tratamiento: rótulo, regla y guiones.
+// Los dos bloques de lista comparten tratamiento, como en la página de sector.
 const lists = [
-  { label: t.solutions.stackLabel, items: solution.stack[lang] },
-  { label: t.solutions.humanLabel, items: solution.human[lang] },
+  { label: t.solutions.measuresLabel, items: useCase.measures[lang] },
+  { label: t.solutions.requiresLabel, items: useCase.requires[lang] },
 ]
 ---
 
 <Layout
   lang={lang}
   path={path}
-  title={`${solution.title[lang]} — Vantalogics`}
-  description={solution.description[lang]}
+  title={`${useCase.title[lang]} — Vantalogics`}
+  description={useCase.description[lang]}
   alternates={Object.fromEntries(
-    LANGS.map((code) => [code, solutionPath(code, solution)])
+    LANGS.map((code) => [code, casePath(code, solution, useCase)])
   )}
-  jsonLd={[service, breadcrumb, faqPage]}
+  jsonLd={[service, steps, breadcrumb, faqPage]}
 >
   <SiteHeader lang={lang} />
 
@@ -163,18 +153,27 @@ const lists = [
               {t.solutions.breadcrumb}
             </a>
           </li>
+          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
+          <li>
+            <a
+              href={sectorPath}
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+            >
+              {solution.sector[lang]}
+            </a>
+          </li>
         </ol>
       </nav>
 
       <h1
         class="mt-[clamp(32px,5vw,64px)] max-w-[20ch] display-lg text-balance text-bone"
       >
-        {solution.title[lang]}
+        {useCase.title[lang]}
       </h1>
 
       <div class="mt-[30px] flex max-w-[62ch] flex-col gap-5">
         {
-          solution.intro[lang].map((paragraph) => (
+          useCase.intro[lang].map((paragraph) => (
             <p class="copy text-ash">{paragraph}</p>
           ))
         }
@@ -188,39 +187,35 @@ const lists = [
       >
         <p class="label-untitled text-muted-ash">{t.blog.answerLabel}</p>
         <p class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.55] text-bone">
-          {solution.answer[lang]}
+          {useCase.answer[lang]}
         </p>
       </div>
     </Frame>
 
-    <Frame labelledby="procesos">
-      <h2
-        id="procesos"
-        class="max-w-[20ch] display-section text-bone"
-        data-reveal
-      >
-        {t.solutions.processesLabel}
+    <Frame labelledby="pasos">
+      <h2 id="pasos" class="max-w-[20ch] display-section text-bone" data-reveal>
+        {t.solutions.stepsLabel}
       </h2>
 
-      <ol
-        class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] gap-y-0 md:grid-cols-2"
-      >
+      <ol class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[68ch] flex-col">
         {
-          solution.processes.map((process, index) => (
+          useCase.steps.map((step, index) => (
             <li
-              class="border-t border-hairline py-7 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
+              class="flex gap-5 border-t border-hairline py-7 first:border-t-0 first:pt-0"
               data-reveal
               style={`--reveal-delay: ${index * 60}ms;`}
             >
-              <p class="label-untitled text-muted-ash">
+              <span class="shrink-0 label-untitled text-muted-ash">
                 {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 class="mt-3 text-[clamp(18px,1.7vw,21px)] leading-[1.3] text-bone">
-                {process.title[lang]}
-              </h3>
-              <p class="mt-3 max-w-[46ch] copy text-ash">
-                {process.detail[lang]}
-              </p>
+              </span>
+              <div>
+                <h3 class="text-[clamp(18px,1.7vw,21px)] leading-[1.3] text-bone">
+                  {step.title[lang]}
+                </h3>
+                <p class="mt-3 max-w-[52ch] copy text-ash">
+                  {step.detail[lang]}
+                </p>
+              </div>
             </li>
           ))
         }
@@ -251,35 +246,9 @@ const lists = [
       </div>
     </Frame>
 
-    <Frame labelledby="empezar">
-      <h2
-        id="empezar"
-        class="max-w-[20ch] display-section text-bone"
-        data-reveal
-      >
-        {t.solutions.startLabel}
-      </h2>
-      <ol class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[62ch] flex-col">
-        {
-          solution.start[lang].map((step, index) => (
-            <li
-              class="flex gap-5 border-t border-hairline py-6 first:border-t-0 first:pt-0"
-              data-reveal
-            >
-              <span class="shrink-0 label-untitled text-muted-ash">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span class="copy text-ash">{step}</span>
-            </li>
-          ))
-        }
-      </ol>
-    </Frame>
-
-    <!-- Cuándo no conviene.
-         Es la sección que hace que la página valga algo. Una página por sector
-         que sólo dice que todo se puede automatizar es indistinguible de las
-         otras mil, y un motor de respuesta no tiene motivo para citarla. -->
+    <!-- Cuándo no conviene. Mismo criterio que en la página de sector: es la
+         sección que sólo puede escribir alguien que hizo el trabajo, y es lo
+         que separa una página programática de una granja de contenido. -->
     <Frame labelledby="cuando-no">
       <h2
         id="cuando-no"
@@ -290,7 +259,7 @@ const lists = [
       </h2>
       <ul class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[62ch] flex-col">
         {
-          solution.notThis[lang].map((item) => (
+          useCase.notThis[lang].map((item) => (
             <li class="border-t border-hairline py-6 copy text-ash first:border-t-0 first:pt-0">
               {item}
             </li>
@@ -299,9 +268,9 @@ const lists = [
       </ul>
     </Frame>
 
-    <Frame labelledby="faq-solucion">
+    <Frame labelledby="faq-caso">
       <h2
-        id="faq-solucion"
+        id="faq-caso"
         class="max-w-[20ch] display-section text-bone"
         data-reveal
       >
@@ -309,7 +278,7 @@ const lists = [
       </h2>
       <dl class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[68ch] flex-col">
         {
-          solution.faq.map((entry) => (
+          useCase.faq.map((entry) => (
             <div class="border-t border-hairline py-7 first:border-t-0 first:pt-0">
               <dt class="text-[clamp(17px,1.5vw,19px)] leading-[1.4] text-bone">
                 {entry.question[lang]}
@@ -330,27 +299,24 @@ const lists = [
         >
           {t.blog.ctaButton}
         </Cta>
-        <Cta href={indexPath} variant="pill-quiet" size="pill-lg">
-          {t.solutions.breadcrumb}
+        <Cta href={sectorPath} variant="pill-quiet" size="pill-lg">
+          {t.solutions.backToSector}
         </Cta>
       </div>
     </Frame>
 
     {
-      useCases.length > 0 && (
-        <Frame labelledby="casos-de-uso">
+      siblings.length > 0 && (
+        <Frame labelledby="otros-casos">
           <h2
-            id="casos-de-uso"
+            id="otros-casos"
             class="max-w-[24ch] display-section text-bone"
             data-reveal
           >
             {t.solutions.useCasesLabel}
           </h2>
-          <p class="mt-6 max-w-[62ch] copy text-ash" data-reveal>
-            {t.solutions.useCasesIntro}
-          </p>
           <ul class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2">
-            {useCases.map((useCase, index) => (
+            {siblings.map((other, index) => (
               <li
                 class="group relative border-t border-hairline py-7 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
                 data-reveal
@@ -358,37 +324,18 @@ const lists = [
               >
                 <h3 class="text-[clamp(18px,1.7vw,21px)] leading-[1.3] text-bone">
                   <a
-                    href={casePath(lang, solution, useCase)}
+                    href={casePath(lang, solution, other)}
                     class="transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 before:absolute before:inset-0 before:content-['']"
                   >
-                    {useCase.title[lang]}
+                    {other.title[lang]}
                   </a>
                 </h3>
                 <p class="mt-3 max-w-[44ch] copy text-ash">
-                  {useCase.description[lang]}
+                  {other.description[lang]}
                 </p>
               </li>
             ))}
           </ul>
-        </Frame>
-      )
-    }
-
-    {
-      posts.length > 0 && (
-        <Frame labelledby="notas-sector">
-          <h2
-            id="notas-sector"
-            class="max-w-[24ch] display-section text-bone"
-            data-reveal
-          >
-            {t.solutions.notesLabel}
-          </h2>
-          <div class="mt-[clamp(28px,3.5vw,48px)] flex flex-col">
-            {posts.map((post) => (
-              <PostCard post={post} />
-            ))}
-          </div>
         </Frame>
       )
     }

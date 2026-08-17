@@ -28,9 +28,9 @@ export const es = {
   nav: {
     items: [
       { href: "#que-hacemos", label: "Qué hacemos" },
+      { href: "#industrias", label: "Industrias" },
       { href: "#proceso", label: "Cómo trabajamos" },
       { href: "/blog/", label: "Notas" },
-      { href: "#faq", label: "Preguntas" },
     ],
     cta: "Agendar diagnóstico",
     menu: "Menú",
@@ -372,12 +372,15 @@ export const es = {
       "Automatizamos trabajo repetitivo y construimos agentes de IA que aguantan producción.",
     columns: [
       {
-        title: "Qué hacemos",
+        title: "Industrias",
         links: [
-          { href: "#que-hacemos", label: "Automatizar un proceso" },
-          { href: "#que-hacemos", label: "Agentes a medida" },
-          { href: "#que-hacemos", label: "Evaluación y monitoreo" },
-          { href: "/soluciones/", label: "Soluciones por sector" },
+          { href: "/soluciones/inmobiliarias/", label: "Inmobiliarias" },
+          {
+            href: "/soluciones/edtech-y-plataformas-educativas/",
+            label: "EdTech y educación",
+          },
+          { href: "/soluciones/", label: "Todos los sectores" },
+          { href: "#que-hacemos", label: "Qué hacemos" },
         ],
       },
       {
@@ -441,6 +444,26 @@ export const es = {
     },
   },
 
+  /**
+   * Las dos industrias foco, en la portada.
+   *
+   * El bloque existe para resolver una tensión de posicionamiento: la agencia
+   * atiende cualquier rubro, pero una agencia que dice «atendemos cualquier
+   * rubro» no es la primera opción de nadie. El titular admite las dos cosas en
+   * la misma frase y el bloque entero es, en la práctica, el enlace más fuerte
+   * de la home hacia las dos landings de industria y sus casos de uso.
+   */
+  industries: {
+    label: "Industrias foco",
+    titleMuted: "Automatizamos en cualquier rubro.",
+    titleBright: "Estos dos los conocemos por dentro.",
+    body: "En inmobiliarias y en plataformas educativas ya sabemos qué proceso paga primero, con qué sistemas hay que hablar y en qué casos conviene decir que no. Eso acorta el diagnóstico y evita construir lo que ya sabemos que no funciona.",
+    casesLabel: "Casos de uso",
+    cta: "Ver el sector completo",
+    moreLabel: "¿Otro rubro?",
+    more: "Ver los seis sectores",
+  },
+
   /** Páginas de solución por sector. Ver `src/data/solutions.ts`. */
   solutions: {
     label: "Soluciones",
@@ -450,11 +473,21 @@ export const es = {
       "Cómo se automatiza con IA en cada sector: qué procesos conviene atacar primero, qué se integra y qué queda con aprobación humana.",
     indexIntro:
       "El proceso cambia según el rubro. Estas páginas son el punto de partida por sector: qué automatizamos primero, con qué sistemas hablamos y dónde dejamos a una persona decidiendo.",
+    focusLabel: "Industrias foco",
+    othersLabel: "Otros sectores",
     processesLabel: "Qué automatizamos primero",
     stackLabel: "Con qué se integra",
     humanLabel: "Qué queda con aprobación humana",
     startLabel: "Por dónde se empieza",
     notThisLabel: "Cuándo no conviene",
+    useCasesLabel: "Casos de uso en este sector",
+    useCasesIntro:
+      "Cada uno explica una implementación concreta: cómo funciona de punta a punta, qué número se mueve y qué tiene que existir de tu lado antes de empezar.",
+    stepsLabel: "Cómo funciona",
+    measuresLabel: "Qué se mide",
+    requiresLabel: "Qué hace falta de tu lado",
+    backToSector: "Ver todo el sector",
+    notesLabel: "Notas sobre este sector",
   },
 
   agent: {

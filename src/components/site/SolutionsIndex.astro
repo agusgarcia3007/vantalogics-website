@@ -5,7 +5,14 @@ import SiteFooter from "@/components/site/SiteFooter.astro"
 import CallToAction from "@/components/site/CallToAction.astro"
 import Frame from "@/components/site/Frame.astro"
 import { LANGS, localizePath, useTranslations, type Lang } from "@/i18n"
-import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
+import {
+  FOCUS_SOLUTIONS,
+  ORDERED_SOLUTIONS,
+  OTHER_SOLUTIONS,
+  solutionPath,
+  solutionsIndexPath,
+} from "@/data/solutions"
+import { casePath, casesFor } from "@/data/use-cases"
 
 interface Props {
   lang: Lang
@@ -23,7 +30,7 @@ const itemList = {
   "@type": "ItemList",
   "@id": `${pageUrl}#list`,
   name: t.solutions.indexTitle,
-  itemListElement: SOLUTIONS.map((solution, index) => ({
+  itemListElement: ORDERED_SOLUTIONS.map((solution, index) => ({
     "@type": "ListItem",
     position: index + 1,
     name: solution.title[lang],
@@ -93,23 +100,80 @@ const breadcrumb = {
       </p>
     </Frame>
 
-    <Frame>
-      <ul class="grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2">
+    <!-- Dos bloques y no una grilla pareja.
+         El índice tiene que decir en qué se especializa la agencia sin negar
+         que atiende el resto. Un listado alfabético de seis sectores comunica
+         exactamente lo contrario: que todos valen lo mismo. Las industrias
+         foco van arriba, con sus casos de uso desplegados; el resto va abajo,
+         más compacto y sin dejar de ser navegable. -->
+    <Frame labelledby="foco">
+      <h2 id="foco" class="label-untitled text-muted-ash" data-reveal>
+        {t.solutions.focusLabel}
+      </h2>
+
+      <ul
+        class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2"
+      >
         {
-          SOLUTIONS.map((solution, index) => (
+          FOCUS_SOLUTIONS.map((solution, index) => (
+            <li
+              class="border-t border-hairline py-8 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
+              data-reveal
+              style={`--reveal-delay: ${index * 50}ms;`}
+            >
+              <h3 class="text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em] text-bone">
+                <a
+                  href={solutionPath(lang, solution)}
+                  class="transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
+                >
+                  {solution.sector[lang]}
+                </a>
+              </h3>
+              <p class="mt-3 max-w-[44ch] copy text-ash">
+                {solution.description[lang]}
+              </p>
+
+              <ul class="mt-6 flex flex-col">
+                {casesFor(solution).map((useCase) => (
+                  <li class="border-t border-hairline first:border-t-0">
+                    <a
+                      href={casePath(lang, solution, useCase)}
+                      class="block py-3 label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                    >
+                      {useCase.title[lang]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </Frame>
+
+    <Frame labelledby="otros">
+      <h2 id="otros" class="label-untitled text-muted-ash" data-reveal>
+        {t.solutions.othersLabel}
+      </h2>
+
+      <ul
+        class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2"
+      >
+        {
+          OTHER_SOLUTIONS.map((solution, index) => (
             <li
               class="group relative border-t border-hairline py-8 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
               data-reveal
               style={`--reveal-delay: ${index * 50}ms;`}
             >
-              <h2 class="text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em] text-bone">
+              <h3 class="text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em] text-bone">
                 <a
                   href={solutionPath(lang, solution)}
                   class="transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 before:absolute before:inset-0 before:content-['']"
                 >
                   {solution.sector[lang]}
                 </a>
-              </h2>
+              </h3>
               <p class="mt-3 max-w-[44ch] copy text-ash">
                 {solution.description[lang]}
               </p>
