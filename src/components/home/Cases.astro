@@ -77,6 +77,8 @@ const pick = (value: Partial<Record<Lang, string>> & { en: string }) =>
                 {study.href && (
                   <a
                     href={pick(study.href)}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="inline-flex items-center gap-1 label-untitled text-bone hover:text-soft-indigo"
                   >
                     {t.labels.read}

@@ -122,18 +122,23 @@ export const es = {
     ],
   },
 
+  clients: {
+    title: "Clientes con productos en producción",
+    visit: "Visitar",
+  },
+
   cases: {
     eyebrow: "Trabajo seleccionado",
-    title: "Productos que ya están generando resultados.",
+    title: "Productos educativos en producción.",
     intro:
-      "Cada caso muestra el punto de partida, lo que construimos y el resultado que produjo. Sin métricas decorativas ni proyectos presentados como éxitos antes de llegar a producción.",
+      "Cada caso muestra el desafío, el producto que construimos y su alcance verificable hoy. Resultados medibles cuando existen; alcance real cuando todavía no hay una línea de base publicable.",
     labels: {
       client: "Cliente",
       start: "Punto de partida",
       built: "Qué construimos",
       impact: "Impacto",
-      integrations: "Integraciones",
-      read: "Leer el caso completo",
+      integrations: "Componentes",
+      read: "Ver el producto",
     },
   },
 

@@ -1,0 +1,62 @@
+---
+import { CLIENTS } from "@/data/clients"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).clients
+---
+
+<section
+  aria-labelledby="clientes-titulo"
+  class="border-y border-iron bg-pure-black/40"
+>
+  <div class="shell grid lg:grid-cols-12">
+    <div
+      class="flex items-center border-b border-iron py-6 lg:col-span-3 lg:border-e lg:border-b-0 lg:pe-8"
+    >
+      <h2 id="clientes-titulo" class="max-w-[22ch] mono-sm text-mist">
+        {t.title}
+      </h2>
+    </div>
+
+    <ul class="grid sm:grid-cols-2 lg:col-span-9">
+      {
+        CLIENTS.map((client, index) => (
+          <li
+            class:list={[
+              index > 0 && "border-t border-iron sm:border-s sm:border-t-0",
+            ]}
+          >
+            <a
+              href={client.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${t.visit} ${client.name}`}
+              class="group flex min-h-32 items-center justify-center gap-4 px-6 py-5 transition-colors duration-(--duration-state) ease-(--ease-out) hover:bg-graphite focus-visible:bg-graphite"
+            >
+              <img
+                src={client.logo}
+                alt={client.logoAlt}
+                class:list={[
+                  client.logoClass,
+                  "object-contain opacity-65 grayscale transition-[filter,opacity] duration-(--duration-state) ease-(--ease-out) group-hover:opacity-100 group-hover:grayscale-0 group-focus-visible:opacity-100 group-focus-visible:grayscale-0",
+                ]}
+                loading="eager"
+                decoding="async"
+              />
+              {client.wordmark && (
+                <span class="text-[22px] font-medium tracking-[-0.5px] text-ash transition-colors duration-(--duration-state) group-hover:text-bone group-focus-visible:text-bone sm:text-[24px]">
+                  {client.wordmark}
+                </span>
+              )}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

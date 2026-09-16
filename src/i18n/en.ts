@@ -98,18 +98,23 @@ export const en: Dictionary = {
     ],
   },
 
+  clients: {
+    title: "Clients with products in production",
+    visit: "Visit",
+  },
+
   cases: {
     eyebrow: "Selected work",
-    title: "Products already delivering measurable results.",
+    title: "Education products in production.",
     intro:
-      "Every case explains the starting point, what we built and what changed. No decorative metrics and no prototypes presented as production success.",
+      "Each case explains the challenge, the product we built and its verifiable scope today. Measured outcomes where they exist; real product scope where a publishable baseline does not yet exist.",
     labels: {
       client: "Client",
       start: "Starting point",
       built: "What we built",
       impact: "Impact",
-      integrations: "Integrations",
-      read: "Read the full case",
+      integrations: "Product areas",
+      read: "View the product",
     },
   },
 
