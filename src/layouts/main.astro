@@ -42,11 +42,11 @@ const imageUrl = new URL(image ?? ogImage(lang), SITE).href
 const pageTitle = title ?? t.meta.title
 const pageDescription = description ?? t.meta.description
 
-const hreflangs = alternates ?? { es: "/", en: "/en/" }
+const hreflangs = alternates ?? { es: "/", en: "/en/", ar: "/ar/" }
 const hreflangEntries = (Object.entries(hreflangs) as [Lang, string][]).filter(
   ([, href]) => Boolean(href)
 )
-const xDefault = hreflangs.es ?? hreflangs.en
+const xDefault = hreflangs.es ?? hreflangs.en ?? hreflangs.ar
 ---
 
 <!doctype html>
@@ -83,17 +83,16 @@ const xDefault = hreflangs.es ?? hreflangs.en
     />
 
     <!-- Tema antes del primer pintado: evita el flash de tema equivocado.
-         El sistema es de papel por defecto (design.md) y sólo se oscurece si
-         hay una elección guardada. -->
+         El sistema es oscuro por defecto (design.md). -->
     <script is:inline>
       document.documentElement.classList.add("js")
       try {
         const stored = localStorage.getItem("vl-theme")
-        if (stored === "dark") {
-          document.documentElement.setAttribute("data-theme", "dark")
+        if (stored === "light") {
+          document.documentElement.setAttribute("data-theme", "light")
         }
       } catch {
-        /* almacenamiento bloqueado: se queda en papel */
+        /* almacenamiento bloqueado: se queda en oscuro */
       }
     </script>
 
@@ -101,16 +100,7 @@ const xDefault = hreflangs.es ?? hreflangs.en
     <meta name="description" content={pageDescription} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Vantalogics" />
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: light)"
-      content="#f4f1e9"
-    />
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: dark)"
-      content="#100f0d"
-    />
+    <meta name="theme-color" content="#020202" />
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
@@ -144,7 +134,7 @@ const xDefault = hreflangs.es ?? hreflangs.en
   <body>
     <a
       href="#contenido"
-      class="sr-only label-mono focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:border focus:border-bone focus:bg-canvas focus:px-[15px] focus:py-[7px] focus:text-bone"
+      class="sr-only label-untitled focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-pill focus:border focus:border-bone focus:bg-canvas focus:px-[15px] focus:py-[7px] focus:text-bone"
     >
       {t.a11y.skip}
     </a>

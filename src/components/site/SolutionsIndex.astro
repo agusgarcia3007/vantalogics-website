@@ -4,12 +4,15 @@ import SiteHeader from "@/components/site/SiteHeader.astro"
 import SiteFooter from "@/components/site/SiteFooter.astro"
 import CallToAction from "@/components/site/CallToAction.astro"
 import Frame from "@/components/site/Frame.astro"
-import Cta from "@/components/site/Cta.astro"
-import PostCard from "@/components/blog/PostCard.astro"
 import { LANGS, localizePath, useTranslations, type Lang } from "@/i18n"
-import { EDTECH, solutionPath, solutionsIndexPath } from "@/data/solutions"
+import {
+  FOCUS_SOLUTIONS,
+  ORDERED_SOLUTIONS,
+  OTHER_SOLUTIONS,
+  solutionPath,
+  solutionsIndexPath,
+} from "@/data/solutions"
 import { casePath, casesFor } from "@/data/use-cases"
-import { getPostsByIndustry } from "@/lib/blog"
 
 interface Props {
   lang: Lang
@@ -21,29 +24,17 @@ const t = useTranslations(lang)
 
 const path = solutionsIndexPath(lang)
 const pageUrl = new URL(path, SITE).href
-const sectorPath = solutionPath(lang, EDTECH)
-const useCases = casesFor(EDTECH)
-const posts = await getPostsByIndustry(lang, EDTECH.slug.es)
-const alternates = Object.fromEntries(
-  LANGS.map((code) => [code, solutionsIndexPath(code)])
-) as Record<Lang, string>
 
-// El índice del sector.
-//
-// Con una sola vertical, esta página no es una lista de rubros: es la puerta
-// de entrada al silo. Responde la consulta de investigación —«cómo se integra
-// IA en una plataforma educativa»— y desde ahí baja a las cuatro
-// implementaciones, que es donde está la intención de compra.
 const itemList = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "@id": `${pageUrl}#list`,
-  name: t.solutions.useCasesLabel,
-  itemListElement: useCases.map((useCase, index) => ({
+  name: t.solutions.indexTitle,
+  itemListElement: ORDERED_SOLUTIONS.map((solution, index) => ({
     "@type": "ListItem",
     position: index + 1,
-    name: useCase.title[lang],
-    url: new URL(casePath(lang, EDTECH, useCase), SITE).href,
+    name: solution.title[lang],
+    url: new URL(solutionPath(lang, solution), SITE).href,
   })),
 }
 
@@ -72,10 +63,12 @@ const breadcrumb = {
   path={path}
   title={`${t.solutions.indexTitle} — Vantalogics`}
   description={t.solutions.indexDescription}
-  alternates={alternates}
+  alternates={Object.fromEntries(
+    LANGS.map((code) => [code, solutionsIndexPath(code)])
+  )}
   jsonLd={[itemList, breadcrumb]}
 >
-  <SiteHeader lang={lang} alternates={alternates} />
+  <SiteHeader lang={lang} />
 
   <main id="contenido">
     <Frame flush>
@@ -84,13 +77,13 @@ const breadcrumb = {
           <li>
             <a
               href={localizePath(lang)}
-              class="label-mono-sm text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone"
+              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
             >
               Vantalogics
             </a>
           </li>
-          <li class="label-mono-sm text-faint" aria-hidden="true">/</li>
-          <li class="label-mono-sm text-faint" aria-current="page">
+          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
+          <li class="label-untitled text-muted-ash" aria-current="page">
             {t.solutions.breadcrumb}
           </li>
         </ol>
@@ -102,90 +95,96 @@ const breadcrumb = {
         {t.solutions.indexTitle}
       </h1>
 
-      <p class="copy-lead mt-8 max-w-[58ch] text-ash">
+      <p class="mt-[30px] max-w-[56ch] copy text-ash">
         {t.solutions.indexIntro}
       </p>
-
-      <div class="mt-10 flex flex-wrap gap-3">
-        <Cta href={sectorPath} variant="solid" size="lg">
-          {t.solutions.backToSector}
-        </Cta>
-      </div>
     </Frame>
 
-    <Frame labelledby="implementaciones" class="bg-canvas">
-      <h2 id="implementaciones" class="display-section max-w-[24ch] text-bone" data-reveal>
-        {t.solutions.useCasesLabel}
+    <!-- Dos bloques y no una grilla pareja.
+         El índice tiene que decir en qué se especializa la agencia sin negar
+         que atiende el resto. Un listado alfabético de seis sectores comunica
+         exactamente lo contrario: que todos valen lo mismo. Las industrias
+         foco van arriba, con sus casos de uso desplegados; el resto va abajo,
+         más compacto y sin dejar de ser navegable. -->
+    <Frame labelledby="foco">
+      <h2 id="foco" class="label-untitled text-muted-ash" data-reveal>
+        {t.solutions.focusLabel}
       </h2>
 
-      <p class="copy mt-6 max-w-[62ch] text-ash" data-reveal>
-        {t.solutions.useCasesIntro}
-      </p>
-
-      <ul class="mt-[clamp(36px,4.5vw,64px)] flex flex-col">
+      <ul
+        class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2"
+      >
         {
-          useCases.map((useCase, index) => (
+          FOCUS_SOLUTIONS.map((solution, index) => (
             <li
-              class="use-case group relative grid gap-x-[clamp(24px,4vw,64px)] gap-y-3 border-t border-hairline py-[clamp(24px,3vw,36px)] last:border-b md:grid-cols-[auto_minmax(0,1fr)]"
+              class="border-t border-hairline py-8 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
               data-reveal
-              style={`--reveal-delay: ${index * 60}ms;`}
+              style={`--reveal-delay: ${index * 50}ms;`}
             >
-              <span class="label-mono-sm pt-[7px] text-pen-ink md:w-10" data-numeral>
-                {String(index + 1).padStart(2, "0")}
-              </span>
+              <h3 class="text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em] text-bone">
+                <a
+                  href={solutionPath(lang, solution)}
+                  class="transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
+                >
+                  {solution.sector[lang]}
+                </a>
+              </h3>
+              <p class="mt-3 max-w-[44ch] copy text-ash">
+                {solution.description[lang]}
+              </p>
 
-              <div>
-                <h3 class="display-sm max-w-[28ch] text-bone">
-                  <a
-                    href={casePath(lang, EDTECH, useCase)}
-                    class="transition-colors duration-(--duration-state) ease-paper group-hover:text-pen-ink before:absolute before:inset-0 before:content-['']"
-                  >
-                    {useCase.title[lang]}
-                  </a>
-                </h3>
-                <p class="copy mt-3 max-w-[56ch] text-[15px] text-ash">
-                  {useCase.description[lang]}
-                </p>
-              </div>
+              <ul class="mt-6 flex flex-col">
+                {casesFor(solution).map((useCase) => (
+                  <li class="border-t border-hairline first:border-t-0">
+                    <a
+                      href={casePath(lang, solution, useCase)}
+                      class="block py-3 label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                    >
+                      {useCase.title[lang]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))
         }
       </ul>
     </Frame>
 
-    {
-      posts.length > 0 && (
-        <Frame labelledby="notas-sector">
-          <h2
-            id="notas-sector"
-            class="display-section max-w-[24ch] text-bone"
-            data-reveal
-          >
-            {t.solutions.othersLabel}
-          </h2>
-          <div class="mt-[clamp(28px,3.5vw,48px)] flex flex-col">
-            {posts.map((post) => (
-              <PostCard post={post} />
-            ))}
-          </div>
-        </Frame>
-      )
-    }
+    <Frame labelledby="otros">
+      <h2 id="otros" class="label-untitled text-muted-ash" data-reveal>
+        {t.solutions.othersLabel}
+      </h2>
+
+      <ul
+        class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2"
+      >
+        {
+          OTHER_SOLUTIONS.map((solution, index) => (
+            <li
+              class="group relative border-t border-hairline py-8 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
+              data-reveal
+              style={`--reveal-delay: ${index * 50}ms;`}
+            >
+              <h3 class="text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em] text-bone">
+                <a
+                  href={solutionPath(lang, solution)}
+                  class="transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 before:absolute before:inset-0 before:content-['']"
+                >
+                  {solution.sector[lang]}
+                </a>
+              </h3>
+              <p class="mt-3 max-w-[44ch] copy text-ash">
+                {solution.description[lang]}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </Frame>
 
     <CallToAction lang={lang} />
   </main>
 
   <SiteFooter lang={lang} />
 </Layout>
-
-<style>
-  .use-case {
-    transition: background-color var(--duration-state) var(--ease-paper);
-  }
-
-  @media (hover: hover) {
-    .use-case:hover {
-      background-color: var(--color-surface);
-    }
-  }
-</style>

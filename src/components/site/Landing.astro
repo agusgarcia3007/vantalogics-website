@@ -2,14 +2,13 @@
 import Layout from "@/layouts/main.astro"
 import SiteHeader from "@/components/site/SiteHeader.astro"
 import Hero from "@/components/site/Hero.astro"
-import Signals from "@/components/site/Signals.astro"
-import Thesis from "@/components/site/Thesis.astro"
-import Capabilities from "@/components/site/Capabilities.astro"
-import Cases from "@/components/site/Cases.astro"
+import Tools from "@/components/site/Tools.astro"
+import Problem from "@/components/site/Problem.astro"
+import Services from "@/components/site/Services.astro"
+import Industries from "@/components/site/Industries.astro"
 import AgentDemo from "@/components/site/AgentDemo.astro"
 import Process from "@/components/site/Process.astro"
-import Principles from "@/components/site/Principles.astro"
-import Insights from "@/components/site/Insights.astro"
+import Guarantees from "@/components/site/Guarantees.astro"
 import Faq from "@/components/site/Faq.astro"
 import CallToAction from "@/components/site/CallToAction.astro"
 import SiteFooter from "@/components/site/SiteFooter.astro"
@@ -21,8 +20,7 @@ import {
   type Lang,
 } from "@/i18n"
 import { GITHUB_URL, INSTAGRAM_URL } from "@/site"
-import { EDTECH, solutionPath } from "@/data/solutions"
-import { casePath, casesFor } from "@/data/use-cases"
+import { FOCUS_SOLUTIONS, solutionPath } from "@/data/solutions"
 
 interface Props {
   lang: Lang
@@ -35,20 +33,28 @@ const pageUrl = new URL(localizePath(lang), SITE).href
 
 const KNOWS_ABOUT: Record<Lang, string[]> = {
   es: [
-    "Tutores de IA para plataformas educativas",
-    "Corrección asistida con rúbrica",
-    "Retrieval Augmented Generation sobre contenido educativo",
+    "Automatización de procesos empresariales",
+    "Agentes de IA",
     "Evaluación de modelos de lenguaje",
-    "Observabilidad y costo de sistemas de IA",
-    "Integración de IA en producto EdTech",
+    "Observabilidad de sistemas de IA",
+    "Retrieval Augmented Generation",
+    "Integración de IA en producto",
   ],
   en: [
-    "AI tutors for learning platforms",
-    "Rubric-based assisted grading",
-    "Retrieval Augmented Generation over educational content",
+    "Business process automation",
+    "AI agents",
     "Large language model evaluation",
-    "AI systems observability and cost control",
-    "AI product integration for EdTech",
+    "AI systems observability",
+    "Retrieval Augmented Generation",
+    "AI product integration",
+  ],
+  ar: [
+    "أتمتة العمليات في الشركات",
+    "وكلاء الذكاء الاصطناعي",
+    "تقييم النماذج اللغوية الكبيرة",
+    "مراقبة أنظمة الذكاء الاصطناعي",
+    "التوليد المعزَّز بالاسترجاع",
+    "دمج الذكاء الاصطناعي في المنتجات",
   ],
 }
 
@@ -68,35 +74,31 @@ const organization = {
   description: t.meta.description,
   email: "hello@vantalogics.com",
   telephone: "+541178296140",
-  slogan: `${t.hero.title} ${t.hero.titleMark}`,
+  slogan: t.hero.title,
   sameAs: [GITHUB_URL, INSTAGRAM_URL],
   /**
    * `knowsAbout` va en el idioma de la página: es el texto que un motor de
    * respuesta cita cuando resume a la empresa, y una lista en español dentro
-   * de la página en inglés se cita en español.
+   * de la página árabe se cita en español.
    */
   knowsAbout: KNOWS_ABOUT[lang],
-  /** La especialización, declarada como dato y no sólo como texto. */
-  audience: {
-    "@type": "BusinessAudience",
-    name: EDTECH.sector[lang],
-    audienceType: "EdTech companies and learning platforms",
-  },
   areaServed: [
     { "@type": "Place", name: "Latin America" },
     { "@type": "Country", name: "Spain" },
     { "@type": "Country", name: "United States" },
+    { "@type": "Country", name: "United Arab Emirates" },
+    { "@type": "Place", name: "Gulf Cooperation Council" },
   ],
   availableLanguage: LANGS,
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: t.capabilities.label,
-    itemListElement: t.capabilities.items.map((item) => ({
+    name: t.services.titleBright,
+    itemListElement: t.services.items.map((service) => ({
       "@type": "Offer",
       itemOffered: {
         "@type": "Service",
-        name: item.title,
-        description: item.summary,
+        name: service.title,
+        description: service.summary,
       },
     })),
   },
@@ -126,25 +128,25 @@ const webPage = {
 }
 
 /**
- * Los cuatro casos de uso, como lista enlazada desde la portada.
+ * Las industrias foco, como lista enlazada desde la portada.
  *
- * `ItemList` y no cuatro `Service` sueltos: lo que se declara es que la
- * portada es el índice de esas páginas, que es la relación que hace que un
+ * `ItemList` y no cuatro `Service` sueltos: lo que se declara acá es que la
+ * portada es el índice de esas dos páginas, que es la relación que hace que un
  * motor de respuesta las trate como el contenido canónico de la empresa sobre
- * cada implementación en vez de como cuatro páginas más del sitio.
+ * cada rubro en vez de como dos páginas más del sitio.
  */
-const useCasesList = {
+const industriesList = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "@id": `${pageUrl}#implementaciones`,
-  name: t.solutions.useCasesLabel,
-  description: t.solutions.useCasesIntro,
-  itemListElement: casesFor(EDTECH).map((useCase, index) => ({
+  "@id": `${pageUrl}#industrias`,
+  name: t.industries.label,
+  description: t.industries.body,
+  itemListElement: FOCUS_SOLUTIONS.map((solution, index) => ({
     "@type": "ListItem",
     position: index + 1,
-    name: useCase.title[lang],
-    description: useCase.answer[lang],
-    url: new URL(casePath(lang, EDTECH, useCase), SITE).href,
+    name: solution.title[lang],
+    description: solution.answer[lang],
+    url: new URL(solutionPath(lang, solution), SITE).href,
   })),
 }
 
@@ -163,36 +165,22 @@ const faqPage = {
 
 <Layout
   lang={lang}
-  jsonLd={[organization, website, webPage, useCasesList, faqPage]}
+  jsonLd={[organization, website, webPage, industriesList, faqPage]}
 >
   <SiteHeader lang={lang} />
 
   <main id="contenido">
     <Hero lang={lang} />
-    <Signals lang={lang} />
-    <Thesis lang={lang} />
-    <Capabilities lang={lang} />
-    <Cases lang={lang} />
+    <Tools lang={lang} />
+    <Problem lang={lang} />
+    <Services lang={lang} />
+    <Industries lang={lang} />
     <AgentDemo lang={lang} />
     <Process lang={lang} />
-    <Principles lang={lang} />
-    <Insights lang={lang} />
+    <Guarantees lang={lang} />
     <Faq lang={lang} />
     <CallToAction lang={lang} />
   </main>
 
   <SiteFooter lang={lang} />
 </Layout>
-
-<script is:inline define:vars={{ sectorUrl: solutionPath(lang, EDTECH) }}>
-  // Prefetch de la página de sector: es el destino más probable después de la
-  // portada y pesa poco. Se hace en reposo para no competir con el hero.
-  if ("requestIdleCallback" in window) {
-    requestIdleCallback(() => {
-      const link = document.createElement("link")
-      link.rel = "prefetch"
-      link.href = sectorUrl
-      document.head.appendChild(link)
-    })
-  }
-</script>

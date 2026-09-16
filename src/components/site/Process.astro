@@ -11,42 +11,37 @@ const { lang } = Astro.props
 const t = useTranslations(lang).process
 ---
 
-<Frame id="proceso" labelledby="como-trabajamos" class="bg-canvas">
+<Frame id="proceso" labelledby="como-trabajamos">
   <SectionTitle
     id="como-trabajamos"
-    index="05"
     label={t.label}
     muted={t.titleMuted}
     bright={t.titleBright}
-    class="max-w-[34ch]"
+    class="max-w-[38ch]"
   />
 
-  <!-- Cuatro fases sobre una sola línea de tiempo. La regla horizontal es una
-       sola y cruza las cuatro columnas; cada fase la marca con un punto, como
-       las marcas de un cronograma dibujado a mano. -->
+  <!-- Cuatro fases en una sola línea de tiempo horizontal en desktop, con el
+       número anclado a una regla: el orden se ve antes de leer nada. -->
   <ol
-    class="mt-[clamp(44px,5vw,72px)] grid gap-x-[clamp(24px,3vw,44px)] gap-y-12 md:grid-cols-2 lg:grid-cols-4"
+    class="mt-[clamp(40px,5vw,64px)] grid gap-x-[clamp(24px,3vw,40px)] gap-y-10 md:grid-cols-2 lg:grid-cols-4"
   >
     {
       t.steps.map((step, i) => (
         <li data-reveal style={`--reveal-delay: ${i * 90}ms;`}>
           <div class="flex items-center gap-3">
-            <span class="label-mono-sm text-pen-ink" data-numeral>
+            <span class="font-untitled text-[15px] font-medium text-bone">
               {step.step}
             </span>
-            <span class="relative h-px flex-1 bg-hairline">
-              <span
-                class="absolute -top-[2px] left-0 size-[5px] rounded-full bg-pen"
-                aria-hidden="true"
-              />
-            </span>
+            <span class="h-px flex-1 bg-hairline" />
           </div>
 
-          <h3 class="display-sm mt-6 text-bone">{step.title}</h3>
+          <h3 class="mt-5 font-untitled text-[19px] leading-tight text-bone">
+            {step.title}
+          </h3>
 
-          <p class="copy mt-4 text-[15px] text-ash">{step.body}</p>
+          <p class="copy mt-3 text-ash">{step.body}</p>
 
-          <p class="label-mono-sm mt-5 text-faint">{step.meta}</p>
+          <p class="label-untitled mt-4 text-muted-ash">{step.meta}</p>
         </li>
       ))
     }

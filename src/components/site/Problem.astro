@@ -1,0 +1,58 @@
+---
+import Frame from "@/components/site/Frame.astro"
+import SectionTitle from "@/components/site/SectionTitle.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).problem
+---
+
+<Frame labelledby="problema">
+  <div
+    class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)]"
+  >
+    <SectionTitle
+      id="problema"
+      label={t.label}
+      muted={t.titleMuted}
+      bright={t.titleBright}
+    />
+
+    <div>
+      {
+        t.body.map((paragraph, i) => (
+          <p
+            class="copy max-w-[54ch] text-ash first:mt-0 mt-5"
+            data-reveal
+            style={`--reveal-delay: ${100 + i * 80}ms;`}
+          >
+            {paragraph}
+          </p>
+        ))
+      }
+
+      <!-- La lista de síntomas. Cada línea arranca con el hecho en bone y
+           sigue en gris: se puede barrer leyendo sólo lo primero de cada una,
+           que es como se lee una landing en la vida real. -->
+      <ul class="mt-10">
+        {
+          t.items.map((item, i) => (
+            <li
+              class="border-t border-hairline py-[15px]"
+              data-reveal
+              style={`--reveal-delay: ${260 + i * 70}ms;`}
+            >
+              <p class="copy max-w-[52ch] text-ash">
+                <span class="text-bone">{item.title}</span> {item.detail}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</Frame>

@@ -1,8 +1,7 @@
 ---
 import Cta from "@/components/site/Cta.astro"
 import Frame from "@/components/site/Frame.astro"
-import HeroField from "@/components/site/HeroField.astro"
-import Mark from "@/components/site/Mark.astro"
+import HeroFlow from "@/components/site/HeroFlow.astro"
 import { useTranslations, type Lang } from "@/i18n"
 import { SCHEDULE_URL } from "@/site"
 
@@ -12,170 +11,90 @@ interface Props {
 
 const { lang } = Astro.props
 const t = useTranslations(lang)
-const hero = t.hero
 ---
 
-<Frame id="inicio" flush bleed class="relative overflow-hidden">
-  <HeroField />
-
-  <!-- Dos columnas: el argumento a la izquierda y, a la derecha, una consulta
-       de alumno resuelta paso por paso. La demostración es más específica que
-       cualquier ilustración: dice qué hace el sistema y dónde se detiene. -->
+<Frame id="inicio" flush>
+  <!-- Dos columnas: el argumento a la izquierda, la demostración a la derecha.
+       El titular se dimensiona para caer en dos líneas y dejar aire, no para
+       comerse la primera pantalla — la ilustración tiene que entrar con él. -->
   <div
-    class="relative grid items-center gap-x-[clamp(32px,5vw,80px)] gap-y-[clamp(44px,6vw,72px)] px-[clamp(20px,4vw,72px)] pb-[88px] md:pb-0 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,420px)]"
+    class="grid items-center gap-x-[clamp(32px,5vw,72px)] gap-y-[clamp(40px,6vw,64px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)]"
   >
     <div>
-      <p class="flex items-center gap-3" data-reveal>
-        <span class="h-px w-8 bg-pen" aria-hidden="true"></span>
-        <span class="label-mono text-pen-ink">{hero.eyebrow}</span>
-      </p>
+      <p class="label-untitled text-muted-ash" data-reveal>{t.hero.eyebrow}</p>
 
       <h1
-        class="display-hero mt-7 max-w-[17ch] text-balance text-bone"
+        class="display-hero mt-5 max-w-[15ch] text-balance text-bone"
         data-reveal
         style="--reveal-delay: 60ms;"
       >
-        {hero.title}{" "}
-        <Mark delay={520}>{hero.titleMark}</Mark>
+        {t.hero.title}
       </h1>
 
       <p
-        class="copy-lead mt-8 max-w-[52ch] text-ash"
+        class="copy mt-6 max-w-[48ch] text-ash"
         data-reveal
-        style="--reveal-delay: 140ms;"
+        style="--reveal-delay: 120ms;"
       >
-        {hero.lead}
+        {t.hero.lead}
       </p>
 
       <div
-        class="mt-10 flex flex-wrap items-center gap-3"
+        class="mt-9 flex flex-wrap items-center gap-3"
         data-reveal
-        style="--reveal-delay: 200ms;"
+        style="--reveal-delay: 180ms;"
       >
         <Cta
           href={SCHEDULE_URL}
-          variant="solid"
-          size="lg"
+          variant="pill-solid"
           target="_blank"
           rel="noopener noreferrer"
         >
-          {hero.ctaPrimary}
+          {t.hero.ctaPrimary}
         </Cta>
 
         <!-- Abre el mismo panel que el botón flotante: la segunda acción del
-             hero es probar el sistema, no leer más sobre él. -->
-        <button
-          type="button"
-          class="cta-quiet"
-          data-agent-open-secondary
-          aria-haspopup="dialog"
-        >
-          {hero.ctaSecondary}
+             hero es probar el producto, no leer más sobre él. -->
+        <button type="button" class="cta-quiet" data-agent-open-secondary>
+          {t.hero.ctaSecondary}
         </button>
       </div>
 
       <p
-        class="mt-8 flex max-w-[48ch] gap-3 border-t border-hairline pt-5 copy text-[15px] text-ash"
+        class="label-untitled mt-6 max-w-[46ch] text-muted-ash"
         data-reveal
-        style="--reveal-delay: 260ms;"
+        style="--reveal-delay: 240ms;"
       >
-        <span class="label-mono-sm mt-[5px] shrink-0 text-faint">01</span>
-        <span>{hero.note}</span>
+        {t.hero.note}
       </p>
     </div>
 
-    <!-- La ficha. Va apoyada sobre el papel, apenas girada y con la sombra
-         corta de una tarjeta que alguien dejó ahí. -->
-    <figure
-      class="card relative w-full border border-hairline bg-canvas p-[clamp(20px,2.2vw,28px)] shadow-paper"
-      data-reveal
-      style="--reveal-delay: 320ms;"
-    >
-      <figcaption class="label-mono text-faint">{hero.field.label}</figcaption>
-
-      <p
-        class="mt-4 font-display text-[clamp(18px,1.6vw,21px)] leading-[1.35] text-bone italic"
-      >
-        {hero.field.question}
-      </p>
-
-      <ol class="mt-7">
-        {
-          hero.field.steps.map((step, i) => (
-            <li class="flex gap-4 border-t border-hairline py-[14px] last:pb-0">
-              <span class="label-mono-sm mt-[3px] shrink-0 text-pen-ink" data-numeral>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span>
-                <span class="block font-sans text-[15px] leading-snug text-bone">
-                  {step.title}
-                </span>
-                <span class="mt-1 block font-mono text-micro text-ash">
-                  {step.detail}
-                </span>
-              </span>
-            </li>
-          ))
-        }
-      </ol>
-
-      <p class="annotation mt-6 border-t border-hairline pt-5">
-        {hero.field.footnote}
-      </p>
-    </figure>
+    <div class="w-full">
+      <HeroFlow lang={lang} />
+    </div>
   </div>
-
-  <!-- La anotación al margen del hero: una línea, en rojo y girada, como lo
-       que alguien escribiría al costado de la hoja. Se esconde en pantallas
-       angostas, donde no hay margen donde anotar. -->
-  <p class="annotation hero-note" data-reveal style="--reveal-delay: 420ms;">
-    {hero.annotation}
-  </p>
 </Frame>
 
 <style>
-  .card {
-    transform: rotate(-0.35deg);
-  }
-
-  .hero-note {
-    display: none;
-  }
-
-  @media (min-width: 1360px) {
-    .hero-note {
-      position: absolute;
-      inset-block-start: clamp(56px, 7.5vw, 112px);
-      inset-inline-end: 26px;
-      display: block;
-      max-width: 15ch;
-      transform: rotate(1.4deg);
-      text-align: end;
-    }
-  }
-
   .cta-quiet {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 56px;
-    padding: 16px 4px;
-    font-family: var(--font-mono);
-    font-weight: 450;
-    font-size: var(--text-label);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    min-height: 44px;
+    padding: 7px 15px;
+    border-radius: var(--radius-pill);
+    border: var(--hairline-width) solid var(--color-hairline);
+    font-family: var(--font-untitled);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-caption);
     color: var(--color-ash);
-    /* El subrayado es del grosor del lápiz y se entinta al pasar: la tercera
-       acción del sistema no tiene caja. */
-    box-shadow: inset 0 -1px 0 0 var(--color-hairline);
     transition:
-      color var(--duration-state) var(--ease-paper),
-      box-shadow var(--duration-state) var(--ease-paper);
+      color var(--duration-state) var(--ease-opx),
+      border-color var(--duration-state) var(--ease-opx);
   }
 
   .cta-quiet:hover {
     color: var(--color-bone);
-    box-shadow: inset 0 -2px 0 0 var(--color-pen);
+    border-color: var(--color-bone);
   }
 </style>

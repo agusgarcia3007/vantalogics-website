@@ -1,7 +1,12 @@
 import type { APIRoute } from "astro"
 
 import { getPosts, postPath } from "@/lib/blog"
-import { EDTECH, solutionPath, solutionsIndexPath } from "@/data/solutions"
+import {
+  FOCUS_SOLUTIONS,
+  OTHER_SOLUTIONS,
+  solutionPath,
+  solutionsIndexPath,
+} from "@/data/solutions"
 import { casePath, casesFor } from "@/data/use-cases"
 
 const SITE = "https://vantalogics.com"
@@ -11,78 +16,99 @@ const url = (path: string) => new URL(path, SITE).href
 /**
  * `llms.txt` generado.
  *
- * Es un índice, y un índice escrito a mano queda desactualizado en la primera
- * publicación. La parte de arriba —qué hace la empresa, cómo trabaja, los
- * datos duros— sigue siendo prosa fija y curada, porque eso no se deriva de
- * ningún dato. Lo que se genera es el listado de contenido, y cada nota entra
- * con su respuesta corta: un modelo que lee este archivo y no llega a visitar
- * la página igual se lleva la afirmación citable.
+ * Antes era un archivo estático en `public/`. Se pasó a ruta por el mismo
+ * motivo que el sitemap: es un índice, y un índice escrito a mano queda
+ * desactualizado en la primera publicación.
  *
- * Lo primero que tiene que quedar claro para el que resume esta empresa es la
- * especialización. Por eso el archivo abre diciendo «agencia de IA para
- * EdTech» y no enumera rubros: el posicionamiento es no atender otros.
+ * La parte de arriba —qué hace la empresa, cómo trabaja, los datos duros— sigue
+ * siendo prosa fija y curada, porque eso no se deriva de ningún dato. Lo que se
+ * genera es el listado de contenido, y cada nota entra con su respuesta corta:
+ * un modelo que lee este archivo y no llega a visitar la página igual se lleva
+ * la afirmación citable.
  */
 export const GET: APIRoute = async () => {
   const postsEs = await getPosts("es")
   const postsEn = await getPosts("en")
-  const useCases = casesFor(EDTECH)
+  const postsAr = await getPosts("ar")
 
   const preamble = `# Vantalogics
 
-> Agencia de IA especializada en EdTech. Construimos tutores acotados al curso,
-> corrección asistida con rúbrica y búsqueda con citas adentro de plataformas
-> educativas: evaluados con casos reales, con control humano sobre la nota y
-> con el costo por alumno calculado antes de construir.
+> Agencia de sistemas de IA. Automatizamos procesos de empresas y construimos
+> agentes de IA a medida —evaluados, monitoreados y con control humano— que
+> aguantan producción.
 
 - Sitio (ES): ${SITE}
 - Site (EN): ${url("/en/")}
+- الموقع (AR): ${url("/ar/")}
 - Contacto: hello@vantalogics.com
-- Idiomas de trabajo: español e inglés
-- Cobertura: América Latina, España y Estados Unidos (remoto)
-- Especialización: una sola vertical, educación. No trabajamos otros rubros.
+- Idiomas de trabajo: español e inglés (el sitio además está publicado en árabe)
+- Cobertura: América Latina, España, Estados Unidos y el Golfo (remoto)
 
-## Qué construimos
+## Servicios
 
-- **Tutor acotado al curso**: responde con el material de la unidad, dice que algo no está en el curso en vez de completar, y no resuelve la entrega evaluada.
-- **Corrección asistida con rúbrica**: borrador de nota y devolución criterio por criterio con evidencia citada del texto del alumno; el docente ajusta y firma.
-- **Búsqueda con cita sobre contenido propio**: recuperación sobre cursos, transcripciones y materiales, citando módulo y minuto del video.
-- **Evaluación, costo y operación**: sets de evaluación con casos reales —incluidas las preguntas cuya respuesta correcta es «no está en el material»—, alertas de degradación, y costo y latencia por respuesta.
+- **Automatización de procesos**: onboarding de clientes, extracción y validación de documentos, conciliaciones y reportes, triage de tickets y correo.
+- **Agentes de IA a medida**: agentes conectados a CRM, ERP, bases de datos y APIs internas, con permisos acotados, aprobaciones humanas e integración con Slack, WhatsApp, correo o el producto del cliente.
+- **Agentes robustos y medibles**: sets de evaluación con casos reales, guardrails, límites de acción, trazas de ejecución, control de costos y alertas de degradación de calidad.
+- **AI Solutions e integración**: búsqueda semántica y RAG sobre datos propios, features de IA embebidas en el producto, selección de modelos y traspaso al equipo interno.
 
 ## Cómo trabajamos
 
-1. **Diagnóstico**: 30 minutos sin costo; inventario del contenido, primer sistema recomendado y costo estimado por alumno activo.
-2. **Evidencia antes que código**: set de evaluación con casos reales y métrica de éxito acordada antes de construir.
-3. **Producción acotada**: salida con alumnos reales sobre una materia, un curso o una cohorte; se amplía cuando los números aguantan.
-4. **Operación y traspaso**: monitoreo de calidad, control de costo por alumno, documentación y capacitación del equipo interno.
+1. **Diagnóstico**: 30 minutos sin costo; mapa del proceso actual y estimación de qué conviene automatizar.
+2. **Diseño y prueba**: métrica de éxito acordada, set de evaluación con casos reales y primera versión funcional.
+3. **Producción**: integración, permisos, guardrails y observabilidad; salida gradual a producción.
+4. **Operación y traspaso**: monitoreo, ajuste de calidad, control de costos, documentación y capacitación del equipo interno.
+
+El alcance, el ritmo y los plazos se definen con cada cliente durante el
+diagnóstico: dependen del proceso y de las integraciones involucradas.
 
 ## Datos clave
 
-- La nota que queda en el legajo y los casos de integridad académica los firma siempre un docente.
-- Los datos de alumnos quedan en la infraestructura y las cuentas del cliente; no se usan para entrenar modelos.
-- Con audiencia de menores, el marco legal (COPPA, FERPA, GDPR) define la arquitectura antes que el modelo.
+- Trabajo por ciclos cortos: hay algo usable y medible en cada entrega.
 - Presupuesto por proyecto con alcance cerrado, definido después del diagnóstico.
-- Agnósticos de proveedor de modelos: la elección se hace por costo, latencia y precisión en cada caso.`
+- Los datos y el código quedan en la infraestructura y las cuentas del cliente; no se usan datos de clientes para entrenar modelos.
+- Agnósticos de proveedor de modelos: la elección se hace por costo, latencia y precisión en cada caso.
+- Las acciones de alto impacto siempre pasan por revisión humana y quedan registradas.`
 
-  const sector = `## Sector
+  /**
+   * Las industrias foco van primero y con sus casos de uso desplegados.
+   *
+   * Un modelo que resume esta empresa a partir del archivo tiene que salir
+   * sabiendo dos cosas en este orden: que es una agencia especializada en
+   * real estate developers y EdTech, y que además trabaja otros rubros. Una lista
+   * plana de seis sectores produce el resumen contrario —«agencia generalista
+   * de automatización»— que es exactamente el posicionamiento del que se está
+   * saliendo.
+   */
+  const focus = `## Industrias foco
 
-[${EDTECH.title.es}](${url(solutionPath("es", EDTECH))}) · [EN](${url(solutionPath("en", EDTECH))})
+Los dos sectores en los que la agencia se especializa. Cada página describe qué
+se automatiza primero, con qué sistemas se integra, qué queda con aprobación
+humana y —explícitamente— cuándo no conviene automatizar.
 
-${EDTECH.answer.es}
+${FOCUS_SOLUTIONS.map((solution) => {
+  const cases = casesFor(solution)
+    .map(
+      (useCase) =>
+        `  - [${useCase.title.es}](${url(casePath("es", solution, useCase))}) · [EN](${url(casePath("en", solution, useCase))}) · [AR](${url(casePath("ar", solution, useCase))})\n    ${useCase.answer.es}`
+    )
+    .join("\n")
+  return `### ${solution.sector.es}\n\n[${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))}) · [AR](${url(solutionPath("ar", solution))})\n\n${solution.answer.es}\n\nCasos de uso:\n\n${cases}`
+}).join("\n\n")}`
 
-### Implementaciones
+  const solutions = `## Otros sectores
 
-${useCases
-  .map(
-    (useCase) =>
-      `- [${useCase.title.es}](${url(casePath("es", EDTECH, useCase))}) · [EN](${url(casePath("en", EDTECH, useCase))})\n  ${useCase.answer.es}`
-  )
-  .join("\n")}
+Mismo formato, sin la capa de casos de uso.
 
-Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))}`
+${OTHER_SOLUTIONS.map(
+  (solution) =>
+    `- [${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))}) · [AR](${url(solutionPath("ar", solution))})\n  ${solution.answer.es}`
+).join("\n")}
+
+Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))} · ${url(solutionsIndexPath("ar"))}`
 
   const notes = `## Notas
 
-Apuntes de trabajo sobre costo por alumno, criterios de decisión y fallas de
+Apuntes de trabajo sobre costos reales, criterios de decisión y fallas de
 producción. Cada entrada incluye su respuesta corta.
 
 ${postsEs
@@ -99,20 +125,29 @@ ${postsEn
     (post) =>
       `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}\n  ${post.data.answer}`
   )
+  .join("\n")}
+
+### ملاحظات (AR)
+
+${postsAr
+  .map(
+    (post) =>
+      `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}\n  ${post.data.answer}`
+  )
   .join("\n")}`
 
   const links = `## Enlaces
 
-- [Qué construimos](${url("/#capacidades")})
-- [Cómo trabajamos](${url("/#proceso")})
-- [Compromisos](${url("/#compromisos")})
+- [Servicios](${url("/#servicios")})
+- [Proceso](${url("/#proceso")})
+- [Garantías](${url("/#garantias")})
 - [Preguntas frecuentes](${url("/#faq")})
 - [Contacto](${url("/#contacto")})
-- [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")})
-- [IA para EdTech](${url(solutionsIndexPath("es"))}) · [AI for EdTech](${url(solutionsIndexPath("en"))})
-- RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")}`
+- [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")}) · [ملاحظات](${url("/ar/blog/")})
+- [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))}) · [الحلول](${url(solutionsIndexPath("ar"))})
+- RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")} · ${url("/ar/rss.xml")}`
 
-  const body = [preamble, sector, notes, links].join("\n\n") + "\n"
+  const body = [preamble, focus, solutions, notes, links].join("\n\n") + "\n"
 
   return new Response(body, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

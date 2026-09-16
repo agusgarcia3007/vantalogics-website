@@ -1,0 +1,286 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import {
+  AiBrain01Icon,
+  BubbleChatIcon,
+  CheckmarkCircle02Icon,
+  Database01Icon,
+  UserCircleIcon,
+} from "@hugeicons/core-free-icons"
+
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).hero.flow
+
+// El diagrama de flujo del hero. Reemplaza a la traza tabular: aquello se leía
+// como un log de sistema —lo es— y un dueño de negocio no lee logs. Esto se lee
+// como un circuito: entra un mensaje, el agente decide, salen tres acciones.
+//
+// Es la forma de las "flow illustrations" de Tailark, rehecha acá con los
+// tokens del sistema en vez de copiada: aquellas traen color de marca, logos de
+// terceros y licencia paga. Acá el trazo es hairline, el glifo es hugeicons y
+// todo el texto es real —indexable y legible con lector de pantalla—, no una
+// imagen.
+const outputIcons = [UserCircleIcon, Database01Icon, CheckmarkCircle02Icon]
+---
+
+<figure class="w-full" data-reveal>
+  <figcaption
+    class="label-untitled flex flex-wrap items-center justify-between gap-x-6 gap-y-1 pb-5"
+  >
+    <span class="text-bone">
+      <span class="sr-only">{t.caption}. </span>
+      {t.label}
+    </span>
+
+    <span class="flex items-center gap-2 text-muted-ash">
+      <span
+        class="flow-pulse size-1 shrink-0 rounded-full bg-bone"
+        aria-hidden="true"></span>
+      {t.status}
+    </span>
+  </figcaption>
+
+  <div class="flow">
+    <!-- Disparador -->
+    <article class="flow-node" style="--node-delay: 220ms;">
+      <span class="flow-glyph" aria-hidden="true">
+        <HugeiconsIcon icon={BubbleChatIcon} size={16} strokeWidth={1.5} />
+      </span>
+      <span>
+        <span class="flow-title">{t.trigger.title}</span>
+        <span class="flow-detail">{t.trigger.detail}</span>
+      </span>
+    </article>
+
+    <!-- Tronco: la línea que se recorre sola. Es la única pieza animada en
+         bucle del diagrama; el resto entra una vez y se queda quieto. -->
+    <div class="flow-trunk" aria-hidden="true">
+      <span class="flow-beam"></span>
+    </div>
+
+    <!-- El agente, en positivo: es el único nodo con relleno, así que la
+         mirada cae ahí sin necesidad de color. -->
+    <article class="flow-node flow-node--agent" style="--node-delay: 380ms;">
+      <span class="flow-glyph" aria-hidden="true">
+        <HugeiconsIcon icon={AiBrain01Icon} size={16} strokeWidth={1.5} />
+      </span>
+      <span>
+        <span class="flow-title">{t.agent.title}</span>
+        <span class="flow-detail">{t.agent.detail}</span>
+      </span>
+    </article>
+
+    <!-- Las tres salidas cuelgan de un riel que sale del agente. -->
+    <ol class="flow-branches">
+      {
+        t.outputs.map((output, i) => (
+          <li
+            class="flow-branch"
+            style={`--node-delay: ${520 + i * 130}ms;`}
+          >
+            <article class="flow-node">
+              <span class="flow-glyph" aria-hidden="true">
+                <HugeiconsIcon
+                  icon={outputIcons[i]}
+                  size={16}
+                  strokeWidth={1.5}
+                />
+              </span>
+              <span>
+                <span class="flow-title">{output.title}</span>
+                <span class="flow-detail">{output.detail}</span>
+              </span>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <figcaption class="mt-5 label-untitled text-muted-ash">
+    {t.footnote}
+  </figcaption>
+</figure>
+
+<style>
+  .flow {
+    --spine: 27px;
+    --stub: 17px;
+  }
+
+  .flow-node {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    border: var(--hairline-width) solid var(--color-hairline);
+    border-radius: 14px;
+    padding: 11px 15px;
+    background: var(--color-canvas);
+  }
+
+  /* El nodo del agente en positivo. En claro el par se invierte solo: los dos
+     tokens ya cambian de valor con el tema. */
+  .flow-node--agent {
+    background: var(--color-bone);
+    border-color: var(--color-bone);
+    color: var(--color-canvas);
+  }
+
+  .flow-glyph {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: var(--hairline-width) solid var(--color-hairline);
+    color: var(--color-ash);
+  }
+
+  .flow-node--agent .flow-glyph {
+    border-color: color-mix(in srgb, var(--color-canvas) 25%, transparent);
+    color: var(--color-canvas);
+  }
+
+  .flow-title {
+    display: block;
+    font-family: var(--font-untitled);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-caption);
+    line-height: 1.45;
+    color: var(--color-bone);
+  }
+
+  .flow-node--agent .flow-title {
+    color: var(--color-canvas);
+  }
+
+  .flow-detail {
+    display: block;
+    margin-top: 2px;
+    font-family: var(--font-untitled);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-ash);
+  }
+
+  .flow-node--agent .flow-detail {
+    color: color-mix(in srgb, var(--color-canvas) 65%, transparent);
+  }
+
+  /* Tronco vertical entre el disparador y el agente. */
+  .flow-trunk {
+    position: relative;
+    height: 26px;
+    margin-left: var(--spine);
+    width: var(--hairline-width);
+    background: var(--color-hairline);
+    overflow: hidden;
+  }
+
+  .flow-beam {
+    position: absolute;
+    inset-inline: 0;
+    top: -60%;
+    height: 60%;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-bone) 85%,
+      var(--color-bone)
+    );
+  }
+
+  /* Riel del que cuelgan las salidas: cada rama dibuja su propio tramo, así el
+     riel se ajusta solo a la altura real de cada nodo. */
+  .flow-branches {
+    margin-left: var(--spine);
+    padding-left: calc(var(--stub) + 12px);
+  }
+
+  .flow-branch {
+    position: relative;
+    padding-top: 14px;
+  }
+
+  /* Vertical: entera, salvo en la última rama, donde muere en su centro. */
+  .flow-branch::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--stub) * -1 - 12px);
+    top: 0;
+    bottom: 0;
+    width: var(--hairline-width);
+    background: var(--color-hairline);
+  }
+
+  .flow-branch:last-child::before {
+    bottom: auto;
+    height: calc(50% + 7px);
+  }
+
+  /* Horizontal: entra al nodo a media altura. */
+  .flow-branch::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--stub) * -1 - 12px);
+    top: calc(50% + 7px);
+    width: calc(var(--stub) + 12px);
+    height: var(--hairline-width);
+    background: var(--color-hairline);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Los nodos entran encadenados, como un circuito que se enciende. */
+    [data-revealed] .flow-node {
+      animation: node-in 420ms cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+      animation-delay: var(--node-delay);
+    }
+
+    .flow-beam {
+      animation: beam 2.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+    }
+
+    .flow-pulse {
+      animation: flow-pulse 2.4s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+        infinite;
+    }
+  }
+
+  @keyframes node-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes beam {
+    0% {
+      transform: translateY(0);
+    }
+    60%,
+    100% {
+      transform: translateY(280%);
+    }
+  }
+
+  @keyframes flow-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.2;
+    }
+  }
+</style>

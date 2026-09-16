@@ -12,30 +12,26 @@ import {
 
 interface Props {
   lang: Lang
-  /**
-   * Ruta equivalente por idioma. Si falta una, el selector cae a la portada
-   * de ese idioma: un alternate a 404 invalida el par entero.
-   */
-  alternates?: Partial<Record<Lang, string>>
 }
 
-const { lang, alternates } = Astro.props
+const { lang } = Astro.props
 const t = useTranslations(lang)
 ---
 
 <!-- Selector de idioma.
-     Con dos idiomas alcanzaba un enlace al otro, pero un desplegable dice
-     cuál está activo y deja lugar si vuelve un tercero. Está hecho con
-     `details`/`summary` —igual que las preguntas frecuentes— porque así no
-     cuesta JavaScript: el navegador ya sabe abrir y cerrar esto, y anunciarlo
-     como control expandible. El script de abajo sólo agrega lo que el
-     elemento no trae: cerrar al hacer clic afuera o con Esc.
+     Con dos idiomas alcanzaba un enlace al otro; con tres, tres enlaces
+     sueltos compiten con la navegación y no dicen cuál está activo. Es un
+     desplegable, y está hecho con `details`/`summary` —igual que las preguntas
+     frecuentes— porque así no cuesta JavaScript: el navegador ya sabe abrir y
+     cerrar esto, y anunciarlo como control expandible. El script de abajo sólo
+     agrega lo que el elemento no trae: cerrar al hacer clic afuera o con Esc.
 
      El rótulo del botón es el código ISO del idioma actual. Los nombres
-     completos van adentro, cada uno escrito en su propio idioma. -->
+     completos van adentro, cada uno escrito en su propio idioma: es como un
+     lector árabe reconoce su versión sin tener que leer español. -->
 <details class="group relative" data-lang-menu>
   <summary
-    class="flex h-[36px] cursor-pointer list-none items-center gap-[6px] rounded-pill border border-hairline px-[12px] label-mono text-ash transition-colors duration-(--duration-state) ease-paper group-open:border-bone group-open:text-bone hover:border-bone hover:text-bone [&::-webkit-details-marker]:hidden"
+    class="flex h-[36px] cursor-pointer list-none items-center gap-[6px] rounded-pill border border-hairline px-[12px] label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) group-open:border-bone group-open:text-bone hover:border-bone hover:text-bone [&::-webkit-details-marker]:hidden"
     aria-label={t.language.label}
   >
     <span aria-hidden="true">{lang.toUpperCase()}</span>
@@ -43,10 +39,12 @@ const t = useTranslations(lang)
       icon={ArrowDown01Icon}
       size={13}
       strokeWidth={1.5}
-      className="shrink-0 transition-transform duration-(--duration-state) ease-paper group-open:rotate-180"
+      className="shrink-0 transition-transform duration-(--duration-state) ease-(--ease-opx) group-open:rotate-180"
     />
   </summary>
 
+  <!-- `end-0`: el panel se alinea con el borde por el que termina de leerse la
+       página, así que en árabe cuelga del otro lado sin una regla aparte. -->
   <div
     class="absolute end-0 top-[calc(100%+10px)] z-50 min-w-[170px] rounded-[16px] border border-hairline bg-canvas/95 p-[5px] backdrop-blur-md"
   >
@@ -55,11 +53,11 @@ const t = useTranslations(lang)
         LANGS.map((code) => (
           <li>
             <a
-              href={alternates?.[code] ?? localizePath(code)}
+              href={localizePath(code)}
               hreflang={code}
               lang={code}
               aria-current={code === lang ? "true" : undefined}
-              class="flex items-center justify-between gap-5 rounded-pill px-[11px] py-[8px] label-mono text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone aria-[current]:text-bone"
+              class="flex items-center justify-between gap-5 rounded-pill px-[11px] py-[8px] label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone aria-[current]:text-bone"
             >
               <span>{dictionaries[code].language.name}</span>
               {code === lang ? (
@@ -70,7 +68,7 @@ const t = useTranslations(lang)
                   className="shrink-0"
                 />
               ) : (
-                <span class="text-faint" aria-hidden="true">
+                <span class="text-muted-ash" aria-hidden="true">
                   {code.toUpperCase()}
                 </span>
               )}

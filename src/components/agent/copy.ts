@@ -35,13 +35,13 @@ export interface AgentCopy {
 }
 
 const ES: AgentCopy = {
-  title: "Agente de Vantalogics",
+  title: "Agente de ejemplo",
   subtitle: "Es de verdad: preguntale lo que quieras",
   close: "Cerrar",
   placeholder: "Escribí tu mensaje",
   send: "Enviar",
   greeting:
-    "Soy el agente de Vantalogics. Contame qué querés integrar en tu plataforma educativa —un tutor, corrección, búsqueda— y vemos por dónde empezar.",
+    "Soy el agente de Vantalogics. Contame qué proceso te está comiendo el mes y vemos si tiene sentido automatizarlo.",
   thinking: "pensando",
   error: "Se cortó la conexión. Probá de nuevo o escribinos por WhatsApp.",
   blocked:
@@ -68,13 +68,13 @@ const ES: AgentCopy = {
 }
 
 const EN: AgentCopy = {
-  title: "Vantalogics agent",
+  title: "Sample agent",
   subtitle: "It is the real thing: ask it anything",
   close: "Close",
   placeholder: "Type your message",
   send: "Send",
   greeting:
-    "I'm the Vantalogics agent. Tell me what you want to put inside your learning platform — a tutor, grading, search — and we'll see where to start.",
+    "I'm the Vantalogics agent. Tell me which process is eating your month and we'll see whether automating it makes sense.",
   thinking: "thinking",
   error: "The connection dropped. Try again or reach us on WhatsApp.",
   blocked:
@@ -100,8 +100,42 @@ const EN: AgentCopy = {
   },
 }
 
+const AR: AgentCopy = {
+  title: "وكيل تجريبي",
+  subtitle: "حقيقي تمامًا: اسأله ما شئت",
+  close: "إغلاق",
+  placeholder: "اكتب رسالتك",
+  send: "إرسال",
+  greeting:
+    "أنا وكيل Vantalogics. أخبرني أي عملية تلتهم شهرك، ولنرَ إن كان من المنطقي أتمتتها.",
+  thinking: "يفكّر",
+  error: "انقطع الاتصال. حاول مرة أخرى أو راسلنا على واتساب.",
+  blocked:
+    "لم أتمكن من التحقق من المتصفح، لذلك لن أفتح المحادثة. راسلنا على واتساب أو على hello@vantalogics.com.",
+  retry: "إعادة المحاولة",
+  approval: {
+    question: "هل أمرّر بيانات التواصل هذه إلى الفريق؟",
+    approve: "تفضّل",
+    reject: "ليس الآن",
+    sent: "تم، مرّرتها إلى الفريق",
+    dismissed: "لم يُرسَل شيء",
+  },
+  cta: {
+    booking: "احجز الثلاثين دقيقة",
+    whatsapp: "راسلنا على واتساب",
+  },
+  steps: {
+    search: "يبحث في قاعدة المعرفة",
+    qualify: "يدوّن الحالة",
+    next_step: "يجهّز الخطوة التالية",
+    hand_off: "يطلب الإذن بتمرير بيانات التواصل",
+    recover: "يعيد محاولة التوليد",
+  },
+}
+
 export function agentCopy(lang: Lang): AgentCopy {
   if (lang === "en") return EN
+  if (lang === "ar") return AR
   return ES
 }
 

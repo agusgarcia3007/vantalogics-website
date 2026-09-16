@@ -1,0 +1,15 @@
+---
+import UseCasePage from "@/components/site/UseCasePage.astro"
+import { USE_CASE_ROUTES } from "@/data/use-cases"
+
+export function getStaticPaths() {
+  return USE_CASE_ROUTES.map(({ solution, useCase }) => ({
+    params: { slug: solution.slug.ar, case: useCase.slug.ar },
+    props: { solution, useCase },
+  }))
+}
+
+const { solution, useCase } = Astro.props
+---
+
+<UseCasePage lang="ar" solution={solution} useCase={useCase} />

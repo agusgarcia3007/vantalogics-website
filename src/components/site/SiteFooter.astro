@@ -22,27 +22,25 @@ const socials = [
 ---
 
 <footer
-  class="mx-auto w-full max-w-[1240px] border-x border-hairline bg-surface"
+  class="mx-auto w-full max-w-[1180px] border-x border-hairline"
   style="container-type: inline-size;"
 >
   <div
-    class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-12 border-t border-hairline px-[clamp(20px,4vw,72px)] py-[clamp(48px,6vw,88px)] md:grid-cols-[minmax(0,1.2fr)_repeat(2,minmax(0,0.8fr))]"
+    class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-10 border-t border-hairline px-[clamp(20px,4vw,56px)] py-[clamp(48px,6vw,80px)] md:grid-cols-[minmax(0,1.2fr)_repeat(2,minmax(0,0.8fr))]"
   >
     <div>
       <Wordmark alt={t.a11y.logoAlt} />
-      <p class="copy mt-6 max-w-[34ch] text-[15px] text-ash">
-        {t.footer.tagline}
-      </p>
+      <p class="mt-5 max-w-[32ch] copy text-ash">{t.footer.tagline}</p>
       <a
-        class="mt-6 inline-block font-display text-[clamp(1.125rem,1.5vw,1.3125rem)] text-bone transition-colors duration-(--duration-state) ease-paper hover:text-pen-ink"
+        class="mt-5 inline-block copy text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
         href={`mailto:${email}`}
       >
         {email}
       </a>
 
-      <!-- Perfiles públicos. Van con glifo y rótulo: un ícono suelto no se
-           distingue de un botón cualquiera. -->
-      <ul class="mt-8 flex flex-wrap gap-3">
+      <!-- Perfiles públicos. Van con glifo y rótulo: un ícono suelto en un
+           sistema monocromo no se distingue de un botón cualquiera. -->
+      <ul class="mt-7 flex flex-wrap gap-3">
         {
           socials.map((social) => (
             <li>
@@ -50,15 +48,15 @@ const socials = [
                 href={social.href}
                 target="_blank"
                 rel="me noopener noreferrer"
-                class="social flex items-center gap-[9px] border border-hairline px-[13px] py-[9px]"
+                class="social flex items-center gap-[9px] rounded-pill border border-hairline px-[13px] py-[8px]"
               >
                 <HugeiconsIcon
                   icon={social.icon}
-                  size={15}
+                  size={16}
                   strokeWidth={1.5}
                   className="shrink-0"
                 />
-                <span class="label-mono-sm">{social.label}</span>
+                <span class="label-untitled">{social.label}</span>
               </a>
             </li>
           ))
@@ -69,12 +67,12 @@ const socials = [
     {
       t.footer.columns.map((column) => (
         <nav aria-label={column.title}>
-          <h2 class="label-mono text-faint">{column.title}</h2>
-          <ul class="mt-6 flex flex-col">
+          <h2 class="label-untitled text-muted-ash">{column.title}</h2>
+          <ul class="mt-5 flex flex-col gap-[10px]">
             {column.links.map((link) => (
-              <li class="border-t border-hairline first:border-t-0">
+              <li>
                 <a
-                  class="block py-[11px] copy text-[15px] text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone"
+                  class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
                   href={navHref(lang, link.href)}
                 >
                   {link.label}
@@ -88,26 +86,30 @@ const socials = [
   </div>
 
   <div
-    class="flex flex-wrap items-center justify-between gap-x-[clamp(24px,4vw,56px)] gap-y-3 border-t border-hairline px-[clamp(20px,4vw,72px)] py-[22px]"
+    class="flex flex-wrap items-center justify-between gap-x-[clamp(24px,4vw,56px)] gap-y-3 border-t border-hairline px-[clamp(20px,4vw,56px)] py-[22px]"
   >
-    <p dir="ltr" class="label-mono-sm text-faint">© Vantalogics {year}</p>
-    <p class="label-mono-sm text-faint">{t.footer.tags}</p>
+    <!-- `dir="ltr"`: el símbolo © es un carácter neutro y en un párrafo RTL el
+         algoritmo bidireccional lo manda al final («Vantalogics 2026 ©»). La
+         línea de copyright es una fórmula legal latina y se escribe siempre en
+         el mismo orden. -->
+    <p dir="ltr" class="label-untitled text-muted-ash">© Vantalogics {year}</p>
+    <p class="label-untitled text-muted-ash">{t.footer.tags}</p>
   </div>
 
-  <!-- La marca a sangre: el nombre ocupa el ancho de la columna y se corta por
-       la mitad contra el borde inferior, como el título impreso en el lomo de
-       un apunte. Es decorativo —el nombre accesible ya está arriba—. La altura
-       es la mitad de la altura de mayúscula de Newsreader y el desplazamiento
-       sube la línea hasta que el tope de las letras coincide con el borde. -->
+  <!-- Marca a sangre: el nombre ocupa el ancho de la columna y se corta por la
+       mitad contra el borde inferior. Es decorativo — el nombre accesible ya
+       está arriba. La altura es la mitad de la altura de mayúscula de Inter
+       (0.727em) y el desplazamiento sube la línea hasta que el tope de las
+       letras coincide con el borde: queda partido al medio, sin aire debajo. -->
   <div
     class="overflow-hidden border-t border-hairline select-none"
-    style="font-size: 17.4cqw; height: 0.345em;"
+    style="font-size: 18.6cqw; height: 0.363em;"
     aria-hidden="true"
     data-reveal
   >
     <span
-      class="block w-full text-center font-display whitespace-nowrap text-bone"
-      style="line-height: 1; margin-top: -0.145em; letter-spacing: -0.03em; opacity: 0.09;"
+      class="block w-full text-center font-opx whitespace-nowrap text-transparent"
+      style="line-height: 1; margin-top: -0.137em; letter-spacing: -0.035em; -webkit-text-stroke: 1.5px var(--bone);"
     >
       Vantalogics
     </span>
@@ -118,8 +120,8 @@ const socials = [
   .social {
     color: var(--color-ash);
     transition:
-      color var(--duration-state) var(--ease-paper),
-      border-color var(--duration-state) var(--ease-paper);
+      color var(--duration-state) var(--ease-opx),
+      border-color var(--duration-state) var(--ease-opx);
   }
 
   .social:hover {

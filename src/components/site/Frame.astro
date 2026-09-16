@@ -3,47 +3,35 @@ interface Props {
   id?: string
   /** Sin la regla superior: sólo para el primer bloque bajo el encabezado. */
   flush?: boolean
-  /** Sin el inset horizontal: para las bandas que sangran a los bordes. */
-  bleed?: boolean
   class?: string
   labelledby?: string
 }
 
-const {
-  id,
-  flush = false,
-  bleed = false,
-  class: className = "",
-  labelledby,
-} = Astro.props
+const { id, flush = false, class: className = "", labelledby } = Astro.props
 
-// La hoja.
+// El marco de la página.
 //
-// Todo el sitio vive dentro de una misma columna de 1240px con dos reglas
-// verticales que la recorren de arriba abajo, y cada sección cierra con una
-// regla horizontal que va exactamente de una a la otra. Es lo que convierte
-// una pila de secciones en un documento: el ojo tiene un borde contra el cual
-// medir todo lo demás, y el fondo queda como margen de la hoja en vez de como
-// vacío.
-//
-// La columna está apoyada sobre `--surface`, medio tono por encima del canvas:
-// es papel sobre escritorio, no un bloque flotando.
+// Toda la landing vive dentro de una misma columna de 1180px con dos hairlines
+// verticales que la recorren de arriba a abajo, y cada sección cierra con una
+// regla horizontal que va exactamente de un hairline al otro. Es lo que
+// convierte una pila de secciones sueltas en un documento: el ojo tiene un
+// borde contra el cual medir todo lo demás, y el fondo a sangre queda como
+// margen de la página en vez de como vacío.
 ---
 
 <section
   id={id}
   aria-labelledby={labelledby}
   class:list={[
-    // El encabezado queda pegado arriba: los anclas del menú tienen que
+        // El encabezado queda pegado arriba: los anclas del menú tienen que
     // frenar por debajo de él y no detrás.
-    "mx-auto w-full max-w-[1240px] scroll-mt-[96px] border-x border-hairline bg-surface",
+    "mx-auto w-full max-w-[1180px] scroll-mt-[104px] border-x border-hairline",
     className,
   ]}
 >
   <div
     class:list={[
-      "py-[clamp(56px,7.5vw,112px)]",
-      !bleed && "px-[clamp(20px,4vw,72px)]",
+      "px-[clamp(20px,4vw,56px)] py-[clamp(56px,7.5vw,104px)]",
       !flush && "border-t border-hairline",
     ]}
   >

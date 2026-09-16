@@ -12,6 +12,8 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        outline:
+          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
@@ -19,37 +21,38 @@ export const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        // --- Sistema «Paper & Pen» -----------------------------------
-        // La acción principal: bloque de tinta con el rótulo en
-        // monoespaciada. Al pasar el cursor se vuelve rojo de corrección —el
-        // único lugar del sistema donde el rojo ocupa una superficie entera.
-        solid:
-          "label-mono rounded-edge border border-bone bg-bone text-center text-canvas transition-[background-color,border-color,color] duration-(--duration-state) ease-paper hover:border-pen hover:bg-pen hover:text-white",
-        // Acción secundaria: contorno de regla que se entinta al pasar.
-        outline:
-          "label-mono rounded-edge border border-hairline bg-transparent text-center text-bone transition-[background-color,border-color,color] duration-(--duration-state) ease-paper hover:border-bone hover:bg-bone hover:text-canvas",
-        // Terciaria: sin caja, con subrayado rojo que se completa al pasar.
-        quiet:
-          "label-mono rounded-edge border border-transparent bg-transparent text-center text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone",
-        // Enlace en línea dentro de un párrafo o una lista.
-        "inline-link":
-          "label-mono relative rounded-none px-0 text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone",
+        // --- OPX system (design.md) --------------------------------------
+        // Pill CTA: 1px bone stroke, transparent fill. The system has no
+        // filled button — the fill only exists as a hover state.
+        pill: "label-untitled rounded-pill border border-bone bg-transparent text-center text-bone transition-colors duration-(--duration-state) ease-(--ease-opx) hover:bg-bone hover:text-canvas",
+        // El único botón con relleno del sistema: la acción principal de la
+        // página. Se reserva para el CTA del hero y el del cierre.
+        "pill-solid":
+          "label-untitled rounded-pill border border-bone bg-bone text-center text-canvas transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-85",
+        // Same pill drawn in hairline grey — for secondary actions.
+        "pill-quiet":
+          "label-untitled rounded-pill border border-hairline bg-transparent text-center text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone hover:text-bone",
+        // Tag-like inline link: type only, hairline underline on hover.
+        "opx-link":
+          "label-untitled relative rounded-none px-0 text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone",
       },
       size: {
         default:
           "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+        lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         icon: "size-8",
         "icon-xs":
           "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
-        // --- Medidas del sistema: alto cómodo, rótulo chico ------------
-        md: "min-h-[46px] max-w-full gap-2 px-[18px] py-[12px] whitespace-normal [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "min-h-[56px] max-w-full gap-2.5 px-[26px] py-[16px] whitespace-normal [&_svg:not([class*='size-'])]:size-4",
-        "inline-link": "min-h-11 max-w-full py-2 whitespace-normal",
+        // --- OPX pills: 7px/15px padding, growing to a 44px touch target ---
+        pill: "min-h-11 max-w-full gap-2 px-[15px] py-[7px] whitespace-normal [&_svg:not([class*='size-'])]:size-3.5",
+        "pill-lg":
+          "min-h-[54px] max-w-full gap-2 px-[30px] py-[15px] whitespace-normal [&_svg:not([class*='size-'])]:size-4",
+        "opx-link": "min-h-11 max-w-full py-2 whitespace-normal",
       },
     },
     defaultVariants: {

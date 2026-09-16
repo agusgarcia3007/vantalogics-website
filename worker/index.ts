@@ -1,6 +1,6 @@
 /**
  * El sitio es estático: lo único que justifica código de servidor es el
- * redirect de www al apex y el mapa de URLs que salieron del sitio.
+ * redirect de www al apex y el mapa de URLs viejas.
  *
  * `www` es un custom domain del mismo Worker, así que sin esto el sitio se
  * serviría duplicado en dos hostnames y Google elegiría el canónico por su
@@ -19,79 +19,77 @@ interface Env {
 /**
  * URLs que existieron y ya no.
  *
- * Vantalogics pasó de agencia generalista a agencia de IA para EdTech. Las
- * páginas de los otros sectores —real estate developers, clínicas, estudios
- * contables, distribuidoras, ecommerce y estudios jurídicos—, sus casos de uso
- * y las notas escritas para ellos salieron del sitio. Estaban indexadas, así
- * que van con 301 a lo más cercano que sigue existiendo: las páginas de sector
- * a la portada del idioma, las notas al índice de notas.
+ * El sector «inmobiliarias» pasó a ser «real estate developers», que no es un
+ * cambio de nombre sino de público: cambiaron los slugs de la página de sector,
+ * los de sus casos de uso y los de las cuatro notas del silo. Las viejas
+ * estaban indexadas, así que van con 301 —permanente— para que el enlace y la
+ * autoridad se transfieran en vez de perderse en un 404.
  *
- * Los sectores se resuelven por prefijo porque cada uno arrastra sus casos de
- * uso debajo; el prefijo es un slug de sector completo con barra final, así que
- * no puede capturar una URL que exista. Las notas van literales.
+ * El mapa es literal y no un patrón: un `replace("inmobiliarias", …)` mandaría
+ * a 301 cualquier URL futura que contenga la palabra, incluida una que sí
+ * exista. Las claves llevan la barra final porque el sitio usa
+ * `trailingSlash: "always"`.
  */
-const REMOVED_SECTORS: [prefix: string, target: string][] = [
-  ...[
-    "inmobiliarias",
-    "real-estate-developers",
-    "clinicas-y-consultorios",
-    "estudios-contables",
-    "distribuidoras-y-mayoristas",
-    "ecommerce",
-    "estudios-juridicos",
-  ].map((slug): [string, string] => [`/soluciones/${slug}/`, "/"]),
-  ...[
-    "real-estate-agencies",
-    "real-estate-developers",
-    "clinics-and-medical-practices",
-    "accounting-firms",
-    "distributors-and-wholesalers",
-    "ecommerce",
-    "law-firms",
-  ].flatMap((slug): [string, string][] => [
-    [`/en/solutions/${slug}/`, "/en/"],
-    [`/solutions/${slug}/`, "/en/"],
-  ]),
-]
+const REDIRECTS: Record<string, string> = {
+  // Página de sector.
+  "/soluciones/inmobiliarias/": "/soluciones/real-estate-developers/",
+  "/solutions/real-estate-agencies/": "/solutions/real-estate-developers/",
+  "/ar/solutions/real-estate-agencies/":
+    "/ar/solutions/real-estate-developers/",
 
-const REMOVED_POSTS: Record<string, string> = Object.fromEntries([
-  ...[
-    "cuanto-cuesta-un-agente-de-ia-para-una-inmobiliaria",
-    "cuanto-cuesta-un-agente-de-ia-para-un-real-estate-developer",
-    "errores-de-un-agente-de-ia-en-una-inmobiliaria",
-    "errores-de-un-agente-de-ia-en-un-real-estate-developer",
-    "tiempo-de-respuesta-en-una-inmobiliaria",
-    "tiempo-de-respuesta-en-un-real-estate-developer",
-    "crm-inmobiliario-antes-de-automatizar",
-    "centralizar-los-datos-antes-de-automatizar",
-    "agente-de-ia-para-whatsapp-que-carga-pedidos",
-  ].map((slug) => [`/blog/${slug}/`, "/blog/"]),
-  ...[
-    "how-much-does-an-ai-agent-for-a-real-estate-agency-cost",
-    "how-much-does-an-ai-agent-for-a-real-estate-developer-cost",
-    "mistakes-an-ai-agent-makes-in-real-estate",
-    "mistakes-an-ai-agent-makes-at-a-real-estate-developer",
-    "response-time-in-a-real-estate-agency",
-    "response-time-at-a-real-estate-developer",
-    "real-estate-crm-before-automating",
-    "centralize-your-data-before-automating",
-  ].map((slug) => [`/en/blog/${slug}/`, "/en/blog/"]),
-])
+  // Casos de uso: los dos primeros conservan el slug, los otros dos cambiaron.
+  "/soluciones/inmobiliarias/agente-de-whatsapp/":
+    "/soluciones/real-estate-developers/agente-de-whatsapp/",
+  "/solutions/real-estate-agencies/whatsapp-agent/":
+    "/solutions/real-estate-developers/whatsapp-agent/",
+  "/ar/solutions/real-estate-agencies/whatsapp-agent/":
+    "/ar/solutions/real-estate-developers/whatsapp-agent/",
+  "/soluciones/inmobiliarias/calificacion-de-leads/":
+    "/soluciones/real-estate-developers/calificacion-de-leads/",
+  "/solutions/real-estate-agencies/lead-qualification/":
+    "/solutions/real-estate-developers/lead-qualification/",
+  "/ar/solutions/real-estate-agencies/lead-qualification/":
+    "/ar/solutions/real-estate-developers/lead-qualification/",
+  "/soluciones/inmobiliarias/coordinacion-de-visitas/":
+    "/soluciones/real-estate-developers/coordinacion-de-visitas/",
+  "/solutions/real-estate-agencies/viewing-coordination/":
+    "/solutions/real-estate-developers/unit-visit-coordination/",
+  "/ar/solutions/real-estate-agencies/viewing-coordination/":
+    "/ar/solutions/real-estate-developers/unit-visit-coordination/",
+  // La reactivación de base salió y la reemplazó la centralización de datos:
+  // es el caso más cercano de la nueva grilla, no una traducción del anterior.
+  "/soluciones/inmobiliarias/reactivacion-de-base-de-datos/":
+    "/soluciones/real-estate-developers/centralizacion-de-datos/",
+  "/solutions/real-estate-agencies/database-reactivation/":
+    "/solutions/real-estate-developers/data-centralization/",
+  "/ar/solutions/real-estate-agencies/database-reactivation/":
+    "/ar/solutions/real-estate-developers/data-centralization/",
 
-/**
- * La versión en árabe salió del sitio mientras se rehace la marca.
- *
- * Sus URLs estaban indexadas, así que cada `/ar/…` va a su equivalente en
- * inglés —la misma página, el idioma más cercano de los dos que quedan— y
- * desde ahí, si esa página tampoco existe ya, sigue la regla que corresponda.
- */
-function withoutArabic(path: string): string {
-  return path.startsWith("/ar/") ? `/en/${path.slice(4)}` : path
-}
-
-function redirectTarget(path: string): string | undefined {
-  if (REMOVED_POSTS[path]) return REMOVED_POSTS[path]
-  return REMOVED_SECTORS.find(([prefix]) => path.startsWith(prefix))?.[1]
+  // Notas del silo.
+  "/blog/cuanto-cuesta-un-agente-de-ia-para-una-inmobiliaria/":
+    "/blog/cuanto-cuesta-un-agente-de-ia-para-un-real-estate-developer/",
+  "/en/blog/how-much-does-an-ai-agent-for-a-real-estate-agency-cost/":
+    "/en/blog/how-much-does-an-ai-agent-for-a-real-estate-developer-cost/",
+  "/ar/blog/how-much-does-an-ai-agent-for-a-real-estate-agency-cost/":
+    "/ar/blog/how-much-does-an-ai-agent-for-a-real-estate-developer-cost/",
+  "/blog/errores-de-un-agente-de-ia-en-una-inmobiliaria/":
+    "/blog/errores-de-un-agente-de-ia-en-un-real-estate-developer/",
+  "/en/blog/mistakes-an-ai-agent-makes-in-real-estate/":
+    "/en/blog/mistakes-an-ai-agent-makes-at-a-real-estate-developer/",
+  "/ar/blog/mistakes-an-ai-agent-makes-in-real-estate/":
+    "/ar/blog/mistakes-an-ai-agent-makes-at-a-real-estate-developer/",
+  "/blog/tiempo-de-respuesta-en-una-inmobiliaria/":
+    "/blog/tiempo-de-respuesta-en-un-real-estate-developer/",
+  "/en/blog/response-time-in-a-real-estate-agency/":
+    "/en/blog/response-time-at-a-real-estate-developer/",
+  "/ar/blog/response-time-in-a-real-estate-agency/":
+    "/ar/blog/response-time-at-a-real-estate-developer/",
+  "/blog/crm-inmobiliario-antes-de-automatizar/":
+    "/blog/centralizar-los-datos-antes-de-automatizar/",
+  "/en/blog/real-estate-crm-before-automating/":
+    "/en/blog/centralize-your-data-before-automating/",
+  "/ar/blog/real-estate-crm-before-automating/":
+    "/ar/blog/centralize-your-data-before-automating/",
 }
 
 export default {
@@ -109,8 +107,7 @@ export default {
     // La barra final se normaliza antes de buscar: una request sin ella nunca
     // matchearía el mapa y caería en el 404 del sitio.
     const path = url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`
-    const latin = withoutArabic(path)
-    const target = redirectTarget(latin) ?? (latin !== path ? latin : undefined)
+    const target = REDIRECTS[path]
     if (target) {
       url.pathname = target
       return Response.redirect(url.toString(), 301)

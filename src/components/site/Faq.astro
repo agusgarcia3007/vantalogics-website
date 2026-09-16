@@ -13,11 +13,10 @@ const t = useTranslations(lang).faq
 
 <Frame id="faq" labelledby="faq-titulo">
   <div
-    class="grid gap-x-[clamp(32px,5vw,80px)] gap-y-10 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1fr)]"
+    class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)]"
   >
     <SectionTitle
       id="faq-titulo"
-      index="08"
       label={t.label}
       muted={t.titleMuted}
       bright={t.titleBright}
@@ -33,25 +32,21 @@ const t = useTranslations(lang).faq
             data-reveal
             style={`--reveal-delay: ${i * 50}ms;`}
           >
-            <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-[20px] [&::-webkit-details-marker]:hidden">
-              <h3 class="max-w-[44ch] font-display text-[clamp(1.0625rem,1.4vw,1.1875rem)] leading-snug text-bone transition-colors duration-(--duration-state) ease-paper group-hover:text-pen-ink">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-[18px] [&::-webkit-details-marker]:hidden">
+              <h3 class="max-w-[42ch] font-untitled text-[17px] leading-snug text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70">
                 {entry.question}
               </h3>
-
-              {/* La cruz que se vuelve guion: el trazo vertical rota hasta
-                  desaparecer sobre el horizontal. Rojo, porque es la única
-                  marca interactiva del bloque. */}
               <span
-                class="relative mt-[8px] size-[13px] shrink-0"
+                class="relative mt-[6px] size-[14px] shrink-0"
                 aria-hidden="true"
               >
-                <span class="absolute start-0 top-1/2 h-px w-[13px] -translate-y-1/2 bg-pen" />
-                <span class="absolute start-0 top-1/2 h-px w-[13px] -translate-y-1/2 rotate-90 bg-pen transition-transform duration-(--duration-state) ease-paper group-open:rotate-0" />
+                <span class="absolute start-0 top-1/2 h-px w-[14px] -translate-y-1/2 bg-ash" />
+                <span class="absolute start-0 top-1/2 h-px w-[14px] -translate-y-1/2 rotate-90 bg-ash transition-transform duration-(--duration-state) ease-(--ease-opx) group-open:rotate-0" />
               </span>
             </summary>
 
-            <div class="faq-panel pb-[24px]">
-              <p class="copy max-w-[64ch] text-ash">{entry.answer}</p>
+            <div class="faq-panel pb-[22px]">
+              <p class="max-w-[64ch] copy text-ash">{entry.answer}</p>
             </div>
           </details>
         ))
@@ -63,7 +58,7 @@ const t = useTranslations(lang).faq
 <style>
   @media (prefers-reduced-motion: no-preference) {
     details[open] .faq-panel {
-      animation: faq-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: faq-in 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
     }
   }
 

@@ -80,7 +80,7 @@ type CtaData = { channel: "booking" | "whatsapp"; url: string }
  * para que la burbuja apunte a su emisor sin dibujar una colita.
  */
 const BUBBLE_BASE =
-  "rounded-[20px] px-[15px] py-[10px] font-sans text-[15px] leading-[1.55] font-normal"
+  "rounded-[20px] px-[15px] py-[10px] font-untitled text-[15px] leading-[1.55] font-normal"
 const BUBBLE_MINE = `${BUBBLE_BASE} rounded-br-[6px]`
 const BUBBLE_THEIRS = `${BUBBLE_BASE} rounded-bl-[6px]`
 
@@ -301,7 +301,7 @@ export default function AgentChat({
                               <Marker
                                 key={key}
                                 variant="separator"
-                                className="label-mono text-[12px] text-ash"
+                                className="label-untitled text-[12px] text-ash"
                               >
                                 <MarkerContent>
                                   {stepLabel(copy, data.name)}
@@ -323,7 +323,7 @@ export default function AgentChat({
                                 href={data.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex w-fit items-center gap-[7px] rounded-pill bg-bone px-[15px] py-[9px] label-mono text-canvas transition-opacity duration-(--duration-state) hover:opacity-80"
+                                className="inline-flex w-fit items-center gap-[7px] rounded-pill bg-bone px-[15px] py-[9px] label-untitled text-canvas transition-opacity duration-(--duration-state) hover:opacity-80"
                               >
                                 <HugeiconsIcon
                                   icon={
@@ -362,13 +362,13 @@ export default function AgentChat({
                                   </span>
 
                                   {state ? (
-                                    <span className="label-mono text-ash">
+                                    <span className="label-untitled text-ash">
                                       {state === "sent"
                                         ? copy.approval.sent
                                         : copy.approval.dismissed}
                                     </span>
                                   ) : (
-                                    <span className="flex gap-[7px] label-mono">
+                                    <span className="flex gap-[7px] label-untitled">
                                       <button
                                         type="button"
                                         onClick={() =>
@@ -410,14 +410,14 @@ export default function AgentChat({
               {busy && (
                 <Marker
                   variant="separator"
-                  className="animate-pulse label-mono text-[12px] text-ash"
+                  className="animate-pulse label-untitled text-[12px] text-ash"
                 >
                   <MarkerContent>{copy.thinking}</MarkerContent>
                 </Marker>
               )}
 
               {error && (
-                <Marker className="label-mono text-[12px] text-ash">
+                <Marker className="label-untitled text-[12px] text-ash">
                   <MarkerContent>{copy.error}</MarkerContent>
                 </Marker>
               )}
@@ -440,7 +440,7 @@ export default function AgentChat({
           data-ready={ready ? "" : undefined}
           className={cn(
             "group/prompt flex items-end gap-[7px] rounded-[22px] border border-hairline bg-surface py-[7px] ps-[15px] pe-[7px] pb-[7px]",
-            "transition-[border-color,box-shadow] duration-(--duration-state) ease-(--ease-paper)",
+            "transition-[border-color,box-shadow] duration-(--duration-state) ease-(--ease-opx)",
             "focus-within:border-bone focus-within:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-bone)_8%,transparent)]"
           )}
         >
@@ -458,7 +458,7 @@ export default function AgentChat({
             }}
             placeholder={copy.placeholder}
             aria-label={copy.placeholder}
-            className="max-h-[132px] min-h-[30px] flex-1 resize-none overflow-y-auto bg-transparent py-[4px] font-sans text-[15px] leading-[1.5] text-bone outline-none placeholder:text-ash focus-visible:outline-none"
+            className="max-h-[132px] min-h-[30px] flex-1 resize-none overflow-y-auto bg-transparent py-[4px] font-untitled text-[15px] leading-[1.5] text-bone outline-none placeholder:text-ash focus-visible:outline-none"
           />
           {/* El botón nace chico y apagado y crece cuando hay algo que mandar:
               el estado del formulario se ve antes de leer nada. */}
@@ -468,7 +468,7 @@ export default function AgentChat({
             aria-label={copy.send}
             className={cn(
               "grid size-[32px] shrink-0 place-items-center rounded-pill bg-bone text-canvas",
-              "transition-[opacity,scale] duration-(--duration-state) ease-(--ease-paper)",
+              "transition-[opacity,scale] duration-(--duration-state) ease-(--ease-opx)",
               "scale-90 opacity-30 group-data-ready/prompt:scale-100 group-data-ready/prompt:opacity-100",
               "hover:opacity-80 disabled:pointer-events-none"
             )}

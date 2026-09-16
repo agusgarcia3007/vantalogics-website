@@ -1,0 +1,141 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
+
+import Frame from "@/components/site/Frame.astro"
+import SectionTitle from "@/components/site/SectionTitle.astro"
+import { useTranslations, type Lang } from "@/i18n"
+import {
+  FOCUS_SOLUTIONS,
+  solutionPath,
+  solutionsIndexPath,
+} from "@/data/solutions"
+import { casePath, casesFor } from "@/data/use-cases"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+
+const industries = FOCUS_SOLUTIONS.map((solution) => ({
+  solution,
+  useCases: casesFor(solution),
+}))
+
+// El bloque de industrias foco.
+//
+// Cumple dos funciones a la vez y por eso está construido así. Para el lector
+// es la respuesta a «¿esto sirve para lo mío?»: dos sectores nombrados, con lo
+// que se automatiza en cada uno a la vista. Para el buscador es el único lugar
+// de la portada donde entran diez enlaces internos con texto de ancla
+// descriptivo —las dos landings de sector y sus ocho casos de uso—, que es lo
+// que hace que esas páginas hereden la autoridad de la home en vez de vivir
+// colgadas del sitemap.
+//
+// Los casos se listan enteros y no recortados: un «ver más» esconde
+// exactamente los enlaces que justifican el bloque.
+---
+
+<Frame id="industrias" labelledby="industrias-titulo">
+  <SectionTitle
+    id="industrias-titulo"
+    label={t.industries.label}
+    muted={t.industries.titleMuted}
+    bright={t.industries.titleBright}
+    class="max-w-[34ch]"
+  />
+
+  <p class="mt-7 max-w-[62ch] copy text-ash" data-reveal>
+    {t.industries.body}
+  </p>
+
+  <div class="mt-[clamp(40px,5vw,64px)] grid gap-px bg-hairline md:grid-cols-2">
+    {
+      industries.map(({ solution, useCases }, i) => (
+        <article
+          class="industry flex flex-col bg-canvas p-[clamp(24px,3vw,36px)]"
+          data-reveal
+          style={`--reveal-delay: ${i * 90}ms;`}
+        >
+          <p class="label-untitled text-muted-ash">
+            {String(i + 1).padStart(2, "0")}
+          </p>
+
+          <h3 class="mt-4 font-untitled text-[22px] leading-tight text-bone">
+            <a
+              href={solutionPath(lang, solution)}
+              class="transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
+            >
+              {solution.sector[lang]}
+            </a>
+          </h3>
+
+          <p class="mt-4 max-w-[46ch] copy text-ash">
+            {solution.description[lang]}
+          </p>
+
+          <p class="mt-8 label-untitled text-muted-ash">
+            {t.industries.casesLabel}
+          </p>
+
+          <ul class="mt-4 flex flex-col">
+            {useCases.map((useCase) => (
+              <li class="border-t border-hairline first:border-t-0">
+                <a
+                  href={casePath(lang, solution, useCase)}
+                  class="group flex items-center justify-between gap-4 py-3 text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                >
+                  <span class="label-untitled">{useCase.title[lang]}</span>
+                  <HugeiconsIcon
+                    icon={ArrowRight01Icon}
+                    size={15}
+                    strokeWidth={1.5}
+                    className="shrink-0 opacity-40 transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-100 rtl:-scale-x-100"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={solutionPath(lang, solution)}
+            class="mt-auto inline-flex items-center gap-2 pt-8 label-untitled text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
+          >
+            {t.industries.cta}
+            <HugeiconsIcon
+              icon={ArrowRight01Icon}
+              size={15}
+              strokeWidth={1.5}
+              className="shrink-0 rtl:-scale-x-100"
+            />
+          </a>
+        </article>
+      ))
+    }
+  </div>
+
+  <p
+    class="mt-[clamp(28px,3vw,40px)] label-untitled text-muted-ash"
+    data-reveal
+  >
+    {t.industries.moreLabel}{" "}
+    <a
+      href={solutionsIndexPath(lang)}
+      class="text-ash underline decoration-hairline underline-offset-4 transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+    >
+      {t.industries.more}
+    </a>
+  </p>
+</Frame>
+
+<style>
+  .industry {
+    transition: background-color var(--duration-state) var(--ease-opx);
+  }
+
+  .industry:hover {
+    background-color: var(--color-surface);
+  }
+</style>
