@@ -10,6 +10,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "og:generate": "node scripts/generate-og.mjs",
     "astro": "astro",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,astro}\"",
@@ -60,6 +61,7 @@
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.0",
+    "sharp": "^0.35.3",
     "typescript": "~6",
     "typescript-eslint": "^8",
     "wrangler": "^4.121.0"
