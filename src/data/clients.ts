@@ -3,7 +3,7 @@ export interface Client {
   href: string
   logo: string
   logoAlt: string
-  /** Ajuste óptico: los dos archivos tienen proporciones muy distintas. */
+  /** Ajuste óptico: los archivos tienen proporciones muy distintas. */
   logoClass: string
   wordmark?: string
 }
@@ -30,5 +30,20 @@ export const CLIENTS: Client[] = [
     logoAlt: "",
     logoClass: "h-20 w-auto sm:h-24",
     wordmark: "Lu Apuntes",
+  },
+  {
+    name: "Academia Dr. La Rosa",
+    href: "https://curso.pulso.health/",
+    logo: "https://cdn.uselearnbase.com/logos/cc8de334-4fbe-4062-920a-e07a378f4b82/1768848667451.png",
+    logoAlt: "",
+    logoClass: "h-16 w-auto sm:h-18",
+    wordmark: "Academia Dr. La Rosa",
+  },
+  {
+    name: "Academia SIED",
+    href: "https://platform.siedonline.org/",
+    logo: "https://cdn.uselearnbase.com/logos/99f544ec-d00b-4d35-ae04-6d19ad58f54a/1776305323141.webp",
+    logoAlt: "Academia SIED",
+    logoClass: "h-20 w-auto max-w-[200px] sm:h-24",
   },
 ]

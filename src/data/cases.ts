@@ -134,4 +134,106 @@ export const CASES: CaseStudy[] = [
       en: "https://luapuntes.com/",
     },
   },
+  {
+    slug: "academia-dr-la-rosa",
+    client: {
+      es: "Academia Dr. La Rosa",
+      en: "Dr. La Rosa Academy",
+    },
+    title: {
+      es: "Una academia digital que convierte conocimiento sobre salud en una experiencia de aprendizaje estructurada.",
+      en: "A digital academy that turns health expertise into a structured learning experience.",
+    },
+    start: {
+      es: "Una audiencia que busca mejorar su salud necesita algo más que contenido disperso: un recorrido claro, materiales prácticos y herramientas para comprobar lo aprendido.",
+      en: "An audience looking to improve its health needs more than scattered content: a clear learning path, practical materials and ways to check understanding.",
+    },
+    built: {
+      es: "Construimos una academia con catálogo de cursos, lecciones en video, materiales complementarios, autoevaluaciones, seguimiento del progreso y acceso desde dispositivos móviles y TV.",
+      en: "We built an academy with a course catalog, video lessons, supplementary materials, self-assessments, progress tracking, and mobile and TV access.",
+    },
+    metrics: [
+      {
+        value: "594+",
+        label: {
+          es: "estudiantes en la plataforma",
+          en: "students on the platform",
+        },
+      },
+      {
+        value: "154",
+        label: {
+          es: "clases en el curso principal",
+          en: "lessons in the flagship course",
+        },
+      },
+      {
+        value: "14",
+        label: {
+          es: "autoevaluaciones incluidas",
+          en: "self-assessments included",
+        },
+      },
+    ],
+    integrations: ["Cursos", "Video", "Evaluaciones", "Progreso"],
+    period: {
+      es: "Producto revisado en sep. 2026",
+      en: "Product reviewed Sep 2026",
+    },
+    href: {
+      es: "https://curso.pulso.health/",
+      en: "https://curso.pulso.health/",
+    },
+  },
+  {
+    slug: "academia-sied",
+    client: {
+      es: "Academia SIED",
+      en: "SIED Academy",
+    },
+    title: {
+      es: "Educación médica continua para endoscopistas de toda Latinoamérica desde una sola plataforma.",
+      en: "Continuing medical education for endoscopists across Latin America on a single platform.",
+    },
+    start: {
+      es: "La formación médica regional reúne docentes internacionales, contenidos especializados y programas de certificación que necesitan una experiencia académica común.",
+      en: "Regional medical education brings together international faculty, specialized content and certification programs that need a shared academic experience.",
+    },
+    built: {
+      es: "Desarrollamos una academia para publicar y vender cursos, organizar clases y materiales, acompañar programas asincrónicos, evaluar conocimientos y emitir certificaciones oficiales.",
+      en: "We developed an academy to publish and sell courses, organize lessons and materials, support asynchronous programs, assess knowledge and issue official certificates.",
+    },
+    metrics: [
+      {
+        value: "838+",
+        label: {
+          es: "estudiantes en la plataforma",
+          en: "students on the platform",
+        },
+      },
+      {
+        value: "51",
+        label: {
+          es: "clases en la formación principal",
+          en: "lessons in the main program",
+        },
+      },
+      {
+        value: "33 h",
+        label: {
+          es: "de formación especializada",
+          en: "of specialized training",
+        },
+      },
+    ],
+    integrations: ["Cursos", "Pagos", "Evaluaciones", "Certificados"],
+    period: {
+      es: "Producto revisado en sep. 2026",
+      en: "Product reviewed Sep 2026",
+    },
+    href: {
+      es: "https://platform.siedonline.org/",
+      en: "https://platform.siedonline.org/",
+    },
+  },
 ]

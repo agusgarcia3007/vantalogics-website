@@ -28,7 +28,9 @@ const t = useTranslations(lang).clients
         CLIENTS.map((client, index) => (
           <li
             class:list={[
-              index > 0 && "border-t border-iron sm:border-s sm:border-t-0",
+              index > 0 && "border-t border-iron",
+              index % 2 === 1 && "sm:border-s",
+              index < 2 && "sm:border-t-0",
             ]}
           >
             <a
