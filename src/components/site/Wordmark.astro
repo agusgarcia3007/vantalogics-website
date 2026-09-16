@@ -7,24 +7,24 @@ interface Props {
 const { class: className = "", alt } = Astro.props
 ---
 
-<!-- `dir="ltr"` fijo: el lockup es la marca, no texto de la página. En árabe
-     el documento se voltea y el nombre quedaría a la izquierda del isotipo,
-     que es otro logo. La isla en LTR también le devuelve el tracking latino al
-     nombre —ver la regla del árabe en global.css—. -->
-<span dir="ltr" class={`flex items-center gap-3 ${className}`}>
-  <!-- El logo es un PNG negro con fondo transparente; sobre el canvas oscuro
-       se invierte a blanco, y vuelve a su negro original en tema claro. -->
+<!-- El lockup. `dir="ltr"` fijo: es la marca, no texto de la página, y tiene
+     que conservar su orden y su tracking latino en cualquier idioma. -->
+<span dir="ltr" class={`flex items-center gap-[10px] ${className}`}>
+  <!-- El logo es un PNG negro sobre fondo transparente: en papel va tal cual y
+       en modo oscuro se invierte a tinta clara. -->
   <img
     src="/logo-va.png"
     srcset="/logo-va.png 340w, /logo-va@2x.png 681w"
-    sizes="34px"
+    sizes="26px"
     width="340"
     height="256"
     alt={alt}
     decoding="async"
-    class="h-[26px] w-auto invert-100 [:root[data-theme=light]_&]:invert-0"
+    class="h-[24px] w-auto [:root[data-theme=dark]_&]:invert"
   />
-  <span class="font-opx text-subheading leading-none tracking-[-0.01em]">
+  <span
+    class="font-display text-[19px] leading-none tracking-[-0.012em] text-bone"
+  >
     Vantalogics
   </span>
 </span>

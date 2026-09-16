@@ -42,7 +42,7 @@ const blogPath = localizePath(lang, "/blog/")
  * El sector del que habla la nota, si declara uno.
  *
  * `findSolution` busca por slug español porque es el identificador estable del
- * sector: la nota en inglés y la nota en árabe declaran el mismo valor, y cada
+ * sector: la nota en inglés declara el mismo valor que la española, y cada
  * una resuelve el enlace a la página de sector de su propio idioma.
  */
 const industrySolution = post.data.industry
@@ -159,7 +159,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
   alternates={alternates}
   jsonLd={jsonLd}
 >
-  <SiteHeader lang={lang} />
+  <SiteHeader lang={lang} alternates={alternates} />
 
   <main id="contenido">
     <Frame flush>
@@ -168,16 +168,16 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
           <li>
             <a
               href={localizePath(lang)}
-              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+              class="label-mono-sm text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone"
             >
               Vantalogics
             </a>
           </li>
-          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
+          <li class="label-mono-sm text-faint" aria-hidden="true">/</li>
           <li>
             <a
               href={blogPath}
-              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+              class="label-mono-sm text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone"
             >
               {t.blog.label}
             </a>
@@ -192,32 +192,29 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
               <>
                 <a
                   href={solutionPath(lang, industrySolution)}
-                  class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                  class="label-mono-sm text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone"
                 >
                   {industrySolution.sector[lang]}
                 </a>
-                <span class="label-untitled text-muted-ash" aria-hidden="true">
+                <span class="label-mono-sm text-faint" aria-hidden="true">
                   ·
                 </span>
               </>
             )
           }
-          <span class="label-untitled text-muted-ash">
+          <span class="label-mono-sm text-pen-ink">
             {t.blog.clusters[post.data.cluster]}
           </span>
-          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span
-          >
+          <span class="label-mono-sm text-faint" aria-hidden="true">·</span>
           <time
-            class="label-untitled text-muted-ash"
+            class="label-mono-sm text-faint"
             datetime={post.data.date.toISOString()}
           >
             {formatDate(post.data.date, lang)}
           </time>
-          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span
-          >
-          <span class="label-untitled text-muted-ash">
-            {minutes}
-            {t.blog.readingTime}
+          <span class="label-mono-sm text-faint" aria-hidden="true">·</span>
+          <span class="label-mono-sm text-faint">
+            {minutes} {t.blog.readingTime}
           </span>
         </div>
 
@@ -230,7 +227,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
 
         {
           post.data.updated && (
-            <p class="mt-6 label-untitled text-muted-ash">
+            <p class="mt-6 label-mono-sm text-faint">
               {t.blog.updatedOn} {formatDate(post.data.updated, lang)}
             </p>
           )
@@ -247,9 +244,9 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
         class="max-w-[62ch] border-l border-hairline ps-[clamp(20px,2.5vw,32px)]"
         data-reveal
       >
-        <p class="label-untitled text-muted-ash">{t.blog.answerLabel}</p>
+        <p class="label-mono text-faint">{t.blog.answerLabel}</p>
         <p
-          class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.55] text-bone"
+          class="mt-4 font-display text-[clamp(18px,1.7vw,21px)] leading-[1.55] text-bone"
           data-speakable
         >
           {post.data.answer}
@@ -271,7 +268,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
               aria-labelledby="indice-nota"
               class="order-first lg:sticky lg:top-[104px] lg:order-none"
             >
-              <p id="indice-nota" class="label-untitled text-muted-ash">
+              <p id="indice-nota" class="label-mono text-faint">
                 {t.blog.tocLabel}
               </p>
               <ol class="mt-4 flex flex-col gap-[10px] border-l border-hairline ps-4">
@@ -279,7 +276,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
                   <li>
                     <a
                       href={`#${heading.slug}`}
-                      class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
+                      class="label-mono-sm text-ash transition-colors duration-(--duration-state) ease-paper hover:text-bone"
                     >
                       {heading.text}
                     </a>
@@ -317,7 +314,7 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
         class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between"
       >
         <div>
-          <p class="label-untitled text-muted-ash">{t.blog.authorLabel}</p>
+          <p class="label-mono text-faint">{t.blog.authorLabel}</p>
           <p class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.4] text-bone">
             {t.blog.author}
           </p>
@@ -327,14 +324,14 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
         <div class="flex flex-wrap gap-3 lg:shrink-0">
           <Cta
             href={SCHEDULE_URL}
-            variant="pill-solid"
-            size="pill-lg"
+            variant="solid"
+            size="lg"
             target="_blank"
             rel="noopener noreferrer"
           >
             {t.blog.ctaButton}
           </Cta>
-          <Cta href={blogPath} variant="pill-quiet" size="pill-lg">
+          <Cta href={blogPath} variant="outline" size="lg">
             {t.blog.backToIndex}
           </Cta>
         </div>

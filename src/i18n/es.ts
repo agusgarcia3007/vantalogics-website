@@ -1,20 +1,25 @@
 /**
  * Todo el texto del sitio, en un solo lugar.
  *
- * Los titulares vienen partidos en dos: `muted` es la premisa y `bright` el
- * remate. La sección los imprime en dos tonos —gris y bone— para que el ojo
- * agarre la idea completa antes de leerla entera. Es la única concesión
- * tipográfica del sistema y sólo aplica a los h2.
+ * Dos convenciones que vienen del diseño:
+ *
+ * 1. Los titulares de sección vienen partidos en `titleMuted` + `titleBright`.
+ *    Es una sola frase —se lee de corrido y el lector de pantalla la anuncia
+ *    entera—, pero el remate se imprime en tinta plena y con el trazo de lápiz
+ *    rojo debajo, así que el ojo lo agarra antes de terminar de leer.
+ * 2. `annotation` es la letra al margen: una línea corta, en cursiva y en rojo,
+ *    que comenta lo que dice el bloque en vez de repetirlo. Si no aporta algo
+ *    que el bloque no dice, se deja vacía.
  */
 export const es = {
   htmlLang: "es",
   ogLocale: "es_ES",
 
   meta: {
-    title: "Vantalogics — Automatizamos el trabajo repetitivo de tu empresa",
+    title: "Vantalogics — La agencia de IA para EdTech",
     description:
-      "Construimos agentes de IA que atienden, cargan datos y resuelven casos dentro de las herramientas que ya usás. Con control humano donde hay plata en juego.",
-    imageAlt: "Vantalogics — agencia de sistemas de IA",
+      "Construimos tutores, corrección asistida y búsqueda con citas adentro de plataformas educativas. Evaluados con tus casos reales y con el costo por alumno calculado antes de construir.",
+    imageAlt: "Vantalogics — agencia de IA para EdTech",
   },
 
   a11y: {
@@ -27,15 +32,15 @@ export const es = {
 
   nav: {
     items: [
-      { href: "#que-hacemos", label: "Qué hacemos" },
-      { href: "#industrias", label: "Industrias" },
+      { href: "#capacidades", label: "Qué construimos" },
       { href: "#proceso", label: "Cómo trabajamos" },
+      { href: "/soluciones/edtech-y-plataformas-educativas/", label: "EdTech" },
       { href: "/blog/", label: "Notas" },
     ],
     cta: "Agendar diagnóstico",
     menu: "Menú",
     close: "Cerrar",
-    tagline: "Sistemas de IA en producción",
+    tagline: "IA para plataformas educativas",
   },
 
   theme: {
@@ -44,14 +49,6 @@ export const es = {
     toLight: "Activar modo claro",
   },
 
-  /**
-   * El selector de idioma.
-   *
-   * `switchTo` es la invitación a ver el sitio *en este* idioma, escrita en
-   * este idioma: es la etiqueta que muestran los otros idiomas cuando enlazan
-   * acá. Con dos idiomas alcanzaba con guardar la del contrario; con tres, cada
-   * diccionario tiene que traer la suya.
-   */
   language: {
     label: "Idioma",
     name: "Español",
@@ -59,226 +56,254 @@ export const es = {
   },
 
   hero: {
-    eyebrow: "Agencia de sistemas de IA",
-    title: "Que el trabajo repetitivo lo haga un sistema.",
-    lead: "Construimos agentes de IA que atienden clientes, cargan datos y resuelven casos dentro de las herramientas que ya usás. Vos seguís decidiendo donde hay plata en juego.",
-    ctaPrimary: "Agendar diagnóstico gratuito",
-    ctaSecondary: "Probar un agente ahora",
-    note: "30 minutos, sin costo. Salís con el mapa de tu proceso y una estimación.",
-    flow: {
-      caption: "Un pedido que entra por WhatsApp, resuelto solo",
-      label: "Ejemplo de flujo",
-      status: "Trabajando ahora",
-      trigger: {
-        title: "Entra un mensaje",
-        detail: "«Hola, quiero pedir 20 cajas para el jueves»",
-      },
-      agent: {
-        title: "Tu agente",
-        detail: "Lee, entiende y decide qué hacer",
-      },
-      outputs: [
+    eyebrow: "Agencia de IA para EdTech",
+    /** El titular se imprime en dos partes: la segunda lleva el trazo rojo. */
+    title: "Ponemos IA adentro de tu plataforma educativa",
+    titleMark: "sin que invente.",
+    lead: "Tutores acotados al curso, corrección con rúbrica y búsqueda que cita el módulo y el minuto del video. Probados contra tus propios casos antes de que los vea un alumno.",
+    ctaPrimary: "Agendar diagnóstico",
+    ctaSecondary: "Probar el agente",
+    note: "30 minutos, sin costo. Salís con el inventario de tu contenido, el alcance del primer sistema y el costo estimado por alumno activo.",
+    annotation: "Una sola vertical: educación.",
+    /** Rótulos de la ficha que acompaña al campo de puntos del hero. */
+    field: {
+      label: "Consulta de un alumno",
+      question: "«¿Por qué me dio 0,84 el R² del ejercicio 3?»",
+      steps: [
         {
-          title: "Le contesta al cliente",
-          detail: "Confirma stock y fecha de entrega",
+          title: "Busca en el material del curso",
+          detail: "Unidad 4, video 2 — minuto 12:40",
         },
         {
-          title: "Carga el pedido",
-          detail: "Queda en tu sistema, sin que nadie lo tipee",
+          title: "Responde citando el pasaje",
+          detail: "Con enlace al momento exacto de la clase",
         },
         {
-          title: "Te avisa si hay que decidir",
-          detail: "Descuento fuera de lo normal: lo aprobás vos",
+          title: "Se detiene antes de la entrega",
+          detail: "No resuelve el ejercicio evaluado: acompaña hasta el paso anterior",
         },
       ],
-      footnote: "Seis segundos de punta a punta. Cada paso queda registrado.",
+      footnote:
+        "Si el material no cubre la pregunta, lo dice. Esa respuesta también se evalúa.",
     },
   },
 
-  tools: {
-    title: "Trabaja adentro de lo que ya usás",
-    note: "Y de cualquier otra cosa que tenga API. No cambiás de sistema: le sumamos manos.",
+  /**
+   * La franja de confianza.
+   *
+   * En vez de logos de clientes —que a esta altura serían prestados— dice
+   * dónde vive el sistema. Los estándares del rubro hacen el mismo trabajo que
+   * un muro de logos («esto se enchufa a tu mundo real») y son verificables.
+   */
+  signals: {
+    title: "Se integra con lo que ya tenés",
+    note: "Por API o por estándar del rubro. Si tu plataforma es propia, se integra igual: es el caso más común.",
     items: [
-      "WhatsApp",
-      "Correo",
-      "Planillas",
-      "Slack",
-      "Notion",
-      "Tu ERP",
-      "Tu CRM",
-      "Tu web",
+      "Moodle",
+      "Canvas",
+      "Open edX",
+      "Google Classroom",
+      "LTI 1.3",
+      "xAPI y SCORM",
+      "Tu SIS",
+      "Tu propia app",
     ],
   },
 
-  problem: {
+  thesis: {
     label: "El problema",
-    titleMuted: "Tu equipo no odia el trabajo.",
-    titleBright: "Odia hacerlo dos veces.",
+    titleMuted: "Un chatbot sobre tu contenido",
+    titleBright: "no es un tutor.",
     body: [
-      "La mayoría de las empresas no tiene un problema de gente: tiene tareas que se hacen a mano tres veces por semana porque nadie las sistematizó nunca.",
-      "Eso es exactamente lo que hacemos. Miramos el proceso real, no la presentación del proceso, y automatizamos la parte que se repite.",
+      "Poner un modelo genérico encima de un curso es media tarde de trabajo, y por eso ya lo probó casi todo el sector. Lo que aparece después es siempre lo mismo: responde bien sobre el mundo y mal sobre la materia, y nadie puede decir si mejoró o empeoró con el último cambio.",
+      "Lo que construimos empieza por el otro lado: qué tiene que recuperar, qué no puede contestar nunca, cuánto sale cada respuesta y cómo se prueba todo eso antes de abrirlo. Recién ahí se elige el modelo.",
     ],
+    annotation: "Lo caro no es el modelo: es lo que el modelo dice mal.",
     items: [
       {
-        title: "Pedidos por mensaje.",
+        title: "Contesta lo que no está en el curso.",
         detail:
-          "Alguien los copia al sistema a mano, y cada tanto se pierde uno.",
+          "Cuando el material no cubre la pregunta, el modelo completa con lo que recuerda de internet. En un curso pago, eso es un reclamo.",
       },
       {
-        title: "Facturas y remitos.",
-        detail: "Se leen, se cargan y se revisan de a uno, todos los días.",
+        title: "Resuelve la entrega evaluada.",
+        detail:
+          "El alumno le pega la consigna y la hace. La plataforma terminó automatizando la trampa que dice combatir.",
       },
       {
-        title: "Las mismas preguntas.",
-        detail: "El mismo mensaje contestado veinte veces, todos los días.",
+        title: "Cuesta más de lo que cobra.",
+        detail:
+          "Uso alto e ingreso por alumno bajo: sin costo por alumno activo calculado antes, la función se come el margen del plan que la vende.",
       },
       {
-        title: "El reporte del lunes.",
-        detail: "Media mañana armando lo mismo que la semana pasada.",
+        title: "Nadie puede probar que mejoró.",
+        detail:
+          "Sin un set de evaluación propio no hay forma de comparar dos versiones del tutor. Cada cambio pasa a ser una apuesta.",
       },
     ],
   },
 
-  services: {
-    label: "Qué hacemos",
-    titleMuted: "Cuatro formas de poner IA a trabajar.",
-    titleBright: "Todas terminan en algo funcionando.",
+  capabilities: {
+    label: "Qué construimos",
+    titleMuted: "Cuatro sistemas.",
+    titleBright: "Los cuatro terminan en producción.",
+    intro:
+      "No entregamos un informe ni un prototipo para demo. Cada uno de estos se despliega con tus datos, se mide contra casos reales y queda operando en tu infraestructura.",
     items: [
       {
         index: "01",
-        title: "Automatizar un proceso",
+        title: "Tutor acotado al curso",
         summary:
-          "El trabajo que hoy hace una persona copiando y pegando pasa a un sistema que corre solo y deja registro de cada paso.",
+          "Responde con el material de la unidad, dice «esto no está en el curso» en vez de completar y no resuelve la entrega evaluada: acompaña hasta el paso anterior y ahí se detiene.",
         items: [
-          "Alta de clientes y proveedores",
-          "Lectura y carga de documentos",
-          "Cruces entre sistemas que hoy son manuales",
-          "Triage y respuesta de tickets",
+          "Alcance atado a lo que el alumno tiene habilitado",
+          "Límite explícito frente a la evaluación",
+          "Voz y nivel del curso, no del modelo",
+          "Escalado a un docente cuando hace falta",
         ],
       },
       {
         index: "02",
-        title: "Un agente a medida",
+        title: "Corrección asistida con rúbrica",
         summary:
-          "Atiende, consulta tus datos reales y ejecuta acciones concretas. Con permisos acotados y un humano donde el error sale caro.",
+          "Borrador de nota y devolución criterio por criterio, con la evidencia citada del propio texto del alumno. El docente ajusta y firma. Ahí están las horas que hoy se pierden.",
         items: [
-          "Soporte y ventas con tu información",
-          "Copilotos internos para tu equipo",
-          "Tareas de varios pasos con aprobación",
-          "En WhatsApp, correo, Slack o tu producto",
+          "La rúbrica se vuelve explícita y comprobable",
+          "Un criterio por vez, no una nota de golpe",
+          "Interfaz de revisión con la diferencia a la vista",
+          "Distancia entre borrador y nota final, medida",
         ],
       },
       {
         index: "03",
-        title: "Que funcione siempre igual",
+        title: "Búsqueda con cita sobre tu contenido",
         summary:
-          "Acordamos qué significa que el agente ande bien y lo medimos en cada cambio. Si baja la calidad, salta una alerta antes de que te enteres por un cliente.",
+          "Recuperación sobre tus cursos, transcripciones y materiales, con la cita al módulo y al minuto del video. Es la base de todo lo demás: sin esto, cualquier tutor responde de memoria.",
         items: [
-          "Pruebas con casos reales de tu operación",
-          "Límites explícitos de qué puede hacer solo",
-          "Registro, costo y tiempo de cada ejecución",
-          "Alertas cuando algo se degrada",
+          "Transcripción e indexado del video existente",
+          "Vocabulario del dominio, no genérico",
+          "Devuelve el pasaje, no el curso entero",
+          "Respeta permisos y matriculación",
         ],
       },
       {
         index: "04",
-        title: "IA adentro de tu producto",
+        title: "Evaluación, costo y operación",
         summary:
-          "Si vendés software y la IA tiene que vivir adentro, nos hacemos cargo de la arquitectura completa y se la dejamos andando a tu equipo.",
+          "Un set de evaluación con tus casos reales —incluidas las preguntas cuya respuesta correcta es «no está en el material»— y el costo por alumno activo bajo control desde el primer día.",
         items: [
-          "Búsqueda sobre tus propios datos",
-          "Funciones de IA embebidas en tu producto",
-          "Elección de modelos y control de costos",
-          "Traspaso documentado al equipo interno",
+          "Evals que corren en cada cambio, no una vez",
+          "Alerta cuando la calidad baja del umbral",
+          "Costo y latencia por respuesta, a la vista",
+          "Traza completa de qué citó y por qué",
         ],
       },
     ],
   },
 
+  /**
+   * Casos.
+   *
+   * La sección se imprime sola desde `src/data/cases.ts` y desaparece entera
+   * mientras no haya ninguno publicado: una grilla de «próximamente» es peor
+   * que no tener la sección.
+   */
+  cases: {
+    label: "Casos",
+    titleMuted: "Lo que dejamos",
+    titleBright: "corriendo.",
+    intro:
+      "Cada caso dice qué se construyó, contra qué número se midió y qué había que resolver antes de empezar. Los números son los del cliente, publicados con su permiso.",
+    contextLabel: "Punto de partida",
+    workLabel: "Qué construimos",
+    resultLabel: "Qué se movió",
+    stackLabel: "Con qué se integró",
+  },
+
   agentDemo: {
     label: "Probalo ahora",
-    titleMuted: "Este sitio tiene un agente adentro.",
-    titleBright: "Contale tu caso y respondé dos preguntas.",
-    body: "Es el mismo tipo de agente que construimos para clientes: consulta información real, anota lo que le contás y pide permiso antes de pasarle tu contacto a una persona. No es un video, no es una demo grabada.",
+    titleMuted: "Este sitio tiene",
+    titleBright: "un agente adentro.",
+    body: "Es el mismo tipo de sistema que construimos para plataformas educativas, corriendo en producción: consulta información real, anota lo que le contás y pide permiso antes de pasarle tu contacto a una persona. No es un video ni una demo grabada.",
+    annotation: "Preguntale algo que no esté en el sitio y mirá qué contesta.",
     points: [
       "Cada paso que da queda escrito en el chat",
       "No manda nada sin que vos lo apruebes",
-      "Si no entiende, lo dice en vez de inventar",
+      "Si no sabe, lo dice en vez de inventar",
     ],
   },
 
   process: {
     label: "Cómo trabajamos",
-    titleMuted: "De la primera charla",
-    titleBright: "a un sistema andando.",
+    titleMuted: "De tu contenido",
+    titleBright: "a un sistema con alumnos adentro.",
     steps: [
       {
         step: "01",
         title: "Diagnóstico",
-        body: "Media hora con quien conoce el proceso de verdad. Salís con el mapa del flujo y qué conviene automatizar primero.",
-        meta: "30 minutos · gratis",
+        body: "Media hora con quien conoce el contenido y el producto. Salís con el inventario del material, el primer sistema recomendado y el costo estimado por alumno activo.",
+        meta: "30 minutos · sin costo",
       },
       {
         step: "02",
-        title: "Diseño y prueba",
-        body: "Definimos la métrica de éxito y construimos la versión más chica que resuelve el problema completo, no una maqueta.",
+        title: "Evidencia antes que código",
+        body: "Armamos el set de evaluación con tus casos reales y la métrica que tiene que moverse. Es lo que después permite decir si el sistema mejoró, y lo que casi nadie construye.",
         meta: "Primeras semanas",
       },
       {
         step: "03",
-        title: "Producción",
-        body: "Integración, permisos, límites y monitoreo. Se abre a más gente cuando los números aguantan, no antes.",
-        meta: "Con tus datos reales",
+        title: "Producción acotada",
+        body: "Sale con alumnos de verdad, pero en un alcance chico: una materia, un curso, una cohorte. Se abre al resto cuando los números aguantan, no antes.",
+        meta: "Con alumnos reales",
       },
       {
         step: "04",
         title: "Operación y traspaso",
-        body: "Monitoreamos, controlamos el costo y documentamos. Si tenés equipo técnico, queda en condiciones de seguir sin nosotros.",
+        body: "Monitoreo de calidad, control de costo por alumno y documentación. Si tenés equipo técnico, queda en condiciones de seguir sin nosotros.",
         meta: "Continuo",
       },
     ],
   },
 
   /**
-   * Lo que se puede verificar, en lugar de casos de éxito.
+   * Lo que se puede verificar, en lugar de casos de éxito ajenos.
    *
-   * La sección anterior mostraba métricas y testimonios de clientes que no
-   * existen. Un caso de éxito ajeno no se puede comprobar; estas cuatro cosas
-   * sí, y son las mismas que después aparecen en el contrato. Cuando haya
-   * casos reales con permiso para publicarlos, van acá.
+   * Son las mismas cuatro cosas que después aparecen en el contrato.
    */
-  guarantees: {
-    label: "Garantías",
+  principles: {
+    label: "Compromisos",
     titleMuted: "No te pedimos que nos creas.",
     titleBright: "Te dejamos con qué comprobarlo.",
     intro:
-      "Cualquiera puede mostrarte una demo que sale bien y un caso de éxito que no podés verificar. Preferimos que nos midas por lo que sí podés controlar vos, desde la primera semana.",
+      "Cualquiera puede mostrarte una demo que sale bien. Preferimos que nos midas por lo que podés controlar vos, desde la primera semana.",
     items: [
+      {
+        title: "La nota la firma un docente",
+        body: "La corrección propone y una persona decide. Ninguna calificación que quede en el legajo, ningún caso de integridad académica y ninguna baja se resuelven solos.",
+      },
+      {
+        title: "Los datos de los alumnos no se mueven",
+        body: "Desplegamos en tu nube y tus cuentas de proveedor. No usamos datos de alumnos para entrenar modelos y, si tu audiencia son menores, el marco legal define la arquitectura antes que el modelo.",
+      },
       {
         title: "La métrica se acuerda antes",
         body: "Antes de escribir una línea definimos qué número tiene que moverse y cómo se mide. Si no se mueve, quedó por escrito que no se movió.",
       },
       {
-        title: "El sistema es tuyo",
-        body: "Repositorios, cuentas de proveedor e infraestructura a tu nombre desde el primer día. Si nos querés echar, sigue funcionando sin nosotros.",
-      },
-      {
-        title: "Cada ejecución deja rastro",
-        body: "Qué hizo el agente, con qué datos, cuánto tardó y cuánto costó. No hay que creerle al resumen mensual: está el detalle de cada caso.",
-      },
-      {
-        title: "La demo es este sitio",
-        body: "El agente de esta página es el mismo tipo de sistema que entregamos, corriendo en producción. Probalo y juzgá con eso, no con una grabación.",
+        title: "El sistema queda a tu nombre",
+        body: "Repositorios, cuentas e infraestructura tuyos desde el primer día, y cada respuesta con su cita, su costo y su traza. Si nos querés echar, sigue funcionando sin nosotros.",
       },
     ],
   },
 
-  /**
-   * Seis preguntas, respuestas de 40–60 palabras. Los rich results de FAQ
-   * quedaron deprecados en mayo de 2026, así que el largo ya no se optimiza
-   * para el SERP sino para la extracción: ese rango entra completo en un
-   * chunk de retrieval y es el que citan los motores de respuesta.
-   */
+  /** Las notas, en la portada. Tres, las más recientes. */
+  insights: {
+    label: "Notas",
+    titleMuted: "Lo que aprendimos",
+    titleBright: "poniendo esto en producción.",
+    cta: "Ver todas las notas",
+  },
+
   faq: {
     label: "Preguntas",
     titleMuted: "Lo que preguntan",
@@ -286,44 +311,43 @@ export const es = {
     indexLabel: "Índice",
     entries: [
       {
-        question: "¿Qué hace exactamente Vantalogics?",
+        question: "¿Cómo evitan que el tutor invente contenido?",
         answer:
-          "Automatizamos trabajo repetitivo de empresas y construimos agentes de IA conectados a tus sistemas —CRM, ERP, bases de datos y APIs internas—. Los medimos con casos reales de tu operación para que funcionen todos los días en producción, y no sólo el día de la demo.",
+          "Acotando la recuperación al material del curso y exigiendo cita: si ningún pasaje respalda la respuesta, el tutor lo dice en vez de completar. Se prueba con un set de preguntas cuya respuesta correcta es «no está en el material», que es justo el caso que casi nadie evalúa.",
       },
       {
-        question: "¿Cuánto tarda un proyecto de automatización con IA?",
+        question: "¿Cuánto cuesta la función por alumno activo?",
         answer:
-          "Depende del proceso y de con qué sistemas hay que hablar, así que el plazo se cierra durante el diagnóstico. Trabajamos en ciclos cortos: en lugar de un único entregable al final, hay algo usable y medible en cada entrega, normalmente desde las primeras semanas.",
+          "Depende del volumen de mensajes y del largo del contexto, y se estima antes de construir contra el tráfico real de la plataforma. En producción se controla con caché, recuperación acotada y un modelo chico para la mayoría de las consultas, reservando el grande para lo que lo necesita.",
       },
       {
-        question: "¿Cuánto cuesta automatizar un proceso con IA?",
+        question: "Nuestro contenido está en video sin transcribir y PDF escaneado. ¿Sirve igual?",
         answer:
-          "El presupuesto se arma después del diagnóstico, con alcance cerrado y precio por proyecto en lugar de horas abiertas. El diagnóstico inicial de 30 minutos es gratuito y termina con un alcance y un rango de inversión por escrito, antes de que te comprometas a nada.",
+          "Sirve, pero el primer proyecto es de normalización, no de IA: transcripción, corte por unidad y metadatos. Lo decimos en el diagnóstico porque cambia el plazo y el presupuesto, y porque un tutor sobre material desordenado responde mal por más bueno que sea el modelo.",
       },
       {
-        question: "¿Qué pasa con los datos de mi empresa?",
+        question: "¿Trabajan sobre nuestro LMS o sobre nuestro producto propio?",
         answer:
-          "Los datos quedan en tu infraestructura y tus cuentas de proveedor: desplegamos en tu nube o en la que definas, con acuerdo de confidencialidad y acceso mínimo necesario. No usamos información de clientes para entrenar modelos y trabajamos con retención cero cuando el caso lo exige.",
+          "Sobre los dos. Con Moodle, Canvas, Open edX o Google Classroom entramos por LTI 1.3, xAPI o su API; con un producto propio integramos contra tu backend y tu modelo de permisos. El caso más frecuente es una plataforma propia con un LMS al lado.",
       },
       {
-        question: "¿Qué pasa si el agente se equivoca?",
+        question: "¿El tutor no termina ayudando a hacer trampa?",
         answer:
-          "Cada agente se despliega con límites explícitos de qué puede hacer solo y qué requiere aprobación de una persona. Las acciones de alto impacto pasan siempre por revisión humana, todo queda registrado paso por paso, y hay alertas automáticas cuando la calidad baja del umbral acordado.",
+          "Es la primera restricción que se escribe: el tutor conoce qué entregas están evaluadas y se detiene en el paso anterior, explica el método pero no produce la respuesta entregable. Esa frontera se define con tu equipo docente y se prueba con intentos reales de cruzarla.",
       },
       {
-        question:
-          "¿Necesito un equipo técnico interno para trabajar con ustedes?",
+        question: "¿Cuánto tarda en estar con alumnos adentro?",
         answer:
-          "No. Nos hacemos cargo de la arquitectura, el desarrollo y el despliegue completo. Sí necesitamos una persona del lado del negocio que conozca el proceso a fondo y pueda validar los resultados. Si tenés equipo técnico, le transferimos el sistema documentado para que pueda operarlo y extenderlo.",
+          "El plazo se cierra en el diagnóstico porque depende del estado del contenido y de las integraciones. Trabajamos en ciclos cortos: primero el set de evaluación y la búsqueda con citas, que ya cambian la experiencia, y después el tutor o la corrección sobre un alcance acotado.",
       },
     ],
   },
 
   cta: {
     label: "Próximo paso",
-    title: "Contanos qué proceso te está comiendo el mes.",
-    body: "Treinta minutos, sin compromiso. Salís con un mapa del proceso y una estimación de cuánto se puede automatizar. Si no vemos caso, te lo decimos en la misma llamada.",
-    primary: "Agendar diagnóstico gratuito",
+    title: "Mostranos tu contenido y te decimos qué se puede hacer con él.",
+    body: "Treinta minutos con quien va a construirlo, no con un comercial. Salís con el inventario del material, el primer sistema recomendado y una estimación de costo por alumno. Si no vemos caso, te lo decimos en la misma llamada.",
+    primary: "Agendar diagnóstico",
     secondary: "Escribirnos por correo",
     emailLabel: "Correo",
     responseLabel: "Respuesta",
@@ -332,35 +356,41 @@ export const es = {
 
   footer: {
     tagline:
-      "Automatizamos trabajo repetitivo y construimos agentes de IA que aguantan producción.",
+      "Agencia de IA para EdTech. Tutores, corrección asistida y búsqueda con citas que aguantan producción.",
     columns: [
       {
-        title: "Industrias",
+        title: "Qué construimos",
         links: [
           {
-            href: "/soluciones/real-estate-developers/",
-            label: "Real estate developers",
+            href: "/soluciones/edtech-y-plataformas-educativas/tutor-de-ia/",
+            label: "Tutor de IA",
           },
           {
-            href: "/soluciones/edtech-y-plataformas-educativas/",
-            label: "EdTech y educación",
+            href: "/soluciones/edtech-y-plataformas-educativas/correccion-asistida/",
+            label: "Corrección asistida",
           },
-          { href: "/soluciones/", label: "Todos los sectores" },
-          { href: "#que-hacemos", label: "Qué hacemos" },
+          {
+            href: "/soluciones/edtech-y-plataformas-educativas/generacion-de-evaluaciones/",
+            label: "Generación de evaluaciones",
+          },
+          {
+            href: "/soluciones/edtech-y-plataformas-educativas/busqueda-semantica/",
+            label: "Búsqueda semántica",
+          },
         ],
       },
       {
         title: "La agencia",
         links: [
+          { href: "/soluciones/", label: "IA para EdTech" },
           { href: "/blog/", label: "Notas" },
           { href: "#proceso", label: "Cómo trabajamos" },
-          { href: "#faq", label: "Preguntas frecuentes" },
           { href: "#contacto", label: "Contacto" },
         ],
       },
     ],
     socialTitle: "Seguinos",
-    tags: "Automatización · Agentes de IA · AI Solutions",
+    tags: "Tutores de IA · Corrección asistida · RAG educativo",
   },
 
   /**
@@ -377,12 +407,12 @@ export const es = {
     meta: {
       title: "Notas — Vantalogics",
       description:
-        "Costos reales, criterios de decisión y fallas de producción en proyectos de automatización con IA. Apuntes de trabajo, no artículos de captación.",
+        "Costo por alumno, criterios de decisión y fallas de producción en proyectos de IA para plataformas educativas. Apuntes de trabajo, no artículos de captación.",
     },
     titleMuted: "Lo que aprendimos",
-    titleBright: "poniendo agentes en producción.",
+    titleBright: "poniendo IA en plataformas educativas.",
     intro:
-      "Costos reales, criterios para decidir y las fallas que aparecen recién cuando el agente atiende clientes de verdad. Publicamos lo que nos hubiera servido leer antes de empezar.",
+      "Costos reales por alumno, criterios para decidir y las fallas que aparecen recién cuando el tutor atiende a una cohorte entera. Publicamos lo que nos hubiera servido leer antes de empezar.",
     empty: "Todavía no hay notas publicadas.",
     readMore: "Leer la nota",
     backToIndex: "Todas las notas",
@@ -397,11 +427,11 @@ export const es = {
     authorLabel: "Escrito por",
     author: "Equipo Vantalogics",
     authorBio:
-      "Agencia de sistemas de IA. Automatizamos procesos repetitivos y construimos agentes evaluados y monitoreados que aguantan producción.",
-    ctaTitle: "¿Te suena a tu operación?",
+      "Agencia de IA para EdTech. Construimos tutores, corrección asistida y búsqueda con citas, evaluados y monitoreados, adentro de plataformas educativas.",
+    ctaTitle: "¿Te suena a tu plataforma?",
     ctaBody:
-      "Treinta minutos, sin costo. Salís con el mapa de tu proceso y una estimación de qué conviene automatizar primero.",
-    ctaButton: "Agendar diagnóstico gratuito",
+      "Treinta minutos, sin costo. Salís con el inventario de tu contenido y una estimación de qué conviene construir primero.",
+    ctaButton: "Agendar diagnóstico",
     clusters: {
       costos: "Costos",
       decision: "Cómo decidir",
@@ -410,61 +440,41 @@ export const es = {
     },
   },
 
-  /**
-   * Las dos industrias foco, en la portada.
-   *
-   * El bloque existe para resolver una tensión de posicionamiento: la agencia
-   * atiende cualquier rubro, pero una agencia que dice «atendemos cualquier
-   * rubro» no es la primera opción de nadie. El titular admite las dos cosas en
-   * la misma frase y el bloque entero es, en la práctica, el enlace más fuerte
-   * de la home hacia las dos landings de industria y sus casos de uso.
-   */
-  industries: {
-    label: "Industrias foco",
-    titleMuted: "Automatizamos en cualquier rubro.",
-    titleBright: "Estos dos los conocemos por dentro.",
-    body: "En real estate developers y en plataformas educativas ya sabemos qué proceso paga primero, con qué sistemas hay que hablar y en qué casos conviene decir que no. Eso acorta el diagnóstico y evita construir lo que ya sabemos que no funciona.",
-    casesLabel: "Casos de uso",
-    cta: "Ver el sector completo",
-    moreLabel: "¿Otro rubro?",
-    more: "Ver los seis sectores",
-  },
-
-  /** Páginas de solución por sector. Ver `src/data/solutions.ts`. */
+  /** Páginas de sector y de caso de uso. Ver `src/data/solutions.ts`. */
   solutions: {
-    label: "Soluciones",
-    breadcrumb: "Soluciones",
-    indexTitle: "Automatización con IA, por sector",
+    label: "EdTech",
+    breadcrumb: "IA para EdTech",
+    indexTitle: "IA para plataformas educativas",
     indexDescription:
-      "Cómo se automatiza con IA en cada sector: qué procesos conviene atacar primero, qué se integra y qué queda con aprobación humana.",
+      "Cómo se integra IA en una plataforma educativa: búsqueda con citas sobre el contenido propio, tutor acotado al curso y corrección asistida, con la nota firmada por un docente.",
     indexIntro:
-      "El proceso cambia según el rubro. Estas páginas son el punto de partida por sector: qué automatizamos primero, con qué sistemas hablamos y dónde dejamos a una persona decidiendo.",
-    focusLabel: "Industrias foco",
-    othersLabel: "Otros sectores",
-    processesLabel: "Qué automatizamos primero",
+      "Esta es la página madre del sector: qué se integra primero, con qué sistemas hablamos, qué queda siempre con un docente decidiendo y en qué casos conviene no hacerlo. Abajo, cada implementación por separado.",
+    focusLabel: "Casos de uso",
+    othersLabel: "Notas del sector",
+    processesLabel: "Qué integramos primero",
     stackLabel: "Con qué se integra",
     humanLabel: "Qué queda con aprobación humana",
     startLabel: "Por dónde se empieza",
     notThisLabel: "Cuándo no conviene",
-    useCasesLabel: "Casos de uso en este sector",
+    useCasesLabel: "Casos de uso",
     useCasesIntro:
       "Cada uno explica una implementación concreta: cómo funciona de punta a punta, qué número se mueve y qué tiene que existir de tu lado antes de empezar.",
     stepsLabel: "Cómo funciona",
     measuresLabel: "Qué se mide",
     requiresLabel: "Qué hace falta de tu lado",
     backToSector: "Ver todo el sector",
-    notesLabel: "Notas sobre este sector",
+    notesLabel: "Notas sobre esto",
   },
 
   agent: {
-    open: "Probá un agente de ejemplo",
+    open: "Probá el agente",
   },
 
   whatsapp: {
     label: "Escribinos por WhatsApp",
     aria: "Escribinos por WhatsApp, abre en una pestaña nueva",
     prefill:
-      "Hola Vantalogics, quiero automatizar un proceso de mi empresa. ¿Podemos hablar?",
+      "Hola Vantalogics, tenemos una plataforma educativa y queremos integrar IA. ¿Podemos hablar?",
   },
 }
 

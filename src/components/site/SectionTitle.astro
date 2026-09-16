@@ -1,30 +1,55 @@
 ---
+import Mark from "@/components/site/Mark.astro"
+
 interface Props {
   label?: string
+  /** Número de sección, tipo índice de apunte: «02». */
+  index?: string
   muted: string
   bright: string
   id?: string
   class?: string
+  /** Sin el trazo de lápiz bajo el remate. */
+  plain?: boolean
 }
 
-const { label, muted, bright, id, class: className = "" } = Astro.props
+const {
+  label,
+  index,
+  muted,
+  bright,
+  id,
+  class: className = "",
+  plain = false,
+} = Astro.props
 
-// Titular a dos tonos: la premisa en gris, el remate en bone. Es la misma
-// frase —se lee de corrido y el lector de pantalla la anuncia entera—, pero el
-// contraste hace que el ojo agarre el remate antes de terminar de leer.
+// Titular de sección a dos voces: la premisa en gris y el remate en tinta
+// plena, subrayado a mano. Es una sola frase —se lee de corrido y el lector de
+// pantalla la anuncia entera—, pero el ojo agarra el remate antes de terminar
+// de leerla.
 ---
 
-<div class:list={["max-w-[24ch]", className]} data-reveal>
+<div class:list={["max-w-[26ch]", className]} data-reveal>
   {
-    label && (
-      <p class="label-untitled mb-5 text-muted-ash">
-        {label}
+    (label || index) && (
+      <p class="mb-6 flex items-center gap-3">
+        {index && (
+          <span class="label-mono-sm text-pen-ink" data-numeral>
+            {index}
+          </span>
+        )}
+        {index && label && (
+          <span class="h-px w-6 bg-hairline" aria-hidden="true" />
+        )}
+        {label && <span class="label-mono text-faint">{label}</span>}
       </p>
     )
   }
-  <h2 id={id} class="display-section text-bone">
+
+  <h2 id={id} class="display-section text-balance text-bone">
     <span class="text-ash">{muted}</span>{" "}
-    <span>{bright}</span>
+    {plain ? <span>{bright}</span> : <Mark>{bright}</Mark>}
   </h2>
+
   <slot />
 </div>

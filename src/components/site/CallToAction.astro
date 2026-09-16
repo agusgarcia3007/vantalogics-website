@@ -1,6 +1,7 @@
 ---
 import Cta from "@/components/site/Cta.astro"
 import Frame from "@/components/site/Frame.astro"
+import Mark from "@/components/site/Mark.astro"
 import { useTranslations, type Lang } from "@/i18n"
 import { CONTACT_EMAIL, SCHEDULE_URL } from "@/site"
 
@@ -12,74 +13,127 @@ const { lang } = Astro.props
 const t = useTranslations(lang).cta
 
 const email = CONTACT_EMAIL
+
+// El cierre.
+//
+// Es la única banda del sitio que invierte el papel: tinta plena de fondo y
+// texto en papel. Después de siete secciones de hoja clara, el cambio funciona
+// como el reverso de la página —se sabe que el documento terminó— y le da al
+// último llamado un peso que no necesita un titular más grande.
 ---
 
-<Frame id="contacto" labelledby="contacto-titulo">
-  <!-- El cierre: una sola línea grande y el botón al lado. Nada compite. -->
+<Frame id="contacto" labelledby="contacto-titulo" class="closing">
   <div
-    class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-[clamp(32px,5vw,72px)]"
+    class="grid gap-x-[clamp(32px,5vw,80px)] gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.7fr)]"
   >
     <div>
-      <p class="label-untitled text-muted-ash" data-reveal>{t.label}</p>
+      <p class="flex items-center gap-3" data-reveal>
+        <span class="h-px w-8 bg-pen" aria-hidden="true"></span>
+        <span class="label-mono text-pen">{t.label}</span>
+      </p>
+
       <h2
         id="contacto-titulo"
-        class="display-section mt-5 max-w-[18ch] text-balance text-bone"
+        class="display-lg mt-7 max-w-[20ch] text-balance"
         data-reveal
         style="--reveal-delay: 60ms;"
       >
-        {t.title}
+        <Mark delay={420}>{t.title}</Mark>
       </h2>
-    </div>
 
-    <div
-      class="flex flex-wrap items-center gap-3 lg:shrink-0"
-      data-reveal
-      style="--reveal-delay: 140ms;"
-    >
-      <Cta
-        href={SCHEDULE_URL}
-        variant="pill-solid"
-        target="_blank"
-        rel="noopener noreferrer"
+      <p
+        class="copy-lead mt-8 max-w-[54ch] opacity-70"
+        data-reveal
+        style="--reveal-delay: 140ms;"
       >
-        {t.primary}
-      </Cta>
-      <Cta href={`mailto:${email}`} variant="pill-quiet">{t.secondary}</Cta>
-    </div>
-  </div>
+        {t.body}
+      </p>
 
-  <p class="copy mt-9 max-w-[58ch] text-ash" data-reveal style="--reveal-delay: 200ms;">
-    {t.body}
-  </p>
-
-  <dl
-    class="mt-[clamp(40px,5vw,64px)] grid gap-x-[clamp(24px,3vw,40px)] gap-y-8 sm:grid-cols-2"
-  >
-    {
-      [
-        { label: t.emailLabel, value: email, href: `mailto:${email}` },
-        { label: t.responseLabel, value: t.response },
-      ].map((item, i) => (
-        <div
-          class="border-t border-hairline pt-5"
-          data-reveal
-          style={`--reveal-delay: ${i * 70}ms;`}
+      <div
+        class="mt-10 flex flex-wrap items-center gap-3"
+        data-reveal
+        style="--reveal-delay: 200ms;"
+      >
+        <Cta
+          href={SCHEDULE_URL}
+          variant="solid"
+          size="lg"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <dt class="label-untitled text-muted-ash">{item.label}</dt>
-          <dd class="label-untitled mt-2 text-bone">
-            {item.href ? (
-              <a
-                class="transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
-                href={item.href}
-              >
-                {item.value}
-              </a>
-            ) : (
-              item.value
-            )}
-          </dd>
-        </div>
-      ))
-    }
-  </dl>
+          {t.primary}
+        </Cta>
+        <Cta href={`mailto:${email}`} variant="outline" size="lg">
+          {t.secondary}
+        </Cta>
+      </div>
+    </div>
+
+    <dl class="flex flex-col justify-end gap-8">
+      {
+        [
+          { label: t.emailLabel, value: email, href: `mailto:${email}` },
+          { label: t.responseLabel, value: t.response },
+        ].map((item, i) => (
+          <div
+            class="border-t border-current/20 pt-5"
+            data-reveal
+            style={`--reveal-delay: ${220 + i * 70}ms;`}
+          >
+            <dt class="label-mono-sm opacity-60">{item.label}</dt>
+            <dd class="mt-3 font-display text-[clamp(1.125rem,1.6vw,1.375rem)] leading-snug">
+              {item.href ? (
+                <a
+                  class="transition-colors duration-(--duration-state) ease-paper hover:text-pen"
+                  href={item.href}
+                >
+                  {item.value}
+                </a>
+              ) : (
+                item.value
+              )}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
 </Frame>
+
+<style>
+  /* El reverso de la hoja. Se redefinen los tokens en vez de pintar cada
+     elemento: los botones, las reglas y los enlaces de adentro leen los mismos
+     nombres de siempre y se invierten solos, en los dos temas. */
+  /* Los valores van literales y no como `var(--bone)`: redefinir un token en
+     términos de otro que se redefine en el mismo bloque arma un ciclo y el
+     navegador descarta los dos. */
+  .closing {
+    --canvas: #14130f;
+    --surface: #14130f;
+    --sunken: #0b0a09;
+    --bone: #f4f1e9;
+    --hairline: rgba(244, 241, 233, 0.22);
+    --ash: rgba(244, 241, 233, 0.72);
+    --faint: rgba(244, 241, 233, 0.52);
+    /* El rojo del lápiz no sobrevive sobre tinta: sobre el reverso se aclara
+       hasta el rojo del bolígrafo. */
+    --pen: #ff6a45;
+    --pen-ink: #ff8a6b;
+
+    background-color: var(--canvas);
+    color: var(--bone);
+  }
+
+  /* En modo oscuro el reverso es el que trae el papel. */
+  :global(:root[data-theme="dark"]) .closing {
+    --canvas: #f2efe6;
+    --surface: #f2efe6;
+    --sunken: #e6e2d6;
+    --bone: #100f0d;
+    --hairline: rgba(16, 15, 13, 0.18);
+    --ash: rgba(16, 15, 13, 0.7);
+    --faint: rgba(16, 15, 13, 0.5);
+    --pen: #cf3a1b;
+    --pen-ink: #ad2f12;
+  }
+</style>

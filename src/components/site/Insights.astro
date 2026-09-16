@@ -1,0 +1,107 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
+
+import Frame from "@/components/site/Frame.astro"
+import SectionTitle from "@/components/site/SectionTitle.astro"
+import { localizePath, useTranslations, type Lang } from "@/i18n"
+import { formatDate, getPosts, postPath, readingTime } from "@/lib/blog"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+
+// Las tres notas más recientes, en la portada.
+//
+// No es relleno: en una agencia de ticket alto lo que decide la llamada es si
+// el que va a construir el sistema sabe más del problema que el que lo tiene.
+// Tres apuntes con costo real y criterio hacen ese trabajo mejor que cualquier
+// párrafo sobre la experiencia del equipo.
+const posts = (await getPosts(lang)).slice(0, 3)
+---
+
+{
+  posts.length > 0 && (
+    <Frame labelledby="notas-titulo" class="bg-canvas">
+      <div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+        <SectionTitle
+          id="notas-titulo"
+          index="07"
+          label={t.insights.label}
+          muted={t.insights.titleMuted}
+          bright={t.insights.titleBright}
+          class="max-w-[30ch]"
+        />
+
+        <a
+          href={localizePath(lang, "/blog/")}
+          class="group inline-flex items-center gap-2 label-mono text-bone transition-colors duration-(--duration-state) ease-paper hover:text-pen-ink"
+          data-reveal
+        >
+          {t.insights.cta}
+          <HugeiconsIcon
+            icon={ArrowRight01Icon}
+            size={14}
+            strokeWidth={1.8}
+            className="shrink-0 transition-transform duration-(--duration-state) ease-paper group-hover:translate-x-1"
+          />
+        </a>
+      </div>
+
+      <ol class="mt-[clamp(40px,5vw,64px)] grid gap-px border border-hairline bg-hairline md:grid-cols-3">
+        {posts.map((post, i) => (
+          <li
+            class="note group relative flex flex-col bg-canvas p-[clamp(22px,2.4vw,32px)]"
+            data-reveal
+            style={`--reveal-delay: ${i * 80}ms;`}
+          >
+            <p class="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span class="label-mono-sm text-pen-ink">
+                {t.blog.clusters[post.data.cluster]}
+              </span>
+              <span class="label-mono-sm text-faint" aria-hidden="true">
+                ·
+              </span>
+              <time
+                class="label-mono-sm text-faint"
+                datetime={post.data.date.toISOString()}
+              >
+                {formatDate(post.data.date, lang)}
+              </time>
+            </p>
+
+            <h3 class="mt-5 max-w-[24ch] font-display text-[clamp(1.125rem,1.5vw,1.3125rem)] leading-[1.24] text-bone">
+              <a
+                href={postPath(post)}
+                class="transition-colors duration-(--duration-state) ease-paper group-hover:text-pen-ink before:absolute before:inset-0 before:content-['']"
+              >
+                {post.data.title}
+              </a>
+            </h3>
+
+            <p class="copy mt-4 max-w-[38ch] text-[15px] text-ash">
+              {post.data.description}
+            </p>
+
+            <p class="label-mono-sm mt-auto pt-8 text-faint">
+              {readingTime(post.body)} {t.blog.readingTime}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </Frame>
+  )
+}
+
+<style>
+  .note {
+    transition: background-color var(--duration-state) var(--ease-paper);
+  }
+
+  .note:hover {
+    background-color: var(--color-surface);
+  }
+</style>

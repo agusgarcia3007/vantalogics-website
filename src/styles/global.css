@@ -5,84 +5,74 @@
    Se configura abajo, en `.typeset-nota`. */
 @import "./typeset.css";
 
-/* OPX-Medium / Untitled -> Inter (substitute per design.md) */
-@import "@fontsource-variable/inter";
-/* Open Sans -> supporting copy face */
-@import "@fontsource-variable/open-sans";
-/* Árabe: Inter no trae glifos árabes y el fallback del sistema cambia de
-   máquina en máquina (Geeza Pro en macOS, Segoe UI en Windows). Noto Sans
-   Arabic es la contraparte neutra de Inter y sostiene el mismo gris de página. */
-@import "@fontsource-variable/noto-sans-arabic";
-
+/* Newsreader — la serif del sistema. Redonda variable + cursiva variable: la
+   cursiva se usa como voz aparte (la anotación, el énfasis del titular) y una
+   cursiva sintética arruinaría justamente eso. */
+@import "@fontsource-variable/newsreader";
+@import "@fontsource-variable/newsreader/wght-italic.css";
+/* Geist — la grotesca de interfaz y su monoespaciada. */
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 @custom-variant dark (&:is(.dark *));
 
 /* ---------------------------------------------------------------------------
-   OPX Studio — design system tokens (design.md)
-   Dark gallery monolith: void-black canvas, bone-white type, #292a2c
-   hairlines, pill outlines, monumental display type. No shadows, no color.
+   Vantalogics — «Paper & Pen»
+   Papel cálido, tinta negra, corrección en rojo.
+
+   El sistema sale de la mesa de quien corrige: una hoja de papel con grilla de
+   puntos, texto en serif de revista académica, rótulos en monoespaciada como
+   los de una consola, y un único color —el rojo del lápiz de corregir— que
+   aparece sólo donde hay una marca, una cifra o una corrección. No hay
+   gradientes, no hay glow, no hay violeta de IA.
 --------------------------------------------------------------------------- */
 @theme {
-  /* Colors — literal palette from design.md */
-  --color-void-black: #020202;
-  --color-surface-black: #000000;
-  --color-charcoal-hairline: #292a2c;
-  --color-bone-white: #ffffff;
-  --color-ash-gray: #9b9b9b;
+  /* Familias */
+  --font-display:
+    "Newsreader Variable", "Newsreader", ui-serif, Georgia, "Times New Roman",
+    serif;
+  --font-sans:
+    "Geist Variable", "Geist", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono:
+    "Geist Mono Variable", "Geist Mono", ui-monospace, SFMono-Regular,
+    "SF Mono", Menlo, monospace;
 
-  /* Semantic aliases. Every component uses these, so the light theme is a
-     value swap rather than a rewrite. */
+  /* Semánticos. Todo componente pinta con estos; el tema claro/oscuro es un
+     cambio de valores y no una reescritura. */
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
   --color-hairline: var(--hairline);
   --color-bone: var(--bone);
   --color-ash: var(--ash);
+  --color-faint: var(--faint);
+  /* El rojo de corregir. `pen` para marcas y superficies, `pen-ink` para texto
+     chico —el primero no llega a 4.5:1 sobre el papel. */
+  --color-pen: var(--pen);
+  --color-pen-ink: var(--pen-ink);
 
-  /* Font families */
-  --font-opx:
-    "Inter Variable", Inter, "Söhne", ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, sans-serif;
-  --font-open-sans:
-    "Open Sans Variable", "Open Sans", "Source Sans 3", ui-sans-serif,
-    system-ui, sans-serif;
-  --font-untitled:
-    "Inter Variable", Inter, "Söhne", ui-sans-serif, system-ui, sans-serif;
-  --font-helvetica: Helvetica, ui-sans-serif, system-ui, Arial, sans-serif;
-
-  /* Type scale — leading tightens inversely with size */
+  /* Escala tipográfica. Los titulares se definen abajo como utilidades porque
+     son fluidos; acá viven los tamaños fijos del texto de interfaz. */
+  --text-micro: 11px;
+  --text-micro--line-height: 1.45;
+  --text-label: 12px;
+  --text-label--line-height: 1.5;
   --text-caption: 14px;
-  --text-caption--line-height: 1.67;
-  --text-body: 18px;
-  --text-body--line-height: 1.67;
-  --text-subheading: 20px;
-  --text-subheading--line-height: 1.67;
-  --text-heading-sm: 26px;
-  --text-heading-sm--line-height: 1.42;
-  --text-heading: 35px;
-  --text-heading--line-height: 1.4;
-  --text-heading-lg: 50px;
-  --text-heading-lg--line-height: 1.38;
-  --text-display: 80px;
-  --text-display--line-height: 1.07;
-  --text-display-xl: 111px;
-  --text-display-xl--line-height: 1;
+  --text-caption--line-height: 1.6;
+  --text-body: 17px;
+  --text-body--line-height: 1.62;
+  --text-lead: 20px;
+  --text-lead--line-height: 1.55;
 
-  /* Spacing steps from design.md (the 4px scale stays intact underneath) */
-  --spacing-7: 7px;
-  --spacing-15: 15px;
-  --spacing-21: 21px;
-  --spacing-30: 30px;
-  --spacing-99: 99px;
-  --spacing-150: 150px;
-  --spacing-200: 200px;
-  /* Fluid page inset: 20px on phones, up to the 100px editorial margin. */
-  --spacing-page: clamp(20px, 6vw, 100px);
-  /* Fluid section rhythm inside the 100–200px band. */
-  --spacing-band: clamp(64px, 11vw, 150px);
+  /* Ritmo. Inset de página y aire entre bandas, los dos fluidos. */
+  --spacing-page: clamp(20px, 5.2vw, 88px);
+  --spacing-band: clamp(72px, 9vw, 136px);
 
-  /* Radii — pills for interactive elements, 0 everywhere else */
-  --radius-pill: 45px;
+  --radius-edge: 2px;
+  --radius-pill: 999px;
 
-  /* Elevation: the system deliberately avoids shadows. */
+  /* El sistema no usa sombras de elevación: la profundidad la dan las reglas
+     y el papel. La única sombra que existe es la del papel levantado. */
   --shadow-2xs: 0 0 #0000;
   --shadow-xs: 0 0 #0000;
   --shadow-sm: 0 0 #0000;
@@ -91,14 +81,14 @@
   --shadow-lg: 0 0 #0000;
   --shadow-xl: 0 0 #0000;
   --shadow-2xl: 0 0 #0000;
+  --shadow-paper: var(--paper-shadow);
 
-  --ease-opx: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-pen: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 @theme inline {
-  --font-heading: var(--font-opx);
-  --font-sans: var(--font-opx);
-  --font-serif: var(--font-open-sans);
+  --font-heading: var(--font-display);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -107,11 +97,6 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -135,158 +120,145 @@
   --radius-lg: var(--radius);
   --radius-xl: var(--radius);
   --radius-2xl: var(--radius);
-  --radius-3xl: var(--radius-pill);
-  --radius-4xl: var(--radius-pill);
 }
 
 /* ---------------------------------------------------------------------------
-   Temas. El sistema es nativamente oscuro (design.md: theme dark) y ese es el
-   predeterminado. `data-theme="light"` invierte canvas y tipografía
-   manteniendo las mismas relaciones: hairline apenas visible, texto apagado
-   con contraste suficiente (nunca #9b9b9b sobre blanco — falla 2.8:1).
+   Temas. El papel es el estado natural del sistema —es una agencia que trabaja
+   sobre material escrito— y el modo oscuro es la misma mesa de noche: tinta
+   invertida, mismo rojo un punto más caliente para que no se apague.
 --------------------------------------------------------------------------- */
 :root {
-  color-scheme: dark;
-
-  --canvas: #020202;
-  --surface: #000000;
-  --hairline: #292a2c;
-  --bone: #ffffff;
-  --ash: #9b9b9b;
-
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
-}
-
-:root[data-theme="light"] {
   color-scheme: light;
 
-  --canvas: #ffffff;
-  --surface: #fafafa;
-  --hairline: #d8d9da;
-  --bone: #020202;
-  /* #9b9b9b falla contraste sobre blanco; se oscurece a 4.6:1. */
-  --ash: #6b6b6b;
+  --canvas: #f4f1e9;
+  --surface: #fbf9f3;
+  --sunken: #eae5d9;
+  --hairline: #d7d1c1;
+  --bone: #14130f;
+  --ash: #5a574d;
+  /* Tercer gris, sólo para lo que debe estar y no debe leerse primero:
+     numeración de sección, metadatos, la grilla de puntos. */
+  --faint: #8e8a7d;
+  --pen: #cf3a1b;
+  --pen-ink: #ad2f12;
+  --paper-shadow: 0 1px 0 rgba(20, 19, 15, 0.04), 0 18px 40px -28px rgba(20, 19, 15, 0.35);
+  --grid-dot: rgba(20, 19, 15, 0.14);
 
-  --background: #ffffff;
-  --foreground: #020202;
-  --card: #fafafa;
-  --card-foreground: #020202;
-  --popover: #ffffff;
-  --popover-foreground: #020202;
-  --primary: #020202;
-  --primary-foreground: #ffffff;
-  --secondary: #fafafa;
-  --secondary-foreground: #020202;
-  --muted: #fafafa;
-  --muted-foreground: #6b6b6b;
-  --accent: #020202;
+  --background: var(--canvas);
+  --foreground: var(--bone);
+  --card: var(--surface);
+  --card-foreground: var(--bone);
+  --popover: var(--surface);
+  --popover-foreground: var(--bone);
+  --primary: var(--bone);
+  --primary-foreground: var(--canvas);
+  --secondary: var(--sunken);
+  --secondary-foreground: var(--bone);
+  --muted: var(--sunken);
+  --muted-foreground: var(--ash);
+  --accent: var(--pen);
   --accent-foreground: #ffffff;
-  --destructive: #020202;
-  --border: #d8d9da;
-  --input: #d8d9da;
-  --ring: #020202;
-  --chart-1: #020202;
-  --chart-2: #4a4a4a;
-  --chart-3: #6b6b6b;
-  --chart-4: #9b9b9b;
-  --chart-5: #d8d9da;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #020202;
-  --sidebar-primary: #020202;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #020202;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #d8d9da;
-  --sidebar-ring: #020202;
+  --destructive: var(--pen-ink);
+  --border: var(--hairline);
+  --input: var(--hairline);
+  --ring: var(--bone);
+  --chart-1: var(--pen);
+  --chart-2: var(--bone);
+  --chart-3: var(--ash);
+  --chart-4: var(--faint);
+  --chart-5: var(--hairline);
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--bone);
+  --sidebar-primary: var(--bone);
+  --sidebar-primary-foreground: var(--canvas);
+  --sidebar-accent: var(--sunken);
+  --sidebar-accent-foreground: var(--bone);
+  --sidebar-border: var(--hairline);
+  --sidebar-ring: var(--bone);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #100f0d;
+  --surface: #191713;
+  --sunken: #0a0908;
+  --hairline: #2c2a24;
+  --bone: #f2efe6;
+  --ash: #a29d90;
+  --faint: #6f6b60;
+  --pen: #ff5c33;
+  --pen-ink: #ff7a57;
+  --paper-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 24px 48px -32px rgba(0, 0, 0, 0.9);
+  --grid-dot: rgba(242, 239, 230, 0.13);
+
+  --accent-foreground: #100f0d;
 }
 
 /* Tokens independientes del tema. */
 :root {
-  --radius: 0px;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --element-gap: 30px;
+  --radius: 2px;
   --hairline-width: 1px;
-  --duration-state: 300ms;
-  --duration-geometry: 600ms;
+  --duration-state: 220ms;
+  --duration-geometry: 620ms;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-canvas font-opx text-body font-normal text-bone;
-    -webkit-font-smoothing: antialiased;
-  }
+
   html {
-    @apply font-opx;
+    @apply font-sans;
+    background-color: var(--canvas);
   }
+
+  body {
+    @apply bg-canvas font-sans text-body text-bone;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    /* Authority comes from scale, never from weight. */
-    @apply font-opx font-normal;
+    @apply font-display;
+    font-weight: 400;
+    font-variation-settings: "opsz" 36;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
   ::selection {
-    background: var(--bone);
-    color: var(--canvas);
+    background: var(--pen);
+    color: #ffffff;
+  }
+
+  /* Las cifras del sitio son datos: tabulares y sin ligaduras raras. */
+  time,
+  [data-numeral] {
+    font-variant-numeric: tabular-nums;
   }
 }
 
 /* ---------------------------------------------------------------------------
-   System utilities — the OPX vocabulary
+   Utilidades del sistema
 --------------------------------------------------------------------------- */
 
-/* Editorial page inset: type holds a generous left margin, canvas bleeds. */
 @utility page-x {
   padding-inline: var(--spacing-page);
 }
 
-/* Monolithic vertical rhythm between bands. */
 @utility band-y {
   padding-block: var(--spacing-band);
 }
 
-/* The only structural separator in the system. */
 @utility rule-t {
   border-top: var(--hairline-width) solid var(--color-hairline);
 }
@@ -295,91 +267,128 @@
   border-bottom: var(--hairline-width) solid var(--color-hairline);
 }
 
-/* Monumental display type — 80–111px, weight 400, leading locked at ~1. */
-@utility display-xl {
-  font-family: var(--font-opx);
-  font-weight: var(--font-weight-regular);
-  /* Calibrado para que el titular del hero caiga en tres líneas limpias
-     desde 1024px hasta 1920px. */
-  font-size: clamp(2.75rem, 7.4vw, 6.9375rem);
-  line-height: 1;
-  letter-spacing: -0.025em;
+/* La grilla de puntos del papel. La misma que dibuja el campo de WebGL del
+   hero, en CSS, para el resto del sitio y como fondo previo al canvas. */
+@utility paper-grid {
+  background-image: radial-gradient(
+    circle at center,
+    var(--grid-dot) 1px,
+    transparent 1.2px
+  );
+  background-size: 26px 26px;
+  background-position: center;
+}
+
+/* Titular de portada. Serif en cuerpo grande y con el eje óptico alto: a esta
+   escala Newsreader afina los remates y deja de parecer texto de nota. */
+@utility display-hero {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 72;
+  font-size: clamp(2.75rem, 6.2vw, 5.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.021em;
 }
 
 @utility display-lg {
-  font-family: var(--font-opx);
-  font-weight: var(--font-weight-regular);
-  font-size: clamp(2.125rem, 5.6vw, 5rem);
-  line-height: 1.07;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 60;
+  font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+}
+
+/* Titular de sección. */
+@utility display-section {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 42;
+  font-size: clamp(1.75rem, 3vw, 2.625rem);
+  line-height: 1.12;
   letter-spacing: -0.015em;
 }
 
-/* Titular del hero. Más chico que el display-xl anterior a propósito: la
-   escala monumental leía como póster y empujaba todo lo demás fuera de la
-   primera pantalla. Acá el titular entra en dos líneas y deja lugar a la
-   propuesta, los botones y la ilustración. */
-@utility display-hero {
-  font-family: var(--font-opx);
-  font-weight: var(--font-weight-regular);
-  font-size: clamp(2.375rem, 4.6vw, 3.75rem);
-  line-height: 1.06;
-  letter-spacing: -0.028em;
+@utility display-sm {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 28;
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+  line-height: 1.24;
+  letter-spacing: -0.008em;
 }
 
-/* Titulares de sección — 28–40px, en dos tonos (ver i18n). */
-@utility display-section {
-  font-family: var(--font-opx);
-  font-weight: var(--font-weight-regular);
-  font-size: clamp(1.5rem, 2.4vw, 2.125rem);
-  line-height: 1.18;
-  letter-spacing: -0.02em;
+/* Rótulos: monoespaciada en versalita, como el encabezado de una ficha. */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-weight: 450;
+  font-size: var(--text-label);
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-/* Small label text for pills and tag-like links — the only weight 500. */
-@utility label-untitled {
-  font-family: var(--font-untitled);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--text-caption);
-  line-height: 1.67;
+@utility label-mono-sm {
+  font-family: var(--font-mono);
+  font-weight: 450;
+  font-size: var(--text-micro);
+  line-height: 1.45;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-/* Supporting copy. Antes iba en Open Sans a 18px: dos familias tipográficas
-   para un sitio de una sola página era una complicación sin beneficio, y a
-   18/1.67 los párrafos ocupaban media sección. Una sola familia, 17px. */
+/* Texto corriente. */
 @utility copy {
-  font-family: var(--font-untitled);
-  font-weight: var(--font-weight-regular);
-  font-size: 17px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-body);
   line-height: 1.62;
+  letter-spacing: -0.003em;
 }
 
-/* Muted metadata — only valid on the dark canvas. */
+@utility copy-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  line-height: 1.55;
+  letter-spacing: -0.006em;
+}
+
+/* La anotación al margen: cursiva de la serif, como la letra de quien corrige
+   arriba del renglón. Siempre acompaña a otro bloque, nunca va sola. */
+@utility annotation {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "opsz" 20;
+  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
+  line-height: 1.45;
+  color: var(--color-pen-ink);
+}
+
 @utility text-muted-ash {
   color: var(--color-ash);
+}
+
+/* El subrayado de lápiz: se dibuja solo cuando la sección entra en pantalla.
+   Va sobre un `<span>` que envuelve el remate del titular. */
+@utility pen-underline {
+  position: relative;
+  display: inline-block;
 }
 
 /* ---------------------------------------------------------------------------
    Preset de typeset para las notas.
 
-   shadcn/typeset trae la tipografía de contenido renderizado; acá sólo se lo
-   ata al sistema de la casa. Son dos ajustes y nada más:
-
-   1. Color. Typeset lee `--color-foreground`, `--color-muted-foreground` y
-      `--color-border`, y en este proyecto esos tokens quedaron con los valores
-      claros de shadcn en `:root` —el sitio nunca los usó, pinta todo con
-      `bone`/`ash`/`hairline`—. Sin redefinirlos acá, el cuerpo de la nota
-      saldría casi negro sobre el canvas negro. Se redefinen sobre el
-      contenedor, así que valen para todo lo que cuelgue de él y siguen el
-      cambio de tema solos.
-
-   2. Peso de los titulares. Typeset los pone en 600; design.md es explícito en
-      que la autoridad viene de la escala y nunca del peso. Van en 400.
+   shadcn/typeset trae la tipografía del contenido renderizado; acá sólo se lo
+   ata al sistema de la casa: el color lo toma de los tokens del tema y los
+   titulares van en la serif, no en la grotesca.
 --------------------------------------------------------------------------- */
 
 @layer components {
   .typeset-nota {
-    --typeset-font-body: var(--font-untitled);
-    --typeset-font-heading: var(--font-opx);
+    --typeset-font-body: var(--font-sans);
+    --typeset-font-heading: var(--font-display);
     --typeset-size: 17px;
     --typeset-leading: 1.68;
     --typeset-flow: 1.35em;
@@ -387,17 +396,14 @@
     --color-foreground: var(--bone);
     --color-muted-foreground: var(--ash);
     --color-border: var(--hairline);
-    --color-muted: var(--surface);
+    --color-muted: var(--sunken);
     --color-primary: var(--bone);
     --color-ring: var(--bone);
   }
 
-  /* La medida va en los bloques, no en el contenedor.
-     Si el ancho de 68ch lo lleva el contenedor, la tabla queda encerrada en la
-     medida de lectura y se corta a los tres cuartos incluso en un monitor
-     grande, con scroll horizontal donde había lugar de sobra. Poniéndola en
-     los hijos, el texto conserva su renglón corto y las tablas —que no se leen
-     renglón por renglón— usan todo el ancho de la columna. */
+  /* La medida va en los bloques y no en el contenedor: si el ancho de lectura
+     lo lleva el contenedor, una tabla comparativa queda encerrada en 68ch y se
+     corta con scroll donde había lugar de sobra. */
   .typeset-nota > * {
     max-width: 68ch;
   }
@@ -407,37 +413,42 @@
   }
 
   .typeset-nota :is(h1, h2, h3, h4, h5, h6) {
-    font-weight: var(--font-weight-regular);
-    letter-spacing: -0.02em;
-    /* El encabezado pegajoso mide 104px: sin esto, un ancla del índice deja el
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    /* El encabezado pegajoso mide 96px: sin esto, un ancla del índice deja el
        titular escondido detrás. */
-    scroll-margin-block-start: 104px;
+    scroll-margin-block-start: 96px;
   }
 
-  /* La regla de arriba de cada h2 es el mismo hairline que separa las
-     secciones de la portada: hace que la nota se lea como parte del sitio y no
-     como una plantilla de blog pegada encima. */
   .typeset-nota :is(h2) {
     border-block-start: var(--hairline-width) solid var(--color-hairline);
     padding-block-start: var(--typeset-flow);
     margin-block-start: calc(var(--typeset-flow) * 2.2);
   }
 
-  /* Enlaces: subrayado en hairline que se enciende al pasar. El subrayado
-     lleno competía con el texto en una nota con veinte enlaces internos. */
+  /* Enlaces del cuerpo: subrayado en rojo de lápiz, fino y por debajo de la
+     línea base, como una marca sobre el papel. */
   .typeset-nota :is(a) {
-    text-decoration-color: var(--color-hairline);
+    text-decoration-color: color-mix(in srgb, var(--pen) 55%, transparent);
+    text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-    transition: text-decoration-color var(--duration-state) var(--ease-opx);
+    transition: text-decoration-color var(--duration-state) var(--ease-paper);
   }
 
   .typeset-nota :is(a):hover {
-    text-decoration-color: var(--bone);
+    text-decoration-color: var(--pen);
+  }
+
+  .typeset-nota :is(blockquote) {
+    border-inline-start: 2px solid var(--pen);
+    font-family: var(--font-display);
+    font-style: italic;
   }
 }
 
 /* ---------------------------------------------------------------------------
-   Motion — slow, editorial, geometry only.
+   Movimiento — lento, editorial, sólo geometría y opacidad.
 --------------------------------------------------------------------------- */
 
 @layer utilities {
@@ -447,10 +458,10 @@
 
   .js [data-reveal] {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(14px);
     transition:
-      opacity var(--duration-geometry) var(--ease-opx),
-      transform var(--duration-geometry) var(--ease-opx);
+      opacity var(--duration-geometry) var(--ease-paper),
+      transform var(--duration-geometry) var(--ease-paper);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
@@ -459,11 +470,11 @@
     transform: none;
   }
 
-  /* Hairlines that draw themselves in as their band enters the viewport. */
+  /* Reglas que se dibujan solas al entrar su banda. */
   .js [data-rule-draw] {
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform var(--duration-geometry) var(--ease-opx);
+    transition: transform var(--duration-geometry) var(--ease-paper);
   }
 
   .js [data-revealed] [data-rule-draw],
@@ -471,9 +482,24 @@
     transform: scaleX(1);
   }
 
+  /* El trazo de lápiz bajo el remate del titular. El SVG lleva la longitud del
+     trazo en `pathLength="1"`, así que una sola regla sirve para cualquier
+     ancho. */
+  .js [data-pen-draw] path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 760ms var(--ease-pen);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js [data-revealed] [data-pen-draw] path,
+  .js [data-pen-draw][data-revealed] path {
+    stroke-dashoffset: 0;
+  }
+
   :where(a, button, summary, input, textarea, [tabindex]):focus-visible {
-    outline: var(--hairline-width) solid var(--color-bone);
-    outline-offset: 4px;
+    outline: 2px solid var(--color-pen);
+    outline-offset: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -490,90 +516,4 @@
       scroll-behavior: auto !important;
     }
   }
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
-/* ---------------------------------------------------------------------------
-   Árabe — tipografía y dirección
-   El documento entero se voltea con `dir="rtl"` desde el layout. Acá van las
-   tres cosas que la propiedad lógica no resuelve sola.
---------------------------------------------------------------------------- */
-
-/* 1. La familia. Se sustituyen las variables del tema en vez de tocar cada
-      utilidad: `font-opx`, `font-untitled` y compañía leen estas variables, así
-      que el sitio entero cambia de tipografía con la cascada. Inter queda
-      detrás para los tramos latinos —«WhatsApp», «ERP», el propio nombre de la
-      marca—, que no deben caer en la árabe. */
-html[lang="ar"] {
-  --font-opx:
-    "Noto Sans Arabic Variable", "Inter Variable", Inter, ui-sans-serif,
-    system-ui, sans-serif;
-  --font-untitled:
-    "Noto Sans Arabic Variable", "Inter Variable", Inter, ui-sans-serif,
-    system-ui, sans-serif;
-  --font-open-sans:
-    "Noto Sans Arabic Variable", "Open Sans Variable", "Open Sans",
-    ui-sans-serif, system-ui, sans-serif;
-  --font-helvetica:
-    "Noto Sans Arabic Variable", Helvetica, ui-sans-serif, system-ui, sans-serif;
-  --typeset-font-body: var(--font-open-sans);
-  --typeset-font-heading: var(--font-opx);
-}
-
-/* 2. El tracking. La escala display del sistema aprieta las letras hasta
-      −0.025em, que en latín es lo que la vuelve monumental y en árabe separa
-      glifos que van unidos: la palabra se lee cortada. El árabe no lleva
-      tracking, nunca. El selector gana por especificidad a las utilidades de
-      una clase; lo que va en `style=` —la marca a sangre del pie, que es
-      latina— sigue mandando por encima. Las islas marcadas `dir="ltr"` —el
-      lockup de la marca— quedan afuera: ahí el texto es latino y el tracking
-      es parte del logo. */
-html[lang="ar"] *:not([dir="ltr"], [dir="ltr"] *) {
-  letter-spacing: normal;
-}
-
-/* 3. El interlineado de los titulares. La display latina baja hasta 1 porque
-      no hay descendentes que choquen; el árabe sí las tiene, y a 1 los puntos
-      de una línea tocan las astas de la siguiente. */
-html[lang="ar"] :is(h1, h2, h3) {
-  line-height: 1.28;
-}
-
-/* Las reglas que se dibujan solas nacen del borde por el que empieza a leerse
-   la página. `transform-origin` no tiene variante lógica. */
-[dir="rtl"] .js [data-rule-draw] {
-  transform-origin: right;
 }

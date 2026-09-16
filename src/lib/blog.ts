@@ -11,7 +11,7 @@ export function postLang(post: Post): Lang {
 }
 
 export function postSlug(post: Post): string {
-  return post.id.replace(/^(es|en|ar)\//, "")
+  return post.id.replace(/^(es|en)\//, "")
 }
 
 export function postPath(post: Post): string {
@@ -48,8 +48,8 @@ export async function getAllPosts(): Promise<Post[]> {
  *
  * Se busca por `translationOf` en cualquiera de las direcciones: alcanza con
  * declararlo de un lado. Devuelve sólo las que existen de verdad —una nota
- * puede estar en español y árabe pero no en inglés—, porque un `hreflang` que
- * apunta a un 404 hace que Google descarte el grupo entero.
+ * puede estar en español y no en inglés—, porque un `hreflang` que apunta a un
+ * 404 hace que Google descarte el grupo entero.
  */
 export async function getTranslations(post: Post): Promise<Post[]> {
   const lang = postLang(post)
@@ -72,9 +72,8 @@ export async function getTranslations(post: Post): Promise<Post[]> {
  * suyo propio y el que declara apuntando a otra.
  *
  * Comparar los dos conjuntos —y no sólo `translationOf` contra el slug— es lo
- * que hace que el grupo funcione con más de dos idiomas. La nota en árabe
- * apunta al slug en español, la inglesa también, y así las tres se encuentran
- * entre sí sin que ninguna tenga que enumerar a las demás.
+ * que hace que el grupo funcione si vuelve un tercer idioma: cada traducción
+ * apunta al slug canónico y se encuentran entre sí sin enumerarse.
  */
 function identifiers(post: Post): string[] {
   const own = [postSlug(post)]
@@ -139,16 +138,9 @@ export function readingTime(body: string | undefined): number {
   return Math.max(1, Math.round(words / 200))
 }
 
-/**
- * `ar-AE-u-nu-latn` y no `ar-AE` a secas: por defecto el árabe formatea con
- * dígitos índicos orientales (٢٠٢٦) y el resto del sitio —métricas, precios,
- * porcentajes— está escrito en dígitos occidentales. Mezclar los dos sistemas
- * en la misma página se lee como un error de codificación.
- */
 const LOCALES: Record<Lang, string> = {
   es: "es-AR",
   en: "en-US",
-  ar: "ar-AE-u-nu-latn",
 }
 
 export function formatDate(date: Date, lang: Lang): string {

@@ -2,33 +2,23 @@ import { clsx, type ClassValue } from "clsx"
 import { extendTailwindMerge } from "tailwind-merge"
 
 /**
- * El sistema OPX define su propia escala tipográfica (text-body, text-display,
- * …) y su propia paleta (canvas, bone, ash, hairline). Sin declararlas,
- * tailwind-merge confunde `text-heading-sm` con un color y descarta
- * `text-bone`, dejando texto del color heredado sobre el canvas oscuro.
+ * El sistema define su propia escala tipográfica (text-body, text-label, …) y
+ * su propia paleta (canvas, bone, ash, pen…). Sin declararlas, tailwind-merge
+ * confunde `text-label` con un color y descarta `text-bone`, dejando texto del
+ * color heredado sobre el papel.
  */
-const fontSizes = [
-  "caption",
-  "body",
-  "subheading",
-  "heading-sm",
-  "heading",
-  "heading-lg",
-  "display",
-  "display-xl",
-]
+const fontSizes = ["micro", "label", "caption", "body", "lead"]
 
 const colors = [
   "canvas",
   "surface",
+  "sunken",
   "hairline",
   "bone",
   "ash",
-  "void-black",
-  "surface-black",
-  "charcoal-hairline",
-  "bone-white",
-  "ash-gray",
+  "faint",
+  "pen",
+  "pen-ink",
 ]
 
 const twMerge = extendTailwindMerge({
@@ -38,8 +28,8 @@ const twMerge = extendTailwindMerge({
       "text-color": [{ text: colors }],
       "bg-color": [{ bg: colors }],
       "border-color": [{ border: colors }],
-      "font-family": [{ font: ["opx", "open-sans", "untitled", "helvetica"] }],
-      rounded: [{ rounded: ["pill"] }],
+      "font-family": [{ font: ["display", "sans", "mono"] }],
+      rounded: [{ rounded: ["edge", "pill"] }],
     },
   },
 })

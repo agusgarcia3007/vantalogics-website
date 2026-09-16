@@ -64,6 +64,12 @@
       "computedHash": "be345b36752b8f421d6894a14b8a2e3ae7702c00e017db79a246356c8bedd10d",
       "wellKnownDigest": "sha256:a6b02aa58062bd61d9f1b44304f634450a74110e0dfe77c27531c296d8e161df"
     },
+    "three-best-practices": {
+      "source": "joyco-studio/skills",
+      "sourceType": "github",
+      "skillPath": "skills/three-best-practices/SKILL.md",
+      "computedHash": "29f9d6f53f92c1915b1ed085761e4d5b827a4b79bcb467d73f5fddb15aa1803d"
+    },
     "vercel-react-best-practices": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",

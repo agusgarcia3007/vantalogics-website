@@ -1,0 +1,85 @@
+---
+import Frame from "@/components/site/Frame.astro"
+import SectionTitle from "@/components/site/SectionTitle.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).capabilities
+---
+
+<Frame id="capacidades" labelledby="capacidades-titulo" class="bg-canvas">
+  <div
+    class="grid gap-x-[clamp(32px,5vw,80px)] gap-y-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]"
+  >
+    <SectionTitle
+      id="capacidades-titulo"
+      index="02"
+      label={t.label}
+      muted={t.titleMuted}
+      bright={t.titleBright}
+    />
+    <p
+      class="copy max-w-[52ch] self-end text-ash"
+      data-reveal
+      style="--reveal-delay: 100ms;"
+    >
+      {t.intro}
+    </p>
+  </div>
+
+  <!-- Cuatro entradas en fila, no cuatro tarjetas. Cada una es un renglón de
+       ficha: número, título en serif, resumen, y la lista de lo que incluye en
+       la columna de al lado. La regla superior es del contenedor, así que la
+       sección se lee como un documento dividido y no como cajas apoyadas. -->
+  <ol class="mt-[clamp(44px,5vw,72px)]">
+    {
+      t.items.map((item, i) => (
+        <li
+          class="capability grid gap-x-[clamp(24px,4vw,64px)] gap-y-5 border-t border-hairline py-[clamp(28px,3.4vw,44px)] last:border-b md:grid-cols-[auto_minmax(0,1fr)_minmax(0,0.85fr)]"
+          data-reveal
+          style={`--reveal-delay: ${i * 80}ms;`}
+        >
+          <span
+            class="label-mono-sm pt-[6px] text-pen-ink md:w-10"
+            data-numeral
+          >
+            {item.index}
+          </span>
+
+          <div>
+            <h3 class="display-sm max-w-[20ch] text-bone">{item.title}</h3>
+            <p class="copy mt-4 max-w-[46ch] text-ash">{item.summary}</p>
+          </div>
+
+          <ul class="flex flex-col gap-[10px] md:pt-1">
+            {item.items.map((line) => (
+              <li class="flex items-start gap-3">
+                {/* Un guion largo, no un tilde verde: el sistema marca con
+                    lápiz, y una lista de capacidades no es una lista de
+                    logros conseguidos. */}
+                <span class="mt-[6px] h-px w-3 shrink-0 bg-pen" aria-hidden="true" />
+                <span class="copy text-[15px] text-ash">{line}</span>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ol>
+</Frame>
+
+<style>
+  .capability {
+    transition: background-color var(--duration-state) var(--ease-paper);
+  }
+
+  @media (hover: hover) {
+    .capability:hover {
+      background-color: var(--color-surface);
+    }
+  }
+</style>

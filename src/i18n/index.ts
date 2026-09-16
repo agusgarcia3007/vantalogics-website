@@ -1,34 +1,40 @@
 import { es } from "./es"
 import { en } from "./en"
-import { ar } from "./ar"
 import type { Dictionary } from "./es"
 
 export type { Dictionary }
 
-export type Lang = "es" | "en" | "ar"
+export type Lang = "es" | "en"
 
 /**
- * i18n estático: cada idioma es una ruta prerenderizada (`/`, `/en/`, `/ar/`),
+ * i18n estático: cada idioma es una ruta prerenderizada (`/`, `/en/`),
  * sin JavaScript de cliente, sin diccionarios en el bundle y sin
  * redirecciones. El selector son enlaces entre las rutas.
  */
 export const DEFAULT_LANG: Lang = "es"
 
-export const LANGS: Lang[] = ["es", "en", "ar"]
+export const LANGS: Lang[] = ["es", "en"]
 
-export const dictionaries: Record<Lang, Dictionary> = { es, en, ar }
+export const dictionaries: Record<Lang, Dictionary> = { es, en }
 
 export function useTranslations(lang: Lang): Dictionary {
   return dictionaries[lang]
 }
 
 /**
- * Dirección de escritura. El árabe se escribe de derecha a izquierda, así que
- * el documento entero se voltea con `dir="rtl"` y el layout se apoya en
- * propiedades lógicas (`ps-`, `me-`, `text-start`) en vez de físicas.
+ * Dirección de escritura.
+ *
+ * Hoy los dos idiomas publicados se escriben de izquierda a derecha, pero el
+ * layout sigue apoyado en propiedades lógicas (`ps-`, `me-`, `text-start`) y el
+ * atributo sigue saliendo de acá: la versión en árabe existió y va a volver, y
+ * con esto puesto vuelve cambiando una línea en vez de auditando el sitio.
  */
 export function langDir(lang: Lang): "ltr" | "rtl" {
-  return lang === "ar" ? "rtl" : "ltr"
+  switch (lang) {
+    case "es":
+    case "en":
+      return "ltr"
+  }
 }
 
 /** Ruta de una página en un idioma dado. El idioma por defecto vive en la raíz. */
@@ -61,13 +67,7 @@ export function otherLangs(lang: Lang): Lang[] {
   return LANGS.filter((candidate) => candidate !== lang)
 }
 
-/**
- * Imagen de Open Graph del idioma.
- *
- * Todavía no hay una pieza en árabe, y una tarjeta en español para un lector
- * árabe es peor que una en inglés: hasta que exista `og-ar.png`, el árabe cae
- * en la inglesa.
- */
+/** Imagen de Open Graph del idioma. */
 export function ogImage(lang: Lang): string {
-  return lang === "ar" ? "/og-en.png" : `/og-${lang}.png`
+  return `/og-${lang}.png`
 }

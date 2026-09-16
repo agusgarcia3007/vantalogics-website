@@ -68,7 +68,7 @@ export const GET: APIRoute = async () => {
     for (const lang of LANGS) {
       entries.push({
         path: solutionPath(lang, solution),
-        priority: solution.focus ? "0.9" : "0.7",
+        priority: "0.9",
         changefreq: "monthly",
         alternates: Object.fromEntries(
           LANGS.map((code) => [code, solutionPath(code, solution)])

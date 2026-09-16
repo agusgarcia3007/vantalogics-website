@@ -42,15 +42,15 @@ const copy = agentCopy(lang)
   <div
     class="flex flex-col gap-[3px] border-b border-hairline px-[18px] py-[13px]"
   >
-    <p class="font-untitled text-[15px] leading-tight text-bone">
+    <p class="font-sans text-[15px] leading-tight text-bone">
       {copy.title}
     </p>
-    <p class="label-untitled text-[12px] text-ash">{copy.subtitle}</p>
+    <p class="label-mono text-[12px] text-ash">{copy.subtitle}</p>
   </div>
 
   <div class="flex flex-1 flex-col justify-end gap-[11px] px-[18px] py-[18px]">
     <p
-      class="max-w-[86%] self-start rounded-[20px] rounded-bl-[6px] border border-hairline bg-canvas px-[15px] py-[10px] font-untitled text-[15px] leading-[1.55] text-bone"
+      class="max-w-[86%] self-start rounded-[20px] rounded-bl-[6px] border border-hairline bg-canvas px-[15px] py-[10px] font-sans text-[15px] leading-[1.55] text-bone"
     >
       {copy.greeting}
     </p>
@@ -61,14 +61,14 @@ const copy = agentCopy(lang)
     class="border-t border-hairline px-[18px] py-[15px]"
   >
     <div
-      class="flex items-end gap-[7px] rounded-[22px] border border-hairline bg-canvas py-[7px] ps-[15px] pe-[7px] transition-[border-color] duration-(--duration-state) ease-(--ease-opx) focus-within:border-bone"
+      class="flex items-end gap-[7px] rounded-[22px] border border-hairline bg-canvas py-[7px] ps-[15px] pe-[7px] transition-[border-color] duration-(--duration-state) ease-(--ease-paper) focus-within:border-bone"
     >
       <textarea
         rows="1"
         data-agent-inline-input
         placeholder={copy.placeholder}
         aria-label={copy.placeholder}
-        class="max-h-[132px] min-h-[30px] flex-1 resize-none bg-transparent py-[4px] font-untitled text-[15px] leading-[1.5] text-bone outline-none placeholder:text-ash"
+        class="max-h-[132px] min-h-[30px] flex-1 resize-none bg-transparent py-[4px] font-sans text-[15px] leading-[1.5] text-bone outline-none placeholder:text-ash"
       ></textarea>
       <button
         type="submit"

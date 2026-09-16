@@ -37,14 +37,14 @@ export default function AgentInline({
   return (
     <div className="flex h-[clamp(420px,58svh,560px)] flex-col overflow-hidden rounded-[20px] border border-hairline bg-surface">
       <div className="flex flex-col gap-[3px] border-b border-hairline px-[18px] py-[13px]">
-        <p className="font-untitled text-[15px] leading-tight text-bone">
+        <p className="font-sans text-[15px] leading-tight text-bone">
           {copy.title}
         </p>
-        <p className="label-untitled text-[12px] text-ash">{copy.subtitle}</p>
+        <p className="label-mono text-[12px] text-ash">{copy.subtitle}</p>
       </div>
 
       {blocked ? (
-        <p className="px-[18px] py-[18px] label-untitled text-ash">
+        <p className="px-[18px] py-[18px] label-mono text-ash">
           {copy.blocked}
         </p>
       ) : pass ? (
@@ -56,7 +56,7 @@ export default function AgentInline({
           openingMessage={openingMessage}
         />
       ) : (
-        <p className="px-[18px] py-[18px] label-untitled text-ash">
+        <p className="px-[18px] py-[18px] label-mono text-ash">
           <span className="animate-pulse">···</span>
         </p>
       )}

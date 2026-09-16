@@ -84,13 +84,13 @@ export default function AgentPanel({
   // Sin pase no se abre el socket. Falla cerrado: si el desafío no pasa, el
   // panel dice por dónde escribir en vez de intentar conectarse igual.
   const chat = blocked ? (
-    <p className="px-[21px] py-[21px] label-untitled text-ash">
+    <p className="px-[21px] py-[21px] label-mono text-ash">
       {copy.blocked}
     </p>
   ) : pass ? (
     <AgentChat host={host} pass={pass} copy={copy} />
   ) : (
-    <p className="px-[21px] py-[21px] label-untitled text-ash">
+    <p className="px-[21px] py-[21px] label-mono text-ash">
       <span className="animate-pulse">···</span>
     </p>
   )
@@ -107,10 +107,10 @@ export default function AgentPanel({
           className="flex w-full flex-col gap-0 overflow-hidden border-hairline bg-canvas p-0 sm:max-w-[420px] md:end-[16px]! md:top-[16px]! md:bottom-[16px]! md:h-[calc(100svh-32px)]! md:rounded-[24px] md:border"
         >
           <SheetHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px] pe-[52px]">
-            <SheetTitle className="font-untitled text-[16px] leading-tight text-bone">
+            <SheetTitle className="font-sans text-[16px] leading-tight text-bone">
               {copy.title}
             </SheetTitle>
-            <SheetDescription className="label-untitled text-[13px] text-ash">
+            <SheetDescription className="label-mono text-[13px] text-ash">
               {copy.subtitle}
             </SheetDescription>
           </SheetHeader>
@@ -124,10 +124,10 @@ export default function AgentPanel({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent className="flex h-[82svh] flex-col gap-0 overflow-hidden rounded-t-[24px] border-hairline bg-canvas p-0">
         <DrawerHeader className="flex flex-col gap-[3px] border-b border-hairline px-[21px] py-[15px] pe-[52px]">
-          <DrawerTitle className="font-untitled text-[16px] leading-tight text-bone">
+          <DrawerTitle className="font-sans text-[16px] leading-tight text-bone">
             {copy.title}
           </DrawerTitle>
-          <DrawerDescription className="label-untitled text-[13px] text-ash">
+          <DrawerDescription className="label-mono text-[13px] text-ash">
             {copy.subtitle}
           </DrawerDescription>
         </DrawerHeader>
