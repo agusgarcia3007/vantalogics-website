@@ -1,0 +1,151 @@
+---
+/**
+ * El lienzo de la luna. El HTML trae una luna estática en CSS que se ve desde
+ * el primer pintado —sin JavaScript, sin WebGL o con ahorro de datos— y la
+ * escena WebGL la reemplaza con un fundido cuando su primer cuadro está listo.
+ */
+---
+
+<div
+  class="moon pointer-events-none absolute inset-0 -z-10"
+  data-moon
+  aria-hidden="true"
+>
+  <div class="moon-fallback"></div>
+  <div class="moon-canvas" data-moon-canvas></div>
+</div>
+
+<script>
+  import type { MoonScene } from "@/lib/moon/scene"
+
+  const root = document.querySelector<HTMLElement>("[data-moon]")
+  const mount = root?.querySelector<HTMLElement>("[data-moon-canvas]")
+  const hero = root?.closest<HTMLElement>("section")
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  const saveData =
+    (navigator as Navigator & { connection?: { saveData?: boolean } })
+      .connection?.saveData === true
+
+  let scene: MoonScene | null = null
+  let heroHeight = hero?.offsetHeight ?? window.innerHeight
+
+  const syncScroll = () => {
+    scene?.setScroll(window.scrollY / Math.max(heroHeight, 1))
+  }
+
+  const boot = async () => {
+    if (!root || !mount) return
+    try {
+      const { createMoonScene } = await import("@/lib/moon/scene")
+      scene = createMoonScene(mount, {
+        reducedMotion: reduced,
+        onReady: () => root.setAttribute("data-ready", ""),
+        onFail: () => {
+          root.removeAttribute("data-ready")
+          scene?.dispose()
+          scene = null
+        },
+      })
+      syncScroll()
+    } catch {
+      // Sin WebGL: queda la luna en CSS, que ya estaba en pantalla.
+    }
+  }
+
+  if (root && mount && !saveData) {
+    // El texto del hero es el LCP: la escena entra cuando el hilo principal
+    // se libera, no antes.
+    const idle =
+      window.requestIdleCallback ??
+      ((cb: () => void) => window.setTimeout(cb, 200))
+    idle(() => void boot(), { timeout: 1200 })
+
+    window.addEventListener("scroll", syncScroll, { passive: true })
+    window.addEventListener(
+      "resize",
+      () => {
+        heroHeight = hero?.offsetHeight ?? window.innerHeight
+      },
+      { passive: true }
+    )
+  }
+</script>
+
+<style>
+  /* La luna estática usa la misma composición que la escena (layoutFor). */
+  .moon {
+    --moon-x: 80%;
+    --moon-y: 12%;
+    --moon-r: 36vw;
+  }
+
+  @media (min-width: 640px) {
+    .moon {
+      --moon-x: 76%;
+      --moon-y: 20%;
+      --moon-r: 26vw;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .moon {
+      --moon-x: 76%;
+      --moon-y: 43%;
+      --moon-r: min(32svh, 22vw);
+    }
+  }
+
+  .moon-fallback,
+  .moon-canvas {
+    position: absolute;
+    inset: 0;
+    transition: opacity 1.4s var(--ease-out);
+  }
+
+  .moon-canvas {
+    opacity: 0;
+  }
+
+  [data-ready] .moon-canvas {
+    opacity: 1;
+  }
+
+  [data-ready] .moon-fallback {
+    opacity: 0;
+  }
+
+  .moon-fallback::before,
+  .moon-fallback::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--moon-x) - var(--moon-r));
+    top: calc(var(--moon-y) - var(--moon-r));
+    width: calc(var(--moon-r) * 2);
+    height: calc(var(--moon-r) * 2);
+    border-radius: 50%;
+  }
+
+  .moon-fallback::before {
+    background:
+      radial-gradient(
+        circle at 88% 22%,
+        rgb(103 152 255 / 0.22),
+        transparent 38%
+      ),
+      radial-gradient(circle at 60% 40%, #15161b, #0b0c0e 62%);
+  }
+
+  /* Luz de borde: un anillo fino del lado de la luz. */
+  .moon-fallback::after {
+    background: radial-gradient(
+      circle,
+      transparent 69%,
+      rgb(103 152 255 / 0.55) 70.5%,
+      rgb(103 152 255 / 0.08) 73%,
+      transparent 80%
+    );
+    mask-image: linear-gradient(225deg, black 20%, transparent 60%);
+    transform: scale(1.02);
+  }
+</style>

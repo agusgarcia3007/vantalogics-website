@@ -1,0 +1,133 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { FileValidationIcon, UserCheck01Icon } from "@hugeicons/core-free-icons"
+
+import VisualFrame from "@/components/home/visuals/VisualFrame.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const v = useTranslations(lang).capabilities.visuals
+const t = v.assessment
+const total = t.criteria.reduce((sum, c) => sum + c.score, 0)
+const max = t.criteria.reduce((sum, c) => sum + c.max, 0)
+---
+
+<VisualFrame title={t.title} tag={v.example}>
+  <p class="flex items-center gap-2 mono-sm text-mist">
+    <HugeiconsIcon icon={FileValidationIcon} size={13} strokeWidth={1.6} />
+    {t.submission}
+  </p>
+
+  <ul class="mt-4 flex flex-col divide-y divide-iron border-y border-iron">
+    {
+      t.criteria.map((criterion, row) => (
+        <li class="flex items-center justify-between gap-4 py-3">
+          <span class="min-w-0 truncate text-[13px] text-bone">
+            {criterion.name}
+          </span>
+          <span class="flex shrink-0 items-center gap-3">
+            <span class="flex gap-[3px]">
+              {Array.from({ length: criterion.max }, (_, i) => (
+                <span
+                  class:list={[
+                    "seg h-[6px] w-5 rounded-[2px]",
+                    i < criterion.score ? "is-on" : "bg-iron",
+                  ]}
+                  style={`--i: ${row * 4 + i};`}
+                />
+              ))}
+            </span>
+            <span class="w-7 text-end mono-sm text-ash">
+              {criterion.score}/{criterion.max}
+            </span>
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p
+    class="note mt-4 border-s-2 border-soft-indigo bg-soft-indigo/5 py-2 ps-3 pe-2 text-[13px] leading-snug text-ash"
+  >
+    {t.note}
+  </p>
+
+  <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+    <p class="flex items-baseline gap-2">
+      <span class="eyebrow text-mist">{t.suggested}</span>
+      <span class="text-[20px] font-medium tracking-[-0.4px] text-bone">
+        {total}/{max}
+      </span>
+    </p>
+    <div class="flex items-center gap-2">
+      <span
+        class="rounded-[6px] border border-smoke px-3 py-[6px] text-[12px] font-medium text-bone"
+      >
+        {t.adjust}
+      </span>
+      <span
+        class="rounded-[6px] bg-bone px-3 py-[6px] text-[12px] font-medium text-carbon"
+      >
+        {t.approve}
+      </span>
+    </div>
+  </div>
+  <p
+    class="mt-4 flex items-center gap-2 border-t border-iron pt-3 mono-sm text-mist"
+  >
+    <HugeiconsIcon
+      icon={UserCheck01Icon}
+      size={13}
+      strokeWidth={1.6}
+      className="text-soft-indigo"
+    />
+    {t.decision}
+  </p>
+</VisualFrame>
+
+<style>
+  .seg.is-on {
+    background: var(--indigo);
+  }
+
+  :global(.js) .seg.is-on {
+    background: var(--color-iron);
+  }
+
+  :global([data-revealed]) .seg.is-on {
+    animation: fill 0.3s var(--ease-out) calc(0.5s + var(--i) * 0.07s) forwards;
+  }
+
+  :global(.js) .note {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  :global([data-revealed]) .note {
+    animation: wipe 0.9s var(--ease-out) 1.5s forwards;
+  }
+
+  @keyframes fill {
+    to {
+      background: var(--indigo);
+    }
+  }
+
+  @keyframes wipe {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .seg.is-on {
+      background: var(--indigo);
+    }
+    :global(.js) .note {
+      clip-path: none;
+    }
+  }
+</style>

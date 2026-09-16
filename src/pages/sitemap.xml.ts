@@ -1,6 +1,11 @@
 import type { APIRoute } from "astro"
 
-import { DEFAULT_LANG, LANGS, localizePath } from "@/i18n"
+import {
+  DEFAULT_LANG,
+  PUBLIC_LANGS as LANGS,
+  isPublicLang,
+  localizePath,
+} from "@/i18n"
 import { getAllPosts, getTranslations, postLang, postPath } from "@/lib/blog"
 import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
 import { USE_CASE_ROUTES, casePath } from "@/data/use-cases"
@@ -98,8 +103,11 @@ export const GET: APIRoute = async () => {
   // Notas.
   const posts = await getAllPosts()
   for (const post of posts) {
-    const translations = await getTranslations(post)
     const lang = postLang(post)
+    if (!isPublicLang(lang)) continue
+    const translations = (await getTranslations(post)).filter((other) =>
+      isPublicLang(postLang(other))
+    )
     entries.push({
       path: postPath(post),
       priority: "0.6",

@@ -2,7 +2,7 @@
 import "@/styles/global.css"
 import WhatsAppButton from "@/components/site/WhatsAppButton.astro"
 import AgentButton from "@/components/site/AgentButton.astro"
-import { langDir, localizePath, ogImage, type Lang } from "@/i18n"
+import { isPublicLang, langDir, localizePath, ogImage, type Lang } from "@/i18n"
 import { useTranslations } from "@/i18n"
 
 interface Props {
@@ -42,11 +42,14 @@ const imageUrl = new URL(image ?? ogImage(lang), SITE).href
 const pageTitle = title ?? t.meta.title
 const pageDescription = description ?? t.meta.description
 
-const hreflangs = alternates ?? { es: "/", en: "/en/", ar: "/ar/" }
+// Sólo los idiomas publicados declaran alternates; el árabe queda fuera del
+// descubrimiento (ver PUBLIC_LANGS) y sus páginas salen con noindex.
+const published = isPublicLang(lang)
+const hreflangs = alternates ?? { es: "/", en: "/en/" }
 const hreflangEntries = (Object.entries(hreflangs) as [Lang, string][]).filter(
-  ([, href]) => Boolean(href)
+  ([code, href]) => Boolean(href) && isPublicLang(code)
 )
-const xDefault = hreflangs.es ?? hreflangs.en ?? hreflangs.ar
+const xDefault = hreflangs.es ?? hreflangs.en
 ---
 
 <!doctype html>
@@ -62,12 +65,17 @@ const xDefault = hreflangs.es ?? hreflangs.en ?? hreflangs.ar
     <link rel="canonical" href={canonicalUrl} />
 
     {
-      hreflangEntries.map(([code, href]) => (
-        <link rel="alternate" hreflang={code} href={new URL(href, SITE).href} />
-      ))
+      published &&
+        hreflangEntries.map(([code, href]) => (
+          <link
+            rel="alternate"
+            hreflang={code}
+            href={new URL(href, SITE).href}
+          />
+        ))
     }
     {
-      xDefault && (
+      published && xDefault && (
         <link
           rel="alternate"
           hreflang="x-default"
@@ -82,25 +90,22 @@ const xDefault = hreflangs.es ?? hreflangs.en ?? hreflangs.ar
       href={new URL(localizePath(lang, "/rss.xml"), SITE).href}
     />
 
-    <!-- Tema antes del primer pintado: evita el flash de tema equivocado.
-         El sistema es oscuro por defecto (design.md). -->
+    <!-- `js` habilita los estados iniciales de las animaciones: sin script,
+         todo se ve desde el primer pintado. -->
     <script is:inline>
       document.documentElement.classList.add("js")
-      try {
-        const stored = localStorage.getItem("vl-theme")
-        if (stored === "light") {
-          document.documentElement.setAttribute("data-theme", "light")
-        }
-      } catch {
-        /* almacenamiento bloqueado: se queda en oscuro */
-      }
     </script>
 
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta
+      name="robots"
+      content={published
+        ? "index, follow, max-image-preview:large"
+        : "noindex, follow"}
+    />
     <meta name="author" content="Vantalogics" />
-    <meta name="theme-color" content="#020202" />
+    <meta name="theme-color" content="#0a0a0a" />
 
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
@@ -134,7 +139,7 @@ const xDefault = hreflangs.es ?? hreflangs.en ?? hreflangs.ar
   <body>
     <a
       href="#contenido"
-      class="sr-only label-untitled focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-pill focus:border focus:border-bone focus:bg-canvas focus:px-[15px] focus:py-[7px] focus:text-bone"
+      class="sr-only label-untitled focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-[8px] focus:bg-bone focus:px-4 focus:py-2 focus:text-carbon"
     >
       {t.a11y.skip}
     </a>
@@ -144,6 +149,20 @@ const xDefault = hreflangs.es ?? hreflangs.en ?? hreflangs.ar
     <WhatsAppButton lang={lang} />
 
     <AgentButton lang={lang} />
+
+    <script is:inline>
+      // Botones flotantes: visibles después del primer pantallazo.
+      ;(() => {
+        const sync = () => {
+          document.documentElement.toggleAttribute(
+            "data-floating",
+            window.scrollY > window.innerHeight * 0.7
+          )
+        }
+        sync()
+        window.addEventListener("scroll", sync, { passive: true })
+      })()
+    </script>
 
     <script is:inline>
       // Reveal al hacer scroll — una sola vez, desactivado con reduced motion.

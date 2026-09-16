@@ -1,0 +1,133 @@
+---
+import SectionHeading from "@/components/home/SectionHeading.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).process
+---
+
+<!-- En escritorio la sección se fija y los cinco pasos avanzan en horizontal
+     con el scroll (GSAP, `src/scripts/home-motion.ts`). Sin JavaScript, en
+     pantallas chicas o con reduced motion, es una lista que se scrollea
+     normalmente: el marcado es el mismo. -->
+<section
+  id="proceso"
+  aria-labelledby="proceso-titulo"
+  class="process relative isolate overflow-clip"
+  data-process
+>
+  <div class="shell">
+    <div class="process-frame border-t border-iron pt-(--spacing-band)">
+      <div class="process-pin" data-process-pin>
+        <div
+          class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"
+        >
+          <SectionHeading
+            id="proceso-titulo"
+            eyebrow={t.eyebrow}
+            title={t.title}
+          />
+          <p
+            class="process-count hidden shrink-0 mono-sm text-mist"
+            aria-hidden="true"
+          >
+            <span data-process-count>01</span> / {
+              String(t.steps.length).padStart(2, "0")
+            }
+          </p>
+        </div>
+
+        <div class="relative mt-16 lg:mt-20">
+          <!-- Riel con progreso. -->
+          <div
+            class="process-rail absolute top-[11px] right-0 left-0 hidden h-px bg-iron"
+            aria-hidden="true"
+          >
+            <span
+              class="process-bar absolute inset-y-0 left-0 w-full origin-left bg-soft-indigo"
+              data-process-bar></span>
+          </div>
+
+          <ol
+            class="process-track grid gap-10 pb-(--spacing-band) sm:grid-cols-2 lg:grid-cols-5 lg:gap-8"
+            data-process-track
+          >
+            {
+              t.steps.map((step, i) => (
+                <li
+                  class="process-step relative"
+                  data-process-step={i}
+                  data-reveal
+                  style={`--reveal-delay: ${i * 60}ms;`}
+                >
+                  <span
+                    class="step-node relative z-10 grid size-[23px] place-items-center rounded-full border border-slate-edge bg-carbon"
+                    aria-hidden="true"
+                  >
+                    <span class="size-[7px] rounded-full bg-smoke transition-colors duration-500" />
+                  </span>
+                  <p class="mt-8 mono-sm text-mist">{step.step}</p>
+                  <h3 class="mt-3 heading text-bone">{step.title}</h3>
+                  <p class="mt-4 max-w-[36ch] copy text-ash">{step.body}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Modo horizontal: sólo cuando GSAP lo toma (ver home-motion.ts). */
+  [data-horizontal] .process-pin {
+    display: flex;
+    min-height: 100svh;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 64px;
+  }
+
+  [data-horizontal] .process-frame {
+    padding-top: 0;
+  }
+
+  [data-horizontal] .process-count {
+    display: block;
+  }
+
+  [data-horizontal] .process-rail {
+    display: block;
+  }
+
+  [data-horizontal] .process-track {
+    display: flex;
+    gap: 0;
+    padding-bottom: 0;
+  }
+
+  [data-horizontal] .process-step {
+    width: 34vw;
+    min-width: 320px;
+    max-width: 440px;
+    flex-shrink: 0;
+    padding-inline-end: 48px;
+  }
+
+  :global(.js) .process-bar {
+    transform: scaleX(0);
+  }
+
+  .process-step[data-active] .step-node {
+    border-color: var(--indigo);
+  }
+
+  .process-step[data-active] .step-node > span {
+    background: var(--indigo);
+  }
+</style>

@@ -1,26 +1,26 @@
 ---
 import Layout from "@/layouts/main.astro"
 import SiteHeader from "@/components/site/SiteHeader.astro"
-import Hero from "@/components/site/Hero.astro"
-import Tools from "@/components/site/Tools.astro"
-import Problem from "@/components/site/Problem.astro"
-import Services from "@/components/site/Services.astro"
-import Industries from "@/components/site/Industries.astro"
-import AgentDemo from "@/components/site/AgentDemo.astro"
-import Process from "@/components/site/Process.astro"
-import Guarantees from "@/components/site/Guarantees.astro"
-import Faq from "@/components/site/Faq.astro"
-import CallToAction from "@/components/site/CallToAction.astro"
 import SiteFooter from "@/components/site/SiteFooter.astro"
+import CallToAction from "@/components/site/CallToAction.astro"
+import Hero from "@/components/home/Hero.astro"
+import Ecosystem from "@/components/home/Ecosystem.astro"
+import Cases from "@/components/home/Cases.astro"
+import Thesis from "@/components/home/Thesis.astro"
+import Capabilities from "@/components/home/Capabilities.astro"
+import Difference from "@/components/home/Difference.astro"
+import Process from "@/components/home/Process.astro"
+import Principles from "@/components/home/Principles.astro"
+import Insights from "@/components/home/Insights.astro"
+import { CASES } from "@/data/cases"
 import {
-  LANGS,
+  PUBLIC_LANGS,
   localizePath,
   ogImage,
   useTranslations,
   type Lang,
 } from "@/i18n"
-import { GITHUB_URL, INSTAGRAM_URL } from "@/site"
-import { FOCUS_SOLUTIONS, solutionPath } from "@/data/solutions"
+import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/site"
 
 interface Props {
   lang: Lang
@@ -30,38 +30,41 @@ const SITE = "https://vantalogics.com"
 const { lang } = Astro.props
 const t = useTranslations(lang)
 const pageUrl = new URL(localizePath(lang), SITE).href
+const hasCases = CASES.length > 0
 
 const KNOWS_ABOUT: Record<Lang, string[]> = {
   es: [
-    "Automatización de procesos empresariales",
-    "Agentes de IA",
+    "Tecnología educativa",
+    "Agentes de IA especializados",
+    "Evaluación asistida por IA",
+    "Plataformas de aprendizaje",
+    "Integraciones LTI 1.3, xAPI y SCORM",
     "Evaluación de modelos de lenguaje",
-    "Observabilidad de sistemas de IA",
     "Retrieval Augmented Generation",
-    "Integración de IA en producto",
   ],
   en: [
-    "Business process automation",
-    "AI agents",
+    "Education technology",
+    "Specialized AI agents",
+    "AI-assisted assessment",
+    "Learning platforms",
+    "LTI 1.3, xAPI and SCORM integrations",
     "Large language model evaluation",
-    "AI systems observability",
     "Retrieval Augmented Generation",
-    "AI product integration",
   ],
   ar: [
-    "أتمتة العمليات في الشركات",
-    "وكلاء الذكاء الاصطناعي",
+    "تقنيات التعليم",
+    "وكلاء الذكاء الاصطناعي المتخصصون",
+    "التقييم بمساعدة الذكاء الاصطناعي",
+    "منصات التعلّم",
+    "تكاملات LTI 1.3 وxAPI وSCORM",
     "تقييم النماذج اللغوية الكبيرة",
-    "مراقبة أنظمة الذكاء الاصطناعي",
     "التوليد المعزَّز بالاسترجاع",
-    "دمج الذكاء الاصطناعي في المنتجات",
   ],
 }
 
 /**
  * Datos estructurados. Sólo hechos declarables sobre la empresa y su oferta:
- * no se incluyen Review ni AggregateRating, que exigen reseñas reales y
- * verificables para ser válidos ante Google y los motores de respuesta.
+ * nada de Review ni AggregateRating, que exigen reseñas reales y verificables.
  */
 const organization = {
   "@context": "https://schema.org",
@@ -71,34 +74,32 @@ const organization = {
   url: SITE,
   logo: `${SITE}/logo-va@2x.png`,
   image: `${SITE}${ogImage(lang)}`,
-  description: t.meta.description,
-  email: "hello@vantalogics.com",
+  description: t.footer.tagline,
+  email: CONTACT_EMAIL,
   telephone: "+541178296140",
   slogan: t.hero.title,
   sameAs: [GITHUB_URL, INSTAGRAM_URL],
-  /**
-   * `knowsAbout` va en el idioma de la página: es el texto que un motor de
-   * respuesta cita cuando resume a la empresa, y una lista en español dentro
-   * de la página árabe se cita en español.
-   */
   knowsAbout: KNOWS_ABOUT[lang],
+  audience: {
+    "@type": "BusinessAudience",
+    audienceType: t.hero.eyebrow,
+  },
   areaServed: [
     { "@type": "Place", name: "Latin America" },
     { "@type": "Country", name: "Spain" },
     { "@type": "Country", name: "United States" },
-    { "@type": "Country", name: "United Arab Emirates" },
-    { "@type": "Place", name: "Gulf Cooperation Council" },
   ],
-  availableLanguage: LANGS,
+  availableLanguage: PUBLIC_LANGS,
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: t.services.titleBright,
-    itemListElement: t.services.items.map((service) => ({
+    name: t.capabilities.title,
+    itemListElement: t.capabilities.items.map((item) => ({
       "@type": "Offer",
       itemOffered: {
         "@type": "Service",
-        name: service.title,
-        description: service.summary,
+        name: item.title,
+        description: item.summary,
+        serviceType: t.capabilities.eyebrow,
       },
     })),
   },
@@ -127,60 +128,42 @@ const webPage = {
   about: { "@id": `${SITE}/#organization` },
 }
 
-/**
- * Las industrias foco, como lista enlazada desde la portada.
- *
- * `ItemList` y no cuatro `Service` sueltos: lo que se declara acá es que la
- * portada es el índice de esas dos páginas, que es la relación que hace que un
- * motor de respuesta las trate como el contenido canónico de la empresa sobre
- * cada rubro en vez de como dos páginas más del sitio.
- */
-const industriesList = {
+/** El proceso de trabajo, como pasos ordenados. */
+const process = {
   "@context": "https://schema.org",
-  "@type": "ItemList",
-  "@id": `${pageUrl}#industrias`,
-  name: t.industries.label,
-  description: t.industries.body,
-  itemListElement: FOCUS_SOLUTIONS.map((solution, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    name: solution.title[lang],
-    description: solution.answer[lang],
-    url: new URL(solutionPath(lang, solution), SITE).href,
-  })),
-}
-
-const faqPage = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "@id": `${pageUrl}#faq`,
+  "@type": "HowTo",
+  "@id": `${pageUrl}#proceso`,
+  name: t.process.title,
   inLanguage: lang,
-  mainEntity: t.faq.entries.map((entry) => ({
-    "@type": "Question",
-    name: entry.question,
-    acceptedAnswer: { "@type": "Answer", text: entry.answer },
+  step: t.process.steps.map((step, index) => ({
+    "@type": "HowToStep",
+    position: index + 1,
+    name: step.title,
+    text: step.body,
+    url: `${pageUrl}#proceso`,
   })),
 }
 ---
 
-<Layout
-  lang={lang}
-  jsonLd={[organization, website, webPage, industriesList, faqPage]}
->
+<Layout lang={lang} jsonLd={[organization, website, webPage, process]}>
   <SiteHeader lang={lang} />
 
   <main id="contenido">
-    <Hero lang={lang} />
-    <Tools lang={lang} />
-    <Problem lang={lang} />
-    <Services lang={lang} />
-    <Industries lang={lang} />
-    <AgentDemo lang={lang} />
+    <Hero lang={lang} hasCases={hasCases} />
+    <Ecosystem lang={lang} />
+    <Cases lang={lang} />
+    <Thesis lang={lang} />
+    <Capabilities lang={lang} />
+    <Difference lang={lang} />
     <Process lang={lang} />
-    <Guarantees lang={lang} />
-    <Faq lang={lang} />
+    <Principles lang={lang} />
+    <Insights lang={lang} />
     <CallToAction lang={lang} />
   </main>
 
   <SiteFooter lang={lang} />
 </Layout>
+
+<script>
+  import "@/scripts/home-motion"
+</script>

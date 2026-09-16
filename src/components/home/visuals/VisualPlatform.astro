@@ -1,0 +1,113 @@
+---
+import VisualFrame from "@/components/home/visuals/VisualFrame.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const v = useTranslations(lang).capabilities.visuals
+const t = v.platform
+---
+
+<VisualFrame title={t.title} tag={v.example}>
+  <div class="stack relative flex flex-col gap-2">
+    <span class="scan" aria-hidden="true"></span>
+    {
+      t.layers.map((layer, i) => (
+        <div
+          class="layer grid grid-cols-[88px_minmax(0,1fr)] items-center gap-3 rounded-[6px] border border-iron bg-carbon/60 p-2 sm:grid-cols-[112px_minmax(0,1fr)]"
+          style={`--i: ${i};`}
+        >
+          <span class="truncate ps-1 eyebrow text-mist">{layer.name}</span>
+          <span class="grid grid-cols-3 gap-2">
+            {layer.items.map((item) => (
+              <span class="truncate rounded-[4px] border border-iron bg-graphite px-2 py-[6px] text-center text-[12px] text-ash">
+                {item}
+              </span>
+            ))}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</VisualFrame>
+
+<style>
+  .scan {
+    position: absolute;
+    left: -8px;
+    right: -8px;
+    top: 0;
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgb(103 152 255 / 0.45);
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgb(103 152 255 / 0.07),
+      transparent
+    );
+    pointer-events: none;
+    animation: scan 7s var(--ease-in-out) infinite;
+  }
+
+  /* 5 capas de 44px con 8px de separación: el barrido se detiene en cada una. */
+  @keyframes scan {
+    0%,
+    14% {
+      transform: translateY(0);
+    }
+    20%,
+    34% {
+      transform: translateY(52px);
+    }
+    40%,
+    54% {
+      transform: translateY(104px);
+    }
+    60%,
+    74% {
+      transform: translateY(156px);
+    }
+    80%,
+    94% {
+      transform: translateY(208px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .layer {
+    height: 44px;
+  }
+
+  :global(.js) .layer {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+
+  :global([data-revealed]) .layer {
+    animation: stack-in 0.6s var(--ease-out) calc(0.3s + var(--i) * 0.1s)
+      forwards;
+  }
+
+  @keyframes stack-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scan {
+      display: none;
+    }
+    :global(.js) .layer {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

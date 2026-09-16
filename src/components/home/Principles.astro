@@ -1,0 +1,92 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import {
+  BookOpen01Icon,
+  ChartLineData01Icon,
+  Key01Icon,
+  UserCheck01Icon,
+} from "@hugeicons/core-free-icons"
+
+import Section from "@/components/home/Section.astro"
+import SectionHeading from "@/components/home/SectionHeading.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).principles
+const icons = [BookOpen01Icon, UserCheck01Icon, ChartLineData01Icon, Key01Icon]
+---
+
+<Section id="principios" labelledby="principios-titulo">
+  <SectionHeading id="principios-titulo" eyebrow={t.eyebrow} title={t.title} />
+
+  <!-- Las tarjetas se separan con 1px de la grilla de fondo; un foco de luz
+       que sigue al puntero ilumina esas juntas. La respuesta al hover es
+       luminancia, nunca sombra ni color de relleno. -->
+  <ul
+    class="spotlight mt-16 grid gap-px overflow-hidden rounded-[8px] border border-iron bg-iron md:grid-cols-2"
+    data-spotlight
+  >
+    {
+      t.items.map((item, i) => (
+        <li
+          class="principle relative flex min-h-[260px] flex-col justify-between gap-10 bg-carbon p-6 sm:p-8"
+          data-reveal
+          style={`--reveal-delay: ${i * 70}ms;`}
+        >
+          <div class="flex items-center justify-between">
+            <span class="grid size-9 place-items-center rounded-[8px] border border-iron bg-graphite text-soft-indigo">
+              <HugeiconsIcon icon={icons[i]} size={17} strokeWidth={1.5} />
+            </span>
+            <span class="mono-sm text-smoke">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+          </div>
+          <div>
+            <h3 class="max-w-[26ch] heading-sm text-bone">{item.title}</h3>
+            <p class="mt-3 max-w-[46ch] copy text-ash">{item.body}</p>
+            {i === 2 && (
+              <ul class="mt-5 flex flex-wrap gap-2" aria-hidden="true">
+                {t.measures.map((measure) => (
+                  <li class="rounded-[4px] border border-iron px-2 py-1 eyebrow text-mist">
+                    {measure}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<script>
+  const grid = document.querySelector<HTMLElement>("[data-spotlight]")
+  if (grid && window.matchMedia("(pointer: fine)").matches) {
+    grid.addEventListener(
+      "pointermove",
+      (event) => {
+        const box = grid.getBoundingClientRect()
+        grid.style.setProperty("--mx", `${event.clientX - box.left}px`)
+        grid.style.setProperty("--my", `${event.clientY - box.top}px`)
+      },
+      { passive: true }
+    )
+  }
+</script>
+
+<style>
+  .spotlight {
+    --mx: -999px;
+    --my: -999px;
+    background-image: radial-gradient(
+      420px circle at var(--mx) var(--my),
+      rgb(255 255 255 / 0.22),
+      transparent 60%
+    );
+  }
+</style>

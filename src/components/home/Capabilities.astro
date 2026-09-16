@@ -1,0 +1,160 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Tick02Icon } from "@hugeicons/core-free-icons"
+
+import Section from "@/components/home/Section.astro"
+import SectionHeading from "@/components/home/SectionHeading.astro"
+import VisualAgents from "@/components/home/visuals/VisualAgents.astro"
+import VisualAssessment from "@/components/home/visuals/VisualAssessment.astro"
+import VisualLearning from "@/components/home/visuals/VisualLearning.astro"
+import VisualPlatform from "@/components/home/visuals/VisualPlatform.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).capabilities
+const visuals = [VisualAgents, VisualLearning, VisualAssessment, VisualPlatform]
+---
+
+<Section id="capacidades" labelledby="capacidades-titulo" grid>
+  <div class="grid gap-16 lg:grid-cols-12 lg:gap-8">
+    <!-- Columna fija: el índice acompaña el scroll y marca la capacidad que
+         está en pantalla. -->
+    <div class="lg:col-span-4">
+      <div class="lg:sticky lg:top-[calc(var(--header-h)+48px)]">
+        <SectionHeading
+          id="capacidades-titulo"
+          eyebrow={t.eyebrow}
+          title={t.title}
+        />
+
+        <nav
+          class="mt-12 hidden lg:block"
+          aria-label={t.eyebrow}
+          data-cap-index
+        >
+          <ol class="relative flex flex-col border-s border-iron">
+            <span
+              class="cap-progress absolute -start-px top-0 w-px bg-soft-indigo"
+              aria-hidden="true"></span>
+            {
+              t.items.map((item, i) => (
+                <li>
+                  <a
+                    href={`#capacidad-${item.index}`}
+                    class="cap-link flex items-baseline gap-4 py-3 ps-5 text-mist transition-colors duration-300 ease-(--ease-out) hover:text-bone"
+                    data-cap-link={i}
+                  >
+                    <span class="mono-sm">{item.index}</span>
+                    <span class="text-[15px] font-medium tracking-[-0.3px]">
+                      {item.title}
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <ol class="flex flex-col gap-24 lg:col-span-7 lg:col-start-6 lg:gap-40">
+      {
+        t.items.map((item, i) => {
+          const Visual = visuals[i]
+          return (
+            <li
+              id={`capacidad-${item.index}`}
+              class="cap-item scroll-mt-[calc(var(--header-h)+48px)]"
+              data-cap-item={i}
+              aria-labelledby={`capacidad-${item.index}-titulo`}
+            >
+              <div data-reveal>
+                <Visual lang={lang} />
+              </div>
+
+              <div class="mt-10 grid gap-8 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+                <div data-reveal style="--reveal-delay: 80ms;">
+                  <p class="eyebrow text-soft-indigo">{item.index}</p>
+                  <h3
+                    id={`capacidad-${item.index}-titulo`}
+                    class="mt-3 heading text-bone"
+                  >
+                    {item.title}
+                  </h3>
+                  <p class="mt-4 copy text-ash">{item.summary}</p>
+                </div>
+                <ul
+                  class="flex flex-col self-end border-t border-iron"
+                  data-reveal
+                  style="--reveal-delay: 160ms;"
+                >
+                  {item.points.map((point) => (
+                    <li class="flex items-start gap-3 border-b border-iron py-3 text-[14px] leading-snug text-ash">
+                      <HugeiconsIcon
+                        icon={Tick02Icon}
+                        size={14}
+                        strokeWidth={1.8}
+                        className="mt-[2px] shrink-0 text-soft-indigo"
+                      />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          )
+        })
+      }
+    </ol>
+  </div>
+</Section>
+
+<script>
+  const nav = document.querySelector<HTMLElement>("[data-cap-index]")
+  const items = document.querySelectorAll<HTMLElement>("[data-cap-item]")
+  const links = document.querySelectorAll<HTMLElement>("[data-cap-link]")
+  const progress = nav?.querySelector<HTMLElement>(".cap-progress")
+
+  if (nav && items.length && progress) {
+    const setActive = (index: number) => {
+      links.forEach((link, i) => {
+        if (i === index) link.setAttribute("aria-current", "true")
+        else link.removeAttribute("aria-current")
+      })
+      const link = links[index]
+      if (!link) return
+      progress.style.transform = `translateY(${link.offsetTop}px)`
+      progress.style.height = `${link.offsetHeight}px`
+    }
+
+    // La capacidad activa es la que cruza la franja central de la pantalla.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          setActive(Number((entry.target as HTMLElement).dataset.capItem))
+        })
+      },
+      { rootMargin: "-45% 0px -45% 0px" }
+    )
+
+    items.forEach((item) => observer.observe(item))
+    setActive(0)
+  }
+</script>
+
+<style>
+  .cap-progress {
+    transition:
+      transform 0.6s var(--ease-out),
+      height 0.6s var(--ease-out);
+  }
+
+  .cap-link[aria-current] {
+    color: var(--color-bone);
+  }
+</style>

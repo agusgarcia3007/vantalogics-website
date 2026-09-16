@@ -1,0 +1,208 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import {
+  AiBrain01Icon,
+  BookOpen01Icon,
+  Calendar03Icon,
+  DatabaseIcon,
+  SecurityCheckIcon,
+  UserCheck01Icon,
+  UserIcon,
+} from "@hugeicons/core-free-icons"
+
+import VisualFrame from "@/components/home/visuals/VisualFrame.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const v = useTranslations(lang).capabilities.visuals
+const t = v.agents
+const toolIcons = [BookOpen01Icon, Calendar03Icon, DatabaseIcon]
+---
+
+<VisualFrame title={t.title} tag={v.example}>
+  <div class="flex flex-col gap-5">
+    <div class="flex items-center gap-3">
+      <div class="node min-w-0">
+        <HugeiconsIcon icon={UserIcon} size={14} strokeWidth={1.6} />
+        <span>{t.request}</span>
+      </div>
+      <div class="wire flex-1"><span></span></div>
+      <div class="node node-core min-w-0">
+        <HugeiconsIcon icon={AiBrain01Icon} size={14} strokeWidth={1.6} />
+        <span>{t.orchestrator}</span>
+      </div>
+    </div>
+
+    <div class="bracket grid grid-cols-3 gap-2 pt-4">
+      {
+        t.tools.map((tool, i) => {
+          const Icon = toolIcons[i]
+          return (
+            <div class="tool" style={`--i: ${i};`}>
+              <HugeiconsIcon icon={Icon} size={13} strokeWidth={1.6} />
+              <span>{tool}</span>
+            </div>
+          )
+        })
+      }
+    </div>
+
+    <div
+      class="flex items-center gap-3 rounded-[8px] border border-dashed border-slate-edge p-3"
+    >
+      <div class="node min-w-0">
+        <HugeiconsIcon icon={SecurityCheckIcon} size={14} strokeWidth={1.6} />
+        <span>{t.guard}</span>
+      </div>
+      <div class="wire wire-slow flex-1"><span></span></div>
+      <div class="node node-human min-w-0">
+        <HugeiconsIcon icon={UserCheck01Icon} size={14} strokeWidth={1.6} />
+        <span>{t.human}</span>
+      </div>
+    </div>
+
+    <ol class="rounded-[8px] border border-iron bg-pure-black/60 p-3">
+      {
+        t.log.map((line, i) => (
+          <li class="log flex gap-3 mono-sm text-mist" style={`--i: ${i};`}>
+            <span class="text-slate-edge">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span class:list={[i === t.log.length - 1 && "text-soft-indigo"]}>
+              {line}
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</VisualFrame>
+
+<style>
+  .node,
+  .tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    border: 1px solid var(--color-slate-edge);
+    border-radius: 6px;
+    background: var(--color-iron);
+    padding: 7px 10px;
+    font-size: 12.5px;
+    line-height: 1.2;
+    color: var(--color-bone);
+  }
+
+  .tool {
+    color: var(--color-ash);
+    background: transparent;
+    border-color: var(--color-iron);
+  }
+
+  .tool span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .node :global(svg),
+  .tool :global(svg) {
+    flex-shrink: 0;
+    color: var(--color-ash);
+  }
+
+  .node-core {
+    border-color: rgb(103 152 255 / 0.55);
+    background: rgb(103 152 255 / 0.08);
+  }
+
+  .node-core :global(svg),
+  .node-human :global(svg) {
+    color: var(--indigo);
+  }
+
+  .wire {
+    position: relative;
+    height: 1px;
+    min-width: 16px;
+    background: var(--color-slate-edge);
+    overflow: hidden;
+  }
+
+  .wire span {
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, var(--indigo), transparent);
+    animation: flow 2.2s var(--ease-in-out) infinite;
+  }
+
+  .wire-slow span {
+    animation-duration: 3.4s;
+    animation-delay: 0.8s;
+  }
+
+  @keyframes flow {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(250%);
+    }
+  }
+
+  /* Corchete que baja del agente a sus herramientas. */
+  .bracket {
+    position: relative;
+  }
+
+  .bracket::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(100% / 6);
+    right: calc(100% / 6);
+    height: 10px;
+    border: 1px solid var(--color-slate-edge);
+    border-bottom: 0;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .log {
+    padding-block: 2px;
+  }
+
+  :global(.js) .log {
+    opacity: 0;
+  }
+
+  :global([data-revealed]) .log {
+    animation: log-in 0.4s var(--ease-out) calc(0.4s + var(--i) * 0.35s)
+      forwards;
+  }
+
+  @keyframes log-in {
+    from {
+      opacity: 0;
+      transform: translateX(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wire span {
+      display: none;
+    }
+    :global(.js) .log {
+      opacity: 1;
+    }
+  }
+</style>

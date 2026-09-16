@@ -29,45 +29,48 @@ const url = (path: string) => new URL(path, SITE).href
 export const GET: APIRoute = async () => {
   const postsEs = await getPosts("es")
   const postsEn = await getPosts("en")
-  const postsAr = await getPosts("ar")
 
   const preamble = `# Vantalogics
 
-> Agencia de sistemas de IA. Automatizamos procesos de empresas y construimos
-> agentes de IA a medida —evaluados, monitoreados y con control humano— que
-> aguantan producción.
+> Estudio de producto e ingeniería de IA para educación. Construimos agentes
+> especializados y el software necesario para convertirlos en productos reales.
 
 - Sitio (ES): ${SITE}
 - Site (EN): ${url("/en/")}
-- الموقع (AR): ${url("/ar/")}
 - Contacto: hello@vantalogics.com
-- Idiomas de trabajo: español e inglés (el sitio además está publicado en árabe)
-- Cobertura: América Latina, España, Estados Unidos y el Golfo (remoto)
+- Idiomas de trabajo: español e inglés
+- Cobertura: América Latina, España y Estados Unidos (remoto)
 
-## Servicios
+## Para quién
 
-- **Automatización de procesos**: onboarding de clientes, extracción y validación de documentos, conciliaciones y reportes, triage de tickets y correo.
-- **Agentes de IA a medida**: agentes conectados a CRM, ERP, bases de datos y APIs internas, con permisos acotados, aprobaciones humanas e integración con Slack, WhatsApp, correo o el producto del cliente.
-- **Agentes robustos y medibles**: sets de evaluación con casos reales, guardrails, límites de acción, trazas de ejecución, control de costos y alertas de degradación de calidad.
-- **AI Solutions e integración**: búsqueda semántica y RAG sobre datos propios, features de IA embebidas en el producto, selección de modelos y traspaso al equipo interno.
+Fundadores y líderes de producto de empresas EdTech, plataformas educativas con
+producto propio, universidades, empresas de formación profesional o corporativa
+y compañías de software que entran al sector educativo.
+
+## Qué construimos
+
+- **Agentes especializados**: integrados al producto, trabajan sobre contenido y datos propios, respetan usuarios, permisos y etapas, se conectan con APIs y herramientas internas, escalan decisiones sensibles a una persona y registran sus fuentes y acciones.
+- **Experiencias de aprendizaje con IA**: acompañamiento contextual, búsqueda con fuentes, práctica y simulaciones, recomendaciones según progreso y feedback inmediato.
+- **Evaluación y operaciones académicas**: corrección asistida con rúbricas, generación y validación de evaluaciones, análisis de respuestas, herramientas para docentes, revisión humana y trazabilidad.
+- **Plataformas y software educativo**: plataformas completas, portales para alumnos y docentes, herramientas de autor, integraciones con LMS y SIS, infraestructura y operación.
+
+Integraciones y estándares: Moodle, Canvas, Open edX, Google Classroom, LTI 1.3,
+xAPI, SCORM, SIS y plataformas propias.
 
 ## Cómo trabajamos
 
-1. **Diagnóstico**: 30 minutos sin costo; mapa del proceso actual y estimación de qué conviene automatizar.
-2. **Diseño y prueba**: métrica de éxito acordada, set de evaluación con casos reales y primera versión funcional.
-3. **Producción**: integración, permisos, guardrails y observabilidad; salida gradual a producción.
-4. **Operación y traspaso**: monitoreo, ajuste de calidad, control de costos, documentación y capacitación del equipo interno.
+1. **Definimos la oportunidad**: producto, usuarios, contenido y operación; un problema con resultado observable.
+2. **Diseñamos el sistema**: experiencia, restricciones, arquitectura y métricas antes de desarrollar.
+3. **Construimos una versión real**: con contenido e integraciones reales, no una maqueta.
+4. **Probamos con usuarios**: alcance controlado (una cohorte, una materia, un equipo).
+5. **Medimos y escalamos**: cuando calidad, adopción y economía unitaria lo justifican.
 
-El alcance, el ritmo y los plazos se definen con cada cliente durante el
-diagnóstico: dependen del proceso y de las integraciones involucradas.
+## Principios
 
-## Datos clave
-
-- Trabajo por ciclos cortos: hay algo usable y medible en cada entrega.
-- Presupuesto por proyecto con alcance cerrado, definido después del diagnóstico.
-- Los datos y el código quedan en la infraestructura y las cuentas del cliente; no se usan datos de clientes para entrenar modelos.
-- Agnósticos de proveedor de modelos: la elección se hace por costo, latencia y precisión en cada caso.
-- Las acciones de alto impacto siempre pasan por revisión humana y quedan registradas.`
+- El sistema responde desde el material y las reglas de la institución.
+- Calificaciones definitivas, integridad académica y decisiones sobre un alumno quedan en manos de una persona.
+- Calidad, adopción, costo, latencia y correcciones humanas quedan registrados.
+- Código, infraestructura, cuentas y documentación quedan en manos del cliente.`
 
   /**
    * Las industrias foco van primero y con sus casos de uso desplegados.
@@ -79,9 +82,9 @@ diagnóstico: dependen del proceso y de las integraciones involucradas.
    * de automatización»— que es exactamente el posicionamiento del que se está
    * saliendo.
    */
-  const focus = `## Industrias foco
+  const focus = `## Páginas por sector
 
-Los dos sectores en los que la agencia se especializa. Cada página describe qué
+Sectores con página propia. Cada página describe qué
 se automatiza primero, con qué sistemas se integra, qué queda con aprobación
 humana y —explícitamente— cuándo no conviene automatizar.
 
@@ -89,10 +92,10 @@ ${FOCUS_SOLUTIONS.map((solution) => {
   const cases = casesFor(solution)
     .map(
       (useCase) =>
-        `  - [${useCase.title.es}](${url(casePath("es", solution, useCase))}) · [EN](${url(casePath("en", solution, useCase))}) · [AR](${url(casePath("ar", solution, useCase))})\n    ${useCase.answer.es}`
+        `  - [${useCase.title.es}](${url(casePath("es", solution, useCase))}) · [EN](${url(casePath("en", solution, useCase))})\n    ${useCase.answer.es}`
     )
     .join("\n")
-  return `### ${solution.sector.es}\n\n[${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))}) · [AR](${url(solutionPath("ar", solution))})\n\n${solution.answer.es}\n\nCasos de uso:\n\n${cases}`
+  return `### ${solution.sector.es}\n\n[${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))})\n\n${solution.answer.es}\n\nCasos de uso:\n\n${cases}`
 }).join("\n\n")}`
 
   const solutions = `## Otros sectores
@@ -101,10 +104,10 @@ Mismo formato, sin la capa de casos de uso.
 
 ${OTHER_SOLUTIONS.map(
   (solution) =>
-    `- [${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))}) · [AR](${url(solutionPath("ar", solution))})\n  ${solution.answer.es}`
+    `- [${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))})\n  ${solution.answer.es}`
 ).join("\n")}
 
-Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))} · ${url(solutionsIndexPath("ar"))}`
+Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))}`
 
   const notes = `## Notas
 
@@ -125,27 +128,17 @@ ${postsEn
     (post) =>
       `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}\n  ${post.data.answer}`
   )
-  .join("\n")}
-
-### ملاحظات (AR)
-
-${postsAr
-  .map(
-    (post) =>
-      `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}\n  ${post.data.answer}`
-  )
   .join("\n")}`
 
   const links = `## Enlaces
 
-- [Servicios](${url("/#servicios")})
+- [Qué construimos](${url("/#capacidades")})
 - [Proceso](${url("/#proceso")})
-- [Garantías](${url("/#garantias")})
-- [Preguntas frecuentes](${url("/#faq")})
+- [Principios](${url("/#principios")})
 - [Contacto](${url("/#contacto")})
-- [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")}) · [ملاحظات](${url("/ar/blog/")})
-- [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))}) · [الحلول](${url(solutionsIndexPath("ar"))})
-- RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")} · ${url("/ar/rss.xml")}`
+- [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")})
+- [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))})
+- RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")}`
 
   const body = [preamble, focus, solutions, notes, links].join("\n\n") + "\n"
 

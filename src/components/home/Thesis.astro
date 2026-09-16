@@ -1,0 +1,162 @@
+---
+import Section from "@/components/home/Section.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).thesis
+const words = t.title.split(" ")
+
+// Campo de puntos del «producto»: 26 × 14. Unos pocos marcados en índigo son
+// los casos que el sistema reconoce que no sabe y deriva.
+const COLS = 26
+const ROWS = 14
+const flagged = new Set([37, 88, 131, 170, 219, 262, 301, 347])
+const field = Array.from({ length: COLS * ROWS }, (_, i) => ({
+  x: (i % COLS) * 12 + 6,
+  y: Math.floor(i / COLS) * 12 + 6,
+  flagged: flagged.has(i),
+  delay: ((i * 7919) % 97) / 97,
+}))
+---
+
+<Section id="tesis" labelledby="tesis-titulo">
+  <p class="flex items-center gap-3 eyebrow text-ash" data-reveal>
+    <span class="h-px w-6 bg-smoke" aria-hidden="true"></span>
+    {t.eyebrow}
+  </p>
+
+  <!-- Las palabras se encienden a medida que se scrollea. Sin JavaScript o con
+       reduced motion, el titular está entero desde el principio. -->
+  <h2
+    id="tesis-titulo"
+    class="mt-6 max-w-[20ch] display-lg text-bone"
+    data-scrub-title
+  >
+    {
+      words.map((word) => (
+        <>
+          <span data-scrub-word>{word}</span>{" "}
+        </>
+      ))
+    }
+  </h2>
+
+  <div class="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-12 lg:gap-8">
+    <div class="flex flex-col gap-6 lg:col-span-5">
+      {
+        t.body.map((paragraph, i) => (
+          <p
+            class="copy-lg text-ash"
+            data-reveal
+            style={`--reveal-delay: ${i * 90}ms;`}
+          >
+            {paragraph}
+          </p>
+        ))
+      }
+    </div>
+
+    <figure
+      class="grid overflow-hidden card sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:col-span-6 lg:col-start-7"
+      aria-hidden="true"
+      data-reveal
+      data-contrast
+      style="--reveal-delay: 120ms;"
+    >
+      <div
+        class="flex flex-col justify-between gap-8 border-iron p-6 max-sm:border-b sm:border-e"
+      >
+        <div>
+          <p class="eyebrow text-mist">{t.contrast.demo}</p>
+          <p class="mt-2 text-[15px] font-medium text-bone">
+            {t.contrast.demoValue}
+          </p>
+        </div>
+        <div class="grid w-fit grid-cols-5 gap-[6px]">
+          {
+            Array.from({ length: 10 }, (_, i) => (
+              <span
+                class="demo-dot size-[9px] rounded-full bg-bone"
+                style={`--d: ${i * 0.06}s;`}
+              />
+            ))
+          }
+        </div>
+      </div>
+      <div class="flex flex-col justify-between gap-8 p-6">
+        <div>
+          <p class="eyebrow text-mist">{t.contrast.product}</p>
+          <p class="mt-2 text-[15px] font-medium text-bone">
+            {t.contrast.productValue}
+          </p>
+        </div>
+        <svg
+          viewBox={`0 0 ${COLS * 12} ${ROWS * 12}`}
+          class="h-auto w-full"
+          role="presentation"
+        >
+          {
+            field.map((dot) => (
+              <circle
+                class:list={["field-dot", dot.flagged && "is-flagged"]}
+                cx={dot.x}
+                cy={dot.y}
+                r={dot.flagged ? 2.6 : 1.7}
+                style={`--d: ${dot.delay.toFixed(2)}s;`}
+              />
+            ))
+          }
+        </svg>
+      </div>
+    </figure>
+  </div>
+</Section>
+
+<style>
+  .field-dot {
+    fill: var(--color-slate-edge);
+  }
+
+  .field-dot.is-flagged {
+    fill: var(--indigo);
+  }
+
+  :global(.js) .field-dot,
+  :global(.js) .demo-dot {
+    opacity: 0;
+  }
+
+  [data-revealed] .field-dot,
+  [data-revealed] .demo-dot {
+    animation: appear 0.6s var(--ease-out) calc(0.3s + var(--d)) forwards;
+  }
+
+  [data-revealed] .field-dot.is-flagged {
+    animation:
+      appear 0.6s var(--ease-out) calc(0.3s + var(--d)) forwards,
+      beat 2.8s var(--ease-in-out) calc(1.4s + var(--d)) infinite;
+  }
+
+  @keyframes appear {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes beat {
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .field-dot,
+    :global(.js) .demo-dot {
+      opacity: 1;
+    }
+  }
+</style>

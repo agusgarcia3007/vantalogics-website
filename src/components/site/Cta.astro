@@ -26,6 +26,10 @@ const {
 } = Astro.props
 ---
 
-<a href={href} class={cn(buttonVariants({ variant, size }), className)} {...rest}>
+<a
+  href={href}
+  class={cn(buttonVariants({ variant, size }), className)}
+  {...rest}
+>
   <slot />
 </a>

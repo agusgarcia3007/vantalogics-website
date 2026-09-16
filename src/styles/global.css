@@ -5,84 +5,83 @@
    Se configura abajo, en `.typeset-nota`. */
 @import "./typeset.css";
 
-/* OPX-Medium / Untitled -> Inter (substitute per design.md) */
+/* Inter carga la lectura; JetBrains Mono estampa las etiquetas (design.md). */
 @import "@fontsource-variable/inter";
-/* Open Sans -> supporting copy face */
-@import "@fontsource-variable/open-sans";
+@import "@fontsource-variable/jetbrains-mono";
 /* Árabe: Inter no trae glifos árabes y el fallback del sistema cambia de
-   máquina en máquina (Geeza Pro en macOS, Segoe UI en Windows). Noto Sans
-   Arabic es la contraparte neutra de Inter y sostiene el mismo gris de página. */
+   máquina en máquina. Noto Sans Arabic es la contraparte neutra de Inter. */
 @import "@fontsource-variable/noto-sans-arabic";
 
 @custom-variant dark (&:is(.dark *));
 
 /* ---------------------------------------------------------------------------
-   OPX Studio — design system tokens (design.md)
-   Dark gallery monolith: void-black canvas, bone-white type, #292a2c
-   hairlines, pill outlines, monumental display type. No shadows, no color.
+   Sistema — design.md
+   Grilla de plano bajo una luna negra: canvas casi negro, superficies que
+   suben por luminancia y no por sombra, tipografía blanca y una sola chispa
+   índigo. Radio de 8px en todo lo que se toca; pill sólo en la navegación.
 --------------------------------------------------------------------------- */
 @theme {
-  /* Colors — literal palette from design.md */
-  --color-void-black: #020202;
-  --color-surface-black: #000000;
-  --color-charcoal-hairline: #292a2c;
-  --color-bone-white: #ffffff;
-  --color-ash-gray: #9b9b9b;
+  /* Paleta literal de design.md */
+  --color-soft-indigo: #6798ff;
+  --color-pure-black: #000000;
+  --color-carbon: #0a0a0a;
+  --color-graphite: #141414;
+  --color-iron: #1e1e1e;
+  --color-slate-edge: #313131;
+  --color-smoke: #454545;
+  --color-mist: #7c7c7c;
+  --color-ash: #a7a7a7;
+  --color-bone: #ffffff;
 
-  /* Semantic aliases. Every component uses these, so the light theme is a
-     value swap rather than a rewrite. */
-  --color-canvas: var(--canvas);
-  --color-surface: var(--surface);
-  --color-hairline: var(--hairline);
-  --color-bone: var(--bone);
-  --color-ash: var(--ash);
+  /* Alias semánticos. Las páginas internas (notas, soluciones, casos) se
+     escribieron contra estos nombres; siguen funcionando con los valores
+     nuevos sin tocar cada componente. */
+  --color-canvas: #0a0a0a;
+  --color-surface: #141414;
+  --color-hairline: #1e1e1e;
 
-  /* Font families */
-  --font-opx:
+  /* Familias */
+  --font-inter:
     "Inter Variable", Inter, "Söhne", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
-  --font-open-sans:
-    "Open Sans Variable", "Open Sans", "Source Sans 3", ui-sans-serif,
-    system-ui, sans-serif;
-  --font-untitled:
-    "Inter Variable", Inter, "Söhne", ui-sans-serif, system-ui, sans-serif;
-  --font-helvetica: Helvetica, ui-sans-serif, system-ui, Arial, sans-serif;
+  --font-jetbrains-mono:
+    "JetBrains Mono Variable", "JetBrains Mono", "IBM Plex Mono", ui-monospace,
+    SFMono-Regular, Menlo, Consolas, monospace;
+  --font-opx: var(--font-inter);
+  --font-untitled: var(--font-inter);
+  --font-open-sans: var(--font-inter);
+  --font-helvetica: var(--font-inter);
 
-  /* Type scale — leading tightens inversely with size */
-  --text-caption: 14px;
-  --text-caption--line-height: 1.67;
-  --text-body: 18px;
-  --text-body--line-height: 1.67;
+  /* Escala tipográfica de design.md */
+  --text-caption: 12px;
+  --text-caption--line-height: 1.4;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.57;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
   --text-subheading: 20px;
-  --text-subheading--line-height: 1.67;
-  --text-heading-sm: 26px;
-  --text-heading-sm--line-height: 1.42;
-  --text-heading: 35px;
-  --text-heading--line-height: 1.4;
-  --text-heading-lg: 50px;
-  --text-heading-lg--line-height: 1.38;
-  --text-display: 80px;
-  --text-display--line-height: 1.07;
-  --text-display-xl: 111px;
-  --text-display-xl--line-height: 1;
+  --text-subheading--line-height: 1.33;
+  --text-heading-sm: 20px;
+  --text-heading-sm--line-height: 1.33;
+  --text-heading: 24px;
+  --text-heading--line-height: 1.29;
+  --text-heading-lg: 40px;
+  --text-heading-lg--line-height: 1.2;
+  --text-display-sm: 56px;
+  --text-display-sm--line-height: 1.14;
+  --text-display: 64px;
+  --text-display--line-height: 1.13;
 
-  /* Spacing steps from design.md (the 4px scale stays intact underneath) */
-  --spacing-7: 7px;
-  --spacing-15: 15px;
-  --spacing-21: 21px;
-  --spacing-30: 30px;
-  --spacing-99: 99px;
-  --spacing-150: 150px;
-  --spacing-200: 200px;
-  /* Fluid page inset: 20px on phones, up to the 100px editorial margin. */
-  --spacing-page: clamp(20px, 6vw, 100px);
-  /* Fluid section rhythm inside the 100–200px band. */
-  --spacing-band: clamp(64px, 11vw, 150px);
+  /* Espaciado de design.md (la escala de 4px de Tailwind queda debajo) */
+  --spacing-page: clamp(20px, 4vw, 40px);
+  --spacing-band: clamp(72px, 10vw, 128px);
 
-  /* Radii — pills for interactive elements, 0 everywhere else */
-  --radius-pill: 45px;
+  /* Radios */
+  --radius-tag: 4px;
+  --radius-card: 8px;
+  --radius-pill: 9999px;
 
-  /* Elevation: the system deliberately avoids shadows. */
+  /* Sin sombras: la profundidad es luminancia. */
   --shadow-2xs: 0 0 #0000;
   --shadow-xs: 0 0 #0000;
   --shadow-sm: 0 0 #0000;
@@ -92,13 +91,26 @@
   --shadow-xl: 0 0 #0000;
   --shadow-2xl: 0 0 #0000;
 
-  --ease-opx: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  /* Curvas. `out` para todo lo que entra; `in-out` para lo que ya está en
+     pantalla y cambia de lugar. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-opx: var(--ease-out);
+
+  --animate-marquee: marquee var(--marquee-duration, 48s) linear infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
 }
 
 @theme inline {
-  --font-heading: var(--font-opx);
-  --font-sans: var(--font-opx);
-  --font-serif: var(--font-open-sans);
+  --font-heading: var(--font-inter);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-serif: var(--font-inter);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -130,128 +142,88 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  --radius-sm: var(--radius);
-  --radius-md: var(--radius);
-  --radius-lg: var(--radius);
-  --radius-xl: var(--radius);
-  --radius-2xl: var(--radius);
-  --radius-3xl: var(--radius-pill);
-  --radius-4xl: var(--radius-pill);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+  --radius-2xl: 8px;
+  --radius-3xl: 9999px;
+  --radius-4xl: 9999px;
 }
 
 /* ---------------------------------------------------------------------------
-   Temas. El sistema es nativamente oscuro (design.md: theme dark) y ese es el
-   predeterminado. `data-theme="light"` invierte canvas y tipografía
-   manteniendo las mismas relaciones: hairline apenas visible, texto apagado
-   con contraste suficiente (nunca #9b9b9b sobre blanco — falla 2.8:1).
+   El sistema es sólo oscuro (design.md: «theme: dark», «nunca un canvas
+   blanco»). Los tokens de shadcn apuntan a la misma escala para que el panel
+   del agente y los componentes de ui hablen el mismo idioma.
 --------------------------------------------------------------------------- */
 :root {
   color-scheme: dark;
 
-  --canvas: #020202;
-  --surface: #000000;
-  --hairline: #292a2c;
+  --canvas: #0a0a0a;
+  --surface: #141414;
+  --hairline: #1e1e1e;
   --bone: #ffffff;
-  --ash: #9b9b9b;
+  --ash: #a7a7a7;
+  --indigo: #6798ff;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-
-  --canvas: #ffffff;
-  --surface: #fafafa;
-  --hairline: #d8d9da;
-  --bone: #020202;
-  /* #9b9b9b falla contraste sobre blanco; se oscurece a 4.6:1. */
-  --ash: #6b6b6b;
-
-  --background: #ffffff;
-  --foreground: #020202;
-  --card: #fafafa;
-  --card-foreground: #020202;
-  --popover: #ffffff;
-  --popover-foreground: #020202;
-  --primary: #020202;
-  --primary-foreground: #ffffff;
-  --secondary: #fafafa;
-  --secondary-foreground: #020202;
-  --muted: #fafafa;
-  --muted-foreground: #6b6b6b;
-  --accent: #020202;
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --card: #141414;
+  --card-foreground: #ffffff;
+  --popover: #141414;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1e1e1e;
+  --secondary-foreground: #ffffff;
+  --muted: #141414;
+  --muted-foreground: #a7a7a7;
+  --accent: #1e1e1e;
   --accent-foreground: #ffffff;
-  --destructive: #020202;
-  --border: #d8d9da;
-  --input: #d8d9da;
-  --ring: #020202;
-  --chart-1: #020202;
-  --chart-2: #4a4a4a;
-  --chart-3: #6b6b6b;
-  --chart-4: #9b9b9b;
-  --chart-5: #d8d9da;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #020202;
-  --sidebar-primary: #020202;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #020202;
+  --destructive: #ff6b6b;
+  --border: #1e1e1e;
+  --input: #313131;
+  --ring: #6798ff;
+  --chart-1: #6798ff;
+  --chart-2: #ffffff;
+  --chart-3: #a7a7a7;
+  --chart-4: #454545;
+  --chart-5: #313131;
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #1e1e1e;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #d8d9da;
-  --sidebar-ring: #020202;
-}
+  --sidebar-border: #1e1e1e;
+  --sidebar-ring: #6798ff;
+  --radius: 8px;
 
-/* Tokens independientes del tema. */
-:root {
-  --radius: 0px;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
-  --element-gap: 30px;
+  --element-gap: 8px;
   --hairline-width: 1px;
-  --duration-state: 300ms;
-  --duration-geometry: 600ms;
+  --duration-state: 180ms;
+  --duration-geometry: 700ms;
+  /* Alto del encabezado pegajoso: los anclas frenan debajo. */
+  --header-h: 68px;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-canvas font-opx text-body font-normal text-bone;
-    -webkit-font-smoothing: antialiased;
-  }
   html {
-    @apply font-opx;
+    @apply bg-carbon font-inter;
+    font-feature-settings: "liga", "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+  body {
+    @apply bg-carbon font-inter text-body text-bone;
+    letter-spacing: -0.25px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   h1,
   h2,
@@ -259,103 +231,172 @@
   h4,
   h5,
   h6 {
-    /* Authority comes from scale, never from weight. */
-    @apply font-opx font-normal;
+    @apply font-inter font-medium;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
   ::selection {
-    background: var(--bone);
-    color: var(--canvas);
+    background: var(--indigo);
+    color: #0a0a0a;
   }
 }
 
 /* ---------------------------------------------------------------------------
-   System utilities — the OPX vocabulary
+   Vocabulario del sistema
 --------------------------------------------------------------------------- */
 
-/* Editorial page inset: type holds a generous left margin, canvas bleeds. */
 @utility page-x {
   padding-inline: var(--spacing-page);
 }
 
-/* Monolithic vertical rhythm between bands. */
 @utility band-y {
   padding-block: var(--spacing-band);
 }
 
-/* The only structural separator in the system. */
+/* Contenedor de 1200px de design.md. */
+@utility shell {
+  width: 100%;
+  max-width: calc(1200px + var(--spacing-page) * 2);
+  margin-inline: auto;
+  padding-inline: var(--spacing-page);
+}
+
 @utility rule-t {
-  border-top: var(--hairline-width) solid var(--color-hairline);
+  border-top: var(--hairline-width) solid var(--color-iron);
 }
 
 @utility rule-b {
-  border-bottom: var(--hairline-width) solid var(--color-hairline);
+  border-bottom: var(--hairline-width) solid var(--color-iron);
 }
 
-/* Monumental display type — 80–111px, weight 400, leading locked at ~1. */
+/* Titulares. El tracking se ajusta con la escala: −0.036em a 64px, −0.012em a
+   20px. Los tamaños son fluidos pero nunca bajan de 40px en display. */
+@utility display {
+  font-family: var(--font-inter);
+  font-weight: var(--font-weight-medium);
+  font-size: clamp(2.5rem, 1.35rem + 3.9vw, 4rem);
+  line-height: 1.06;
+  letter-spacing: -0.036em;
+}
+
 @utility display-xl {
-  font-family: var(--font-opx);
-  font-weight: var(--font-weight-regular);
-  /* Calibrado para que el titular del hero caiga en tres líneas limpias
-     desde 1024px hasta 1920px. */
-  font-size: clamp(2.75rem, 7.4vw, 6.9375rem);
-  line-height: 1;
-  letter-spacing: -0.025em;
+  font-family: var(--font-inter);
+  font-weight: var(--font-weight-medium);
+  font-size: clamp(2.5rem, 1rem + 5.4vw, 5.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.042em;
 }
 
 @utility display-lg {
-  font-family: var(--font-opx);
-  font-weight: var(--font-weight-regular);
-  font-size: clamp(2.125rem, 5.6vw, 5rem);
-  line-height: 1.07;
-  letter-spacing: -0.015em;
-}
-
-/* Titular del hero. Más chico que el display-xl anterior a propósito: la
-   escala monumental leía como póster y empujaba todo lo demás fuera de la
-   primera pantalla. Acá el titular entra en dos líneas y deja lugar a la
-   propuesta, los botones y la ilustración. */
-@utility display-hero {
-  font-family: var(--font-opx);
-  font-weight: var(--font-weight-regular);
-  font-size: clamp(2.375rem, 4.6vw, 3.75rem);
-  line-height: 1.06;
-  letter-spacing: -0.028em;
-}
-
-/* Titulares de sección — 28–40px, en dos tonos (ver i18n). */
-@utility display-section {
-  font-family: var(--font-opx);
-  font-weight: var(--font-weight-regular);
-  font-size: clamp(1.5rem, 2.4vw, 2.125rem);
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-}
-
-/* Small label text for pills and tag-like links — the only weight 500. */
-@utility label-untitled {
-  font-family: var(--font-untitled);
+  font-family: var(--font-inter);
   font-weight: var(--font-weight-medium);
-  font-size: var(--text-caption);
-  line-height: 1.67;
+  font-size: clamp(2.5rem, 1.6rem + 2.9vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.031em;
 }
 
-/* Supporting copy. Antes iba en Open Sans a 18px: dos familias tipográficas
-   para un sitio de una sola página era una complicación sin beneficio, y a
-   18/1.67 los párrafos ocupaban media sección. Una sola familia, 17px. */
+@utility display-hero {
+  font-family: var(--font-inter);
+  font-weight: var(--font-weight-medium);
+  font-size: clamp(2.5rem, 1.35rem + 3.9vw, 4rem);
+  line-height: 1.06;
+  letter-spacing: -0.036em;
+}
+
+@utility display-section {
+  font-family: var(--font-inter);
+  font-weight: var(--font-weight-medium);
+  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.021em;
+}
+
+@utility heading {
+  font-family: var(--font-inter);
+  font-weight: var(--font-weight-medium);
+  font-size: 24px;
+  line-height: 1.29;
+  letter-spacing: -0.6px;
+}
+
+@utility heading-sm {
+  font-family: var(--font-inter);
+  font-weight: var(--font-weight-medium);
+  font-size: 20px;
+  line-height: 1.33;
+  letter-spacing: -0.42px;
+}
+
+/* Botones y navegación: Inter 14/500. */
+@utility label-untitled {
+  font-family: var(--font-inter);
+  font-weight: var(--font-weight-medium);
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.15px;
+}
+
+/* La etiqueta estampada: JetBrains Mono, mayúsculas, tracking abierto. Se lee
+   como metadato, no como texto. */
+@utility eyebrow {
+  font-family: var(--font-jetbrains-mono);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.85px;
+  text-transform: uppercase;
+}
+
+@utility mono-sm {
+  font-family: var(--font-jetbrains-mono);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
 @utility copy {
-  font-family: var(--font-untitled);
+  font-family: var(--font-inter);
   font-weight: var(--font-weight-regular);
-  font-size: 17px;
-  line-height: 1.62;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.25px;
 }
 
-/* Muted metadata — only valid on the dark canvas. */
+@utility copy-lg {
+  font-family: var(--font-inter);
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(17px, 0.95rem + 0.25vw, 19px);
+  line-height: 1.55;
+  letter-spacing: -0.3px;
+}
+
 @utility text-muted-ash {
-  color: var(--color-ash);
+  color: var(--color-mist);
+}
+
+/* La grilla de plano (design.md › Grid Background System). 1px, 48px de
+   celda, con un tinte azul-gris apenas perceptible. La máscara la desvanece
+   hacia los bordes para que no se lea como papel cuadriculado. */
+@utility blueprint {
+  background-image:
+    linear-gradient(to right, rgb(150 170 220 / 0.075) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(150 170 220 / 0.075) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: calc(50% + 24px) 0;
+}
+
+/* Tarjeta: graphite sobre carbon, borde iron, 8px. */
+@utility card {
+  background-color: var(--color-graphite);
+  border: 1px solid var(--color-iron);
+  border-radius: var(--radius-card);
 }
 
 /* ---------------------------------------------------------------------------
@@ -372,8 +413,8 @@
       contenedor, así que valen para todo lo que cuelgue de él y siguen el
       cambio de tema solos.
 
-   2. Peso de los titulares. Typeset los pone en 600; design.md es explícito en
-      que la autoridad viene de la escala y nunca del peso. Van en 400.
+   2. Peso de los titulares. Typeset los pone en 600; design.md los quiere en
+      400–500. Van en 500.
 --------------------------------------------------------------------------- */
 
 @layer components {
@@ -381,6 +422,7 @@
     --typeset-font-body: var(--font-untitled);
     --typeset-font-heading: var(--font-opx);
     --typeset-size: 17px;
+    --typeset-font-mono: var(--font-jetbrains-mono);
     --typeset-leading: 1.68;
     --typeset-flow: 1.35em;
 
@@ -407,8 +449,8 @@
   }
 
   .typeset-nota :is(h1, h2, h3, h4, h5, h6) {
-    font-weight: var(--font-weight-regular);
-    letter-spacing: -0.02em;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: -0.021em;
     /* El encabezado pegajoso mide 104px: sin esto, un ancla del índice deja el
        titular escondido detrás. */
     scroll-margin-block-start: 104px;
@@ -432,38 +474,38 @@
   }
 
   .typeset-nota :is(a):hover {
-    text-decoration-color: var(--bone);
+    text-decoration-color: var(--indigo);
   }
 }
 
 /* ---------------------------------------------------------------------------
-   Motion — slow, editorial, geometry only.
+   Movimiento. Todo lo que entra lo hace con `--ease-out`; lo que depende del
+   scroll lo maneja GSAP en `src/scripts/`. Con reduced motion, nada se mueve.
 --------------------------------------------------------------------------- */
 
 @layer utilities {
-  html {
-    scroll-behavior: smooth;
-  }
-
   .js [data-reveal] {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translate3d(0, 20px, 0);
+    filter: blur(6px);
     transition:
-      opacity var(--duration-geometry) var(--ease-opx),
-      transform var(--duration-geometry) var(--ease-opx);
+      opacity var(--duration-geometry) var(--ease-out),
+      transform var(--duration-geometry) var(--ease-out),
+      filter var(--duration-geometry) var(--ease-out);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
   .js [data-reveal][data-revealed] {
     opacity: 1;
     transform: none;
+    filter: none;
   }
 
-  /* Hairlines that draw themselves in as their band enters the viewport. */
+  /* Reglas que se dibujan solas cuando su bloque entra en pantalla. */
   .js [data-rule-draw] {
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform var(--duration-geometry) var(--ease-opx);
+    transition: transform 1.1s var(--ease-out);
   }
 
   .js [data-revealed] [data-rule-draw],
@@ -472,15 +514,36 @@
   }
 
   :where(a, button, summary, input, textarea, [tabindex]):focus-visible {
-    outline: var(--hairline-width) solid var(--color-bone);
-    outline-offset: 4px;
+    outline: 2px solid var(--indigo);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* En la portada, los botones flotantes esperan a que el hero quede atrás
+     para no tapar su tarjeta. */
+  html:has(#inicio) :is([data-whatsapp], [data-agent-open].fixed) {
+    transition:
+      opacity 0.4s var(--ease-out),
+      translate 0.4s var(--ease-out);
+  }
+
+  html:has(#inicio):not([data-floating])
+    :is([data-whatsapp], [data-agent-open].fixed) {
+    opacity: 0;
+    translate: 0 12px;
+    pointer-events: none;
+  }
+
+  /* Lenis toma el scroll en la portada: el `smooth` nativo competiría. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis:not(.lenis-autoToggle).lenis-stopped {
+    overflow: clip;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
     *,
     *::before,
     *::after {
@@ -489,41 +552,12 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-  }
-}
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+    .js [data-reveal] {
+      filter: none;
+      transform: none;
+    }
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -538,6 +572,9 @@
       detrás para los tramos latinos —«WhatsApp», «ERP», el propio nombre de la
       marca—, que no deben caer en la árabe. */
 html[lang="ar"] {
+  --font-inter:
+    "Noto Sans Arabic Variable", "Inter Variable", Inter, ui-sans-serif,
+    system-ui, sans-serif;
   --font-opx:
     "Noto Sans Arabic Variable", "Inter Variable", Inter, ui-sans-serif,
     system-ui, sans-serif;

@@ -16,6 +16,20 @@ export const DEFAULT_LANG: Lang = "es"
 
 export const LANGS: Lang[] = ["es", "en", "ar"]
 
+/**
+ * Los idiomas que se publican.
+ *
+ * El árabe sigue construyéndose —rutas, traducciones y notas quedan en el
+ * repositorio— pero fuera del selector, la navegación, el sitemap, los
+ * `hreflang` y llms.txt, y sus páginas salen con `noindex`. Volver a
+ * publicarlo es agregarlo acá.
+ */
+export const PUBLIC_LANGS: Lang[] = ["es", "en"]
+
+export function isPublicLang(lang: Lang): boolean {
+  return PUBLIC_LANGS.includes(lang)
+}
+
 export const dictionaries: Record<Lang, Dictionary> = { es, en, ar }
 
 export function useTranslations(lang: Lang): Dictionary {
@@ -56,9 +70,9 @@ export function navHref(lang: Lang, href: string): string {
   return localizePath(lang, href)
 }
 
-/** Los demás idiomas, en el orden de `LANGS`. Para el selector. */
+/** Los demás idiomas publicados. Para el selector. */
 export function otherLangs(lang: Lang): Lang[] {
-  return LANGS.filter((candidate) => candidate !== lang)
+  return PUBLIC_LANGS.filter((candidate) => candidate !== lang)
 }
 
 /**

@@ -35,19 +35,25 @@ const minutes = readingTime(post.body)
       {t.blog.clusters[post.data.cluster]}
     </span>
     <span class="label-untitled text-muted-ash" aria-hidden="true">·</span>
-    <time class="label-untitled text-muted-ash" datetime={post.data.date.toISOString()}>
+    <time
+      class="label-untitled text-muted-ash"
+      datetime={post.data.date.toISOString()}
+    >
       {formatDate(post.data.date, lang)}
     </time>
     <span class="label-untitled text-muted-ash" aria-hidden="true">·</span>
     <span class="label-untitled text-muted-ash">
-      {minutes} {t.blog.readingTime}
+      {minutes}
+      {t.blog.readingTime}
     </span>
   </div>
 
   <h3
     class:list={[
       "mt-4 max-w-[26ch] text-balance text-bone",
-      featured ? "display-section" : "text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em]",
+      featured
+        ? "display-section"
+        : "text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em]",
     ]}
   >
     <a
@@ -58,5 +64,5 @@ const minutes = readingTime(post.body)
     </a>
   </h3>
 
-  <p class="copy mt-4 max-w-[58ch] text-ash">{post.data.description}</p>
+  <p class="mt-4 max-w-[58ch] copy text-ash">{post.data.description}</p>
 </article>

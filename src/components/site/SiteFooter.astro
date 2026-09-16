@@ -1,10 +1,21 @@
 ---
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Github01Icon, InstagramIcon } from "@hugeicons/core-free-icons"
+import {
+  ArrowUpRight01Icon,
+  Github01Icon,
+  InstagramIcon,
+} from "@hugeicons/core-free-icons"
 
 import Wordmark from "@/components/site/Wordmark.astro"
 import { navHref, useTranslations, type Lang } from "@/i18n"
-import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/site"
+import {
+  CONTACT_EMAIL,
+  GITHUB_URL,
+  INSTAGRAM_URL,
+  SCHEDULE_URL,
+  WHATSAPP_DISPLAY,
+  whatsappUrl,
+} from "@/site"
 
 interface Props {
   lang: Lang
@@ -13,119 +24,142 @@ interface Props {
 const { lang } = Astro.props
 const t = useTranslations(lang)
 const year = new Date().getFullYear()
-const email = CONTACT_EMAIL
 
 const socials = [
   { href: GITHUB_URL, label: "GitHub", icon: Github01Icon },
   { href: INSTAGRAM_URL, label: "Instagram", icon: InstagramIcon },
 ]
+
+const linkClass =
+  "text-[14px] text-bone/80 transition-colors duration-(--duration-state) ease-(--ease-out) hover:text-bone"
 ---
 
-<footer
-  class="mx-auto w-full max-w-[1180px] border-x border-hairline"
-  style="container-type: inline-size;"
->
-  <div
-    class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-10 border-t border-hairline px-[clamp(20px,4vw,56px)] py-[clamp(48px,6vw,80px)] md:grid-cols-[minmax(0,1.2fr)_repeat(2,minmax(0,0.8fr))]"
-  >
-    <div>
-      <Wordmark alt={t.a11y.logoAlt} />
-      <p class="mt-5 max-w-[32ch] copy text-ash">{t.footer.tagline}</p>
-      <a
-        class="mt-5 inline-block copy text-bone transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
-        href={`mailto:${email}`}
-      >
-        {email}
-      </a>
-
-      <!-- Perfiles públicos. Van con glifo y rótulo: un ícono suelto en un
-           sistema monocromo no se distingue de un botón cualquiera. -->
-      <ul class="mt-7 flex flex-wrap gap-3">
-        {
-          socials.map((social) => (
-            <li>
-              <a
-                href={social.href}
-                target="_blank"
-                rel="me noopener noreferrer"
-                class="social flex items-center gap-[9px] rounded-pill border border-hairline px-[13px] py-[8px]"
-              >
-                <HugeiconsIcon
-                  icon={social.icon}
-                  size={16}
-                  strokeWidth={1.5}
-                  className="shrink-0"
-                />
-                <span class="label-untitled">{social.label}</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    {
-      t.footer.columns.map((column) => (
-        <nav aria-label={column.title}>
-          <h2 class="label-untitled text-muted-ash">{column.title}</h2>
-          <ul class="mt-5 flex flex-col gap-[10px]">
-            {column.links.map((link) => (
+<!-- Pie (design.md › Footer Link Column): columnas con rótulo en mono, sobre
+     el mismo canvas y sin separador del cuerpo más allá de la regla. -->
+<footer class="relative overflow-hidden">
+  <div class="shell">
+    <div
+      class="grid gap-12 border-t border-iron py-16 md:grid-cols-12 md:gap-8"
+    >
+      <div class="md:col-span-5">
+        <Wordmark alt={t.a11y.logoAlt} />
+        <p class="mt-6 max-w-[44ch] copy text-ash">{t.footer.tagline}</p>
+        <ul class="mt-8 flex flex-wrap gap-2">
+          {
+            socials.map((social) => (
               <li>
                 <a
-                  class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-                  href={navHref(lang, link.href)}
+                  href={social.href}
+                  target="_blank"
+                  rel="me noopener noreferrer"
+                  class="flex items-center gap-2 rounded-[8px] border border-iron px-3 py-2 label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-out) hover:border-smoke hover:text-bone"
                 >
-                  {link.label}
+                  <HugeiconsIcon
+                    icon={social.icon}
+                    size={15}
+                    strokeWidth={1.5}
+                  />
+                  {social.label}
                 </a>
               </li>
-            ))}
-          </ul>
-        </nav>
-      ))
-    }
+            ))
+          }
+        </ul>
+      </div>
+
+      {
+        t.footer.columns.map((column) => (
+          <nav aria-label={column.title} class="md:col-span-2">
+            <h2 class="eyebrow text-bone">{column.title}</h2>
+            <ul class="mt-5 flex flex-col gap-3">
+              {column.links.map((link) => (
+                <li>
+                  <a class={linkClass} href={navHref(lang, link.href)}>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+
+      <div class="md:col-span-3">
+        <h2 class="eyebrow text-bone">{t.footer.contactTitle}</h2>
+        <ul class="mt-5 flex flex-col gap-3">
+          <li>
+            <a class={linkClass} href={`mailto:${CONTACT_EMAIL}`}
+              >{CONTACT_EMAIL}</a
+            >
+          </li>
+          <li>
+            <a
+              class={linkClass}
+              href={whatsappUrl(t.whatsapp.prefill)}
+              target="_blank"
+              rel="noopener"
+            >
+              WhatsApp · <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class={`${linkClass} group inline-flex items-center gap-1`}
+              href={SCHEDULE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t.nav.cta}
+              <HugeiconsIcon
+                icon={ArrowUpRight01Icon}
+                size={14}
+                strokeWidth={1.6}
+                className="text-soft-indigo transition-transform duration-(--duration-state) ease-(--ease-out) group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 border-t border-iron py-6"
+    >
+      <p dir="ltr" class="mono-sm text-mist">© {year} Vantalogics</p>
+      <p class="eyebrow text-mist">{t.footer.tags}</p>
+    </div>
   </div>
 
+  <!-- Marca a sangre, cortada por el borde inferior. Decorativa: el nombre
+       accesible ya está arriba. -->
   <div
-    class="flex flex-wrap items-center justify-between gap-x-[clamp(24px,4vw,56px)] gap-y-3 border-t border-hairline px-[clamp(20px,4vw,56px)] py-[22px]"
-  >
-    <!-- `dir="ltr"`: el símbolo © es un carácter neutro y en un párrafo RTL el
-         algoritmo bidireccional lo manda al final («Vantalogics 2026 ©»). La
-         línea de copyright es una fórmula legal latina y se escribe siempre en
-         el mismo orden. -->
-    <p dir="ltr" class="label-untitled text-muted-ash">© Vantalogics {year}</p>
-    <p class="label-untitled text-muted-ash">{t.footer.tags}</p>
-  </div>
-
-  <!-- Marca a sangre: el nombre ocupa el ancho de la columna y se corta por la
-       mitad contra el borde inferior. Es decorativo — el nombre accesible ya
-       está arriba. La altura es la mitad de la altura de mayúscula de Inter
-       (0.727em) y el desplazamiento sube la línea hasta que el tope de las
-       letras coincide con el borde: queda partido al medio, sin aire debajo. -->
-  <div
-    class="overflow-hidden border-t border-hairline select-none"
-    style="font-size: 18.6cqw; height: 0.363em;"
+    class="footer-mark pointer-events-none select-none"
     aria-hidden="true"
     data-reveal
   >
-    <span
-      class="block w-full text-center font-opx whitespace-nowrap text-transparent"
-      style="line-height: 1; margin-top: -0.137em; letter-spacing: -0.035em; -webkit-text-stroke: 1.5px var(--bone);"
-    >
-      Vantalogics
-    </span>
+    <span>Vantalogics</span>
   </div>
 </footer>
 
 <style>
-  .social {
-    color: var(--color-ash);
-    transition:
-      color var(--duration-state) var(--ease-opx),
-      border-color var(--duration-state) var(--ease-opx);
+  .footer-mark {
+    container-type: inline-size;
+    height: 11.5vw;
+    overflow: hidden;
+    mask-image: linear-gradient(180deg, black 20%, transparent 100%);
   }
 
-  .social:hover {
-    color: var(--color-bone);
-    border-color: var(--color-bone);
+  .footer-mark span {
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 21.5cqw;
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    color: transparent;
+    background: linear-gradient(180deg, var(--color-iron), var(--color-carbon));
+    -webkit-background-clip: text;
+    background-clip: text;
   }
 </style>

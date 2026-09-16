@@ -1,0 +1,39 @@
+---
+interface Props {
+  id?: string
+  labelledby?: string
+  class?: string
+  /** Grilla de plano detrás del contenido (design.md › Grid Background). */
+  grid?: boolean
+  /** Sin la regla superior. */
+  flush?: boolean
+}
+
+const {
+  id,
+  labelledby,
+  class: className = "",
+  grid = false,
+  flush = false,
+} = Astro.props
+---
+
+<section
+  id={id}
+  aria-labelledby={labelledby}
+  class:list={["relative isolate", className]}
+>
+  {
+    grid && (
+      <div
+        class="pointer-events-none absolute inset-0 -z-10 blueprint [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]"
+        aria-hidden="true"
+      />
+    )
+  }
+  <div class="shell">
+    <div class:list={["band-y", !flush && "border-t border-iron"]}>
+      <slot />
+    </div>
+  </div>
+</section>

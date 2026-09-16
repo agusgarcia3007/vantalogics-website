@@ -1,0 +1,47 @@
+---
+interface Props {
+  eyebrow?: string
+  title: string
+  id: string
+  align?: "start" | "center"
+  class?: string
+  /** Nivel del titular. La portada usa h2 para todo salvo el hero. */
+  as?: "h2" | "h3"
+}
+
+const {
+  eyebrow,
+  title,
+  id,
+  align = "start",
+  class: className = "",
+  as: Tag = "h2",
+} = Astro.props
+---
+
+<!-- Eyebrow en mono a 24px del titular, como pide design.md. -->
+<div
+  class:list={[
+    "flex flex-col gap-6",
+    align === "center" && "items-center text-center",
+    className,
+  ]}
+>
+  {
+    eyebrow && (
+      <p class="flex items-center gap-3 eyebrow text-ash" data-reveal>
+        <span class="h-px w-6 bg-smoke" aria-hidden="true" />
+        {eyebrow}
+      </p>
+    )
+  }
+  <Tag
+    id={id}
+    class="max-w-[22ch] display-section text-bone"
+    data-reveal
+    style="--reveal-delay: 60ms;"
+  >
+    {title}
+  </Tag>
+  <slot />
+</div>

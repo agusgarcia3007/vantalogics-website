@@ -1,0 +1,89 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons"
+
+import Cta from "@/components/site/Cta.astro"
+import Section from "@/components/home/Section.astro"
+import SectionHeading from "@/components/home/SectionHeading.astro"
+import { localizePath, useTranslations, type Lang } from "@/i18n"
+import { formatDate, getPosts, postPath, readingTime } from "@/lib/blog"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const dict = useTranslations(lang)
+const t = dict.insights
+
+// Primero las notas de educación; si no alcanzan, las más recientes.
+const posts = await getPosts(lang)
+const education = posts.filter(
+  (post) => post.data.industry === "edtech-y-plataformas-educativas"
+)
+const picks = [
+  ...education,
+  ...posts.filter((post) => !education.includes(post)),
+].slice(0, 3)
+---
+
+{
+  picks.length > 0 && (
+    <Section id="perspectivas" labelledby="perspectivas-titulo">
+      <div class="grid gap-8 lg:grid-cols-12">
+        <SectionHeading
+          id="perspectivas-titulo"
+          eyebrow={t.eyebrow}
+          title={t.title}
+          class="lg:col-span-7"
+        />
+        <div class="flex flex-col items-start gap-6 self-end lg:col-span-4 lg:col-start-9">
+          <p class="copy text-ash" data-reveal>
+            {t.body}
+          </p>
+          <Cta href={localizePath(lang, "/blog/")} variant="pill">
+            {t.cta}
+          </Cta>
+        </div>
+      </div>
+
+      <ul class="mt-16 grid gap-4 md:grid-cols-3">
+        {picks.map((post, i) => (
+          <li data-reveal style={`--reveal-delay: ${i * 80}ms;`}>
+            <article class="note group relative flex h-full flex-col justify-between gap-12 card p-6 transition-colors duration-300 ease-(--ease-out) hover:border-slate-edge hover:bg-iron/60">
+              <div>
+                <p class="flex flex-wrap gap-x-3 eyebrow text-mist">
+                  <span>{dict.blog.clusters[post.data.cluster]}</span>
+                  <span aria-hidden="true">·</span>
+                  <time datetime={post.data.date.toISOString()}>
+                    {formatDate(post.data.date, lang)}
+                  </time>
+                </p>
+                <h3 class="mt-5 heading-sm text-bone">
+                  <a
+                    href={postPath(post)}
+                    class="after:absolute after:inset-0 after:content-['']"
+                  >
+                    {post.data.title}
+                  </a>
+                </h3>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="mono-sm text-mist">
+                  {readingTime(post.body)} {dict.blog.readingTime}
+                </span>
+                <span class="grid size-8 place-items-center rounded-[8px] border border-iron text-ash transition-[color,border-color,transform] duration-300 ease-(--ease-out) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:border-smoke group-hover:text-bone">
+                  <HugeiconsIcon
+                    icon={ArrowUpRight01Icon}
+                    size={15}
+                    strokeWidth={1.6}
+                  />
+                </span>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}

@@ -1,0 +1,217 @@
+---
+import Section from "@/components/home/Section.astro"
+import SectionHeading from "@/components/home/SectionHeading.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang).difference
+---
+
+<Section id="diferencia" labelledby="diferencia-titulo">
+  <div class="grid gap-16 lg:grid-cols-12 lg:gap-8">
+    <div class="lg:col-span-5">
+      <SectionHeading
+        id="diferencia-titulo"
+        eyebrow={t.eyebrow}
+        title={t.title}
+      >
+        <div class="mt-4 flex flex-col gap-5">
+          {
+            t.body.map((paragraph, i) => (
+              <p
+                class="max-w-[52ch] copy text-ash"
+                data-reveal
+                style={`--reveal-delay: ${120 + i * 80}ms;`}
+              >
+                {paragraph}
+              </p>
+            ))
+          }
+        </div>
+      </SectionHeading>
+    </div>
+
+    <div
+      class="flex flex-col gap-4 lg:col-span-7 lg:col-start-6"
+      aria-hidden="true"
+    >
+      <!-- Lo habitual: cuatro proveedores, tres traspasos, la señal se apaga. -->
+      <div class="card p-6" data-reveal data-chain>
+        <p class="eyebrow text-mist">{t.usual.label}</p>
+        <ol
+          class="mt-6 grid gap-3 sm:grid-cols-[repeat(4,minmax(0,1fr))] sm:gap-0"
+        >
+          {
+            t.usual.steps.map((step, i) => (
+              <li class="relative flex items-center sm:flex-col sm:items-stretch">
+                <div
+                  class="chain-box flex min-h-12 flex-1 items-center justify-center rounded-[6px] border border-dashed border-slate-edge px-2 py-2 text-center text-[13px] leading-tight text-ash sm:mx-3"
+                  style={`--fade: ${1 - i * 0.2}; --i: ${i};`}
+                >
+                  {step}
+                </div>
+                {i < t.usual.steps.length - 1 && (
+                  <span class="absolute top-[calc(100%+2px)] left-1/2 z-10 hidden -translate-x-1/2 mono-sm text-[10px] text-smoke sm:end-0 sm:top-1/2 sm:left-auto sm:block sm:translate-x-1/2 sm:-translate-y-1/2">
+                    <span class="chain-cut block h-px w-4 bg-smoke" />
+                  </span>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-5 flex flex-wrap gap-x-6 gap-y-1 mono-sm text-smoke">
+          {
+            [1, 2, 3].map((n) => (
+              <span>
+                {t.usual.handoff} {String(n).padStart(2, "0")}
+              </span>
+            ))
+          }
+        </p>
+      </div>
+
+      <!-- Vantalogics: un solo marco, una sola línea que recorre todo. -->
+      <div
+        class="one-team relative overflow-hidden card p-6"
+        data-reveal
+        style="--reveal-delay: 120ms;"
+      >
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <p class="eyebrow text-bone">{t.ours.label}</p>
+        <div class="relative mt-6">
+          <span
+            class="team-line absolute top-1/2 right-6 left-6 hidden h-px bg-slate-edge sm:block"
+          >
+            <span class="team-pulse"></span>
+          </span>
+          <ol class="relative grid grid-cols-2 gap-2 sm:grid-cols-5 sm:gap-3">
+            {
+              t.ours.disciplines.map((discipline, i) => (
+                <li
+                  class="team-chip flex min-h-12 items-center justify-center rounded-[6px] border border-slate-edge bg-iron px-2 py-2 text-center text-[13px] leading-tight font-medium text-bone"
+                  style={`--i: ${i};`}
+                >
+                  {discipline}
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+        <p class="mt-5 mono-sm text-ash">{t.ours.caption}</p>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .chain-box {
+    opacity: var(--fade);
+  }
+
+  :global(.js) .chain-box {
+    opacity: 0;
+  }
+
+  [data-revealed] .chain-box {
+    animation: chain 0.6s var(--ease-out) calc(0.2s + var(--i) * 0.18s) forwards;
+  }
+
+  @keyframes chain {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: var(--fade);
+      transform: none;
+    }
+  }
+
+  .corner {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: var(--indigo);
+    border-style: solid;
+    border-width: 0;
+  }
+  .tl {
+    top: 6px;
+    left: 6px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+  .tr {
+    top: 6px;
+    right: 6px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+  }
+  .bl {
+    bottom: 6px;
+    left: 6px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+  }
+  .br {
+    bottom: 6px;
+    right: 6px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .team-pulse {
+    position: absolute;
+    top: -1px;
+    height: 3px;
+    width: 18%;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, transparent, var(--indigo), transparent);
+    animation: sweep 3.6s var(--ease-in-out) infinite alternate;
+  }
+
+  @keyframes sweep {
+    from {
+      left: 0%;
+    }
+    to {
+      left: 82%;
+    }
+  }
+
+  :global(.js) .team-chip {
+    opacity: 0;
+  }
+
+  [data-revealed] .team-chip {
+    animation: chip 0.6s var(--ease-out) calc(0.3s + var(--i) * 0.08s) forwards;
+  }
+
+  @keyframes chip {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .chain-box {
+      opacity: var(--fade);
+    }
+    :global(.js) .team-chip {
+      opacity: 1;
+    }
+    .team-pulse {
+      display: none;
+    }
+  }
+</style>

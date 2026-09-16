@@ -21,20 +21,19 @@ export const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        // --- OPX system (design.md) --------------------------------------
-        // Pill CTA: 1px bone stroke, transparent fill. The system has no
-        // filled button — the fill only exists as a hover state.
-        pill: "label-untitled rounded-pill border border-bone bg-transparent text-center text-bone transition-colors duration-(--duration-state) ease-(--ease-opx) hover:bg-bone hover:text-canvas",
-        // El único botón con relleno del sistema: la acción principal de la
-        // página. Se reserva para el CTA del hero y el del cierre.
+        // --- Sistema (design.md) -----------------------------------------
+        // Ghost: transparente, borde smoke. Misma clase de acción que el
+        // primario pero con menos peso visual.
+        pill: "rounded-[8px] border border-smoke bg-transparent text-center label-untitled text-bone transition-[background-color,border-color,transform] duration-(--duration-state) ease-(--ease-out) hover:border-mist hover:bg-iron active:scale-[0.97]",
+        // Primario: el único elemento de alta luminancia de la página.
         "pill-solid":
-          "label-untitled rounded-pill border border-bone bg-bone text-center text-canvas transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-85",
-        // Same pill drawn in hairline grey — for secondary actions.
+          "rounded-[8px] border border-bone bg-bone text-center label-untitled text-carbon transition-[background-color,transform] duration-(--duration-state) ease-(--ease-out) hover:bg-[#e8e8e8] active:scale-[0.97]",
+        // Terciario: borde iron, texto ash.
         "pill-quiet":
-          "label-untitled rounded-pill border border-hairline bg-transparent text-center text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone hover:text-bone",
-        // Tag-like inline link: type only, hairline underline on hover.
+          "rounded-[8px] border border-iron bg-transparent text-center label-untitled text-ash transition-[color,border-color,transform] duration-(--duration-state) ease-(--ease-out) hover:border-smoke hover:text-bone active:scale-[0.97]",
+        // Enlace de texto.
         "opx-link":
-          "label-untitled relative rounded-none px-0 text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone",
+          "relative rounded-none px-0 label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-out) hover:text-bone",
       },
       size: {
         default:
@@ -48,10 +47,10 @@ export const buttonVariants = cva(
         "icon-sm":
           "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
         "icon-lg": "size-9",
-        // --- OPX pills: 7px/15px padding, growing to a 44px touch target ---
-        pill: "min-h-11 max-w-full gap-2 px-[15px] py-[7px] whitespace-normal [&_svg:not([class*='size-'])]:size-3.5",
+        // 8px 16px de design.md, con 40px de alto mínimo para el dedo.
+        pill: "min-h-10 max-w-full gap-2 px-4 py-2 whitespace-normal [&_svg:not([class*='size-'])]:size-3.5",
         "pill-lg":
-          "min-h-[54px] max-w-full gap-2 px-[30px] py-[15px] whitespace-normal [&_svg:not([class*='size-'])]:size-4",
+          "min-h-12 max-w-full gap-2 px-5 py-3 whitespace-normal [&_svg:not([class*='size-'])]:size-4",
         "opx-link": "min-h-11 max-w-full py-2 whitespace-normal",
       },
     },

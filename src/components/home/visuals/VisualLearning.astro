@@ -1,0 +1,133 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import {
+  ArrowRight01Icon,
+  BookOpen01Icon,
+  SparklesIcon,
+} from "@hugeicons/core-free-icons"
+
+import VisualFrame from "@/components/home/visuals/VisualFrame.astro"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const v = useTranslations(lang).capabilities.visuals
+const t = v.learning
+---
+
+<VisualFrame title={t.title} tag={v.example}>
+  <div class="flex flex-col gap-4">
+    <p
+      class="bubble ms-auto max-w-[80%] rounded-[8px] rounded-ee-[2px] bg-iron px-3 py-2 text-[13px] leading-snug text-bone"
+    >
+      {t.question}
+    </p>
+
+    <div class="bubble flex gap-3" style="--d: 0.5s;">
+      <span
+        class="grid size-6 shrink-0 place-items-center rounded-full border border-soft-indigo/50 bg-soft-indigo/10 text-soft-indigo"
+      >
+        <HugeiconsIcon icon={SparklesIcon} size={12} strokeWidth={1.6} />
+      </span>
+      <div class="min-w-0">
+        <p class="text-[13px] leading-relaxed text-ash">{t.answer}</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          {
+            t.sources.map((source) => (
+              <span class="inline-flex items-center gap-1.5 rounded-[4px] border border-iron px-2 py-[3px] mono-sm text-ash">
+                <HugeiconsIcon
+                  icon={BookOpen01Icon}
+                  size={11}
+                  strokeWidth={1.6}
+                  className="text-soft-indigo"
+                />
+                {source}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bubble flex items-center justify-between gap-3 rounded-[8px] border border-iron p-3"
+      style="--d: 1s;"
+    >
+      <span class="text-[13px] font-medium text-bone">{t.practice}</span>
+      <span
+        class="grid size-6 place-items-center rounded-[6px] bg-bone text-carbon"
+      >
+        <HugeiconsIcon icon={ArrowRight01Icon} size={13} strokeWidth={1.8} />
+      </span>
+    </div>
+
+    <div class="bubble" style="--d: 1.3s;">
+      <div class="flex items-center justify-between">
+        <span class="eyebrow text-mist">{t.progress}</span>
+        <span class="mono-sm text-ash">64%</span>
+      </div>
+      <div class="mt-2 flex gap-[3px]">
+        {
+          Array.from({ length: 24 }, (_, i) => (
+            <span
+              class:list={[
+                "bar h-5 flex-1 rounded-[2px]",
+                i < 15 ? "is-on" : "bg-iron",
+              ]}
+              style={`--i: ${i};`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</VisualFrame>
+
+<style>
+  .bar.is-on {
+    background: var(--indigo);
+    opacity: calc(0.35 + var(--i) * 0.045);
+  }
+
+  :global(.js) .bubble {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+
+  :global([data-revealed]) .bubble {
+    animation: rise-in 0.6s var(--ease-out) calc(0.3s + var(--d, 0s)) forwards;
+  }
+
+  :global(.js) .bar.is-on {
+    transform: scaleY(0.2);
+    transform-origin: bottom;
+  }
+
+  :global([data-revealed]) .bar.is-on {
+    animation: grow 0.5s var(--ease-out) calc(1.6s + var(--i) * 0.03s) forwards;
+  }
+
+  @keyframes rise-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes grow {
+    to {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .bubble,
+    :global(.js) .bar.is-on {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
