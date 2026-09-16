@@ -1,0 +1,237 @@
+---
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons"
+
+import Layout from "@/layouts/main.astro"
+import SiteHeader from "@/components/site/SiteHeader.astro"
+import SiteFooter from "@/components/site/SiteFooter.astro"
+import CallToAction from "@/components/site/CallToAction.astro"
+import Frame from "@/components/site/Frame.astro"
+import Cta from "@/components/site/Cta.astro"
+import { CLIENTS } from "@/data/clients"
+import {
+  caseStudyPath,
+  formatStudents,
+  type CaseStudy,
+  type Localized,
+} from "@/data/cases"
+import { LANGS, localizePath, useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+  study: CaseStudy
+}
+
+const SITE = "https://vantalogics.com"
+const { lang, study } = Astro.props
+const t = useTranslations(lang).cases
+const client = CLIENTS.find((entry) => entry.caseSlug === study.slug)!
+const pick = (value: Localized) => value[lang] ?? value.en
+const metricValue = (value: string | Localized) =>
+  typeof value === "string" ? value : pick(value)
+const path = caseStudyPath(lang, study.slug)
+const pageUrl = new URL(path, SITE).href
+const clientName = pick(study.client)
+const title = pick(study.title)
+const description = pick(study.built)
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Vantalogics",
+      item: new URL(localizePath(lang), SITE).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: clientName,
+      item: pageUrl,
+    },
+  ],
+}
+
+const creativeWork = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "@id": `${pageUrl}#case-study`,
+  name: title,
+  headline: title,
+  description,
+  inLanguage: lang,
+  url: pageUrl,
+  creator: {
+    "@type": "Organization",
+    name: "Vantalogics",
+    url: SITE,
+  },
+  about: {
+    "@type": "Organization",
+    name: clientName,
+    url: pick(study.href),
+  },
+}
+---
+
+<Layout
+  lang={lang}
+  path={path}
+  title={`${clientName} — ${t.detail.metaSuffix} | Vantalogics`}
+  description={title}
+  alternates={Object.fromEntries(
+    LANGS.map((code) => [code, caseStudyPath(code, study.slug)])
+  )}
+  jsonLd={[breadcrumb, creativeWork]}
+>
+  <SiteHeader lang={lang} />
+
+  <main id="contenido">
+    <Frame flush>
+      <nav aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li>
+            <a
+              href={localizePath(lang)}
+              class="label-untitled text-ash transition-colors duration-(--duration-state) hover:text-bone"
+            >
+              Vantalogics
+            </a>
+          </li>
+          <li class="label-untitled text-mist" aria-hidden="true">/</li>
+          <li class="label-untitled text-ash">{clientName}</li>
+        </ol>
+      </nav>
+
+      <div
+        class="mt-[clamp(32px,5vw,64px)] grid items-center gap-12 lg:grid-cols-12"
+      >
+        <div class="lg:col-span-8">
+          <h1 class="max-w-[19ch] display-lg text-balance text-bone">
+            {title}
+          </h1>
+          <p class="mt-8 mono-sm text-mist">{pick(study.period)}</p>
+        </div>
+
+        <div
+          class="flex min-h-52 items-center justify-center rounded-[8px] border border-iron bg-graphite/60 p-8 lg:col-span-4"
+          aria-label={clientName}
+        >
+          <span class="flex items-center justify-center gap-4">
+            <img
+              src={client.logo}
+              alt={client.logoAlt}
+              class:list={[client.logoClass, "max-h-28 object-contain"]}
+              decoding="async"
+            />
+            {
+              client.wordmark && (
+                <span class="max-w-[14ch] text-[24px] leading-tight font-medium tracking-[-0.5px] text-bone">
+                  {client.wordmark}
+                </span>
+              )
+            }
+          </span>
+        </div>
+      </div>
+    </Frame>
+
+    <Frame labelledby="alcance">
+      <h2 id="alcance" class="display-section text-bone" data-reveal>
+        {t.detail.scope}
+      </h2>
+      <dl class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="border-t border-soft-indigo pt-5" data-reveal>
+          <dd
+            class="text-[40px] leading-none font-medium tracking-[-0.84px] text-bone"
+          >
+            {formatStudents(lang, study.students)}
+          </dd>
+          <dt class="mt-3 copy text-ash">{t.detail.students}</dt>
+        </div>
+        {
+          study.metrics.map((metric, index) => (
+            <div
+              class="border-t border-iron pt-5"
+              data-reveal
+              style={`--reveal-delay: ${(index + 1) * 60}ms;`}
+            >
+              <dd class="text-[40px] leading-none font-medium tracking-[-0.84px] text-bone">
+                {metricValue(metric.value)}
+              </dd>
+              <dt class="mt-3 copy text-ash">{pick(metric.label)}</dt>
+            </div>
+          ))
+        }
+      </dl>
+    </Frame>
+
+    <Frame>
+      <div class="grid gap-12 lg:grid-cols-2 lg:gap-20">
+        <article data-reveal>
+          <h2 class="display-section text-bone">{t.detail.challenge}</h2>
+          <p class="mt-6 max-w-[54ch] copy-lg text-ash">
+            {pick(study.start)}
+          </p>
+        </article>
+        <article data-reveal style="--reveal-delay: 80ms;">
+          <h2 class="display-section text-bone">{t.detail.built}</h2>
+          <p class="mt-6 max-w-[54ch] copy-lg text-ash">
+            {pick(study.built)}
+          </p>
+        </article>
+      </div>
+    </Frame>
+
+    <Frame labelledby="componentes">
+      <div class="grid items-end gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-7">
+          <h2 id="componentes" class="display-section text-bone" data-reveal>
+            {t.detail.components}
+          </h2>
+          <ul class="mt-8 grid gap-x-8 sm:grid-cols-2">
+            {
+              study.integrations.map((item) => (
+                <li class="border-t border-iron py-4 copy text-ash" data-reveal>
+                  {pick(item)}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div
+          class="flex flex-col items-start gap-5 lg:col-span-4 lg:col-start-9"
+        >
+          <Cta
+            href={pick(study.href)}
+            variant="pill-solid"
+            size="pill-lg"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group"
+          >
+            {t.detail.visit}
+            <HugeiconsIcon
+              icon={ArrowUpRight01Icon}
+              size={16}
+              strokeWidth={1.7}
+              className="transition-transform duration-(--duration-state) group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </Cta>
+          <a
+            href={`${localizePath(lang)}#clientes`}
+            class="label-untitled text-ash transition-colors duration-(--duration-state) hover:text-bone"
+          >
+            {t.detail.back}
+          </a>
+        </div>
+      </div>
+    </Frame>
+
+    <CallToAction lang={lang} />
+  </main>
+
+  <SiteFooter lang={lang} />
+</Layout>

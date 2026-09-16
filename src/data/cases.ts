@@ -1,14 +1,17 @@
 import type { Lang } from "@/i18n"
 
-type Localized = Partial<Record<Lang, string>> & { es: string; en: string }
+export type Localized = Partial<Record<Lang, string>> & {
+  es: string
+  en: string
+}
 
 /**
  * Casos de éxito publicables.
  *
- * Mientras esta lista esté vacía, la portada no muestra la sección «Casos» ni
- * su enlace en la navegación, y el botón secundario del hero lleva a las
- * capacidades (copywriting.md: «Si todavía no hay casos publicables, la
- * sección no debe mostrarse»).
+ * La portada sólo presenta los clientes y su cantidad de estudiantes. Cada
+ * entrada de esta lista genera una página individual con el desglose completo.
+ * Si la lista queda vacía, la navegación y el CTA del hero vuelven a apuntar a
+ * las capacidades.
  *
  * Cada caso necesita datos reales y autorizados. Cuando todavía no existe una
  * línea de base de negocio publicable, las métricas describen el alcance real
@@ -22,13 +25,25 @@ export interface CaseStudy {
   title: Localized
   start: Localized
   built: Localized
+  /** Cantidad actual de estudiantes o cuentas de alumno, autorizada. */
+  students: number
   /** Entre una y tres métricas verificables. */
-  metrics: { value: string; label: Localized }[]
-  integrations: string[]
+  metrics: { value: string | Localized; label: Localized }[]
+  integrations: Localized[]
   /** Período de medición, p. ej. «mar–jun 2026». */
   period: Localized
-  /** Enlace al caso completo, si existe. */
-  href?: Localized
+  /** Enlace al producto en producción. */
+  href: Localized
+}
+
+export function caseStudyPath(lang: Lang, slug: string): string {
+  const root =
+    lang === "es" ? "/casos" : lang === "en" ? "/en/cases" : "/ar/cases"
+  return `${root}/${slug}/`
+}
+
+export function formatStudents(lang: Lang, count: number): string {
+  return `${new Intl.NumberFormat(lang).format(count)}+`
 }
 
 export const CASES: CaseStudy[] = [
@@ -50,6 +65,7 @@ export const CASES: CaseStudy[] = [
       es: "Diseñamos y desarrollamos una experiencia completa para explorar cursos, acceder a videos y materiales, seguir el progreso, resolver evaluaciones y consultar directamente con la docente.",
       en: "We designed and built a complete experience for exploring courses, accessing videos and study materials, tracking progress, taking assessments and contacting the instructor directly.",
     },
+    students: 20000,
     metrics: [
       {
         value: "5",
@@ -66,14 +82,19 @@ export const CASES: CaseStudy[] = [
         },
       },
       {
-        value: "1 año",
+        value: { es: "1 año", en: "1 year" },
         label: {
           es: "de acceso según el plan",
           en: "of access depending on plan",
         },
       },
     ],
-    integrations: ["Catálogo", "Cursos", "Progreso", "Evaluaciones"],
+    integrations: [
+      { es: "Catálogo", en: "Catalog" },
+      { es: "Cursos", en: "Courses" },
+      { es: "Progreso", en: "Progress" },
+      { es: "Evaluaciones", en: "Assessments" },
+    ],
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
@@ -101,6 +122,7 @@ export const CASES: CaseStudy[] = [
       es: "Construimos el catálogo, el flujo de compra por transferencia, la acreditación automática, una biblioteca personal y un visor propio pensado para estudiar desde el celular.",
       en: "We built the catalog, bank-transfer checkout, automatic payment confirmation, a personal library and a mobile-first reading experience.",
     },
+    students: 600,
     metrics: [
       {
         value: "3",
@@ -124,7 +146,12 @@ export const CASES: CaseStudy[] = [
         },
       },
     ],
-    integrations: ["Catálogo", "Pagos", "Biblioteca", "Visor"],
+    integrations: [
+      { es: "Catálogo", en: "Catalog" },
+      { es: "Pagos", en: "Payments" },
+      { es: "Biblioteca", en: "Library" },
+      { es: "Visor", en: "Reader" },
+    ],
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
@@ -152,14 +179,8 @@ export const CASES: CaseStudy[] = [
       es: "Construimos una academia con catálogo de cursos, lecciones en video, materiales complementarios, autoevaluaciones, seguimiento del progreso y acceso desde dispositivos móviles y TV.",
       en: "We built an academy with a course catalog, video lessons, supplementary materials, self-assessments, progress tracking, and mobile and TV access.",
     },
+    students: 594,
     metrics: [
-      {
-        value: "594+",
-        label: {
-          es: "estudiantes en la plataforma",
-          en: "students on the platform",
-        },
-      },
       {
         value: "154",
         label: {
@@ -174,8 +195,20 @@ export const CASES: CaseStudy[] = [
           en: "self-assessments included",
         },
       },
+      {
+        value: "3",
+        label: {
+          es: "cursos publicados",
+          en: "published courses",
+        },
+      },
     ],
-    integrations: ["Cursos", "Video", "Evaluaciones", "Progreso"],
+    integrations: [
+      { es: "Cursos", en: "Courses" },
+      { es: "Video", en: "Video" },
+      { es: "Evaluaciones", en: "Assessments" },
+      { es: "Progreso", en: "Progress" },
+    ],
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
@@ -203,14 +236,8 @@ export const CASES: CaseStudy[] = [
       es: "Desarrollamos una academia para publicar y vender cursos, organizar clases y materiales, acompañar programas asincrónicos, evaluar conocimientos y emitir certificaciones oficiales.",
       en: "We developed an academy to publish and sell courses, organize lessons and materials, support asynchronous programs, assess knowledge and issue official certificates.",
     },
+    students: 838,
     metrics: [
-      {
-        value: "838+",
-        label: {
-          es: "estudiantes en la plataforma",
-          en: "students on the platform",
-        },
-      },
       {
         value: "51",
         label: {
@@ -225,8 +252,20 @@ export const CASES: CaseStudy[] = [
           en: "of specialized training",
         },
       },
+      {
+        value: "3",
+        label: {
+          es: "programas publicados",
+          en: "published programs",
+        },
+      },
     ],
-    integrations: ["Cursos", "Pagos", "Evaluaciones", "Certificados"],
+    integrations: [
+      { es: "Cursos", en: "Courses" },
+      { es: "Pagos", en: "Payments" },
+      { es: "Evaluaciones", en: "Assessments" },
+      { es: "Certificados", en: "Certificates" },
+    ],
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",

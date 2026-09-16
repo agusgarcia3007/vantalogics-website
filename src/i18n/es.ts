@@ -32,7 +32,7 @@ export const es = {
    */
   nav: {
     items: [
-      { href: "#casos", label: "Casos", section: "cases" },
+      { href: "#clientes", label: "Clientes", section: "cases" },
       { href: "#capacidades", label: "Qué construimos" },
       { href: "#proceso", label: "Cómo trabajamos" },
       { href: "#perspectivas", label: "Perspectivas" },
@@ -124,7 +124,8 @@ export const es = {
 
   clients: {
     title: "Clientes con productos en producción",
-    visit: "Visitar",
+    visit: "Ver el caso de",
+    students: "estudiantes",
   },
 
   cases: {
@@ -139,6 +140,17 @@ export const es = {
       impact: "Impacto",
       integrations: "Componentes",
       read: "Ver el producto",
+    },
+    detail: {
+      breadcrumb: "Casos",
+      students: "estudiantes",
+      scope: "Alcance actual",
+      challenge: "El desafío",
+      built: "Lo que construimos",
+      components: "Componentes del producto",
+      visit: "Ver producto en producción",
+      back: "Volver a todos los clientes",
+      metaSuffix: "Caso de producto",
     },
   },
 

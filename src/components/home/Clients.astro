@@ -1,5 +1,6 @@
 ---
 import { CLIENTS } from "@/data/clients"
+import { CASES, caseStudyPath, formatStudents } from "@/data/cases"
 import { useTranslations, type Lang } from "@/i18n"
 
 interface Props {
@@ -8,9 +9,11 @@ interface Props {
 
 const { lang } = Astro.props
 const t = useTranslations(lang).clients
+const studies = new Map(CASES.map((study) => [study.slug, study]))
 ---
 
 <section
+  id="clientes"
   aria-labelledby="clientes-titulo"
   class="border-y border-iron bg-pure-black/40"
 >
@@ -34,27 +37,31 @@ const t = useTranslations(lang).clients
             ]}
           >
             <a
-              href={client.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={caseStudyPath(lang, client.caseSlug)}
               aria-label={`${t.visit} ${client.name}`}
-              class="group flex min-h-32 items-center justify-center gap-4 px-6 py-5 transition-colors duration-(--duration-state) ease-(--ease-out) hover:bg-graphite focus-visible:bg-graphite"
+              class="group flex min-h-40 flex-col items-center justify-center gap-4 px-6 py-6 transition-colors duration-(--duration-state) ease-(--ease-out) hover:bg-graphite focus-visible:bg-graphite"
             >
-              <img
-                src={client.logo}
-                alt={client.logoAlt}
-                class:list={[
-                  client.logoClass,
-                  "object-contain opacity-65 grayscale transition-[filter,opacity] duration-(--duration-state) ease-(--ease-out) group-hover:opacity-100 group-hover:grayscale-0 group-focus-visible:opacity-100 group-focus-visible:grayscale-0",
-                ]}
-                loading="eager"
-                decoding="async"
-              />
-              {client.wordmark && (
-                <span class="text-[22px] font-medium tracking-[-0.5px] text-ash transition-colors duration-(--duration-state) group-hover:text-bone group-focus-visible:text-bone sm:text-[24px]">
-                  {client.wordmark}
-                </span>
-              )}
+              <span class="flex items-center justify-center gap-4">
+                <img
+                  src={client.logo}
+                  alt={client.logoAlt}
+                  class:list={[
+                    client.logoClass,
+                    "object-contain opacity-65 grayscale transition-[filter,opacity] duration-(--duration-state) ease-(--ease-out) group-hover:opacity-100 group-hover:grayscale-0 group-focus-visible:opacity-100 group-focus-visible:grayscale-0",
+                  ]}
+                  loading="eager"
+                  decoding="async"
+                />
+                {client.wordmark && (
+                  <span class="max-w-[14ch] text-[22px] leading-tight font-medium tracking-[-0.5px] text-ash transition-colors duration-(--duration-state) group-hover:text-bone group-focus-visible:text-bone sm:text-[24px]">
+                    {client.wordmark}
+                  </span>
+                )}
+              </span>
+              <span class="mono-sm text-mist">
+                {formatStudents(lang, studies.get(client.caseSlug)!.students)}{" "}
+                {t.students}
+              </span>
             </a>
           </li>
         ))

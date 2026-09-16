@@ -9,6 +9,7 @@ import {
 import { getAllPosts, getTranslations, postLang, postPath } from "@/lib/blog"
 import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
 import { USE_CASE_ROUTES, casePath } from "@/data/use-cases"
+import { CASES, caseStudyPath } from "@/data/cases"
 
 const SITE = "https://vantalogics.com"
 
@@ -95,6 +96,20 @@ export const GET: APIRoute = async () => {
         changefreq: "monthly",
         alternates: Object.fromEntries(
           LANGS.map((code) => [code, casePath(code, solution, useCase)])
+        ),
+      })
+    }
+  }
+
+  // Casos reales de productos construidos.
+  for (const study of CASES) {
+    for (const lang of LANGS) {
+      entries.push({
+        path: caseStudyPath(lang, study.slug),
+        priority: "0.8",
+        changefreq: "monthly",
+        alternates: Object.fromEntries(
+          LANGS.map((code) => [code, caseStudyPath(code, study.slug)])
         ),
       })
     }

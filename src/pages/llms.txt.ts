@@ -8,6 +8,7 @@ import {
   solutionsIndexPath,
 } from "@/data/solutions"
 import { casePath, casesFor } from "@/data/use-cases"
+import { CASES, caseStudyPath, formatStudents } from "@/data/cases"
 
 const SITE = "https://vantalogics.com"
 
@@ -109,6 +110,15 @@ ${OTHER_SOLUTIONS.map(
 
 Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))}`
 
+  const studies = `## Productos construidos
+
+Casos de productos educativos en producción, con alcance verificable.
+
+${CASES.map(
+  (study) =>
+    `- [${study.client.es}](${url(caseStudyPath("es", study.slug))}) · [EN](${url(caseStudyPath("en", study.slug))}) — ${formatStudents("es", study.students)} estudiantes\n  ${study.title.es}`
+).join("\n")}`
+
   const notes = `## Notas
 
 Apuntes de trabajo sobre costos reales, criterios de decisión y fallas de
@@ -140,7 +150,8 @@ ${postsEn
 - [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))})
 - RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")}`
 
-  const body = [preamble, focus, solutions, notes, links].join("\n\n") + "\n"
+  const body =
+    [preamble, studies, focus, solutions, notes, links].join("\n\n") + "\n"
 
   return new Response(body, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

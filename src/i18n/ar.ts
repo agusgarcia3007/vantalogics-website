@@ -36,7 +36,7 @@ export const ar: Dictionary = {
 
   nav: {
     items: [
-      { href: "#casos", label: "أعمالنا", section: "cases" },
+      { href: "#clientes", label: "عملاؤنا", section: "cases" },
       { href: "#capacidades", label: "ما نبنيه" },
       { href: "#proceso", label: "منهجيتنا" },
       { href: "#perspectivas", label: "رؤى" },
@@ -102,7 +102,8 @@ export const ar: Dictionary = {
 
   clients: {
     title: "عملاء لديهم منتجات قيد التشغيل",
-    visit: "زيارة",
+    visit: "عرض حالة",
+    students: "طالبًا",
   },
 
   cases: {
@@ -117,6 +118,17 @@ export const ar: Dictionary = {
       impact: "الأثر",
       integrations: "مكوّنات المنتج",
       read: "عرض المنتج",
+    },
+    detail: {
+      breadcrumb: "دراسات الحالة",
+      students: "طالبًا",
+      scope: "النطاق الحالي",
+      challenge: "التحدي",
+      built: "ما بنيناه",
+      components: "مكوّنات المنتج",
+      visit: "عرض المنتج العامل",
+      back: "العودة إلى جميع العملاء",
+      metaSuffix: "دراسة حالة منتج",
     },
   },
 

@@ -21,7 +21,7 @@ export const en: Dictionary = {
 
   nav: {
     items: [
-      { href: "#casos", label: "Work", section: "cases" },
+      { href: "#clientes", label: "Clients", section: "cases" },
       { href: "#capacidades", label: "Capabilities" },
       { href: "#proceso", label: "Approach" },
       { href: "#perspectivas", label: "Insights" },
@@ -100,7 +100,8 @@ export const en: Dictionary = {
 
   clients: {
     title: "Clients with products in production",
-    visit: "Visit",
+    visit: "View the case for",
+    students: "students",
   },
 
   cases: {
@@ -115,6 +116,17 @@ export const en: Dictionary = {
       impact: "Impact",
       integrations: "Product areas",
       read: "View the product",
+    },
+    detail: {
+      breadcrumb: "Case studies",
+      students: "students",
+      scope: "Current scope",
+      challenge: "The challenge",
+      built: "What we built",
+      components: "Product components",
+      visit: "View live product",
+      back: "Back to all clients",
+      metaSuffix: "Product case study",
     },
   },
 
