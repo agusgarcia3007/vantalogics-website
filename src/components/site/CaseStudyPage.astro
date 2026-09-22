@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
+import Foot from "@/components/cine/Foot.astro"
 import { CLIENTS } from "@/data/clients"
 import {
   caseStudyPath,
@@ -191,6 +192,8 @@ const creativeWork = {
           </div>
         </div>
       </section>
+
+      <Foot lang={lang} />
     </div>
   </Chrome>
 </Layout>

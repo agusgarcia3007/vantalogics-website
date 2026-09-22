@@ -2,10 +2,8 @@
 import { render } from "astro:content"
 
 import Layout from "@/layouts/main.astro"
-import SiteHeader from "@/components/site/SiteHeader.astro"
-import SiteFooter from "@/components/site/SiteFooter.astro"
-import Frame from "@/components/site/Frame.astro"
-import Cta from "@/components/site/Cta.astro"
+import Chrome from "@/components/cine/Chrome.astro"
+import Foot from "@/components/cine/Foot.astro"
 import PostCard from "@/components/blog/PostCard.astro"
 import { localizePath, ogImage, useTranslations } from "@/i18n"
 import {
@@ -158,204 +156,163 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
   ogType="article"
   alternates={alternates}
   jsonLd={jsonLd}
+  floating={false}
 >
-  <SiteHeader lang={lang} />
+  <Chrome lang={lang}>
+    <main class="doc-page" id="contenido">
+      <div class="shell">
+        <nav class="crumbs appear appear--soft" aria-label="Breadcrumb">
+          <a href={localizePath(lang)}>Vantalogics</a>
+          <span aria-hidden="true">/</span>
+          <a href={blogPath}>{t.blog.label}</a>
+        </nav>
 
-  <main id="contenido">
-    <Frame flush>
-      <nav aria-label="Breadcrumb">
-        <ol class="flex flex-wrap items-center gap-2">
-          <li>
-            <a
-              href={localizePath(lang)}
-              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-            >
-              Vantalogics
-            </a>
-          </li>
-          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
-          <li>
-            <a
-              href={blogPath}
-              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-            >
-              {t.blog.label}
-            </a>
-          </li>
-        </ol>
-      </nav>
+        <header class="doc-head">
+          <div class="doc-meta appear appear--soft" style="--d:0.2s">
+            {
+              industrySolution && (
+                <>
+                  <a href={solutionPath(lang, industrySolution)}>
+                    {industrySolution.sector[lang]}
+                  </a>
+                  <span aria-hidden="true">·</span>
+                </>
+              )
+            }
+            <span>{t.blog.clusters[post.data.cluster]}</span>
+            <span aria-hidden="true">·</span>
+            <time datetime={post.data.date.toISOString()}>
+              {formatDate(post.data.date, lang)}
+            </time>
+            <span aria-hidden="true">·</span>
+            <span>{minutes} {t.blog.readingTime}</span>
+          </div>
 
-      <header class="mt-[clamp(32px,5vw,64px)]">
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <h1 class="appear appear--soft" style="--d:0.32s" data-speakable>
+            {post.data.title}
+          </h1>
+
           {
-            industrySolution && (
-              <>
-                <a
-                  href={solutionPath(lang, industrySolution)}
-                  class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-                >
-                  {industrySolution.sector[lang]}
-                </a>
-                <span class="label-untitled text-muted-ash" aria-hidden="true">
-                  ·
-                </span>
-              </>
+            post.data.updated && (
+              <p class="doc-updated appear appear--soft" style="--d:0.44s">
+                {t.blog.updatedOn} {formatDate(post.data.updated, lang)}
+              </p>
             )
           }
-          <span class="label-untitled text-muted-ash">
-            {t.blog.clusters[post.data.cluster]}
-          </span>
-          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span
-          >
-          <time
-            class="label-untitled text-muted-ash"
-            datetime={post.data.date.toISOString()}
-          >
-            {formatDate(post.data.date, lang)}
-          </time>
-          <span class="label-untitled text-muted-ash" aria-hidden="true">·</span
-          >
-          <span class="label-untitled text-muted-ash">
-            {minutes}
-            {t.blog.readingTime}
-          </span>
-        </div>
-
-        <h1
-          class="mt-6 max-w-[20ch] display-lg text-balance text-bone"
-          data-speakable
-        >
-          {post.data.title}
-        </h1>
-
-        {
-          post.data.updated && (
-            <p class="mt-6 label-untitled text-muted-ash">
-              {t.blog.updatedOn} {formatDate(post.data.updated, lang)}
-            </p>
-          )
-        }
-      </header>
-    </Frame>
-
-    <!-- Respuesta corta.
-         Va antes que el cuerpo y encuadrada: es la unidad que extraen los
-         motores de respuesta, y el lector que sólo vino a saber el número se
-         va con el número sin tener que leer mil palabras. -->
-    <Frame>
-      <div
-        class="max-w-[62ch] border-l border-hairline ps-[clamp(20px,2.5vw,32px)]"
-        data-reveal
-      >
-        <p class="label-untitled text-muted-ash">{t.blog.answerLabel}</p>
-        <p
-          class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.55] text-bone"
-          data-speakable
-        >
-          {post.data.answer}
-        </p>
+        </header>
       </div>
-    </Frame>
+    </main>
 
-    <Frame>
-      <div
-        class="grid gap-x-[clamp(32px,5vw,72px)] gap-y-[clamp(40px,5vw,64px)] lg:grid-cols-[minmax(0,1fr)_240px] lg:items-start"
-      >
-        <div class="typeset typeset-nota min-w-0">
-          <Content />
-        </div>
-
-        {
-          toc.length > 1 && (
-            <nav
-              aria-labelledby="indice-nota"
-              class="order-first lg:sticky lg:top-[104px] lg:order-none"
-            >
-              <p id="indice-nota" class="label-untitled text-muted-ash">
-                {t.blog.tocLabel}
-              </p>
-              <ol class="mt-4 flex flex-col gap-[10px] border-l border-hairline ps-4">
-                {toc.map((heading) => (
-                  <li>
-                    <a
-                      href={`#${heading.slug}`}
-                      class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-                    >
-                      {heading.text}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
-          )
-        }
-      </div>
-    </Frame>
-
-    {
-      post.data.faq.length > 0 && (
-        <Frame labelledby="faq-nota">
-          <h2 id="faq-nota" class="max-w-[20ch] display-section text-bone">
-            {t.blog.faqLabel}
-          </h2>
-          <dl class="mt-[clamp(28px,3.5vw,48px)] flex max-w-[68ch] flex-col">
-            {post.data.faq.map((entry) => (
-              <div class="border-t border-hairline py-7 first:border-t-0 first:pt-0">
-                <dt class="text-[clamp(17px,1.5vw,19px)] leading-[1.4] text-bone">
-                  {entry.question}
-                </dt>
-                <dd class="mt-3 copy text-ash">{entry.answer}</dd>
-              </div>
-            ))}
-          </dl>
-        </Frame>
-      )
-    }
-
-    <Frame>
-      <div
-        class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between"
-      >
-        <div>
-          <p class="label-untitled text-muted-ash">{t.blog.authorLabel}</p>
-          <p class="mt-4 text-[clamp(18px,1.7vw,21px)] leading-[1.4] text-bone">
-            {t.blog.author}
-          </p>
-          <p class="mt-3 max-w-[52ch] copy text-ash">{t.blog.authorBio}</p>
-        </div>
-
-        <div class="flex flex-wrap gap-3 lg:shrink-0">
-          <Cta
-            href={SCHEDULE_URL}
-            variant="pill-solid"
-            size="pill-lg"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t.blog.ctaButton}
-          </Cta>
-          <Cta href={blogPath} variant="pill-quiet" size="pill-lg">
-            {t.blog.backToIndex}
-          </Cta>
-        </div>
-      </div>
-    </Frame>
-
-    {
-      related.length > 0 && (
-        <Frame labelledby="relacionadas">
-          <h2 id="relacionadas" class="max-w-[20ch] display-section text-bone">
-            {t.blog.relatedLabel}
-          </h2>
-          <div class="mt-[clamp(28px,3.5vw,48px)] flex flex-col">
-            {related.map((item) => (
-              <PostCard post={item} />
-            ))}
+    <div class="below" slot="after">
+      <!-- Respuesta corta. Va antes que el cuerpo y encuadrada: es la unidad
+           que extraen los motores de respuesta, y el lector que sólo vino a
+           saber el número se va con el número sin leer mil palabras. -->
+      <section class="section">
+        <div class="shell">
+          <div class="answer reveal">
+            <p class="answer-label">{t.blog.answerLabel}</p>
+            <p class="answer-body" data-speakable>{post.data.answer}</p>
           </div>
-        </Frame>
-      )
-    }
-  </main>
+        </div>
+      </section>
 
-  <SiteFooter lang={lang} />
+      <section class="section">
+        <div class="doc-body shell">
+          <div class="typeset typeset-nota">
+            <Content />
+          </div>
+
+          {
+            toc.length > 1 && (
+              <nav class="toc" aria-labelledby="indice-nota">
+                <p id="indice-nota" class="toc-label">
+                  {t.blog.tocLabel}
+                </p>
+                <ol>
+                  {toc.map((heading) => (
+                    <li>
+                      <a href={`#${heading.slug}`}>{heading.text}</a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )
+          }
+        </div>
+      </section>
+
+      {
+        post.data.faq.length > 0 && (
+          <section class="section">
+            <div class="shell">
+              <div class="section-head reveal">
+                <h2 id="faq-nota">{t.blog.faqLabel}</h2>
+              </div>
+              <dl class="faq">
+                {post.data.faq.map((entry, i) => (
+                  <div class="faq-item reveal" style={`--i:${i}`}>
+                    <dt>{entry.question}</dt>
+                    <dd>{entry.answer}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </section>
+        )
+      }
+
+      <section class="section">
+        <div class="shell">
+          <div class="author reveal">
+            <div>
+              <p class="author-label">{t.blog.authorLabel}</p>
+              <p class="author-name">{t.blog.author}</p>
+              <p class="author-bio">{t.blog.authorBio}</p>
+            </div>
+
+            <div class="author-actions">
+              <a
+                class="btn btn-solid btn-lead"
+                href={SCHEDULE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.blog.ctaButton}
+                <span class="btn-pip" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M7 17L17 7M17 7H9M17 7V15"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"></path>
+                  </svg>
+                </span>
+              </a>
+              <a class="btn btn-ghost" href={blogPath}>{t.blog.backToIndex}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {
+        related.length > 0 && (
+          <section class="section">
+            <div class="shell">
+              <div class="section-head reveal">
+                <h2 id="relacionadas">{t.blog.relatedLabel}</h2>
+              </div>
+              <div class="posts">
+                {related.map((item, i) => (
+                  <PostCard post={item} index={i} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      <Foot lang={lang} />
+    </div>
+  </Chrome>
 </Layout>

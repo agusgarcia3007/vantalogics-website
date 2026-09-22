@@ -12,6 +12,7 @@
  */
 import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
+import Foot from "@/components/cine/Foot.astro"
 import { PUBLIC_LANGS, localizePath, ogImage, useTranslations } from "@/i18n"
 import {
   CASES,
@@ -360,6 +361,8 @@ const webPage = {
           </div>
         </div>
       </section>
+
+      <Foot lang={lang} />
     </div>
   </Chrome>
 </Layout>

@@ -26,10 +26,18 @@ hace falta la itálica del serif, que no existía en el sitio. */
 }
 
 /* ── RESET ─────────────────────────────────────────────────────── */
-* {
+/* El cuerpo de las notas queda afuera. `typeset` declara su ritmo dentro de
+   `@layer components` y una regla sin capa le gana siempre, sin importar la
+   especificidad: sin esta excepción el `margin: 0` borra la separación entre
+   párrafos, títulos y listas del artículo. */
+*:not(.typeset, .typeset *) {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+.typeset,
+.typeset * {
+  box-sizing: border-box;
 }
 a {
   color: inherit;
@@ -1131,6 +1139,542 @@ body.menu-open .burger span:nth-child(3) {
   font-size: 15px;
   line-height: 1.6;
   letter-spacing: -0.015em;
+}
+
+/* ── NOTAS ─────────────────────────────────────────────────────── */
+/* El blog corre sobre el mismo sistema que la portada: mismo header, mismo
+   contenedor, mismo pie. Lo único que conserva su propia tipografía es el
+   cuerpo del artículo (`typeset`), que ya estaba resuelto y no gana nada con
+   ser reescrito acá. */
+.doc-page {
+  padding: 0 var(--header-x);
+}
+.doc-head {
+  padding: 48px 0 8px;
+}
+.doc-head h1 {
+  max-width: 20ch;
+  color: #fff;
+  font-size: clamp(34px, 4vw, 60px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.doc-h1-muted {
+  color: #6f6f6f;
+}
+.doc-head > .eyebrow {
+  margin-bottom: 24px;
+}
+.doc-head > p {
+  max-width: 56ch;
+  margin-top: 26px;
+  color: #9a9a9a;
+  font-size: var(--lede);
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+}
+.doc-meta,
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  color: #6f6f6f;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+.doc-meta {
+  margin-bottom: 26px;
+}
+.doc-meta a {
+  color: #b4b4b4;
+  transition: color 0.55s var(--ease-plate);
+}
+.doc-meta a:hover {
+  color: #fff;
+}
+.doc-updated {
+  margin-top: 22px;
+  color: #6f6f6f;
+  font-size: 12.5px;
+}
+.doc-empty {
+  color: #9a9a9a;
+  font-size: var(--lede);
+}
+
+/* ── LISTA DE NOTAS ────────────────────────────────────────────── */
+/* La misma grilla y las mismas tarjetas de doble borde que los casos: es lo
+   que hace que el blog se lea como parte del sitio y no como un anexo. */
+.posts {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+.post {
+  grid-column: span 3;
+  position: relative;
+  padding: 6px;
+  border-radius: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.085),
+    rgba(255, 255, 255, 0.02)
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  transition:
+    transform 0.7s var(--ease-plate),
+    background 0.7s var(--ease-plate),
+    box-shadow 0.7s var(--ease-plate);
+}
+.post--featured {
+  grid-column: span 6;
+}
+.post:hover,
+.post:focus-within {
+  transform: translateY(-5px);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.04)
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 30px 60px -30px rgba(0, 0, 0, 0.9);
+}
+.post-core {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 232px;
+  padding: 26px 26px 22px;
+  border-radius: calc(28px - 6px);
+  background: linear-gradient(180deg, #0d0d0d 0%, #070707 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.075);
+}
+.post-title {
+  max-width: 26ch;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.24;
+  text-wrap: balance;
+}
+.post--featured .post-title {
+  max-width: 24ch;
+  font-size: clamp(24px, 2.4vw, 32px);
+  letter-spacing: -0.04em;
+}
+/* El área clicable es toda la tarjeta; el nombre accesible, sólo el titular. */
+.post-title a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+}
+.post-desc {
+  max-width: 54ch;
+  margin-top: 14px;
+  color: #979797;
+  font-size: 15px;
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+}
+.post-go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-top: auto;
+  padding-top: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  color: #cfcfcf;
+  transition:
+    transform 0.7s var(--ease-plate),
+    background 0.7s var(--ease-plate),
+    color 0.7s var(--ease-plate);
+}
+.post-go svg {
+  flex: none;
+}
+.post:hover .post-go {
+  transform: translate(3px, -3px);
+  background: #fff;
+  color: #0a0a0a;
+}
+
+/* ── RESPUESTA CORTA ───────────────────────────────────────────── */
+.answer {
+  max-width: 68ch;
+  padding: 26px 0 26px 28px;
+  border-left: 2px solid rgba(255, 255, 255, 0.18);
+}
+.answer-label {
+  color: #6f6f6f;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.answer-body {
+  margin-top: 16px;
+  color: #efefef;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+}
+
+/* ── CUERPO + ÍNDICE ───────────────────────────────────────────── */
+.doc-body {
+  display: grid;
+  gap: 48px 72px;
+}
+@media (min-width: 1100px) {
+  .doc-body {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    align-items: start;
+  }
+  .toc {
+    position: sticky;
+    top: 104px;
+  }
+}
+.doc-body .typeset {
+  min-width: 0;
+}
+.toc-label {
+  color: #6f6f6f;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.toc ol {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-top: 18px;
+  padding-left: 16px;
+  border-left: 1px solid var(--border-soft);
+  list-style: none;
+}
+.toc a {
+  color: #8a8a8a;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  transition: color 0.55s var(--ease-plate);
+}
+.toc a:hover {
+  color: #fff;
+}
+
+/* ── FAQ ───────────────────────────────────────────────────────── */
+.faq {
+  max-width: 72ch;
+}
+.faq-item {
+  padding: 28px 0;
+  border-top: 1px solid var(--border-soft);
+}
+.faq-item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.faq-item dt {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+.faq-item dd {
+  max-width: 64ch;
+  margin-top: 12px;
+  color: #9a9a9a;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+}
+
+/* ── AUTOR ─────────────────────────────────────────────────────── */
+.author {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 32px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #0d0d0d 0%, #070707 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.075);
+}
+.author-label {
+  color: #6f6f6f;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.author-name {
+  margin-top: 14px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.author-bio {
+  max-width: 52ch;
+  margin-top: 10px;
+  color: #9a9a9a;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+}
+.author-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.author-actions .btn {
+  height: var(--hero-btn-h);
+  padding: 0 18px;
+}
+.author-actions .btn-lead {
+  padding-inline-end: 5px;
+}
+
+@media (max-width: 900px) {
+  .doc-head {
+    padding-top: 32px;
+  }
+  .posts {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .post,
+  .post--featured {
+    grid-column: 1 / -1;
+  }
+  .post-core {
+    min-height: 0;
+    padding: 22px 20px 18px;
+  }
+  .post:hover {
+    transform: none;
+  }
+  .answer {
+    padding: 20px 0 20px 20px;
+  }
+  .author {
+    padding: 24px 20px;
+  }
+  .author-actions .btn {
+    width: 100%;
+  }
+}
+
+/* ── PIE ───────────────────────────────────────────────────────── */
+/* Cierra con la misma hairline interior que separa las secciones y termina en
+   la marca a sangre: es lo último que se ve y conviene que sea la firma, no
+   una lista de enlaces. */
+.foot {
+  position: relative;
+  padding-top: var(--section-y);
+}
+.foot > .shell::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--section-y) * -0.5);
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-soft) 18%,
+    var(--border-soft) 82%,
+    transparent
+  );
+}
+
+.foot .shell {
+  padding: 0 var(--header-x);
+}
+
+.foot-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  gap: 48px 40px;
+  padding-bottom: 64px;
+}
+
+.foot-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--logo);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  color: #fff;
+}
+.foot-tagline {
+  max-width: 44ch;
+  margin-top: 22px;
+  color: #8f8f8f;
+  font-size: 14.5px;
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+}
+
+.foot-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+.foot-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+  color: #b4b4b4;
+  font-size: 13px;
+  letter-spacing: -0.015em;
+  transition:
+    color 0.55s var(--ease-plate),
+    box-shadow 0.55s var(--ease-plate),
+    background 0.55s var(--ease-plate);
+}
+.foot-social:hover,
+.foot-social:focus-visible {
+  outline: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.foot-social svg {
+  flex: none;
+}
+
+.foot-col-title {
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.foot-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  list-style: none;
+}
+.foot-col a {
+  color: #9a9a9a;
+  font-size: 14px;
+  letter-spacing: -0.015em;
+  transition: color 0.55s var(--ease-plate);
+}
+.foot-col a:hover,
+.foot-col a:focus-visible {
+  outline: none;
+  color: #fff;
+}
+
+/* El único enlace del pie que es una acción y no un destino: se marca con el
+   mismo círculo que el CTA del hero en vez de con un color distinto. */
+.foot-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #e8e8e8 !important;
+}
+.foot-pip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  transition:
+    transform 0.55s var(--ease-plate),
+    background 0.55s var(--ease-plate),
+    color 0.55s var(--ease-plate);
+}
+.foot-cta:hover .foot-pip {
+  transform: translate(2px, -2px);
+  background: #fff;
+  color: #0a0a0a;
+}
+
+.foot-base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 32px;
+  padding: 24px 0 40px;
+  border-top: 1px solid var(--border-soft);
+  color: #6f6f6f;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+}
+
+/* La firma final, cortada por el borde inferior. `container-type: inline-size`
+   para que el cuerpo salga del ancho del bloque y no del viewport: la palabra
+   entra completa y con el mismo aire lateral en cualquier pantalla. */
+.foot-mark {
+  container-type: inline-size;
+  height: 9vw;
+  min-height: 64px;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 18%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 18%, transparent 100%);
+}
+.foot-mark span {
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 17.5cqw;
+  font-weight: 500;
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  color: transparent;
+  background: linear-gradient(180deg, #2b2b2b 0%, #0b0b0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@media (max-width: 1100px) {
+  .foot-top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 44px 32px;
+  }
+  .foot-brand {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 560px) {
+  .foot-top {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── ENTRADA POR SCROLL ────────────────────────────────────────── */

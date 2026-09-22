@@ -1,0 +1,158 @@
+---
+/**
+ * Pie del sistema cinemático.
+ *
+ * El equivalente de `SiteFooter.astro` para las páginas que montan `Chrome`:
+ * misma información y las mismas cadenas de `t.footer`, pero construido con
+ * los tokens de `cine.css` y sin React, que es lo que permite que la portada y
+ * las páginas de caso sigan sin mandar JavaScript de componentes.
+ *
+ * Va dentro de `.below`, que es lo que tiene fondo opaco: en la portada el
+ * video está fijo detrás de todo y un pie transparente lo dejaría ver.
+ */
+import { navHref, localizePath, useTranslations, type Lang } from "@/i18n"
+import {
+  CONTACT_EMAIL,
+  GITHUB_URL,
+  INSTAGRAM_URL,
+  SCHEDULE_URL,
+  WHATSAPP_DISPLAY,
+  whatsappUrl,
+} from "@/site"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const year = new Date().getFullYear()
+---
+
+<footer class="foot">
+  <div class="shell">
+    <div class="foot-top">
+      <div class="foot-brand reveal">
+        <a class="foot-logo" href={localizePath(lang)} aria-label="Vantalogics">
+          <img
+            class="logo-mark"
+            src="/logo-va.png"
+            alt=""
+            width="25"
+            height="25"
+          />
+          <span>Vantalogics</span>
+        </a>
+
+        <p class="foot-tagline">{t.footer.tagline}</p>
+
+        <div class="foot-socials">
+          <a
+            class="foot-social"
+            href={GITHUB_URL}
+            target="_blank"
+            rel="me noopener noreferrer"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+              ><path
+                d="M10 20.5675C6.60158 21.5825 3.7738 19.8814 2.35638 17.4671M10 22V19.6014C10 18.8531 10.1804 18.6294 10.4629 18.3325C10.6449 18.1413 10.9662 17.9773 11.1569 17.9366C11.2364 17.9196 11.1901 17.9063 11.1088 17.8934C10.4295 17.7852 9.86523 17.633 9.38962 17.4306C6.49669 16.2 6 12.7679 6 10.4C6 9.15079 6.4425 8.01197 7.17839 7.10762C6.91888 6.26983 6.87281 4.9927 7.29294 4C8.5 4 9.5 5 10.0797 5.60256C10.6913 5.42122 11.3389 5.39837 12 5.39837C12.6611 5.39837 13.3087 5.42122 13.9203 5.60256C14.5 5 15.5 4 16.7071 4C17.1272 4.9927 17.0811 6.26983 16.8216 7.10762C17.5575 8.01197 18 9.15079 18 10.4C18 12.7679 17.5033 16.2 14.6104 17.4306C14.1348 17.633 13.5705 17.7852 12.8912 17.8934C12.8099 17.9063 12.7636 17.9196 12.8431 17.9366C13.0338 17.9773 13.3551 18.1413 13.5371 18.3325C13.8196 18.6294 14 18.8531 14 19.6014V22"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"></path></svg
+            >
+            GitHub
+          </a>
+
+          <a
+            class="foot-social"
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="me noopener noreferrer"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+              ><path
+                d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="1.5"></path><path
+                d="M16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z"
+                stroke="currentColor"
+                stroke-width="1.5"></path><path
+                d="M17.5078 6.5L17.4988 6.5"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"></path></svg
+            >
+            Instagram
+          </a>
+        </div>
+      </div>
+
+      {
+        t.footer.columns.map((column, i) => (
+          <nav
+            class="foot-col reveal"
+            aria-label={column.title}
+            style={`--i:${i + 1}`}
+          >
+            <h2 class="foot-col-title">{column.title}</h2>
+            <ul>
+              {column.links.map((link) => (
+                <li>
+                  <a href={navHref(lang, link.href)}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+
+      <div class="foot-col reveal" style="--i:3">
+        <h2 class="foot-col-title">{t.footer.contactTitle}</h2>
+        <ul>
+          <li><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
+          <li>
+            <a
+              href={whatsappUrl(t.whatsapp.prefill)}
+              target="_blank"
+              rel="noopener"
+            >
+              WhatsApp · <span dir="ltr">{WHATSAPP_DISPLAY}</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="foot-cta"
+              href={SCHEDULE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t.nav.cta}
+              <span class="foot-pip" aria-hidden="true">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M7 17L17 7M17 7H9M17 7V15"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"></path>
+                </svg>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-base">
+      <p dir="ltr">© {year} Vantalogics</p>
+      <p>{t.footer.tags}</p>
+    </div>
+  </div>
+
+  <!-- La marca a sangre, cortada por el borde inferior de la página. Es
+       decorativa: el nombre accesible ya está en el logo de arriba. -->
+  <div class="foot-mark" aria-hidden="true"><span>Vantalogics</span></div>
+</footer>
