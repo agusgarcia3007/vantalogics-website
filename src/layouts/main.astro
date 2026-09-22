@@ -20,6 +20,11 @@ interface Props {
    * ante Google, así que un post sin traducir no declara ninguno.
    */
   alternates?: Partial<Record<Lang, string>>
+  /**
+   * Botones flotantes de WhatsApp y del agente. La portada trae el suyo y no
+   * scrollea, así que los apaga: `data-floating` nunca se activaría.
+   */
+  floating?: boolean
 }
 
 const SITE = "https://vantalogics.com"
@@ -33,6 +38,7 @@ const {
   image,
   ogType = "website",
   alternates,
+  floating = true,
 } = Astro.props
 const t = useTranslations(lang)
 
@@ -146,9 +152,9 @@ const xDefault = hreflangs.es ?? hreflangs.en
 
     <slot />
 
-    <WhatsAppButton lang={lang} />
+    {floating && <WhatsAppButton lang={lang} />}
 
-    <AgentButton lang={lang} />
+    {floating && <AgentButton lang={lang} />}
 
     <script is:inline>
       // Botones flotantes: visibles después del primer pantallazo.
