@@ -32,10 +32,10 @@ export const es = {
    */
   nav: {
     items: [
-      { href: "#clientes", label: "Clientes", section: "cases" },
-      { href: "#capacidades", label: "Qué construimos" },
+      { href: "#casos", label: "Clientes", section: "cases" },
+      { href: "/soluciones/", label: "Qué construimos" },
       { href: "#proceso", label: "Cómo trabajamos" },
-      { href: "#perspectivas", label: "Perspectivas" },
+      { href: "/blog/", label: "Perspectivas" },
     ],
     cta: "Hablar de tu producto",
     menu: "Menú",
