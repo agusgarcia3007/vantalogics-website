@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vantalogics — Producto e ingeniería de IA para educación</title>
+<meta name="description" content="Vantalogics es un estudio de producto e ingeniería de IA para educación. Construimos la inteligencia detrás de los productos educativos.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="https://vantalogics.com/logo-va.png">
+
+<style>
+/* ── BLACK FIRST — never flash white ───────────────────────────── */
+html, body {
+  background: #000000 !important;
+  color: #ffffff;
+}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&family=Instrument+Serif:ital@1&display=swap">
+
+<style>
+/* ── FONTS ─────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("inter.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("instrument-serif-italic.woff2") format("woff2");
+}
+
+/* ── RESET ─────────────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+html { scroll-behavior: smooth; }
+
+/* ── TOKENS — default ~1440px ──────────────────────────────────── */
+:root {
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: #9a9a9a;
+  --stat: #d8d8d8;
+
+  --border: rgba(255, 255, 255, 0.16);
+  --border-soft: rgba(255, 255, 255, 0.12);
+
+  --logo: 15.5px;
+  --logo-mark: 25px;
+
+  --nav: 14px;
+  --nav-h: 40px;
+  --nav-px: 18px;
+
+  --btn: 13.5px;
+  --btn-h: 40px;
+  --hero-btn-h: 42px;
+
+  --h1: 48px;
+  --lede: 15.5px;
+  --badge: 12.5px;
+  --stat-size: 13.5px;
+
+  --header-y: 22px;
+  --header-x: 40px;
+
+  --stats-x: 72px;
+  --stats-y: 36px;
+
+  --hero-gap: 85px;
+
+  --copy-max: 930px;
+  --lede-max: 620px;
+
+  --badge-mb: 22px;
+  --lede-mt: 18px;
+  --actions-mt: 26px;
+}
+
+html, body {
+  background: #000000;
+  background: var(--bg, #000000);
+  color: #ffffff;
+  color: var(--text, #ffffff);
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── HERO BACKGROUND ───────────────────────────────────────────── */
+.hero-photo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #000;
+}
+.hero-photo video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  display: block;
+}
+.hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.12) 0%,
+    rgba(0,0,0,0.08) 32%,
+    rgba(0,0,0,0.30) 64%,
+    rgba(0,0,0,0.62) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── GRAIN ─────────────────────────────────────────────────────── */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+  background-size: 160px 160px;
+}
+
+/* ── PAGE ──────────────────────────────────────────────────────── */
+.page {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ── HEADER ────────────────────────────────────────────────────── */
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: var(--header-y) var(--header-x) 10px;
+  z-index: 50;
+  position: relative;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+  font-size: var(--logo);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  color: #fff;
+}
+.logo-mark {
+  width: var(--logo-mark);
+  height: var(--logo-mark);
+  object-fit: contain;
+  filter: invert(1) brightness(2);
+}
+
+/* ── NAV ───────────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: center;
+}
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--nav-h);
+  padding: 0 var(--nav-px);
+  position: relative;
+  border: 0;
+  background: none;
+  color: #cfcfcf;
+  font-size: var(--nav);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: color 0.35s ease;
+}
+.nav a:hover,
+.nav a:focus-visible {
+  color: #fff;
+}
+
+/* ── BUTTONS ───────────────────────────────────────────────────── */
+.btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-h);
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: var(--btn);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.btn-solid {
+  background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 48%, #cfcfcf 100%);
+  color: #111;
+  border: 1px solid #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.95);
+}
+.btn-solid:hover {
+  background: linear-gradient(180deg, #fff 0%, #f3f6ff 42%, #d5def2 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 0 22px rgba(186,208,255,0.35),
+    0 8px 18px rgba(255,255,255,0.12);
+}
+.btn-ghost {
+  background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(0,0,0,0.45) 50%, rgba(160,175,200,0.08));
+  color: #fff;
+  border: 1px solid rgba(198,198,198,0.45);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.btn-ghost:hover {
+  border-color: rgba(235,235,235,0.85);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 0 18px rgba(200,210,230,0.14);
+}
+.header-cta { justify-self: end; }
+
+/* ── BURGER ────────────────────────────────────────────────────── */
+.burger {
+  display: none;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  align-content: center;
+  border: 0;
+  background: none;
+  z-index: 60;
+  cursor: pointer;
+}
+.burger span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: #fff;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.burger span + span { margin-top: 5px; }
+body.menu-open .burger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+body.menu-open .burger span:nth-child(2) { opacity: 0; }
+body.menu-open .burger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── MENU BACKDROP ─────────────────────────────────────────────── */
+.menu-backdrop { display: none; }
+
+/* ── HERO ──────────────────────────────────────────────────────── */
+.hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 8px 24px var(--hero-gap);
+  min-height: 0;
+}
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: var(--copy-max);
+  width: 100%;
+}
+
+/* ── BADGE ─────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--badge-mb);
+  padding: 9px 15px;
+  border: 0;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #7d7d7d 0%, #2a2a2a 52%, #0a0a0a 100%);
+  color: #f2f2f2;
+  font-size: var(--badge);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.badge-star {
+  flex: none;
+  animation: star-pop 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+  transform-origin: 50% 50%;
+}
+
+/* ── HEADLINE ──────────────────────────────────────────────────── */
+.hero h1 {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--h1);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.10;
+  color: #fff;
+  text-align: center;
+}
+.headline-line {
+  display: block;
+  overflow: hidden;
+  padding: 0.06em 0.15em 0.14em;
+}
+.headline-line > span { display: inline-block; }
+.hero h1 em {
+  font-family: "Instrument Serif", "Times New Roman", Times, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.03em;
+  color: #a6a6a6;
+  animation: serif-focus 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.72s both;
+}
+
+/* ── LEDE ──────────────────────────────────────────────────────── */
+.lede {
+  max-width: var(--lede-max);
+  margin-top: var(--lede-mt);
+  color: #a0a0a0;
+  font-size: var(--lede);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+}
+
+/* ── ACTIONS ───────────────────────────────────────────────────── */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: var(--actions-mt);
+}
+.hero-actions .btn {
+  height: var(--hero-btn-h);
+  padding: 0 18px;
+}
+.hero-actions .btn-ghost {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ── WHATSAPP ──────────────────────────────────────────────────── */
+.wa {
+  position: fixed;
+  z-index: 60;
+  right: max(var(--stats-x), env(safe-area-inset-right));
+  bottom: calc(max(var(--stats-y), env(safe-area-inset-bottom)) + 56px);
+  display: inline-flex;
+  align-items: center;
+  height: var(--btn-h);
+  padding: 0 13px;
+  border-radius: 6px;
+  border: 1px solid rgba(198,198,198,0.45);
+  background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(0,0,0,0.45) 50%, rgba(160,175,200,0.08));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #fff;
+  font-size: var(--btn);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, opacity .28s ease, visibility .28s ease;
+}
+.wa:hover,
+.wa:focus-visible {
+  border-color: rgba(235,235,235,0.85);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 0 18px rgba(200,210,230,0.14);
+  outline: none;
+}
+.wa svg { flex: none; }
+.wa span {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, margin 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.wa:hover span,
+.wa:focus-visible span {
+  max-width: 22ch;
+  opacity: 1;
+  margin-left: 10px;
+}
+
+/* ── PROOF STRIP ───────────────────────────────────────────────── */
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 var(--stats-x) var(--stats-y);
+  padding-bottom: max(var(--stats-y), env(safe-area-inset-bottom));
+  color: #d8d8d8;
+  color: var(--stat, #d8d8d8);
+}
+.stats > div {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: var(--stat-size);
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+.stats svg { flex: none; }
+
+/* ── ENTRANCE MOTION ───────────────────────────────────────────── */
+.appear {
+  opacity: 1;
+  animation-duration: 1.05s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: var(--d, 0.08s);
+}
+.appear--scale { animation-name: in-scale; }
+.appear--soft  { animation-name: in-soft; }
+.appear--mask  { animation-name: in-mask; }
+.appear--pop   { animation-name: in-pop; }
+.appear--btn   { animation-name: in-btn; }
+.appear--side  { animation-name: in-side; }
+.appear--stat  { animation-name: in-stat; }
+
+.is-in {
+  animation: none;
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+  filter: none;
+}
+
+@keyframes in-scale {
+  from { opacity: 0; transform: scale(0.84); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes in-soft {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes in-mask {
+  from { opacity: 0; transform: translateY(40%); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes in-pop {
+  0%   { opacity: 0; transform: scale(0.9); }
+  70%  { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes in-btn {
+  from { opacity: 0; transform: translateY(18px) scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes in-side {
+  from { opacity: 0; transform: translateX(22px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes in-stat {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes star-pop {
+  0%   { opacity: 0; transform: scale(0.2) rotate(-50deg); }
+  65%  { opacity: 1; transform: scale(1.2) rotate(8deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+@keyframes serif-focus {
+  from { opacity: 0.35; filter: blur(4px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+/* ── DESKTOP LOCK ──────────────────────────────────────────────── */
+@media (min-width: 901px) {
+  html, body { height: 100%; overflow: hidden; }
+  .page { height: 100vh; height: 100dvh; overflow: hidden; }
+}
+
+/* ── RESPONSIVE TOKENS ─────────────────────────────────────────── */
+@media (min-width: 1600px) {
+  :root {
+    --logo: 17px;  --logo-mark: 27px;
+    --nav: 15px;   --nav-h: 44px;   --nav-px: 20px;
+    --btn: 15px;   --btn-h: 44px;   --hero-btn-h: 48px;
+    --h1: 64px;    --lede: 18px;    --badge: 13.5px;  --stat-size: 15px;
+    --header-y: 28px; --header-x: 64px;
+    --stats-x: 96px;  --stats-y: 44px;
+    --copy-max: 1050px; --lede-max: 690px;
+    --badge-mb: 26px; --lede-mt: 22px; --actions-mt: 30px;
+  }
+}
+@media (min-width: 1920px) {
+  :root {
+    --logo: 18px;  --logo-mark: 30px;
+    --nav: 16px;   --nav-h: 48px;
+    --btn: 16px;   --btn-h: 48px;   --hero-btn-h: 52px;
+    --h1: 76px;    --lede: 20px;    --badge: 14.5px;  --stat-size: 16px;
+    --header-y: 32px; --header-x: 80px;
+    --stats-x: 120px; --stats-y: 52px;
+    --copy-max: 1220px; --lede-max: 760px;
+  }
+}
+@media (min-width: 2560px) {
+  :root {
+    --h1: 88px; --lede: 22px;
+    --header-x: 120px; --stats-x: 160px;
+    --copy-max: 1380px; --lede-max: 820px;
+  }
+}
+@media (min-width: 1280px) and (max-width: 1599px) {
+  :root {
+    --h1: 54px; --lede: 16px;
+    --header-x: 48px; --stats-x: 80px;
+    --copy-max: 980px; --lede-max: 660px;
+  }
+}
+@media (min-width: 901px) and (max-width: 1279px) {
+  :root {
+    --logo: 15px;  --logo-mark: 24px;
+    --nav: 13px;   --nav-h: 36px;   --nav-px: 14px;
+    --btn: 13px;   --btn-h: 38px;   --hero-btn-h: 40px;
+    --h1: 42px;    --lede: 15px;    --badge: 12px;   --stat-size: 12.5px;
+    --header-y: 16px; --header-x: 28px;
+    --stats-x: 28px;  --stats-y: 36px;
+    --hero-gap: 64px;
+    --copy-max: 800px; --lede-max: 560px;
+  }
+}
+
+/* ── SHORT DESKTOP VIEWPORTS ───────────────────────────────────── */
+@media (min-width: 901px) and (max-height: 850px) {
+  :root {
+    --header-y: 14px; --stats-y: 24px; --hero-gap: 48px; --h1: 40px;
+    --badge-mb: 12px; --lede-mt: 12px; --actions-mt: 16px;
+  }
+}
+@media (min-width: 901px) and (max-height: 720px) {
+  :root {
+    --h1: 34px; --lede: 14px; --hero-gap: 32px; --stats-y: 18px;
+    --nav-h: 30px; --btn-h: 34px; --hero-btn-h: 36px;
+    --badge-mb: 8px;
+  }
+}
+
+/* ── MOBILE ≤900 ───────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow-y: auto; }
+
+  :root {
+    --logo: 16px;  --logo-mark: 26px;
+    --btn: 15px;   --btn-h: 46px;   --hero-btn-h: 48px;
+    --h1: 36px;    --lede: 16.5px;  --badge: 13.5px;  --stat-size: 15px;
+    --header-y: 16px; --header-x: 18px;
+    --stats-x: 20px;  --stats-y: 28px;
+    --hero-gap: 36px;
+  }
+
+  .header {
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+    padding-top: max(var(--header-y), env(safe-area-inset-top));
+    padding-left: max(var(--header-x), env(safe-area-inset-left));
+    padding-right: max(var(--header-x), env(safe-area-inset-right));
+  }
+  .logo, .header-cta, .burger { z-index: 80; }
+  .burger { display: grid; }
+
+  .menu-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(8,8,8,0.42);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .28s ease, visibility .28s ease;
+  }
+  body.menu-open .menu-backdrop {
+    opacity: 1;
+    visibility: visible;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .nav {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 12px;
+    padding: max(96px, calc(env(safe-area-inset-top) + 88px)) 22px 32px;
+    background: transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .28s ease, visibility .28s ease;
+  }
+  body.menu-open .nav { opacity: 1; visibility: visible; }
+  .nav a {
+    width: 100%;
+    height: 56px;
+    font-size: 19px;
+    justify-content: center;
+  }
+
+  body.menu-open { overflow: hidden; }
+
+  .hero { padding: 20px 20px var(--hero-gap); }
+  .hero-copy { max-width: 100%; }
+  .lede { max-width: 100%; }
+
+  /* El botón flota en una banda reservada bajo la prueba, nunca encima. */
+  .wa {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  body.menu-open .wa { opacity: 0; visibility: hidden; }
+
+  .stats {
+    padding-bottom: calc(max(var(--stats-y), env(safe-area-inset-bottom)) + 58px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  :root { --h1: 34px; --lede: 16px; --header-x: 16px; }
+  .header-cta { padding: 0 12px; font-size: 13.5px; }
+  .logo { gap: 8px; }
+  .hero-actions { flex-direction: column; width: 100%; }
+  .hero-actions .btn { width: 100%; }
+}
+
+/* ── REDUCED MOTION ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .appear,
+  .wa span,
+  .hero-photo,
+  .hero h1 em,
+  .badge-star {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    filter: none;
+  }
+  .logo-mark { filter: invert(1) brightness(2); }
+}
+</style>
+</head>
+
+<body style="background:#000;color:#fff">
+
+<div class="grain" aria-hidden="true"></div>
+
+<div class="hero-photo" aria-hidden="true">
+  <video src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260818_072341_50851634-bbc3-4c33-9acc-7647d4db44aa.mp4"
+         autoplay muted loop playsinline preload="auto"></video>
+</div>
+
+<div class="page">
+
+  <div class="menu-backdrop" aria-hidden="true"></div>
+
+  <header class="header">
+    <a class="logo appear appear--scale" href="#top" aria-label="Vantalogics" style="--d:0.08s">
+      <img class="logo-mark" src="https://vantalogics.com/logo-va.png" alt="" width="25" height="25">
+      <span>Vantalogics</span>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Navegación principal">
+      <a class="appear appear--scale" href="#clientes" style="--d:0.16s">Clientes</a>
+      <a class="appear appear--soft" href="#que-construimos" style="--d:0.28s">Qué construimos</a>
+      <a class="appear appear--scale" href="#como-trabajamos" style="--d:0.40s">Cómo trabajamos</a>
+      <a class="appear appear--soft" href="#perspectivas" style="--d:0.52s">Perspectivas</a>
+    </nav>
+
+    <a class="btn btn-solid header-cta appear appear--scale"
+       href="https://cal.com/vantalogics" target="_blank" rel="noopener" style="--d:0.34s">Hablar de tu producto</a>
+
+    <button class="burger" type="button" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="hero" id="top">
+    <div class="hero-copy">
+
+      <div class="badge appear appear--pop" style="--d:0.22s">
+        <svg class="badge-star" width="18" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 2L15.5387 4.39157C15.9957 6.42015 17.5798 8.00431 19.6084 8.46127L22 9L19.6084 9.53873C17.5798 9.99569 15.9957 11.5798 15.5387 13.6084L15 16L14.4613 13.6084C14.0043 11.5798 12.4202 9.99569 10.3916 9.53873L8 9L10.3916 8.46127C12.4201 8.00431 14.0043 6.42015 14.4613 4.39158L15 2Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"/><path d="M7 12L7.38481 13.7083C7.71121 15.1572 8.84275 16.2888 10.2917 16.6152L12 17L10.2917 17.3848C8.84275 17.7112 7.71121 18.8427 7.38481 20.2917L7 22L6.61519 20.2917C6.28879 18.8427 5.15725 17.7112 3.70827 17.3848L2 17L3.70827 16.6152C5.15725 16.2888 6.28879 15.1573 6.61519 13.7083L7 12Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"/></svg>
+        Producto · IA aplicada · Ingeniería
+      </div>
+
+      <h1>
+        <span class="headline-line"><span class="appear appear--mask" style="--d:0.42s">Construimos la inteligencia detrás</span></span>
+        <span class="headline-line"><span class="appear appear--mask" style="--d:0.62s">de los <em>productos educativos.</em></span></span>
+      </h1>
+
+      <p class="lede appear appear--soft" style="--d:0.82s; animation-duration:1.25s">
+        Diseñamos agentes especializados, sistemas de evaluación y plataformas de aprendizaje completas. Producto, experiencia, IA e ingeniería en un mismo equipo.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-solid appear appear--btn" href="https://cal.com/vantalogics" target="_blank" rel="noopener" style="--d:0.96s">Hablar de tu producto</a>
+        <a class="btn btn-ghost appear appear--side" href="#clientes" style="--d:1.10s">Ver nuestro trabajo</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="stats">
+    <div class="appear appear--stat" style="--d:1.12s">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="currentColor" stroke-width="1.5"/><path d="M15 11C17.2091 11 19 9.20914 19 7C19 4.79086 17.2091 3 15 3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M11 14H7C4.23858 14 2 16.2386 2 19C2 20.1046 2.89543 21 4 21H14C15.1046 21 16 20.1046 16 19C16 16.2386 13.7614 14 11 14Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"/><path d="M17 14C19.7614 14 22 16.2386 22 19C22 20.1046 21.1046 21 20 21H18.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+      20.000+ estudiantes
+    </div>
+
+    <div class="appear appear--stat" style="--d:1.28s">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12C2.5 7.52166 2.5 5.28248 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><path d="M9 21.5L9 2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+      Productos educativos en producción
+    </div>
+
+    <div class="appear appear--stat" style="--d:1.44s">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8V12L14 14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+      Respuesta en menos de 24 h hábiles
+    </div>
+  </footer>
+
+  <a class="wa appear appear--btn"
+     href="https://wa.me/541178296140?text=Hola%20Vantalogics%2C%20quiero%20hablar%20sobre%20un%20producto%20educativo."
+     target="_blank" rel="noopener"
+     aria-label="Escribinos por WhatsApp, abre en una pestaña nueva"
+     style="--d:1.58s">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5"/><path d="M8.58815 12.3773L9.45909 11.2956C9.82616 10.8397 10.2799 10.4153 10.3155 9.80826C10.3244 9.65494 10.2166 8.96657 10.0008 7.58986C9.91601 7.04881 9.41086 7 8.97332 7C8.40314 7 8.11805 7 7.83495 7.12931C7.47714 7.29275 7.10979 7.75231 7.02917 8.13733C6.96539 8.44196 7.01279 8.65187 7.10759 9.07169C7.51023 10.8548 8.45481 12.6158 9.91948 14.0805C11.3842 15.5452 13.1452 16.4898 14.9283 16.8924C15.3481 16.9872 15.558 17.0346 15.8627 16.9708C16.2477 16.8902 16.7072 16.5229 16.8707 16.165C17 15.8819 17 15.5969 17 15.0267C17 14.5891 16.9512 14.084 16.4101 13.9992C15.0334 13.7834 14.3451 13.6756 14.1917 13.6845C13.5847 13.7201 13.1603 14.1738 12.7044 14.5409L11.6227 15.4118" stroke="currentColor" stroke-width="1.5"/></svg>
+    <span>Escribinos por WhatsApp</span>
+  </a>
+
+</div>
+
+<script>
+(function () {
+  var appears = document.querySelectorAll(".appear");
+
+  Array.prototype.forEach.call(appears, function (el) {
+    el.addEventListener("animationend", function () {
+      el.classList.add("is-in");
+    }, { once: true });
+  });
+
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      var running = false;
+      Array.prototype.forEach.call(appears, function (el) {
+        if (el.getAnimations && el.getAnimations().length) running = true;
+      });
+      if (!running) {
+        Array.prototype.forEach.call(appears, function (el) { el.classList.add("is-in"); });
+        var photo = document.querySelector(".hero-photo");
+        if (photo) photo.classList.add("is-in");
+      }
+    });
+  });
+
+  var burger = document.getElementById("burger");
+  var nav = document.getElementById("site-nav");
+
+  function setMenu(open) {
+    document.body.classList.toggle("menu-open", open);
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+  }
+
+  burger.addEventListener("click", function () {
+    setMenu(!document.body.classList.contains("menu-open"));
+  });
+
+  Array.prototype.forEach.call(nav.querySelectorAll("a"), function (a) {
+    a.addEventListener("click", function () { setMenu(false); });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") setMenu(false);
+  });
+
+  var wide = window.matchMedia("(min-width: 901px)");
+  var onWide = function (e) { if (e.matches) setMenu(false); };
+  if (wide.addEventListener) wide.addEventListener("change", onWide);
+  else wide.addListener(onWide);
+})();
+</script>
+
+</body>
+</html>
