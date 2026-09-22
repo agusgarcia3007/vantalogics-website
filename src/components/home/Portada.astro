@@ -12,9 +12,12 @@
  */
 import Layout from "@/layouts/main.astro"
 import { PUBLIC_LANGS, localizePath, ogImage, useTranslations } from "@/i18n"
+import { CASES, caseStudyPath, formatStudents } from "@/data/cases"
 import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL, whatsappUrl } from "@/site"
 
 const SITE = "https://vantalogics.com"
+const HERO_VIDEO =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260818_072341_50851634-bbc3-4c33-9acc-7647d4db44aa.mp4"
 const lang = "es" as const
 const t = useTranslations(lang)
 const pageUrl = new URL(localizePath(lang), SITE).href
@@ -184,12 +187,21 @@ const webPage = {
       overflow: hidden;
       background: #000;
     }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s linear;
+    }
+    .hero-video.is-live {
+      opacity: 1;
+    }
+
     .hero-photo video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
-      opacity: 1;
       display: block;
     }
     .hero-photo::after {
@@ -417,6 +429,36 @@ const webPage = {
       font-size: var(--badge);
       font-weight: 400;
       letter-spacing: -0.01em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* El brillo recorre el badge en loop: es el único elemento de la portada
+       que sigue vivo después de la entrada. Arranca tarde para no pelearse
+       con la animación de aparición. */
+    .badge::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        115deg,
+        transparent 38%,
+        rgba(255, 255, 255, 0.32) 50%,
+        transparent 62%
+      );
+      transform: translateX(-130%);
+      animation: badge-shimmer 4.2s ease-in-out 1.8s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes badge-shimmer {
+      0% {
+        transform: translateX(-130%);
+      }
+      45%,
+      100% {
+        transform: translateX(130%);
+      }
     }
     .badge-star {
       flex: none;
@@ -425,7 +467,14 @@ const webPage = {
     }
 
     /* ── HEADLINE ──────────────────────────────────────────────────── */
+    /* El titular lleva su propio scrim: en vez de oscurecer el video entero,
+       difumina y baja el brillo sólo de lo que le pasa por detrás. Así el
+       contraste se sostiene aunque el fondo se mueva, y la itálica —que es el
+       texto más fino y el de color más bajo— nunca queda contra un frame
+       claro. El degradado del mask evita cualquier borde visible. */
     .hero h1 {
+      position: relative;
+      isolation: isolate;
       font-family: var(--font-inter);
       font-size: var(--h1);
       font-weight: 500;
@@ -434,6 +483,26 @@ const webPage = {
       color: #fff;
       text-align: center;
     }
+    .hero h1::before {
+      content: "";
+      position: absolute;
+      inset: -8% -6%;
+      z-index: -1;
+      backdrop-filter: blur(26px) brightness(0.52) saturate(0.85);
+      -webkit-backdrop-filter: blur(26px) brightness(0.52) saturate(0.85);
+      -webkit-mask-image: radial-gradient(
+        62% 60% at 50% 50%,
+        #000 42%,
+        transparent 100%
+      );
+      mask-image: radial-gradient(
+        62% 60% at 50% 50%,
+        #000 42%,
+        transparent 100%
+      );
+      pointer-events: none;
+    }
+
     .headline-line {
       display: block;
       overflow: hidden;
@@ -700,17 +769,164 @@ const webPage = {
       }
     }
 
-    /* ── DESKTOP LOCK ──────────────────────────────────────────────── */
-    @media (min-width: 901px) {
-      html,
-      body {
-        height: 100%;
-        overflow: hidden;
+    /* ── SECCIONES BAJO EL HERO ────────────────────────────────────── */
+    /* Fondo opaco propio: el video está fijo detrás y tiene que quedar
+       tapado en cuanto se baja del primer cuadro. */
+    .below {
+      position: relative;
+      z-index: 1;
+      background: #000;
+    }
+    .section {
+      padding: 120px var(--header-x);
+      border-top: 1px solid var(--border-soft);
+    }
+    .section-head {
+      max-width: var(--copy-max);
+      margin: 0 auto 56px;
+    }
+    .eyebrow {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .section-head h2 {
+      color: #fff;
+      font-size: clamp(26px, 2.6vw, 38px);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+    }
+    .section-head p {
+      max-width: var(--lede-max);
+      margin-top: 16px;
+      color: #a0a0a0;
+      font-size: var(--lede);
+      line-height: 1.55;
+      letter-spacing: -0.015em;
+    }
+
+    /* Casos: filas editoriales separadas por una línea, sin tarjetas. */
+    .cases {
+      max-width: var(--copy-max);
+      margin: 0 auto;
+    }
+    .case {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 12px 32px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border-soft);
+      transition: border-color 0.35s ease;
+    }
+    .case:last-child {
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .case:hover {
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+    .case-client {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    .case-title {
+      display: block;
+      max-width: 60ch;
+      color: #a0a0a0;
+      font-size: 15px;
+      line-height: 1.5;
+      letter-spacing: -0.015em;
+    }
+    .case-aside {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--stat);
+      font-size: 13.5px;
+      letter-spacing: -0.015em;
+      white-space: nowrap;
+    }
+    .case-aside svg {
+      flex: none;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .case:hover .case-aside svg {
+      transform: translateX(4px);
+    }
+
+    /* Proceso: los pasos como una lista numerada, sin adornos. */
+    .steps {
+      max-width: var(--copy-max);
+      margin: 0 auto;
+      display: grid;
+      gap: 0;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 12px 24px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border-soft);
+    }
+    .step:last-child {
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .step-n {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .step h3 {
+      margin-bottom: 8px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    .step p {
+      max-width: 62ch;
+      color: #a0a0a0;
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: -0.015em;
+    }
+
+    @media (max-width: 900px) {
+      .section {
+        padding: 72px var(--header-x);
       }
+      .section-head {
+        margin-bottom: 36px;
+      }
+      .case {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 26px 0;
+      }
+      .step {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 24px 0;
+      }
+    }
+
+    /* ── PRIMER CUADRO ─────────────────────────────────────────────── */
+    /* Ya no hay lock de scroll: debajo del hero viven los casos y el
+       proceso. `.page` sigue midiendo exactamente un viewport, así que la
+       portada abre como un solo cuadro y lo demás aparece al bajar. */
+    @media (min-width: 901px) {
       .page {
         height: 100vh;
         height: 100dvh;
-        overflow: hidden;
       }
     }
 
@@ -985,6 +1201,7 @@ const webPage = {
         animation: none !important;
       }
       .appear,
+      .badge::after,
       .wa span,
       .hero-photo,
       .hero h1 em,
@@ -1002,14 +1219,18 @@ const webPage = {
 
   <div class="grain" aria-hidden="true"></div>
 
+  <!-- Dos copias del mismo clip: el loop nativo corta en seco al volver al
+       frame 0, así que el script funde una sobre la otra antes del final. -->
   <div class="hero-photo" aria-hidden="true">
     <video
-      src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260818_072341_50851634-bbc3-4c33-9acc-7647d4db44aa.mp4"
+      class="hero-video is-live"
+      src={HERO_VIDEO}
       autoplay
       muted
-      loop
       playsinline
       preload="auto"></video>
+    <video class="hero-video" src={HERO_VIDEO} muted playsinline preload="auto"
+    ></video>
   </div>
 
   <div class="page">
@@ -1024,7 +1245,7 @@ const webPage = {
       >
         <img
           class="logo-mark"
-          src="https://vantalogics.com/logo-va.png"
+          src="/logo-va.png"
           alt=""
           width="25"
           height="25"
@@ -1033,18 +1254,16 @@ const webPage = {
       </a>
 
       <nav class="nav" id="site-nav" aria-label="Navegación principal">
-        <a class="appear appear--scale" href="#clientes" style="--d:0.16s"
+        <a class="appear appear--scale" href="#casos" style="--d:0.16s"
           >Clientes</a
         >
-        <a class="appear appear--soft" href="#que-construimos" style="--d:0.28s"
+        <a class="appear appear--soft" href="/soluciones/" style="--d:0.28s"
           >Qué construimos</a
         >
-        <a
-          class="appear appear--scale"
-          href="#como-trabajamos"
-          style="--d:0.40s">Cómo trabajamos</a
+        <a class="appear appear--scale" href="#proceso" style="--d:0.40s"
+          >Cómo trabajamos</a
         >
-        <a class="appear appear--soft" href="#perspectivas" style="--d:0.52s"
+        <a class="appear appear--soft" href="/blog/" style="--d:0.52s"
           >Perspectivas</a
         >
       </nav>
@@ -1070,6 +1289,7 @@ const webPage = {
     </header>
 
     <main class="hero" id="top">
+      <span id="contenido" tabindex="-1" class="sr-only"></span>
       <div class="hero-copy">
         <div class="badge appear appear--pop" style="--d:0.22s">
           <svg
@@ -1124,7 +1344,7 @@ const webPage = {
           >
           <a
             class="btn btn-ghost appear appear--side"
-            href="#clientes"
+            href="#casos"
             style="--d:1.10s">Ver nuestro trabajo</a
           >
         </div>
@@ -1231,6 +1451,68 @@ const webPage = {
     </a>
   </div>
 
+  <div class="below">
+    <section class="section" id="casos">
+      <div class="section-head">
+        <span class="eyebrow">{t.cases.eyebrow}</span>
+        <h2>{t.cases.title}</h2>
+        <p>{t.cases.intro}</p>
+      </div>
+
+      <div class="cases">
+        {
+          CASES.map((item) => (
+            <a class="case" href={caseStudyPath(lang, item.slug)}>
+              <span>
+                <span class="case-client">{item.client[lang]}</span>
+                <span class="case-title">{item.title[lang]}</span>
+              </span>
+              <span class="case-aside">
+                {formatStudents(lang, item.students)} {t.cases.detail.students}
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M5 12H19M19 12L13 6M19 12L13 18"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section" id="proceso">
+      <div class="section-head">
+        <span class="eyebrow">{t.process.eyebrow}</span>
+        <h2>{t.process.title}</h2>
+      </div>
+
+      <div class="steps">
+        {
+          t.process.steps.map((step) => (
+            <div class="step">
+              <span class="step-n">{step.step}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+
   <script is:inline>
     ;(function () {
       var appears = document.querySelectorAll(".appear")
@@ -1260,6 +1542,38 @@ const webPage = {
           }
         })
       })
+
+      // Loop sin corte: la copia que está por terminar le cede el paso a la
+      // otra, que arranca de cero un segundo antes. El fundido dura lo mismo
+      // que la transición de opacidad.
+      var videos = document.querySelectorAll(".hero-video")
+      if (videos.length === 2) {
+        var FADE = 1.2
+        var live = 0
+        var swapping = false
+
+        var swap = function () {
+          if (swapping) return
+          swapping = true
+          var next = videos[1 - live]
+          next.currentTime = 0
+          var playing = next.play()
+          if (playing && playing.catch) playing.catch(function () {})
+          next.classList.add("is-live")
+          videos[live].classList.remove("is-live")
+          live = 1 - live
+          setTimeout(function () {
+            swapping = false
+          }, FADE * 1000)
+        }
+
+        videos.forEach(function (video) {
+          video.addEventListener("timeupdate", function () {
+            if (video !== videos[live] || !video.duration) return
+            if (video.duration - video.currentTime <= FADE) swap()
+          })
+        })
+      }
 
       var burger = document.getElementById("burger")
       var nav = document.getElementById("site-nav")
