@@ -13,7 +13,13 @@
 import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
 import { PUBLIC_LANGS, localizePath, ogImage, useTranslations } from "@/i18n"
-import { CASES, caseStudyPath, formatStudents } from "@/data/cases"
+import {
+  CASES,
+  caseStudyPath,
+  formatStudents,
+  formatTotalStudents,
+} from "@/data/cases"
+import { findClient } from "@/data/clients"
 import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/site"
 
 const SITE = "https://vantalogics.com"
@@ -88,19 +94,21 @@ const webPage = {
     <!-- Dos copias del mismo clip: el loop nativo corta en seco al volver al
          frame 0, así que el script funde una sobre la otra antes del final. -->
     <div class="hero-photo" slot="backdrop" aria-hidden="true">
-      <video
-        class="hero-video is-live"
-        src={HERO_VIDEO}
-        autoplay
-        muted
-        playsinline
-        preload="auto"></video>
-      <video
-        class="hero-video"
-        src={HERO_VIDEO}
-        muted
-        playsinline
-        preload="auto"></video>
+      <div class="hero-plate">
+        <video
+          class="hero-video is-live"
+          src={HERO_VIDEO}
+          autoplay
+          muted
+          playsinline
+          preload="auto"></video>
+        <video
+          class="hero-video"
+          src={HERO_VIDEO}
+          muted
+          playsinline
+          preload="auto"></video>
+      </div>
     </div>
 
     <main class="hero" id="top">
@@ -109,8 +117,8 @@ const webPage = {
         <div class="badge appear appear--pop" style="--d:0.22s">
           <svg
             class="badge-star"
-            width="18"
-            height="20"
+            width="15"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             aria-hidden="true"
@@ -151,12 +159,24 @@ const webPage = {
 
         <div class="hero-actions">
           <a
-            class="btn btn-solid appear appear--btn"
+            class="btn btn-solid btn-lead appear appear--btn"
             href="https://cal.com/vantalogics"
             target="_blank"
             rel="noopener"
-            style="--d:0.96s">Hablar de tu producto</a
+            style="--d:0.96s"
           >
+            Hablar de tu producto
+            <span class="btn-pip" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 17L17 7M17 7H9M17 7V15"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"></path>
+              </svg>
+            </span>
+          </a>
           <a
             class="btn btn-ghost appear appear--side"
             href="#casos"
@@ -193,7 +213,7 @@ const webPage = {
             stroke-linejoin="round"
             stroke-width="1.5"></path></svg
         >
-        20.000+ estudiantes
+        {formatTotalStudents(lang)} estudiantes
       </div>
 
       <div class="appear appear--stat" style="--d:1.28s">
@@ -239,65 +259,105 @@ const webPage = {
       </div>
     </footer>
 
-    <div class="below" slot="after">
+    <div class="below below--frame" slot="after">
       <section class="section" id="casos">
-        <div class="section-head">
-          <span class="eyebrow">{t.cases.eyebrow}</span>
-          <h2>{t.cases.title}</h2>
-          <p>{t.cases.intro}</p>
-        </div>
+        <div class="shell">
+          <div class="section-head reveal">
+            <span class="eyebrow">{t.cases.eyebrow}</span>
+            <h2>{t.cases.title}</h2>
+            <p>{t.cases.intro}</p>
+          </div>
 
-        <div class="cases">
-          {
-            CASES.map((item) => (
-              <a class="case" href={caseStudyPath(lang, item.slug)}>
-                <span>
-                  <span class="case-client">{item.client[lang]}</span>
-                  <span class="case-title">{item.title[lang]}</span>
-                </span>
-                <span class="case-aside">
-                  {formatStudents(lang, item.students)}{" "}
-                  {t.cases.detail.students}
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
+          <div class="cases">
+            {
+              CASES.map((item, i) => {
+                const client = findClient(item.slug)
+                return (
+                  <a
+                    class="case reveal"
+                    href={caseStudyPath(lang, item.slug)}
+                    style={`--i:${i}`}
                   >
-                    <path
-                      d="M5 12H19M19 12L13 6M19 12L13 18"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="1.5"
-                    />
-                  </svg>
-                </span>
-              </a>
-            ))
-          }
+                    <span class="case-core">
+                      <span class="case-top">
+                        {client && (
+                          <span class="case-mark">
+                            <img
+                              src={client.logo}
+                              alt={client.logoAlt || ""}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                            {client.wordmark && (
+                              <span class="case-wordmark">
+                                {client.wordmark}
+                              </span>
+                            )}
+                          </span>
+                        )}
+                        <span class="case-count">
+                          {formatStudents(lang, item.students)}{" "}
+                          {t.cases.detail.students}
+                        </span>
+                      </span>
+
+                      <span class="case-body">
+                        <span class="case-client">{item.client[lang]}</span>
+                        <span class="case-title">{item.title[lang]}</span>
+                      </span>
+
+                      <span class="case-rail">
+                        <span class="case-tags">
+                          {item.integrations.map((tag) => (
+                            <span class="case-tag">{tag[lang]}</span>
+                          ))}
+                        </span>
+                        <span class="case-go" aria-hidden="true">
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <path
+                              d="M7 17L17 7M17 7H9M17 7V15"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </span>
+                  </a>
+                )
+              })
+            }
+          </div>
         </div>
       </section>
 
       <section class="section" id="proceso">
-        <div class="section-head">
-          <span class="eyebrow">{t.process.eyebrow}</span>
-          <h2>{t.process.title}</h2>
-        </div>
+        <div class="shell">
+          <div class="section-head reveal">
+            <span class="eyebrow">{t.process.eyebrow}</span>
+            <h2>{t.process.title}</h2>
+          </div>
 
-        <div class="steps">
-          {
-            t.process.steps.map((step) => (
-              <div class="step">
-                <span class="step-n">{step.step}</span>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.body}</p>
+          <div class="steps">
+            {
+              t.process.steps.map((step, i) => (
+                <div class="step reveal" style={`--i:${i}`}>
+                  <span class="step-n">{step.step}</span>
+                  <div>
+                    <h3>{step.title}</h3>
+                    <p>{step.body}</p>
+                  </div>
                 </div>
-              </div>
-            ))
-          }
+              ))
+            }
+          </div>
         </div>
       </section>
     </div>

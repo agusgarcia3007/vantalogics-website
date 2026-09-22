@@ -65,7 +65,7 @@ export const CASES: CaseStudy[] = [
       es: "Diseñamos y desarrollamos una experiencia completa para explorar cursos, acceder a videos y materiales, seguir el progreso, resolver evaluaciones y consultar directamente con la docente.",
       en: "We designed and built a complete experience for exploring courses, accessing videos and study materials, tracking progress, taking assessments and contacting the instructor directly.",
     },
-    students: 20000,
+    students: 22000,
     metrics: [
       {
         value: "5",
@@ -179,7 +179,7 @@ export const CASES: CaseStudy[] = [
       es: "Construimos una academia con catálogo de cursos, lecciones en video, materiales complementarios, autoevaluaciones, seguimiento del progreso y acceso desde dispositivos móviles y TV.",
       en: "We built an academy with a course catalog, video lessons, supplementary materials, self-assessments, progress tracking, and mobile and TV access.",
     },
-    students: 594,
+    students: 600,
     metrics: [
       {
         value: "154",
@@ -236,7 +236,7 @@ export const CASES: CaseStudy[] = [
       es: "Desarrollamos una academia para publicar y vender cursos, organizar clases y materiales, acompañar programas asincrónicos, evaluar conocimientos y emitir certificaciones oficiales.",
       en: "We developed an academy to publish and sell courses, organize lessons and materials, support asynchronous programs, assess knowledge and issue official certificates.",
     },
-    students: 838,
+    students: 850,
     metrics: [
       {
         value: "51",
@@ -276,3 +276,25 @@ export const CASES: CaseStudy[] = [
     },
   },
 ]
+
+/**
+ * Estudiantes alcanzados por todos los productos en producción.
+ *
+ * Se deriva de la lista en vez de escribirse a mano: el número de la portada y
+ * el de cada caso salen de la misma fuente, así que no pueden contradecirse.
+ */
+export const TOTAL_STUDENTS: number = CASES.reduce(
+  (total, study) => total + study.students,
+  0
+)
+
+/**
+ * El total, redondeado hacia abajo al millar y con un «+».
+ *
+ * Hacia abajo a propósito: el sufijo ya declara que hay más, y un número
+ * redondeado hacia arriba sería una cifra que todavía no se alcanzó.
+ */
+export function formatTotalStudents(lang: Lang): string {
+  const floor = Math.floor(TOTAL_STUDENTS / 1000) * 1000
+  return `${new Intl.NumberFormat(lang).format(floor)}+`
+}

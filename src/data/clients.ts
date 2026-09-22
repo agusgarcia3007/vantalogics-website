@@ -47,3 +47,15 @@ export const CLIENTS: Client[] = [
     logoClass: "h-20 w-auto max-w-[200px] sm:h-24",
   },
 ]
+
+/**
+ * El cliente detrás de un caso, por slug.
+ *
+ * Los dos archivos se mantienen separados —el caso es contenido editorial, el
+ * cliente es un activo de marca— pero la portada necesita cruzarlos para
+ * mostrar el logo junto al caso. Devuelve `undefined` en vez de tirar: un caso
+ * publicado sin logo todavía tiene que poder renderizar.
+ */
+export function findClient(caseSlug: string): Client | undefined {
+  return CLIENTS.find((client) => client.caseSlug === caseSlug)
+}

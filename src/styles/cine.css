@@ -82,6 +82,18 @@ html {
   --badge-mb: 22px;
   --lede-mt: 18px;
   --actions-mt: 26px;
+
+  /* El marco del primer cuadro: cuánto negro queda alrededor del video y con
+     qué radio se recorta. Es el token que convierte la portada en una placa
+     apoyada sobre la página en vez de un borde a sangre cortado en seco. */
+  --frame: 14px;
+  --plate-r: 26px;
+
+  /* Contenedor de las secciones de abajo y su ritmo vertical. */
+  --shell: 1180px;
+  --section-y: 140px;
+
+  --ease-plate: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 html,
@@ -109,6 +121,18 @@ body {
   overflow: hidden;
   background: #000;
 }
+.hero-plate {
+  position: absolute;
+  inset: var(--frame);
+  border-radius: var(--plate-r);
+  overflow: hidden;
+  background: #000;
+  /* Hairline por dentro del recorte: un `border` empujaría el video y dejaría
+     un hilo de fondo entre el borde y la imagen al redondear las esquinas. */
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 40px 120px -40px rgba(0, 0, 0, 0.9);
+}
 .hero-video {
   position: absolute;
   inset: 0;
@@ -126,7 +150,7 @@ body {
   object-position: center;
   display: block;
 }
-.hero-photo::after {
+.hero-plate::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -169,12 +193,18 @@ body {
   min-height: 0;
 }
 
+/* El aire extra del header existe para no pisar el borde de la placa. Donde no
+   hay placa, es aire de más. */
+.page--flow .header {
+  padding-top: var(--header-y);
+}
+
 /* ── HEADER ────────────────────────────────────────────────────── */
 .header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: var(--header-y) var(--header-x) 10px;
+  padding: calc(var(--header-y) + var(--frame)) var(--header-x) 10px;
   z-index: 50;
   position: relative;
 }
@@ -233,8 +263,8 @@ body {
   align-items: center;
   justify-content: center;
   height: var(--btn-h);
-  padding: 0 16px;
-  border-radius: 6px;
+  padding: 0 18px;
+  border-radius: 999px;
   font-size: var(--btn);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -242,9 +272,39 @@ body {
   white-space: nowrap;
   cursor: pointer;
   transition:
-    background 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
+    background 0.55s var(--ease-plate),
+    box-shadow 0.55s var(--ease-plate),
+    border-color 0.55s var(--ease-plate),
+    transform 0.55s var(--ease-plate);
+}
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* El CTA que manda lleva la flecha dentro de su propio círculo, pegada al
+   padding derecho. Suelta al lado del texto se lee como un enlace; encerrada,
+   como un control. */
+.btn-lead {
+  gap: 10px;
+  padding-inline-end: 5px;
+}
+.btn-pip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--hero-btn-h) - 12px);
+  height: calc(var(--hero-btn-h) - 12px);
+  flex: none;
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.12);
+  transition:
+    transform 0.55s var(--ease-plate),
+    background 0.55s var(--ease-plate);
+}
+.btn-lead:hover .btn-pip {
+  transform: translate(2px, -2px) scale(1.06);
+  background: rgba(17, 17, 17, 0.16);
 }
 .btn-solid {
   background: linear-gradient(180deg, #ffffff 0%, #e7e7e7 48%, #cfcfcf 100%);
@@ -343,16 +403,20 @@ body.menu-open .burger span:nth-child(3) {
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   margin-bottom: var(--badge-mb);
-  padding: 9px 15px;
+  padding: 5px 13px 5px 11px;
   border: 0;
-  border-radius: 5px;
+  border-radius: 999px;
   background: linear-gradient(90deg, #7d7d7d 0%, #2a2a2a 52%, #0a0a0a 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
   color: #f2f2f2;
   font-size: var(--badge);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-weight: 450;
+  letter-spacing: -0.005em;
+  line-height: 1.55;
   position: relative;
   overflow: hidden;
 }
@@ -479,7 +543,7 @@ body.menu-open .burger span:nth-child(3) {
   align-items: center;
   height: var(--btn-h);
   padding: 0 13px;
-  border-radius: 6px;
+  border-radius: 999px;
   border: 1px solid rgba(198, 198, 198, 0.45);
   background: linear-gradient(
     135deg,
@@ -536,7 +600,10 @@ body.menu-open .burger span:nth-child(3) {
   justify-content: space-between;
   gap: 24px;
   padding: 0 var(--stats-x) var(--stats-y);
-  padding-bottom: max(var(--stats-y), env(safe-area-inset-bottom));
+  padding-bottom: max(
+    calc(var(--stats-y) + var(--frame)),
+    env(safe-area-inset-bottom)
+  );
   color: #d8d8d8;
   color: var(--stat, #d8d8d8);
 }
@@ -697,140 +764,421 @@ body.menu-open .burger span:nth-child(3) {
   z-index: 1;
   background: #000;
 }
-.section {
-  padding: 120px var(--header-x);
-  border-top: 1px solid var(--border-soft);
+
+/* Una página de caso ya abre con su propio encabezado y sus métricas: el
+   ritmo de la portada, pensado para separar bloques que llegan después de un
+   viewport entero de video, ahí deja huecos sin contenido. */
+.below:not(.below--frame) {
+  --section-y: 100px;
 }
+
+/* El corte entre la placa del hero y lo que sigue era el borde de un video a
+   sangre contra negro plano. Ahora la placa termina antes del borde y este
+   halo continúa la luz unos cientos de píxeles hacia abajo, así que el paso de
+   una cosa a la otra es un degradado y no una línea.
+
+   Sólo en la portada: en una página de caso, arriba de `.below` no hay ninguna
+   placa que continuar y el halo se leería como una mancha. */
+.below--frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 420px;
+  background: radial-gradient(
+    120% 100% at 50% 0%,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.025) 34%,
+    transparent 72%
+  );
+  pointer-events: none;
+}
+
+/* ── CONTENEDOR ────────────────────────────────────────────────── */
+/* Todo lo que va debajo del hero se alinea contra esta misma columna. Sin
+   ella cada sección elegía su propio ancho y el sitio se leía como una pila
+   de bloques sueltos en vez de una página. */
+.shell,
+.case-wrap {
+  position: relative;
+}
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+}
+.section {
+  position: relative;
+  padding: var(--section-y) var(--header-x);
+}
+
+/* La separación entre secciones es una hairline que empieza y termina con el
+   contenedor, no un borde a sangre: cortar el ancho completo de la pantalla
+   era exactamente la división burda que se quería sacar. */
+.section + .section > .shell::before,
+.section + .section > .case-wrap::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--section-y) * -0.5);
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-soft) 18%,
+    var(--border-soft) 82%,
+    transparent
+  );
+}
+
+/* Split editorial: el titular ocupa la columna ancha y la bajada se apoya
+   contra su última línea en la angosta. Centrado dejaba media pantalla vacía a
+   la derecha, que es lo que hacía ver el bloque como un encabezado suelto en
+   vez de la apertura de una sección. */
 .section-head {
-  max-width: var(--copy-max);
-  margin: 0 auto 56px;
+  margin: 0 0 64px;
+}
+@media (min-width: 1100px) {
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.8fr);
+    align-items: end;
+    column-gap: 64px;
+  }
+  .section-head .eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    /* Como ítem de grid, un inline-flex se estira a lo ancho de la celda: la
+       pastilla pasaría a ser una barra. */
+    justify-self: start;
+  }
+  .section-head h2 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .section-head p {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 0;
+    padding-bottom: 0.35em;
+  }
 }
 .eyebrow {
-  display: block;
-  margin-bottom: 14px;
-  color: var(--muted);
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.09);
+  color: #b4b4b4;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 .section-head h2 {
+  max-width: 18ch;
   color: #fff;
-  font-size: clamp(26px, 2.6vw, 38px);
+  font-size: clamp(30px, 3.2vw, 46px);
   font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 1.15;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
 }
 .section-head p {
-  max-width: var(--lede-max);
-  margin-top: 16px;
-  color: #a0a0a0;
+  max-width: 48ch;
+  margin-top: 18px;
+  color: #9a9a9a;
   font-size: var(--lede);
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+}
+
+/* ── CASOS ─────────────────────────────────────────────────────── */
+/* Grilla asimétrica de seis columnas: el caso de mayor alcance ocupa cuatro y
+   el resto se reparte en dos filas de proporciones distintas. Cuatro tarjetas
+   iguales leen como catálogo; esto lee como una selección. */
+.cases {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+.case:nth-child(1) {
+  grid-column: span 4;
+}
+.case:nth-child(2) {
+  grid-column: span 2;
+}
+.case:nth-child(3),
+.case:nth-child(4) {
+  grid-column: span 3;
+}
+/* Cualquier caso que se agregue después cae en media fila y no rompe nada. */
+.case:nth-child(n + 5) {
+  grid-column: span 3;
+}
+
+/* Doble borde: una bandeja clara con su propio hairline y, adentro, la placa
+   negra del contenido con el radio calculado para que las dos curvas sean
+   concéntricas. */
+.case {
+  display: block;
+  padding: 6px;
+  border-radius: 28px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.085),
+    rgba(255, 255, 255, 0.02)
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  transition:
+    transform 0.7s var(--ease-plate),
+    background 0.7s var(--ease-plate),
+    box-shadow 0.7s var(--ease-plate);
+}
+.case:hover,
+.case:focus-visible {
+  outline: none;
+  transform: translateY(-5px);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.04)
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 30px 60px -30px rgba(0, 0, 0, 0.9);
+}
+.case-core {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 100%;
+  min-height: 268px;
+  padding: 26px 26px 22px;
+  border-radius: calc(28px - 6px);
+  background: linear-gradient(180deg, #0d0d0d 0%, #070707 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.075);
+}
+
+.case-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Los logos llegan de los sitios de cada producto, con colores y proporciones
+   que no se eligieron acá. El gris de reposo los vuelve un sistema; el color
+   aparece sólo en la tarjeta que se está mirando. El brillo levanta los
+   marcados más oscuros, que sobre negro se perderían. */
+.case-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.case-mark img {
+  height: 40px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  object-position: left center;
+  opacity: 0.7;
+  filter: grayscale(1) brightness(1.45) contrast(0.95);
+  transition:
+    opacity 0.7s var(--ease-plate),
+    filter 0.7s var(--ease-plate);
+}
+.case:hover .case-mark img {
+  opacity: 1;
+  filter: grayscale(0) brightness(1.02) contrast(1);
+}
+.case-wordmark {
+  color: #cfcfcf;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  transition: color 0.7s var(--ease-plate);
+}
+.case:hover .case-wordmark {
+  color: #fff;
+}
+
+.case-count {
+  flex: none;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  color: var(--stat);
+  font-size: 12px;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.case-body {
+  display: block;
+}
+.case-client {
+  display: block;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+.case-title {
+  display: block;
+  max-width: 46ch;
+  color: #979797;
+  font-size: 15px;
   line-height: 1.55;
   letter-spacing: -0.015em;
 }
 
-/* Casos: filas editoriales separadas por una línea, sin tarjetas. */
-.cases {
-  max-width: var(--copy-max);
-  margin: 0 auto;
+.case-rail {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
 }
-.case {
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.case-tag {
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  color: #8a8a8a;
+  font-size: 11.5px;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+/* La flecha vive dentro de su propio círculo, como el CTA del hero. */
+.case-go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  color: #cfcfcf;
+  transition:
+    transform 0.7s var(--ease-plate),
+    background 0.7s var(--ease-plate),
+    color 0.7s var(--ease-plate);
+}
+.case:hover .case-go {
+  transform: translate(3px, -3px);
+  background: #fff;
+  color: #0a0a0a;
+}
+
+/* ── PROCESO ───────────────────────────────────────────────────── */
+/* Los pasos como una lista numerada, sin adornos. */
+.steps {
   display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  gap: 12px 32px;
-  padding: 32px 0;
-  border-top: 1px solid var(--border-soft);
-  transition: border-color 0.35s ease;
+  gap: 0;
 }
-.case:last-child {
+.step {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px 32px;
+  padding: 34px 8px;
+  border-top: 1px solid var(--border-soft);
+  border-radius: 14px;
+  transition: background 0.7s var(--ease-plate);
+}
+.step:last-child {
   border-bottom: 1px solid var(--border-soft);
 }
-.case:hover {
-  border-color: rgba(255, 255, 255, 0.32);
+.step:hover {
+  background: rgba(255, 255, 255, 0.022);
 }
-.case-client {
-  display: block;
+.step-n {
+  color: #6f6f6f;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.7s var(--ease-plate);
+}
+.step:hover .step-n {
+  color: #fff;
+}
+.step h3 {
   margin-bottom: 8px;
   color: #fff;
   font-size: 17px;
   font-weight: 500;
   letter-spacing: -0.03em;
 }
-.case-title {
-  display: block;
-  max-width: 60ch;
-  color: #a0a0a0;
-  font-size: 15px;
-  line-height: 1.5;
-  letter-spacing: -0.015em;
-}
-.case-aside {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--stat);
-  font-size: 13.5px;
-  letter-spacing: -0.015em;
-  white-space: nowrap;
-}
-.case-aside svg {
-  flex: none;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.case:hover .case-aside svg {
-  transform: translateX(4px);
-}
-
-/* Proceso: los pasos como una lista numerada, sin adornos. */
-.steps {
-  max-width: var(--copy-max);
-  margin: 0 auto;
-  display: grid;
-  gap: 0;
-}
-.step {
-  display: grid;
-  grid-template-columns: 56px 1fr;
-  gap: 12px 24px;
-  padding: 28px 0;
-  border-top: 1px solid var(--border-soft);
-}
-.step:last-child {
-  border-bottom: 1px solid var(--border-soft);
-}
-.step-n {
-  color: var(--muted);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  font-variant-numeric: tabular-nums;
-}
-.step h3 {
-  margin-bottom: 8px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.03em;
-}
 .step p {
   max-width: 62ch;
-  color: #a0a0a0;
+  color: #9a9a9a;
   font-size: 15px;
-  line-height: 1.55;
+  line-height: 1.6;
   letter-spacing: -0.015em;
+}
+
+/* ── ENTRADA POR SCROLL ────────────────────────────────────────── */
+/* Nada aparece de golpe: cada bloque sube con un desenfoque que se resuelve.
+   El escalonado sale de `--i`, el índice que cada elemento declara en su
+   propio `style`. Sólo `transform`, `opacity` y `filter`: nada que dispare
+   layout. La clase la pone el script de `Chrome.astro` con un
+   IntersectionObserver, y si el script no corre el contenido queda visible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s var(--ease-plate),
+    transform 0.9s var(--ease-plate),
+    filter 0.9s var(--ease-plate);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.reveal.is-seen {
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
 @media (max-width: 900px) {
-  .section {
-    padding: 72px var(--header-x);
-  }
   .section-head {
-    margin-bottom: 36px;
+    margin-bottom: 40px;
   }
-  .case {
+  .cases {
     grid-template-columns: 1fr;
     gap: 14px;
-    padding: 26px 0;
+  }
+  .case,
+  .case:nth-child(1),
+  .case:nth-child(2),
+  .case:nth-child(3),
+  .case:nth-child(4),
+  .case:nth-child(n + 5) {
+    grid-column: 1 / -1;
+  }
+  .case-core {
+    min-height: 0;
+    gap: 24px;
+    padding: 22px 20px 18px;
+  }
+  /* Sin hover táctil, la elevación del reposo nunca se resolvería. */
+  .case:hover {
+    transform: none;
   }
   .step {
     grid-template-columns: 1fr;
@@ -876,6 +1224,10 @@ body.menu-open .burger span:nth-child(3) {
     --stats-y: 44px;
     --copy-max: 1050px;
     --lede-max: 690px;
+    --frame: 18px;
+    --plate-r: 32px;
+    --shell: 1320px;
+    --section-y: 168px;
     --badge-mb: 26px;
     --lede-mt: 22px;
     --actions-mt: 30px;
@@ -900,6 +1252,10 @@ body.menu-open .burger span:nth-child(3) {
     --stats-y: 52px;
     --copy-max: 1220px;
     --lede-max: 760px;
+    --frame: 22px;
+    --plate-r: 38px;
+    --shell: 1480px;
+    --section-y: 192px;
   }
 }
 @media (min-width: 2560px) {
@@ -910,6 +1266,9 @@ body.menu-open .burger span:nth-child(3) {
     --stats-x: 160px;
     --copy-max: 1380px;
     --lede-max: 820px;
+    --frame: 26px;
+    --plate-r: 42px;
+    --shell: 1640px;
   }
 }
 @media (min-width: 1280px) and (max-width: 1599px) {
@@ -920,6 +1279,8 @@ body.menu-open .burger span:nth-child(3) {
     --stats-x: 80px;
     --copy-max: 980px;
     --lede-max: 660px;
+    --shell: 1100px;
+    --section-y: 128px;
   }
 }
 @media (min-width: 901px) and (max-width: 1279px) {
@@ -943,6 +1304,10 @@ body.menu-open .burger span:nth-child(3) {
     --hero-gap: 64px;
     --copy-max: 800px;
     --lede-max: 560px;
+    --frame: 12px;
+    --plate-r: 22px;
+    --shell: 100%;
+    --section-y: 112px;
   }
 }
 
@@ -994,6 +1359,10 @@ body.menu-open .burger span:nth-child(3) {
     --stats-x: 20px;
     --stats-y: 28px;
     --hero-gap: 36px;
+    --frame: 0px;
+    --plate-r: 0px;
+    --shell: 100%;
+    --section-y: 84px;
   }
 
   .header {
@@ -1130,7 +1499,8 @@ body.menu-open .burger span:nth-child(3) {
   .wa span,
   .hero-photo,
   .hero h1 em,
-  .badge-star {
+  .badge-star,
+  .reveal {
     opacity: 1;
     transform: none;
     clip-path: none;
