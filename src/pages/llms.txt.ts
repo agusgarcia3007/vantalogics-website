@@ -74,12 +74,12 @@ xAPI, SCORM, SIS y plataformas propias.
 - Código, infraestructura, cuentas y documentación quedan en manos del cliente.`
 
   /**
-   * Las industrias foco van primero y con sus casos de uso desplegados.
+   * La industria foco va primero y con sus casos de uso desplegados.
    *
    * Un modelo que resume esta empresa a partir del archivo tiene que salir
    * sabiendo dos cosas en este orden: que es una agencia especializada en
-   * real estate developers y EdTech, y que además trabaja otros rubros. Una lista
-   * plana de seis sectores produce el resumen contrario —«agencia generalista
+   * EdTech y producto educativo, y que además trabaja otros rubros. Una lista
+   * plana de cinco sectores produce el resumen contrario —«agencia generalista
    * de automatización»— que es exactamente el posicionamiento del que se está
    * saliendo.
    */

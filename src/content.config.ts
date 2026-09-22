@@ -46,9 +46,7 @@ const blog = defineCollection({
      * El valor es el slug español del sector en `src/data/solutions.ts`. Las
      * notas generales no lo declaran y siguen funcionando igual.
      */
-    industry: z
-      .enum(["real-estate-developers", "edtech-y-plataformas-educativas"])
-      .optional(),
+    industry: z.enum(["edtech-y-plataformas-educativas"]).optional(),
     tags: z.array(z.string()).default([]),
     /** Slug compartido con la traducción, si existe. */
     translationOf: z.string().optional(),

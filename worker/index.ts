@@ -19,77 +19,109 @@ interface Env {
 /**
  * URLs que existieron y ya no.
  *
- * El sector «inmobiliarias» pasó a ser «real estate developers», que no es un
- * cambio de nombre sino de público: cambiaron los slugs de la página de sector,
- * los de sus casos de uso y los de las cuatro notas del silo. Las viejas
- * estaban indexadas, así que van con 301 —permanente— para que el enlace y la
- * autoridad se transfieran en vez de perderse en un 404.
+ * Dos capas de historia en el mismo mapa. Primero «inmobiliarias» pasó a ser
+ * «real estate developers»; después el rubro entero salió del sitio para dejar
+ * una sola industria foco, EdTech. Las dos generaciones de URL estuvieron
+ * indexadas, así que las dos apuntan con 301 —permanente— al índice del nivel
+ * que les corresponde: las páginas de sector y de caso de uso al índice de
+ * soluciones, las notas al índice del blog. Un 301 al índice transfiere parte
+ * de la autoridad y deja al visitante en algo útil; un 404 pierde las dos.
  *
  * El mapa es literal y no un patrón: un `replace("inmobiliarias", …)` mandaría
  * a 301 cualquier URL futura que contenga la palabra, incluida una que sí
  * exista. Las claves llevan la barra final porque el sitio usa
  * `trailingSlash: "always"`.
  */
+const SOLUTIONS_INDEX = {
+  es: "/soluciones/",
+  en: "/solutions/",
+  ar: "/ar/solutions/",
+}
+const BLOG_INDEX = { es: "/blog/", en: "/en/blog/", ar: "/ar/blog/" }
+
 const REDIRECTS: Record<string, string> = {
-  // Página de sector.
-  "/soluciones/inmobiliarias/": "/soluciones/real-estate-developers/",
-  "/solutions/real-estate-agencies/": "/solutions/real-estate-developers/",
-  "/ar/solutions/real-estate-agencies/":
-    "/ar/solutions/real-estate-developers/",
+  // ── Páginas de sector y casos de uso ───────────────────────────────────
+  // Generación actual (real estate developers), la que acaba de salir.
+  "/soluciones/real-estate-developers/": SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-developers/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/real-estate-developers/": SOLUTIONS_INDEX.ar,
+  "/soluciones/real-estate-developers/agente-de-whatsapp/": SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-developers/whatsapp-agent/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/real-estate-developers/whatsapp-agent/": SOLUTIONS_INDEX.ar,
+  "/soluciones/real-estate-developers/calificacion-de-leads/":
+    SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-developers/lead-qualification/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/real-estate-developers/lead-qualification/":
+    SOLUTIONS_INDEX.ar,
+  "/soluciones/real-estate-developers/coordinacion-de-visitas/":
+    SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-developers/unit-visit-coordination/":
+    SOLUTIONS_INDEX.en,
+  "/ar/solutions/real-estate-developers/unit-visit-coordination/":
+    SOLUTIONS_INDEX.ar,
+  "/soluciones/real-estate-developers/centralizacion-de-datos/":
+    SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-developers/data-centralization/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/real-estate-developers/data-centralization/":
+    SOLUTIONS_INDEX.ar,
 
-  // Casos de uso: los dos primeros conservan el slug, los otros dos cambiaron.
-  "/soluciones/inmobiliarias/agente-de-whatsapp/":
-    "/soluciones/real-estate-developers/agente-de-whatsapp/",
-  "/solutions/real-estate-agencies/whatsapp-agent/":
-    "/solutions/real-estate-developers/whatsapp-agent/",
-  "/ar/solutions/real-estate-agencies/whatsapp-agent/":
-    "/ar/solutions/real-estate-developers/whatsapp-agent/",
-  "/soluciones/inmobiliarias/calificacion-de-leads/":
-    "/soluciones/real-estate-developers/calificacion-de-leads/",
-  "/solutions/real-estate-agencies/lead-qualification/":
-    "/solutions/real-estate-developers/lead-qualification/",
-  "/ar/solutions/real-estate-agencies/lead-qualification/":
-    "/ar/solutions/real-estate-developers/lead-qualification/",
-  "/soluciones/inmobiliarias/coordinacion-de-visitas/":
-    "/soluciones/real-estate-developers/coordinacion-de-visitas/",
-  "/solutions/real-estate-agencies/viewing-coordination/":
-    "/solutions/real-estate-developers/unit-visit-coordination/",
+  // Generación anterior (inmobiliarias). Antes saltaban al slug nuevo; ahora
+  // van directo al índice para no encadenar dos 301.
+  "/soluciones/inmobiliarias/": SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-agencies/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/real-estate-agencies/": SOLUTIONS_INDEX.ar,
+  "/soluciones/inmobiliarias/agente-de-whatsapp/": SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-agencies/whatsapp-agent/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/real-estate-agencies/whatsapp-agent/": SOLUTIONS_INDEX.ar,
+  "/soluciones/inmobiliarias/calificacion-de-leads/": SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-agencies/lead-qualification/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/real-estate-agencies/lead-qualification/": SOLUTIONS_INDEX.ar,
+  "/soluciones/inmobiliarias/coordinacion-de-visitas/": SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-agencies/viewing-coordination/": SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-agencies/viewing-coordination/":
-    "/ar/solutions/real-estate-developers/unit-visit-coordination/",
-  // La reactivación de base salió y la reemplazó la centralización de datos:
-  // es el caso más cercano de la nueva grilla, no una traducción del anterior.
+    SOLUTIONS_INDEX.ar,
   "/soluciones/inmobiliarias/reactivacion-de-base-de-datos/":
-    "/soluciones/real-estate-developers/centralizacion-de-datos/",
-  "/solutions/real-estate-agencies/database-reactivation/":
-    "/solutions/real-estate-developers/data-centralization/",
+    SOLUTIONS_INDEX.es,
+  "/solutions/real-estate-agencies/database-reactivation/": SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-agencies/database-reactivation/":
-    "/ar/solutions/real-estate-developers/data-centralization/",
+    SOLUTIONS_INDEX.ar,
 
-  // Notas del silo.
-  "/blog/cuanto-cuesta-un-agente-de-ia-para-una-inmobiliaria/":
-    "/blog/cuanto-cuesta-un-agente-de-ia-para-un-real-estate-developer/",
+  // ── Notas del silo ─────────────────────────────────────────────────────
+  // Generación actual.
+  "/blog/cuanto-cuesta-un-agente-de-ia-para-un-real-estate-developer/":
+    BLOG_INDEX.es,
+  "/en/blog/how-much-does-an-ai-agent-for-a-real-estate-developer-cost/":
+    BLOG_INDEX.en,
+  "/ar/blog/how-much-does-an-ai-agent-for-a-real-estate-developer-cost/":
+    BLOG_INDEX.ar,
+  "/blog/errores-de-un-agente-de-ia-en-un-real-estate-developer/":
+    BLOG_INDEX.es,
+  "/en/blog/mistakes-an-ai-agent-makes-at-a-real-estate-developer/":
+    BLOG_INDEX.en,
+  "/ar/blog/mistakes-an-ai-agent-makes-at-a-real-estate-developer/":
+    BLOG_INDEX.ar,
+  "/blog/tiempo-de-respuesta-en-un-real-estate-developer/": BLOG_INDEX.es,
+  "/en/blog/response-time-at-a-real-estate-developer/": BLOG_INDEX.en,
+  "/ar/blog/response-time-at-a-real-estate-developer/": BLOG_INDEX.ar,
+  "/blog/centralizar-los-datos-antes-de-automatizar/": BLOG_INDEX.es,
+  "/en/blog/centralize-your-data-before-automating/": BLOG_INDEX.en,
+  "/ar/blog/centralize-your-data-before-automating/": BLOG_INDEX.ar,
+
+  // Generación anterior.
+  "/blog/cuanto-cuesta-un-agente-de-ia-para-una-inmobiliaria/": BLOG_INDEX.es,
   "/en/blog/how-much-does-an-ai-agent-for-a-real-estate-agency-cost/":
-    "/en/blog/how-much-does-an-ai-agent-for-a-real-estate-developer-cost/",
+    BLOG_INDEX.en,
   "/ar/blog/how-much-does-an-ai-agent-for-a-real-estate-agency-cost/":
-    "/ar/blog/how-much-does-an-ai-agent-for-a-real-estate-developer-cost/",
-  "/blog/errores-de-un-agente-de-ia-en-una-inmobiliaria/":
-    "/blog/errores-de-un-agente-de-ia-en-un-real-estate-developer/",
-  "/en/blog/mistakes-an-ai-agent-makes-in-real-estate/":
-    "/en/blog/mistakes-an-ai-agent-makes-at-a-real-estate-developer/",
-  "/ar/blog/mistakes-an-ai-agent-makes-in-real-estate/":
-    "/ar/blog/mistakes-an-ai-agent-makes-at-a-real-estate-developer/",
-  "/blog/tiempo-de-respuesta-en-una-inmobiliaria/":
-    "/blog/tiempo-de-respuesta-en-un-real-estate-developer/",
-  "/en/blog/response-time-in-a-real-estate-agency/":
-    "/en/blog/response-time-at-a-real-estate-developer/",
-  "/ar/blog/response-time-in-a-real-estate-agency/":
-    "/ar/blog/response-time-at-a-real-estate-developer/",
-  "/blog/crm-inmobiliario-antes-de-automatizar/":
-    "/blog/centralizar-los-datos-antes-de-automatizar/",
-  "/en/blog/real-estate-crm-before-automating/":
-    "/en/blog/centralize-your-data-before-automating/",
-  "/ar/blog/real-estate-crm-before-automating/":
-    "/ar/blog/centralize-your-data-before-automating/",
+    BLOG_INDEX.ar,
+  "/blog/errores-de-un-agente-de-ia-en-una-inmobiliaria/": BLOG_INDEX.es,
+  "/en/blog/mistakes-an-ai-agent-makes-in-real-estate/": BLOG_INDEX.en,
+  "/ar/blog/mistakes-an-ai-agent-makes-in-real-estate/": BLOG_INDEX.ar,
+  "/blog/tiempo-de-respuesta-en-una-inmobiliaria/": BLOG_INDEX.es,
+  "/en/blog/response-time-in-a-real-estate-agency/": BLOG_INDEX.en,
+  "/ar/blog/response-time-in-a-real-estate-agency/": BLOG_INDEX.ar,
+  "/blog/crm-inmobiliario-antes-de-automatizar/": BLOG_INDEX.es,
+  "/en/blog/real-estate-crm-before-automating/": BLOG_INDEX.en,
+  "/ar/blog/real-estate-crm-before-automating/": BLOG_INDEX.ar,
 }
 
 export default {
