@@ -45,16 +45,16 @@ const hreflangEntries = (Object.entries(hreflangs) as [Lang, string][]).filter(
 )
 const xDefault = hreflangs.es ?? hreflangs.en
 
-const banner = `<!--
-
-  ██╗   ██╗ █████╗ ███╗   ██╗████████╗ █████╗ ██╗      ██████╗  ██████╗ ██╗ ██████╗███████╗
+const art = `  ██╗   ██╗ █████╗ ███╗   ██╗████████╗ █████╗ ██╗      ██████╗  ██████╗ ██╗ ██████╗███████╗
   ██║   ██║██╔══██╗████╗  ██║╚══██╔══╝██╔══██╗██║     ██╔═══██╗██╔════╝ ██║██╔════╝██╔════╝
   ██║   ██║███████║██╔██╗ ██║   ██║   ███████║██║     ██║   ██║██║  ███╗██║██║     ███████╗
   ╚██╗ ██╔╝██╔══██║██║╚██╗██║   ██║   ██╔══██║██║     ██║   ██║██║   ██║██║██║     ╚════██║
    ╚████╔╝ ██║  ██║██║ ╚████║   ██║   ██║  ██║███████╗╚██████╔╝╚██████╔╝██║╚██████╗███████║
-    ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ ╚═╝ ╚═════╝╚══════╝
+    ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ ╚═╝ ╚═════╝╚══════╝`
 
--->`
+const banner = `<!--\n\n${art}\n\n-->`
+
+const consoleBanner = `console.log(${JSON.stringify(`%c${art}`)}, "font-family: monospace; line-height: 1.2")`
 ---
 
 <!doctype html>
@@ -146,6 +146,7 @@ const banner = `<!--
     </a>
 
     <Fragment set:html={banner} />
+    <script is:inline set:html={consoleBanner} />
     <slot />
 
     {floating && <WhatsAppButton lang={lang} />}
