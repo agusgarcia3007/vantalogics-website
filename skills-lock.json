@@ -15,6 +15,12 @@
       "computedHash": "c981cdd4edecb7557d797f1f8ef0a63a1ae5e61c5ccff8290ab7591f9ffa2a22",
       "wellKnownDigest": "sha256:651c8cb2bf0e1ac39d175937e042722cbe77d2d96787f13e8fc3fb928bf01190"
     },
+    "cannibalization-check": {
+      "source": "marketingskills/seo",
+      "sourceType": "github",
+      "skillPath": "skills/cannibalization-check/SKILL.md",
+      "computedHash": "262efd7be0cb78ccd94ac3fd53c66c56992e57e875f3ae0352def3dd378546b6"
+    },
     "copywriting": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
@@ -28,6 +34,12 @@
       "sourceType": "well-known",
       "computedHash": "41b0a4dc1a27164fe297845a6c6850a39e9242c42c9be999967fcee9df2c5974",
       "wellKnownDigest": "sha256:3e4c7e2b34a2fef2f972c1836d3d7925e39875623a76ee1b7a2026a5b32c1454"
+    },
+    "exceed-quality-threshold": {
+      "source": "marketingskills/seo",
+      "sourceType": "github",
+      "skillPath": "skills/exceed-quality-threshold/SKILL.md",
+      "computedHash": "0c2f640f4186c393190cb4e0bbdf8ae7e54829a189207cd447eba67ba3595d6d"
     },
     "gsap-scrolltrigger": {
       "source": "skills.sh",
@@ -50,12 +62,42 @@
       "computedHash": "d47589b26696fd18283075c075e874240afdcaad5a96d23710d8716a592d1181",
       "wellKnownDigest": "sha256:23e0b490bf5ce01f5e2e80347334859a64ab12988dc2465fba073c81048f97cb"
     },
+    "internal-link-builder": {
+      "source": "marketingskills/seo",
+      "sourceType": "github",
+      "skillPath": "skills/internal-link-builder/SKILL.md",
+      "computedHash": "7e38ba34ab3746460d3b84072b2d42438fc0577afe6cd8c3bae5e43b57ba9347"
+    },
+    "keyword-opportunity-finder": {
+      "source": "marketingskills/seo",
+      "sourceType": "github",
+      "skillPath": "skills/keyword-opportunity-finder/SKILL.md",
+      "computedHash": "4d25f53a40024507fe2ee87dfe118840d5d65ac270cf8f6b8c6694382765dda0"
+    },
+    "programmatic-seo": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "skills/programmatic-seo/SKILL.md",
+      "computedHash": "0bbdcbacfbe46fd78d774041ee49afd313505bb435b775dc246f4b8e6981d797"
+    },
+    "refresh-vs-new-content": {
+      "source": "marketingskills/seo",
+      "sourceType": "github",
+      "skillPath": "skills/refresh-vs-new-content/SKILL.md",
+      "computedHash": "d686cc2fa396a541c5dc7c9eeadc578d653914948548cfad597b82c13202911e"
+    },
     "remotion-best-practices": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
       "computedHash": "4f8621b54497f7541f3e5df08b20c1b501989c9655c47d35f5db00454fdc39af",
       "wellKnownDigest": "sha256:b6f312896f623dea6dc436a288b279f022854581f86b397043fb4fb9ba85bcb8"
+    },
+    "schema-fix-writer": {
+      "source": "marketingskills/seo",
+      "sourceType": "github",
+      "skillPath": "skills/schema-fix-writer/SKILL.md",
+      "computedHash": "6dfb4bdc59fda9c8c6439e2c65cfe7f45f484b99969fb3519e70afc133fa8044"
     },
     "seo-aeo-best-practices": {
       "source": "skills.sh",
@@ -64,11 +106,29 @@
       "computedHash": "be345b36752b8f421d6894a14b8a2e3ae7702c00e017db79a246356c8bedd10d",
       "wellKnownDigest": "sha256:a6b02aa58062bd61d9f1b44304f634450a74110e0dfe77c27531c296d8e161df"
     },
+    "seo-growth-loop": {
+      "source": "marketingskills/seo",
+      "sourceType": "github",
+      "skillPath": "skills/seo-growth-loop/SKILL.md",
+      "computedHash": "5977e7f627241ced0099d8b3a3547c156e1f070cd8cdcaa8694a0f6c7547305c"
+    },
+    "site-architecture": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "skills/site-architecture/SKILL.md",
+      "computedHash": "48a38c5e2b000d134c3db282364b1014bad362fa91d4618ad8c2eb7cee991208"
+    },
     "three-best-practices": {
       "source": "joyco-studio/skills",
       "sourceType": "github",
       "skillPath": "skills/three-best-practices/SKILL.md",
       "computedHash": "29f9d6f53f92c1915b1ed085761e4d5b827a4b79bcb467d73f5fddb15aa1803d"
+    },
+    "title-meta-rewriter": {
+      "source": "marketingskills/seo",
+      "sourceType": "github",
+      "skillPath": "skills/title-meta-rewriter/SKILL.md",
+      "computedHash": "72a71dae0e18ce60d9d9ed4b24de02babd73c66ebeb553fa94103d5d2fad6cd8"
     },
     "vercel-react-best-practices": {
       "source": "skills.sh",
