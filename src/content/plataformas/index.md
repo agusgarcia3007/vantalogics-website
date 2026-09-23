@@ -2,7 +2,7 @@
 title: "Desarrollo de plataformas educativas y academias online a medida"
 seoTitle: "Desarrollo de plataformas educativas a medida | Vantalogics"
 description: "Desarrollamos academias online y plataformas educativas propias: cobros, video, evaluaciones, certificados e IA. Cuatro en producción, más de 24.000 alumnos."
-answer: "Una plataforma educativa a medida conviene cuando la academia ya vende y la plataforma actual empieza a costar más de lo que resuelve: comisiones que crecen con cada venta, medios de pago que no acepta, recorridos que no permite o cuentas compartidas. Construimos la plataforma completa y hoy tenemos cuatro en producción con más de 24.000 estudiantes."
+answer: "Una plataforma educativa propia es tu academia con tu marca, tus alumnos y tus datos, sin comisión por venta y sin los límites de Hotmart, Tiendup o un LMS genérico. La armamos a la medida de cada etapa: desde una academia que recién arranca hasta una institución con miles de alumnos. Hoy tenemos cuatro en producción con más de 24.000 estudiantes."
 nav: "Plataformas educativas"
 order: 0
 serviceType: "Desarrollo de plataformas educativas y academias online a medida"
@@ -19,17 +19,19 @@ faq:
     answer: "Cualquiera que tenga una API. En producción tenemos Mercado Pago, PayPal y transferencias bancarias que se acreditan solas vía Talo, sin que nadie revise comprobantes. Para cobrar en otros países se suma Stripe u otro procesador local. Lo que importa no es la lista: es que el acceso se habilite cuando el proveedor confirma el pago, no cuando el alumno ve la pantalla de gracias."
   - question: "¿Se puede evitar que compartan la cuenta o descarguen los videos?"
     answer: "Evitarlo al 100% no. Ninguna plataforma impide una grabación de pantalla. Lo que sí se puede es cerrar la descarga fácil con video por streaming y enlaces que vencen, limitar las sesiones simultáneas por cuenta y estampar en cada PDF los datos de quien lo compró, para que cualquier copia que circule identifique a su origen."
-  - question: "¿Conviene más Moodle que un desarrollo a medida?"
-    answer: "Para una institución con lógica académica formal (comisiones, calificaciones, paquetes SCORM, docentes que ya lo conocen), Moodle suele ser la opción correcta. Para una academia que vende cursos a público general se queda corto en la experiencia de compra y en la del alumno en el celular, y personalizarlo a fondo termina costando parecido a construir."
+  - question: "¿Tengo que tener una academia grande para tener plataforma propia?"
+    answer: "No. Armamos plataformas para cada etapa. Si estás arrancando, empezamos con lo esencial para vender y dar clases —catálogo, cobro, video y progreso— y la plataforma crece con el negocio: evaluaciones, certificados, más medios de pago, IA. Lu Apuntes, por ejemplo, vende seis apuntes a más de 600 estudiantes desde su propia plataforma: no hacen falta miles de alumnos para que tenga sentido."
+  - question: "Ya uso Moodle, ¿qué hacen con eso?"
+    answer: "Depende de qué te frena. Si Moodle funciona para lo académico pero falla en la venta o en la experiencia del alumno en el celular, construimos esa capa y la integramos. Si ya no rinde, migramos usuarios, inscripciones y calificaciones a una plataforma propia. Moodle exporta más datos que cualquier plataforma de cursos, así que es de las migraciones más limpias."
   - question: "¿El código y los datos quedan a nombre de la academia?"
     answer: "Sí. Código, infraestructura, cuentas y documentación se entregan preparados para que la plataforma pueda crecer con o sin nosotros. Los alumnos, las ventas y el contenido son de la academia desde el primer día, que es justamente lo que no pasa en una plataforma de terceros."
   - question: "¿Trabajan con academias fuera de Argentina?"
     answer: "Sí. Academia SIED, por ejemplo, forma a endoscopistas de toda Latinoamérica desde una sola plataforma. Trabajamos en remoto, en español o en inglés, y los medios de pago se eligen según dónde están los alumnos, no dónde está la academia."
 ---
 
-Casi todas las academias que nos escriben ya venden. Tienen un curso que funciona, alumnos que vuelven y una plataforma que al principio fue la decisión correcta: Hotmart, Tiendup, un WordPress con WooCommerce, un Moodle que armó alguien del equipo. Ahora esa plataforma frena algo concreto. Cobra un porcentaje que crece con la facturación, no acepta los medios de pago que usan sus alumnos, no permite el recorrido que el curso necesita o deja que una misma cuenta la usen cinco personas.
+Muchas academias nos escriben desde Hotmart, Tiendup, un WordPress con WooCommerce o un Moodle que armó alguien del equipo, y esa plataforma les frena algo concreto. Cobra un porcentaje que crece con la facturación, no acepta los medios de pago que usan sus alumnos, no permite el recorrido que el curso necesita o deja que una misma cuenta la usen cinco personas. Otras están arrancando y no quieren construir su negocio sobre una plataforma ajena que después haya que abandonar.
 
-Acá contamos lo que aprendimos construyendo cuatro plataformas educativas que hoy están en producción: qué conviene construir, qué no, y cuándo lo más honesto es decirte que sigas donde estás.
+Una plataforma propia saca esos límites del camino. Acá contamos lo que aprendimos construyendo cuatro que hoy están en producción: qué incluyen, cómo se comparan con las alternativas y qué decisiones técnicas las hacen confiables.
 
 ## Qué incluye una plataforma educativa a medida
 
@@ -48,15 +50,15 @@ No hay un paquete fijo. Cada plataforma se arma con los módulos que el negocio 
 
 ## Plataforma propia, Hotmart, Tiendup, un SaaS o Moodle
 
-La pregunta no es cuál es mejor, sino cuál corresponde a la etapa de tu academia. Estas son las opciones que vemos en casi todos los diagnósticos:
+Son las opciones con las que llegan casi todas las academias que nos escriben, y lo que cada una termina limitando:
 
-| Opción | Cómo cobra | Conviene cuando | Se queda corta cuando |
-| --- | --- | --- | --- |
-| Hotmart | 9,9% + USD 0,50 por venta de más de USD 15 | Estás validando un curso y querés checkout y afiliados resueltos | La comisión anual supera lo que costaría una plataforma propia, o necesitás los datos y la relación con el alumno |
-| Tiendup | Abono mensual en pesos, sin comisión; el plan fija el tope de cursos (3, 10 o 30) | Vendés pocos cursos en Argentina y querés cobrar en pesos sin desarrollo | Necesitás más cursos, lógica académica propia (trayectos, entregas, docentes) o integraciones |
-| SaaS de cursos (Teachable, Thinkific, Kajabi) | Abono mensual; algunos suman comisión en los planes bajos | Querés marca propia sin programar y el curso es video más cuestionario | Lo que te diferencia es cómo se aprende, no solo qué se vende |
-| Moodle | Licencia gratuita; se pagan servidor, configuración y mantenimiento de plugins | Sos una institución con lógica académica formal y docentes que ya lo usan | Vendés a público general: la compra y la experiencia en el celular no están pensadas para eso |
-| A medida | Inversión inicial y mantenimiento; ninguna comisión por venta | La plataforma es parte del producto, ya hay facturación y las limitaciones cuestan ventas u horas | Todavía no validaste que el curso se vende |
+| Opción | Cómo cobra | Dónde se queda corta |
+| --- | --- | --- |
+| Hotmart | 9,9% + USD 0,50 por venta de más de USD 15 | La comisión crece con cada venta, el alumno queda en un área de miembros ajena y la experiencia es la misma que la de cualquier otro curso |
+| Tiendup | Abono mensual en pesos; el plan fija el tope de cursos (3, 10 o 30) | Pasar el tope obliga a cambiar de plan, y trayectos, entregas corregidas, docentes o integraciones no se pueden agregar |
+| SaaS de cursos (Teachable, Thinkific, Kajabi) | Abono mensual; algunos suman comisión en los planes bajos | Sirven para video más cuestionario; cuando lo que te diferencia es cómo se aprende, no hay dónde construirlo |
+| Moodle | Licencia gratuita; se pagan servidor, configuración y mantenimiento de plugins | Pensado para lo académico formal: vender a público general y estudiar desde el celular quedan en segundo plano |
+| Plataforma propia con Vantalogics | Sin comisión por venta; el alcance se arma según la etapa de la academia | Con tu marca, tus alumnos y tus datos, y crece módulo a módulo cuando el negocio lo pide |
 
 Tarifas relevadas en septiembre de 2026 en el [centro de ayuda de Hotmart](https://help.hotmart.com/es/article/208298448) y en la [página de planes de Tiendup](https://tiendup.com/page/e-learning).
 
@@ -68,12 +70,16 @@ Con Hotmart es una multiplicación. Una academia que vende 100 cursos de USD 100
 
 A eso sumale las horas que hoy se van en tareas que la plataforma no resuelve: revisar comprobantes de transferencia, dar accesos a mano, contestar "no me llegó el curso", perseguir a quien comparte la cuenta. Ese costo no aparece en ninguna factura, pero se paga igual todos los meses.
 
-## Cuándo no conviene una plataforma a medida
+## Una plataforma para cada etapa
 
-- **Todavía no vendiste el curso.** Validá en Hotmart o Tiendup. Mudarse después es un problema resuelto y lo explicamos en [cómo migrar una academia](/plataformas-educativas/migracion/).
-- **La comisión anual es menor que el mantenimiento de un sistema propio.** Si facturás poco, la plataforma genérica es más barata y va a seguir siéndolo.
-- **Lo que falta es marketing, no producto.** Una plataforma nueva no trae alumnos. Si el problema es que no entra gente, invertí ahí primero.
-- **Nadie de tu lado puede definir cómo se aprende.** Un desarrollo a medida sin alguien que tome decisiones pedagógicas termina copiando la plataforma anterior con otro logo.
+Plataforma propia no significa proyecto enorme. El alcance se arma según dónde está la academia hoy:
+
+- **Si estás arrancando.** Lo esencial para vender y dar clases con tu marca: catálogo, cobro con medios locales, video y progreso. Sin comisión por venta desde el primer curso.
+- **Si ya vendés en otra plataforma.** Te mudamos con todos tus alumnos y sus compras, sin cortar ventas, y sumamos lo que la plataforma anterior no te dejaba hacer. El proceso está en [cómo migrar una academia](/plataformas-educativas/migracion/).
+- **Si tu oferta es compleja.** Trayectos por institución y materia, entregas corregidas por docentes, certificados, planes con vencimiento: lo que hoy resolvés con planillas y a mano.
+- **Si sos una institución.** Integración con los sistemas que ya usás, certificación y una experiencia académica común para programas de distintos docentes, como en [Academia SIED](/casos/academia-sied/).
+
+En todos los casos la plataforma crece por módulos: lo que no hace falta hoy se agrega cuando el negocio lo pide, sin rehacer lo anterior.
 
 ## Decisiones técnicas que tomamos en cada plataforma
 
