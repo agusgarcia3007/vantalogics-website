@@ -9,6 +9,7 @@ import {
 } from "@/data/solutions"
 import { casePath, casesFor } from "@/data/use-cases"
 import { CASES, caseStudyPath, formatStudents } from "@/data/cases"
+import { getPlatformPages, platformPath } from "@/lib/plataformas"
 
 const SITE = "https://vantalogics.com"
 
@@ -30,6 +31,7 @@ const url = (path: string) => new URL(path, SITE).href
 export const GET: APIRoute = async () => {
   const postsEs = await getPosts("es")
   const postsEn = await getPosts("en")
+  const platformPages = await getPlatformPages()
 
   const preamble = `# Vantalogics
 
@@ -110,6 +112,18 @@ ${OTHER_SOLUTIONS.map(
 
 Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))}`
 
+  const platforms = `## Plataformas educativas a medida
+
+Desarrollo de academias online y plataformas educativas propias, y migración
+desde Hotmart, Tiendup, WordPress o Moodle.
+
+${platformPages
+  .map(
+    (page) =>
+      `- [${page.data.title}](${url(platformPath(page))})\n  ${page.data.answer}`
+  )
+  .join("\n")}`
+
   const studies = `## Productos construidos
 
 Casos de productos educativos en producción, con alcance verificable.
@@ -142,16 +156,17 @@ ${postsEn
 
   const links = `## Enlaces
 
-- [Qué construimos](${url("/#capacidades")})
+- [Plataformas educativas](${url("/plataformas-educativas/")})
+- [Casos](${url("/#casos")})
 - [Proceso](${url("/#proceso")})
-- [Principios](${url("/#principios")})
-- [Contacto](${url("/#contacto")})
 - [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")})
 - [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))})
 - RSS: ${url("/rss.xml")} · ${url("/en/rss.xml")}`
 
   const body =
-    [preamble, studies, focus, solutions, notes, links].join("\n\n") + "\n"
+    [preamble, platforms, studies, focus, solutions, notes, links].join(
+      "\n\n"
+    ) + "\n"
 
   return new Response(body, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

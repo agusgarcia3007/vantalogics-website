@@ -1,0 +1,75 @@
+---
+import {
+  caseStudyPath,
+  formatStudents,
+  type CaseStudy,
+  type Localized,
+} from "@/data/cases"
+import { findClient } from "@/data/clients"
+import { useTranslations, type Lang } from "@/i18n"
+
+interface Props {
+  lang: Lang
+  item: CaseStudy
+  index: number
+}
+
+const { lang, item, index } = Astro.props
+const t = useTranslations(lang)
+const client = findClient(item.slug)
+const pick = (value: Localized) => value[lang] ?? value.en
+---
+
+<a
+  class="case reveal"
+  href={caseStudyPath(lang, item.slug)}
+  style={`--i:${index}`}
+>
+  <span class="case-core">
+    <span class="case-top">
+      {
+        client && (
+          <span class="case-mark">
+            <img
+              src={client.logo}
+              alt={client.logoAlt || ""}
+              loading="lazy"
+              decoding="async"
+            />
+            {client.wordmark && (
+              <span class="case-wordmark">{client.wordmark}</span>
+            )}
+          </span>
+        )
+      }
+      <span class="case-count">
+        {formatStudents(lang, item.students)}{" "}{t.cases.detail.students}
+      </span>
+    </span>
+
+    <span class="case-body">
+      <span class="case-client">{pick(item.client)}</span>
+      <span class="case-title">{pick(item.title)}</span>
+    </span>
+
+    <span class="case-rail">
+      <span class="case-tags">
+        {
+          item.integrations.map((tag) => (
+            <span class="case-tag">{pick(tag)}</span>
+          ))
+        }
+      </span>
+      <span class="case-go" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M7 17L17 7M17 7H9M17 7V15"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"></path>
+        </svg>
+      </span>
+    </span>
+  </span>
+</a>

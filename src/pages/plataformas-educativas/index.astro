@@ -1,0 +1,9 @@
+---
+import { getEntry } from "astro:content"
+import PlatformPage from "@/components/cine/PlatformPage.astro"
+
+const page = await getEntry("plataformas", "index")
+if (!page) throw new Error("Falta src/content/plataformas/index.md")
+---
+
+<PlatformPage page={page} />

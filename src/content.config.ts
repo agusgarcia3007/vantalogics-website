@@ -58,4 +58,22 @@ const blog = defineCollection({
   }),
 })
 
-export const collections = { blog }
+const plataformas = defineCollection({
+  loader: glob({ base: "./src/content/plataformas", pattern: "**/*.md" }),
+  schema: z.object({
+    title: z.string(),
+    seoTitle: z.string(),
+    description: z.string(),
+    answer: z.string(),
+    nav: z.string(),
+    order: z.number(),
+    serviceType: z.string(),
+    updated: z.coerce.date(),
+    cases: z.array(z.string()).default([]),
+    faq: z
+      .array(z.object({ question: z.string(), answer: z.string() }))
+      .default([]),
+  }),
+})
+
+export const collections = { blog, plataformas }

@@ -33,7 +33,7 @@ export const es = {
   nav: {
     items: [
       { href: "#casos", label: "Clientes", section: "cases" },
-      { href: "/soluciones/", label: "Qué construimos" },
+      { href: "/plataformas-educativas/", label: "Qué construimos" },
       { href: "#proceso", label: "Cómo trabajamos" },
       { href: "/blog/", label: "Perspectivas" },
     ],
@@ -400,10 +400,13 @@ export const es = {
       {
         title: "Estudio",
         links: [
-          { href: "#capacidades", label: "Qué construimos" },
+          { href: "/plataformas-educativas/", label: "Plataformas educativas" },
+          {
+            href: "/plataformas-educativas/migracion/",
+            label: "Migrar tu academia",
+          },
+          { href: "#casos", label: "Casos" },
           { href: "#proceso", label: "Cómo trabajamos" },
-          { href: "#principios", label: "Principios" },
-          { href: "#contacto", label: "Contacto" },
         ],
       },
       {

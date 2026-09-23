@@ -2176,6 +2176,35 @@ body.menu-open .burger span:nth-child(3) {
   letter-spacing: -0.015em;
 }
 
+.section-more {
+  margin-top: 28px;
+}
+.section-more a {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: -0.015em;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.2);
+  text-underline-offset: 4px;
+  transition:
+    color 0.35s ease,
+    text-decoration-color 0.35s ease;
+}
+.section-more a:hover {
+  color: #fff;
+  text-decoration-color: currentColor;
+}
+.cases.cases--even .case {
+  grid-column: span 3;
+}
+.cases.cases--even .case:only-child {
+  grid-column: 1 / -1;
+}
+@media (max-width: 900px) {
+  .cases.cases--even .case {
+    grid-column: 1 / -1;
+  }
+}
 .case-foot {
   display: flex;
   flex-wrap: wrap;

@@ -14,13 +14,8 @@ import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
 import Foot from "@/components/cine/Foot.astro"
 import { PUBLIC_LANGS, localizePath, ogImage, useTranslations } from "@/i18n"
-import {
-  CASES,
-  caseStudyPath,
-  formatStudents,
-  formatTotalStudents,
-} from "@/data/cases"
-import { findClient } from "@/data/clients"
+import { CASES, formatTotalStudents } from "@/data/cases"
+import CaseCard from "@/components/cine/CaseCard.astro"
 import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/site"
 
 const SITE = "https://vantalogics.com"
@@ -271,71 +266,16 @@ const webPage = {
 
           <div class="cases">
             {
-              CASES.map((item, i) => {
-                const client = findClient(item.slug)
-                return (
-                  <a
-                    class="case reveal"
-                    href={caseStudyPath(lang, item.slug)}
-                    style={`--i:${i}`}
-                  >
-                    <span class="case-core">
-                      <span class="case-top">
-                        {client && (
-                          <span class="case-mark">
-                            <img
-                              src={client.logo}
-                              alt={client.logoAlt || ""}
-                              loading="lazy"
-                              decoding="async"
-                            />
-                            {client.wordmark && (
-                              <span class="case-wordmark">
-                                {client.wordmark}
-                              </span>
-                            )}
-                          </span>
-                        )}
-                        <span class="case-count">
-                          {formatStudents(lang, item.students)}{" "}
-                          {t.cases.detail.students}
-                        </span>
-                      </span>
-
-                      <span class="case-body">
-                        <span class="case-client">{item.client[lang]}</span>
-                        <span class="case-title">{item.title[lang]}</span>
-                      </span>
-
-                      <span class="case-rail">
-                        <span class="case-tags">
-                          {item.integrations.map((tag) => (
-                            <span class="case-tag">{tag[lang]}</span>
-                          ))}
-                        </span>
-                        <span class="case-go" aria-hidden="true">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M7 17L17 7M17 7H9M17 7V15"
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                            />
-                          </svg>
-                        </span>
-                      </span>
-                    </span>
-                  </a>
-                )
-              })
+              CASES.map((item, i) => (
+                <CaseCard lang={lang} item={item} index={i} />
+              ))
             }
           </div>
+          <p class="section-more reveal">
+            <a href="/plataformas-educativas/"
+              >Cómo desarrollamos plataformas educativas a medida</a
+            >
+          </p>
         </div>
       </section>
 

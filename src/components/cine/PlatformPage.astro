@@ -1,0 +1,372 @@
+---
+import { render } from "astro:content"
+
+import Layout from "@/layouts/main.astro"
+import Chrome from "@/components/cine/Chrome.astro"
+import Foot from "@/components/cine/Foot.astro"
+import CaseCard from "@/components/cine/CaseCard.astro"
+import { CASES } from "@/data/cases"
+import { SOLUTIONS, solutionPath } from "@/data/solutions"
+import { formatDate } from "@/lib/blog"
+import {
+  PLATFORMS_ROOT,
+  getPlatformPages,
+  platformPath,
+  type PlatformPage,
+} from "@/lib/plataformas"
+import { localizePath, ogImage } from "@/i18n"
+import { SCHEDULE_URL } from "@/site"
+
+interface Props {
+  page: PlatformPage
+}
+
+const SITE = "https://vantalogics.com"
+const lang = "es" as const
+const { page } = Astro.props
+const { data } = page
+const { Content, headings } = await render(page)
+
+const path = platformPath(page)
+const pageUrl = new URL(path, SITE).href
+const rootUrl = new URL(PLATFORMS_ROOT, SITE).href
+const isRoot = path === PLATFORMS_ROOT
+const toc = headings.filter((heading) => heading.depth === 2)
+
+const allPages = await getPlatformPages()
+const hub = allPages.find((entry) => platformPath(entry) === PLATFORMS_ROOT)
+const siblings = allPages.filter((entry) => entry.id !== page.id)
+const cases = data.cases
+  .map((slug) => CASES.find((study) => study.slug === slug))
+  .filter((study) => study !== undefined)
+
+const aiSolution = SOLUTIONS.find(
+  (solution) => solution.slug.es === "edtech-y-plataformas-educativas"
+)
+
+const related = [
+  ...siblings.map((entry) => ({
+    href: platformPath(entry),
+    eyebrow: entry.data.nav,
+    title: entry.data.title,
+    description: entry.data.description,
+  })),
+  ...(aiSolution
+    ? [
+        {
+          href: solutionPath(lang, aiSolution),
+          eyebrow: "IA sobre la plataforma",
+          title: aiSolution.title.es,
+          description: aiSolution.description.es,
+        },
+      ]
+    : []),
+]
+
+const organization = {
+  "@type": "Organization",
+  "@id": `${SITE}/#organization`,
+  name: "Vantalogics",
+  url: SITE,
+}
+
+const service = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${pageUrl}#service`,
+  name: data.title,
+  serviceType: data.serviceType,
+  description: data.description,
+  url: pageUrl,
+  provider: organization,
+  areaServed: [
+    { "@type": "Place", name: "Latin America" },
+    { "@type": "Country", name: "Spain" },
+    { "@type": "Country", name: "United States" },
+  ],
+  audience: {
+    "@type": "BusinessAudience",
+    audienceType:
+      "Academias online, instituciones educativas y empresas de educación",
+  },
+  ...(isRoot ? {} : { isRelatedTo: { "@id": `${rootUrl}#service` } }),
+}
+
+const webPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${pageUrl}#webpage`,
+  url: pageUrl,
+  name: data.seoTitle,
+  description: data.description,
+  abstract: data.answer,
+  inLanguage: lang,
+  dateModified: data.updated.toISOString(),
+  isPartOf: { "@id": `${SITE}/#website` },
+  about: { "@id": `${pageUrl}#service` },
+  publisher: organization,
+  image: new URL(ogImage(lang), SITE).href,
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["[data-speakable]"],
+  },
+  ...(cases.length
+    ? {
+        mentions: cases.map((study) => ({
+          "@type": "CreativeWork",
+          name: study.client.es,
+          url: new URL(`/casos/${study.slug}/`, SITE).href,
+        })),
+      }
+    : {}),
+}
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Vantalogics",
+      item: new URL(localizePath(lang), SITE).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: hub?.data.nav ?? "Plataformas educativas",
+      item: rootUrl,
+    },
+    ...(isRoot
+      ? []
+      : [
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: data.nav,
+            item: pageUrl,
+          },
+        ]),
+  ],
+}
+
+const faqPage =
+  data.faq.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        inLanguage: lang,
+        mainEntity: data.faq.map((entry) => ({
+          "@type": "Question",
+          name: entry.question,
+          acceptedAnswer: { "@type": "Answer", text: entry.answer },
+        })),
+      }
+    : null
+
+const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
+---
+
+<Layout
+  lang={lang}
+  path={path}
+  title={data.seoTitle}
+  description={data.description}
+  alternates={{ es: path }}
+  jsonLd={jsonLd}
+  floating={false}
+>
+  <Chrome lang={lang}>
+    <main class="doc-page" id="contenido">
+      <div class="shell">
+        <nav class="crumbs appear appear--soft" aria-label="Breadcrumb">
+          <a href={localizePath(lang)}>Vantalogics</a>
+          <span aria-hidden="true">/</span>
+          {
+            isRoot ? (
+              <span>{data.nav}</span>
+            ) : (
+              <>
+                <a href={PLATFORMS_ROOT}>{hub?.data.nav}</a>
+                <span aria-hidden="true">/</span>
+                <span>{data.nav}</span>
+              </>
+            )
+          }
+        </nav>
+
+        <header class="doc-head">
+          <h1 class="appear appear--soft" style="--d:0.2s" data-speakable>
+            {data.title}
+          </h1>
+          <p class="doc-updated appear appear--soft" style="--d:0.32s">
+            Actualizado el <time datetime={data.updated.toISOString()}
+              >{formatDate(data.updated, lang)}</time
+            >
+          </p>
+        </header>
+      </div>
+    </main>
+
+    <div class="below" slot="after">
+      <section class="section">
+        <div class="shell">
+          <div class="answer reveal">
+            <p class="answer-label">La respuesta corta</p>
+            <p class="answer-body" data-speakable>{data.answer}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="doc-body shell">
+          <div class="typeset typeset-nota">
+            <Content />
+          </div>
+
+          {
+            toc.length > 1 && (
+              <nav class="toc" aria-labelledby="indice-pagina">
+                <p id="indice-pagina" class="toc-label">
+                  En esta página
+                </p>
+                <ol>
+                  {toc.map((heading) => (
+                    <li>
+                      <a href={`#${heading.slug}`}>{heading.text}</a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )
+          }
+        </div>
+      </section>
+
+      {
+        cases.length > 0 && (
+          <section class="section" id="casos">
+            <div class="shell">
+              <div class="section-head reveal">
+                <span class="eyebrow">En producción</span>
+                <h2>
+                  {isRoot
+                    ? "Plataformas que construimos"
+                    : "El caso detrás de esta página"}
+                </h2>
+              </div>
+              <div class:list={["cases", cases.length !== 4 && "cases--even"]}>
+                {cases.map((study, i) => (
+                  <CaseCard lang={lang} item={study} index={i} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      {
+        data.faq.length > 0 && (
+          <section class="section">
+            <div class="shell">
+              <div class="section-head reveal">
+                <h2 id="preguntas">Preguntas frecuentes</h2>
+              </div>
+              <dl class="faq">
+                {data.faq.map((entry, i) => (
+                  <div class="faq-item reveal" style={`--i:${i}`}>
+                    <dt>{entry.question}</dt>
+                    <dd>{entry.answer}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </section>
+        )
+      }
+
+      <section class="section">
+        <div class="shell">
+          <div class="author reveal">
+            <div>
+              <p class="author-label">Siguiente paso</p>
+              <p class="author-name">Contanos qué tenés hoy y qué te frena</p>
+              <p class="author-bio">
+                En una llamada de 30 minutos revisamos tu plataforma actual,
+                cómo cobrás y qué querés que cambie. Si lo que necesitás no es
+                un desarrollo a medida, te lo decimos.
+              </p>
+            </div>
+
+            <div class="author-actions">
+              <a
+                class="btn btn-solid btn-lead"
+                href={SCHEDULE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Agendar una llamada
+                <span class="btn-pip" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M7 17L17 7M17 7H9M17 7V15"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"></path>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {
+        related.length > 0 && (
+          <section class="section">
+            <div class="shell">
+              <div class="section-head reveal">
+                <h2 id="relacionadas">Seguí por acá</h2>
+              </div>
+              <div class="posts">
+                {related.map((item, i) => (
+                  <article class="post reveal" style={`--i:${i}`}>
+                    <div class="post-core">
+                      <div class="post-meta">
+                        <span>{item.eyebrow}</span>
+                      </div>
+                      <h3 class="post-title">
+                        <a href={item.href}>{item.title}</a>
+                      </h3>
+                      <p class="post-desc">{item.description}</p>
+                      <span class="post-go" aria-hidden="true">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <path
+                            d="M7 17L17 7M17 7H9M17 7V15"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      <Foot lang={lang} />
+    </div>
+  </Chrome>
+</Layout>

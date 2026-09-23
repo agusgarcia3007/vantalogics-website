@@ -1,0 +1,15 @@
+---
+import PlatformPage from "@/components/cine/PlatformPage.astro"
+import { getPlatformPages, type PlatformPage as Page } from "@/lib/plataformas"
+
+export async function getStaticPaths() {
+  const pages = await getPlatformPages()
+  return pages
+    .filter((page) => page.id !== "index")
+    .map((page) => ({ params: { slug: page.id }, props: { page } }))
+}
+
+const { page } = Astro.props as { page: Page }
+---
+
+<PlatformPage page={page} />
