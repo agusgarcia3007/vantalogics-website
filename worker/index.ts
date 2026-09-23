@@ -34,55 +34,76 @@ interface Env {
  */
 const SOLUTIONS_INDEX = {
   es: "/soluciones/",
-  en: "/solutions/",
+  en: "/en/solutions/",
   ar: "/ar/solutions/",
 }
 const BLOG_INDEX = { es: "/blog/", en: "/en/blog/", ar: "/ar/blog/" }
 
 const REDIRECTS: Record<string, string> = {
   // ── Páginas de sector y casos de uso ───────────────────────────────────
+  // Sectores fuera de educación, retirados del sitio.
+  "/soluciones/clinicas-y-consultorios/": SOLUTIONS_INDEX.es,
+  "/en/solutions/clinics-and-medical-practices/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/clinics-and-medical-practices/": SOLUTIONS_INDEX.ar,
+  "/soluciones/estudios-contables/": SOLUTIONS_INDEX.es,
+  "/en/solutions/accounting-firms/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/accounting-firms/": SOLUTIONS_INDEX.ar,
+  "/soluciones/distribuidoras-y-mayoristas/": SOLUTIONS_INDEX.es,
+  "/en/solutions/distributors-and-wholesalers/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/distributors-and-wholesalers/": SOLUTIONS_INDEX.ar,
+  "/soluciones/ecommerce/": SOLUTIONS_INDEX.es,
+  "/en/solutions/ecommerce/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/ecommerce/": SOLUTIONS_INDEX.ar,
+  "/soluciones/estudios-juridicos/": SOLUTIONS_INDEX.es,
+  "/en/solutions/law-firms/": SOLUTIONS_INDEX.en,
+  "/ar/solutions/law-firms/": SOLUTIONS_INDEX.ar,
+
   // Generación actual (real estate developers), la que acaba de salir.
   "/soluciones/real-estate-developers/": SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-developers/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-developers/": SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-developers/": SOLUTIONS_INDEX.ar,
   "/soluciones/real-estate-developers/agente-de-whatsapp/": SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-developers/whatsapp-agent/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-developers/whatsapp-agent/": SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-developers/whatsapp-agent/": SOLUTIONS_INDEX.ar,
   "/soluciones/real-estate-developers/calificacion-de-leads/":
     SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-developers/lead-qualification/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-developers/lead-qualification/":
+    SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-developers/lead-qualification/":
     SOLUTIONS_INDEX.ar,
   "/soluciones/real-estate-developers/coordinacion-de-visitas/":
     SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-developers/unit-visit-coordination/":
+  "/en/solutions/real-estate-developers/unit-visit-coordination/":
     SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-developers/unit-visit-coordination/":
     SOLUTIONS_INDEX.ar,
   "/soluciones/real-estate-developers/centralizacion-de-datos/":
     SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-developers/data-centralization/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-developers/data-centralization/":
+    SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-developers/data-centralization/":
     SOLUTIONS_INDEX.ar,
 
   // Generación anterior (inmobiliarias). Antes saltaban al slug nuevo; ahora
   // van directo al índice para no encadenar dos 301.
   "/soluciones/inmobiliarias/": SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-agencies/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-agencies/": SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-agencies/": SOLUTIONS_INDEX.ar,
   "/soluciones/inmobiliarias/agente-de-whatsapp/": SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-agencies/whatsapp-agent/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-agencies/whatsapp-agent/": SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-agencies/whatsapp-agent/": SOLUTIONS_INDEX.ar,
   "/soluciones/inmobiliarias/calificacion-de-leads/": SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-agencies/lead-qualification/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-agencies/lead-qualification/": SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-agencies/lead-qualification/": SOLUTIONS_INDEX.ar,
   "/soluciones/inmobiliarias/coordinacion-de-visitas/": SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-agencies/viewing-coordination/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-agencies/viewing-coordination/":
+    SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-agencies/viewing-coordination/":
     SOLUTIONS_INDEX.ar,
   "/soluciones/inmobiliarias/reactivacion-de-base-de-datos/":
     SOLUTIONS_INDEX.es,
-  "/solutions/real-estate-agencies/database-reactivation/": SOLUTIONS_INDEX.en,
+  "/en/solutions/real-estate-agencies/database-reactivation/":
+    SOLUTIONS_INDEX.en,
   "/ar/solutions/real-estate-agencies/database-reactivation/":
     SOLUTIONS_INDEX.ar,
 

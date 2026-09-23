@@ -437,13 +437,12 @@ export const en: Dictionary = {
   solutions: {
     label: "Solutions",
     breadcrumb: "Solutions",
-    indexTitle: "AI automation, by industry",
+    indexTitle: "AI for learning platforms",
     indexDescription:
-      "How AI automation works in each industry: which processes to attack first, what it integrates with, and what stays under human approval.",
+      "How we integrate AI into learning platforms and EdTech: tutors, assisted grading, assessments and semantic search, with human approval where it matters.",
     indexIntro:
-      "The process changes with the industry. These pages are the starting point for each one: what we automate first, which systems we talk to, and where a person stays in the loop.",
-    focusLabel: "Focus industries",
-    othersLabel: "Other industries",
+      "What we build first in a learning platform, which systems it integrates with, and where a person stays in the loop.",
+    focusLabel: "Education",
     processesLabel: "What we automate first",
     stackLabel: "What it integrates with",
     humanLabel: "What stays under human approval",

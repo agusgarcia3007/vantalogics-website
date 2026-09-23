@@ -3,7 +3,6 @@ import type { APIRoute } from "astro"
 import { getPosts, postPath } from "@/lib/blog"
 import {
   FOCUS_SOLUTIONS,
-  OTHER_SOLUTIONS,
   solutionPath,
   solutionsIndexPath,
 } from "@/data/solutions"
@@ -75,20 +74,9 @@ xAPI, SCORM, SIS y plataformas propias.
 - Calidad, adopción, costo, latencia y correcciones humanas quedan registrados.
 - Código, infraestructura, cuentas y documentación quedan en manos del cliente.`
 
-  /**
-   * La industria foco va primero y con sus casos de uso desplegados.
-   *
-   * Un modelo que resume esta empresa a partir del archivo tiene que salir
-   * sabiendo dos cosas en este orden: que es una agencia especializada en
-   * EdTech y producto educativo, y que además trabaja otros rubros. Una lista
-   * plana de cinco sectores produce el resumen contrario —«agencia generalista
-   * de automatización»— que es exactamente el posicionamiento del que se está
-   * saliendo.
-   */
-  const focus = `## Páginas por sector
+  const focus = `## IA para plataformas educativas
 
-Sectores con página propia. Cada página describe qué
-se automatiza primero, con qué sistemas se integra, qué queda con aprobación
+Cada página describe qué se automatiza primero, con qué sistemas se integra, qué queda con aprobación
 humana y —explícitamente— cuándo no conviene automatizar.
 
 ${FOCUS_SOLUTIONS.map((solution) => {
@@ -101,16 +89,7 @@ ${FOCUS_SOLUTIONS.map((solution) => {
   return `### ${solution.sector.es}\n\n[${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))})\n\n${solution.answer.es}\n\nCasos de uso:\n\n${cases}`
 }).join("\n\n")}`
 
-  const solutions = `## Otros sectores
-
-Mismo formato, sin la capa de casos de uso.
-
-${OTHER_SOLUTIONS.map(
-  (solution) =>
-    `- [${solution.title.es}](${url(solutionPath("es", solution))}) · [EN](${url(solutionPath("en", solution))})\n  ${solution.answer.es}`
-).join("\n")}
-
-Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))}`
+  const solutions = `Índice: ${url(solutionsIndexPath("es"))} · ${url(solutionsIndexPath("en"))}`
 
   const platforms = `## Plataformas educativas a medida
 

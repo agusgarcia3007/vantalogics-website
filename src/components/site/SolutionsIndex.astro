@@ -7,8 +7,7 @@ import Frame from "@/components/site/Frame.astro"
 import { LANGS, localizePath, useTranslations, type Lang } from "@/i18n"
 import {
   FOCUS_SOLUTIONS,
-  ORDERED_SOLUTIONS,
-  OTHER_SOLUTIONS,
+  SOLUTIONS,
   solutionPath,
   solutionsIndexPath,
 } from "@/data/solutions"
@@ -30,7 +29,7 @@ const itemList = {
   "@type": "ItemList",
   "@id": `${pageUrl}#list`,
   name: t.solutions.indexTitle,
-  itemListElement: ORDERED_SOLUTIONS.map((solution, index) => ({
+  itemListElement: SOLUTIONS.map((solution, index) => ({
     "@type": "ListItem",
     position: index + 1,
     name: solution.title[lang],
@@ -100,12 +99,6 @@ const breadcrumb = {
       </p>
     </Frame>
 
-    <!-- Dos bloques y no una grilla pareja.
-         El índice tiene que decir en qué se especializa la agencia sin negar
-         que atiende el resto. Un listado alfabético de seis sectores comunica
-         exactamente lo contrario: que todos valen lo mismo. Las industrias
-         foco van arriba, con sus casos de uso desplegados; el resto va abajo,
-         más compacto y sin dejar de ser navegable. -->
     <Frame labelledby="foco">
       <h2 id="foco" class="label-untitled text-muted-ash" data-reveal>
         {t.solutions.focusLabel}
@@ -145,38 +138,6 @@ const breadcrumb = {
                   </li>
                 ))}
               </ul>
-            </li>
-          ))
-        }
-      </ul>
-    </Frame>
-
-    <Frame labelledby="otros">
-      <h2 id="otros" class="label-untitled text-muted-ash" data-reveal>
-        {t.solutions.othersLabel}
-      </h2>
-
-      <ul
-        class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2"
-      >
-        {
-          OTHER_SOLUTIONS.map((solution, index) => (
-            <li
-              class="group relative border-t border-hairline py-8 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
-              data-reveal
-              style={`--reveal-delay: ${index * 50}ms;`}
-            >
-              <h3 class="text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em] text-bone">
-                <a
-                  href={solutionPath(lang, solution)}
-                  class="transition-opacity duration-(--duration-state) ease-(--ease-opx) group-hover:opacity-70 before:absolute before:inset-0 before:content-['']"
-                >
-                  {solution.sector[lang]}
-                </a>
-              </h3>
-              <p class="mt-3 max-w-[44ch] copy text-ash">
-                {solution.description[lang]}
-              </p>
             </li>
           ))
         }

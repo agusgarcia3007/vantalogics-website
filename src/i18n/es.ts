@@ -474,13 +474,12 @@ export const es = {
   solutions: {
     label: "Soluciones",
     breadcrumb: "Soluciones",
-    indexTitle: "Automatización con IA, por sector",
+    indexTitle: "IA para plataformas educativas",
     indexDescription:
-      "Cómo se automatiza con IA en cada sector: qué procesos conviene atacar primero, qué se integra y qué queda con aprobación humana.",
+      "Cómo integramos IA en plataformas educativas y EdTech: tutores, corrección asistida, evaluaciones y búsqueda semántica, con aprobación humana donde importa.",
     indexIntro:
-      "El proceso cambia según el rubro. Estas páginas son el punto de partida por sector: qué automatizamos primero, con qué sistemas hablamos y dónde dejamos a una persona decidiendo.",
-    focusLabel: "Industrias foco",
-    othersLabel: "Otros sectores",
+      "Qué construimos primero en una plataforma educativa, con qué sistemas se integra y dónde dejamos a una persona decidiendo.",
+    focusLabel: "Educación",
     processesLabel: "Qué automatizamos primero",
     stackLabel: "Con qué se integra",
     humanLabel: "Qué queda con aprobación humana",
