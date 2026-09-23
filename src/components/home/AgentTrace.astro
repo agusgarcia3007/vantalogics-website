@@ -21,9 +21,6 @@ const t = useTranslations(lang).hero.trace
 const stepIcons = [UserIcon, Search01Icon, SecurityCheckIcon, AiChat02Icon]
 ---
 
-<!-- La tarjeta de producto del hero (design.md › Dashboard Preview Card):
-     una traza de agente dibujada como interfaz, no como ilustración. Los
-     pasos se encienden en secuencia cuando la tarjeta entra en pantalla. -->
 <figure
   class:list={[
     "trace relative overflow-hidden card bg-graphite/80 backdrop-blur-xl",
@@ -166,7 +163,6 @@ const stepIcons = [UserIcon, Search01Icon, SecurityCheckIcon, AiChat02Icon]
     }
   }
 
-  /* Secuencia: cada paso aparece, gira un instante y se confirma. */
   .step-spin {
     position: absolute;
     inset: -1px;

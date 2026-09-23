@@ -36,19 +36,10 @@ const pageUrl = new URL(path, SITE).href
 const minutes = readingTime(post.body)
 const blogPath = localizePath(lang, "/blog/")
 
-/**
- * El sector del que habla la nota, si declara uno.
- *
- * `findSolution` busca por slug español porque es el identificador estable del
- * sector: la nota en inglés y la nota en árabe declaran el mismo valor, y cada
- * una resuelve el enlace a la página de sector de su propio idioma.
- */
 const industrySolution = post.data.industry
   ? findSolution("es", post.data.industry)
   : undefined
 
-// Sólo se declara `hreflang` cuando la traducción existe de verdad. Un
-// alternate que devuelve 404 hace que Google descarte el par entero.
 const alternates = {
   [lang]: path,
   ...Object.fromEntries(
@@ -56,8 +47,6 @@ const alternates = {
   ),
 }
 
-// Índice con los h2. Los h3 quedan afuera a propósito: un índice de dos
-// niveles en una nota de mil palabras es más ruido que ayuda.
 const toc = headings.filter((heading) => heading.depth === 2)
 
 const article = {
@@ -66,21 +55,8 @@ const article = {
   "@id": `${pageUrl}#article`,
   headline: post.data.title,
   description: post.data.description,
-  /**
-   * `abstract` lleva la respuesta corta y no la bajada. Es el campo que los
-   * motores de respuesta usan como resumen citable, y la respuesta de 40–60
-   * palabras es exactamente lo que queremos que citen.
-   */
   abstract: post.data.answer,
   articleSection: t.blog.clusters[post.data.cluster],
-  /**
-   * `about` apuntando al servicio del sector.
-   *
-   * Es la mitad que faltaba del silo: la página de sector lista sus notas y
-   * cada nota declara de qué sector habla. Un motor de respuesta que llega a
-   * una nota por una consulta de rubro puede seguir el enlace hasta la página
-   * canónica de la empresa sobre ese rubro sin depender de la navegación.
-   */
   ...(industrySolution
     ? {
         about: {
@@ -99,11 +75,6 @@ const article = {
   author: { "@id": `${SITE}/#organization` },
   publisher: { "@id": `${SITE}/#organization` },
   image: new URL(ogImage(lang), SITE).href,
-  /**
-   * `speakable` marca qué leería en voz alta un asistente. Apunta al titular y
-   * al bloque de respuesta corta, que es la unidad que tiene sentido leer
-   * suelta.
-   */
   speakable: {
     "@type": "SpeakableSpecification",
     cssSelector: ["[data-speakable]"],
@@ -204,9 +175,6 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
     </main>
 
     <div class="below" slot="after">
-      <!-- Respuesta corta. Va antes que el cuerpo y encuadrada: es la unidad
-           que extraen los motores de respuesta, y el lector que sólo vino a
-           saber el número se va con el número sin leer mil palabras. -->
       <section class="section">
         <div class="shell">
           <div class="answer reveal">

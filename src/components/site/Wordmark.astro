@@ -7,13 +7,7 @@ interface Props {
 const { class: className = "", alt } = Astro.props
 ---
 
-<!-- `dir="ltr"` fijo: el lockup es la marca, no texto de la página. En árabe
-     el documento se voltea y el nombre quedaría a la izquierda del isotipo,
-     que es otro logo. La isla en LTR también le devuelve el tracking latino al
-     nombre —ver la regla del árabe en global.css—. -->
 <span dir="ltr" class={`flex items-center gap-[10px] ${className}`}>
-  <!-- El logo es un PNG negro con fondo transparente; sobre el canvas oscuro
-       se invierte a blanco. -->
   <img
     src="/logo-va.png"
     srcset="/logo-va.png 340w, /logo-va@2x.png 681w"

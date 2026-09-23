@@ -1,27 +1,5 @@
 import { localizePath, type Lang } from "@/i18n"
 
-/**
- * Páginas de solución por sector (la capa programática del sitio).
- *
- * La búsqueda de palabras clave devolvió el mismo patrón en todos los rubros
- * probados: el volumen no está en «automatización de procesos» —término que
- * además compite con automatización de portones y persianas— sino en la
- * combinación sector + tarea: «IA para clínicas dentales», «tutor de IA para
- * una academia online», «IA para estudios contables». Son consultas de intención
- * comercial alta y casi nadie las responde con contenido específico: se
- * resuelven con una landing genérica a la que le cambiaron el sustantivo.
- *
- * De ahí la forma de este archivo. Cada sector declara procesos reales,
- * sistemas reales del rubro y una lista explícita de cuándo NO conviene. Esa
- * última sección es la que separa una página programática útil de una granja
- * de contenido: dice algo que sólo puede decir alguien que hizo el trabajo, y
- * es lo que hace que la página sea citable por un motor de respuesta.
- *
- * La regla para agregar sectores: si no podés escribir la sección «cuándo no
- * conviene» con algo concreto, todavía no sabés lo suficiente de ese rubro
- * como para publicar la página.
- */
-
 export interface Localized {
   es: string
   en: string
@@ -40,34 +18,17 @@ export interface Item {
 }
 
 export interface Solution {
-  /**
-   * Industria foco de la agencia.
-   *
-   * La industria foco —EdTech y plataformas educativas— es la que recibe
-   * tratamiento distinto: entra a la portada con su propio bloque, tiene
-   * casos de uso propios (`src/data/use-cases.ts`) y es el destino de los
-   * silos del blog.
-   */
   focus?: true
   slug: Localized
   sector: Localized
-  /** H1 de la página. */
   title: Localized
-  /** Meta description, 140–160 caracteres. */
   description: Localized
-  /** Respuesta corta y citable, 40–60 palabras. */
   answer: Localized
-  /** Dos párrafos de contexto del rubro. */
   intro: LocalizedList
-  /** Procesos que se atacan primero. */
   processes: Item[]
-  /** Sistemas del rubro con los que se integra. */
   stack: LocalizedList
-  /** Lo que queda con aprobación humana. */
   human: LocalizedList
-  /** Por dónde se empieza, en orden. */
   start: LocalizedList
-  /** Cuándo no conviene. La sección que hace honesta a la página. */
   notThis: LocalizedList
   faq: { question: Localized; answer: Localized }[]
 }
@@ -279,12 +240,9 @@ export const SOLUTIONS: Solution[] = [
   },
 ]
 
-/** Segmento de la ruta por idioma. */
 const SEGMENT: Record<Lang, string> = {
   es: "soluciones",
   en: "solutions",
-  // El slug árabe se mantiene en ASCII: una URL en árabe se percent-encodea
-  // y queda ilegible al copiarla, compartirla o leerla en un informe.
   ar: "solutions",
 }
 
@@ -300,12 +258,4 @@ export function findSolution(lang: Lang, slug: string): Solution | undefined {
   return SOLUTIONS.find((solution) => solution.slug[lang] === slug)
 }
 
-/**
- * Las industrias foco, en el orden en que se declaran.
- *
- * Es la lista que consume la portada. Se deriva de la bandera en vez de
- * mantenerse aparte para que no puedan desincronizarse: agregar `focus: true`
- * a un sector lo pone en la home, en el índice arriba de todo y en `llms.txt`
- * con tratamiento propio, en un solo movimiento.
- */
 export const FOCUS_SOLUTIONS: Solution[] = SOLUTIONS.filter((s) => s.focus)

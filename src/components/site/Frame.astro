@@ -1,16 +1,12 @@
 ---
 interface Props {
   id?: string
-  /** Sin la regla superior: sólo para el primer bloque bajo el encabezado. */
   flush?: boolean
   class?: string
   labelledby?: string
 }
 
 const { id, flush = false, class: className = "", labelledby } = Astro.props
-
-// Bloque de las páginas internas (notas, soluciones, casos): el contenedor de
-// 1200px de design.md, con una regla superior entre bloques.
 ---
 
 <section

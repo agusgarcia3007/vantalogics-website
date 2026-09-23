@@ -62,10 +62,6 @@ const KNOWS_ABOUT: Record<Lang, string[]> = {
   ],
 }
 
-/**
- * Datos estructurados. Sólo hechos declarables sobre la empresa y su oferta:
- * nada de Review ni AggregateRating, que exigen reseñas reales y verificables.
- */
 const organization = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -128,7 +124,6 @@ const webPage = {
   about: { "@id": `${SITE}/#organization` },
 }
 
-/** El proceso de trabajo, como pasos ordenados. */
 const process = {
   "@context": "https://schema.org",
   "@type": "HowTo",

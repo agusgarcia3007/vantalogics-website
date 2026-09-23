@@ -15,9 +15,6 @@ const t = useTranslations(lang).cta
 const email = CONTACT_EMAIL
 ---
 
-<!-- El cierre. La luna vuelve como horizonte: el borde de una esfera que
-     asoma desde abajo, con la misma luz índigo del hero. Es CSS; la escena
-     WebGL vive sólo arriba. -->
 <section
   id="contacto"
   aria-labelledby="contacto-titulo"
@@ -116,7 +113,6 @@ const email = CONTACT_EMAIL
     transform: translateX(-50%);
   }
 
-  /* El cuerpo: casi negro, apenas más claro que el canvas hacia el borde. */
   .horizon::before {
     background: radial-gradient(
       circle at 50% 0%,
@@ -127,7 +123,6 @@ const email = CONTACT_EMAIL
     border-top: 1px solid rgb(103 152 255 / 0.55);
   }
 
-  /* La luz de borde: brilla en la curva y se abre hacia arriba. */
   .horizon::after {
     background: radial-gradient(
       closest-side,

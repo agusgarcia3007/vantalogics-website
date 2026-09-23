@@ -3,19 +3,6 @@ import { agentCopy } from "./copy"
 import AgentChat from "./AgentChat"
 import { usePass } from "./usePass"
 
-/**
- * El agente embebido en la sección "Probalo ahora".
- *
- * Es el mismo chat que el del panel flotante, sin sheet ni drawer alrededor:
- * acá no hay nada que abrir, la conversación ya está en la página. Comparte la
- * sesión con el panel —el id vive en sessionStorage—, así que quien empieza acá
- * y después abre el botón flotante encuentra la misma conversación.
- *
- * La caja tiene alto fijo a propósito. Si creciera con la conversación, la
- * sección entera saltaría con cada respuesta y empujaría hacia abajo lo que la
- * persona está leyendo.
- */
-
 interface Props {
   lang: Lang
   host: string

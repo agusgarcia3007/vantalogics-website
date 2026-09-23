@@ -27,17 +27,8 @@ const path = solutionPath(lang, solution)
 const pageUrl = new URL(path, SITE).href
 const indexPath = solutionsIndexPath(lang)
 
-/**
- * Los casos de uso del sector, si es una industria foco.
- *
- * Es el enlace de arriba hacia abajo del silo: la página general responde la
- * consulta de investigación —«cómo se automatiza con IA en mi rubro»— y desde
- * ahí baja a la consulta comercial, que es donde está la intención de compra.
- * Los sectores que no son foco no tienen casos y el bloque no se imprime.
- */
 const useCases = casesFor(solution)
 
-/** Las notas escritas para este rubro. La otra mitad del silo. */
 const posts = await getPostsByIndustry(lang, solution.slug.es)
 
 const service = {
@@ -68,9 +59,6 @@ const service = {
       },
     })),
   },
-  // La contraparte del `isPartOf` que declara cada caso de uso. Las dos
-  // direcciones explícitas: es lo que hace legible el silo sin depender de que
-  // el rastreador infiera la jerarquía de la forma de la URL.
   ...(useCases.length
     ? {
         hasPart: useCases.map((useCase) => ({

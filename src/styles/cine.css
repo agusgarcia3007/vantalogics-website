@@ -1,22 +1,9 @@
-/**
- * Sistema visual de la portada: negro, tipografía, controles metálicos.
- *
- * Vive acá y no dentro del componente porque lo comparten la portada y las
- * páginas de caso. Astro lo emite una sola vez y queda cacheado entre páginas.
- * Las reglas del hero (video, badge, titular, franja de prueba) sólo matchean
- * en la portada; en las páginas de caso no aplican a nada.
- */
-
-/* ── BLACK FIRST — nunca un flash blanco ───────────────────────── */
 html,
 body {
   background: #000000 !important;
   color: #ffffff;
 }
 
-/* ── FONTS ─────────────────────────────────────────────────────── */
-/* Inter ya la sirve @fontsource-variable/inter vía --font-inter; acá sólo
-hace falta la itálica del serif, que no existía en el sitio. */
 @font-face {
   font-family: "Instrument Serif";
   font-style: italic;
@@ -25,11 +12,6 @@ hace falta la itálica del serif, que no existía en el sitio. */
   src: url("/fonts/instrument-serif-italic.woff2") format("woff2");
 }
 
-/* ── RESET ─────────────────────────────────────────────────────── */
-/* El cuerpo de las notas queda afuera. `typeset` declara su ritmo dentro de
-   `@layer components` y una regla sin capa le gana siempre, sin importar la
-   especificidad: sin esta excepción el `margin: 0` borra la separación entre
-   párrafos, títulos y listas del artículo. */
 *:not(.typeset, .typeset *) {
   box-sizing: border-box;
   margin: 0;
@@ -50,7 +32,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ── TOKENS — default ~1440px ──────────────────────────────────── */
 :root {
   --bg: #000000;
   --text: #ffffff;
@@ -91,7 +72,6 @@ html {
   --lede-mt: 18px;
   --actions-mt: 26px;
 
-  /* Contenedor de las secciones de abajo y su ritmo vertical. */
   --shell: 1180px;
   --section-y: 140px;
 
@@ -115,7 +95,6 @@ body {
   position: relative;
 }
 
-/* ── HERO BACKGROUND ───────────────────────────────────────────── */
 .hero-photo {
   position: fixed;
   inset: 0;
@@ -160,7 +139,6 @@ body {
   pointer-events: none;
 }
 
-/* ── GRAIN ─────────────────────────────────────────────────────── */
 .grain {
   position: fixed;
   inset: 0;
@@ -172,7 +150,6 @@ body {
   background-size: 160px 160px;
 }
 
-/* ── PAGE ──────────────────────────────────────────────────────── */
 .page {
   position: relative;
   z-index: 1;
@@ -182,20 +159,15 @@ body {
   min-height: 100dvh;
 }
 
-/* Las páginas que fluyen no son un cuadro: sin el grid de tres filas, el
-   contenido queda pegado al header en vez de estirarse hasta el borde. */
 .page--flow {
   display: block;
   min-height: 0;
 }
 
-/* El aire extra del header existe para no pisar el borde de la placa. Donde no
-   hay placa, es aire de más. */
 .page--flow .header {
   padding-top: var(--header-y);
 }
 
-/* ── HEADER ────────────────────────────────────────────────────── */
 .header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -222,7 +194,6 @@ body {
   filter: invert(1) brightness(2);
 }
 
-/* ── NAV ───────────────────────────────────────────────────────── */
 .nav {
   display: flex;
   align-items: center;
@@ -250,7 +221,6 @@ body {
   color: #fff;
 }
 
-/* ── BUTTONS ───────────────────────────────────────────────────── */
 .btn {
   position: relative;
   isolation: isolate;
@@ -277,9 +247,6 @@ body {
   transform: scale(0.98);
 }
 
-/* El CTA que manda lleva la flecha dentro de su propio círculo, pegada al
-   padding derecho. Suelta al lado del texto se lee como un enlace; encerrada,
-   como un control. */
 .btn-lead {
   gap: 10px;
   padding-inline-end: 5px;
@@ -336,7 +303,6 @@ body {
   justify-self: end;
 }
 
-/* ── BURGER ────────────────────────────────────────────────────── */
 .burger {
   display: none;
   width: 42px;
@@ -371,12 +337,10 @@ body.menu-open .burger span:nth-child(3) {
   transform: translateY(-6.5px) rotate(-45deg);
 }
 
-/* ── MENU BACKDROP ─────────────────────────────────────────────── */
 .menu-backdrop {
   display: none;
 }
 
-/* ── HERO ──────────────────────────────────────────────────────── */
 .hero {
   display: flex;
   align-items: flex-end;
@@ -395,7 +359,6 @@ body.menu-open .burger span:nth-child(3) {
   width: 100%;
 }
 
-/* ── BADGE ─────────────────────────────────────────────────────── */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -417,9 +380,6 @@ body.menu-open .burger span:nth-child(3) {
   overflow: hidden;
 }
 
-/* El brillo recorre el badge en loop: es el único elemento de la portada
-    que sigue vivo después de la entrada. Arranca tarde para no pelearse
-    con la animación de aparición. */
 .badge::after {
   content: "";
   position: absolute;
@@ -450,12 +410,6 @@ body.menu-open .burger span:nth-child(3) {
   transform-origin: 50% 50%;
 }
 
-/* ── HEADLINE ──────────────────────────────────────────────────── */
-/* El titular lleva su propio scrim: en vez de oscurecer el video entero,
-    difumina y baja el brillo sólo de lo que le pasa por detrás. Así el
-    contraste se sostiene aunque el fondo se mueva, y la itálica —que es el
-    texto más fino y el de color más bajo— nunca queda contra un frame
-    claro. El degradado del mask evita cualquier borde visible. */
 .hero h1 {
   position: relative;
   isolation: isolate;
@@ -501,7 +455,6 @@ body.menu-open .burger span:nth-child(3) {
   animation: serif-focus 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.72s both;
 }
 
-/* ── LEDE ──────────────────────────────────────────────────────── */
 .lede {
   max-width: var(--lede-max);
   margin-top: var(--lede-mt);
@@ -512,7 +465,6 @@ body.menu-open .burger span:nth-child(3) {
   letter-spacing: -0.015em;
 }
 
-/* ── ACTIONS ───────────────────────────────────────────────────── */
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -529,7 +481,6 @@ body.menu-open .burger span:nth-child(3) {
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* ── WHATSAPP ──────────────────────────────────────────────────── */
 .wa {
   position: fixed;
   z-index: 60;
@@ -589,7 +540,6 @@ body.menu-open .burger span:nth-child(3) {
   margin-left: 10px;
 }
 
-/* ── PROOF STRIP ───────────────────────────────────────────────── */
 .stats {
   display: flex;
   align-items: center;
@@ -615,7 +565,6 @@ body.menu-open .burger span:nth-child(3) {
   flex: none;
 }
 
-/* ── ENTRANCE MOTION ───────────────────────────────────────────── */
 .appear {
   opacity: 1;
   animation-duration: 1.05s;
@@ -752,29 +701,16 @@ body.menu-open .burger span:nth-child(3) {
   }
 }
 
-/* ── SECCIONES BAJO EL HERO ────────────────────────────────────── */
-/* Fondo opaco propio: el video está fijo detrás y tiene que quedar
-    tapado en cuanto se baja del primer cuadro. */
 .below {
   position: relative;
   z-index: 1;
   background: #000;
 }
 
-/* Una página de caso ya abre con su propio encabezado y sus métricas: el
-   ritmo de la portada, pensado para separar bloques que llegan después de un
-   viewport entero de video, ahí deja huecos sin contenido. */
 .below:not(.below--frame) {
   --section-y: 100px;
 }
 
-/* El corte entre la placa del hero y lo que sigue era el borde de un video a
-   sangre contra negro plano. Este halo continúa la luz unos cientos de
-   píxeles hacia abajo, así que el paso de una cosa a la otra es un degradado
-   y no una línea.
-
-   Sólo en la portada: en una página de caso, arriba de `.below` no hay ninguna
-   placa que continuar y el halo se leería como una mancha. */
 .below--frame::before {
   content: "";
   position: absolute;
@@ -791,10 +727,6 @@ body.menu-open .burger span:nth-child(3) {
   pointer-events: none;
 }
 
-/* ── CONTENEDOR ────────────────────────────────────────────────── */
-/* Todo lo que va debajo del hero se alinea contra esta misma columna. Sin
-   ella cada sección elegía su propio ancho y el sitio se leía como una pila
-   de bloques sueltos en vez de una página. */
 .shell,
 .case-wrap {
   position: relative;
@@ -809,9 +741,6 @@ body.menu-open .burger span:nth-child(3) {
   padding: var(--section-y) var(--header-x);
 }
 
-/* La separación entre secciones es una hairline que empieza y termina con el
-   contenedor, no un borde a sangre: cortar el ancho completo de la pantalla
-   era exactamente la división burda que se quería sacar. */
 .section + .section > .shell::before,
 .section + .section > .case-wrap::before {
   content: "";
@@ -829,10 +758,6 @@ body.menu-open .burger span:nth-child(3) {
   );
 }
 
-/* Split editorial: el titular ocupa la columna ancha y la bajada se apoya
-   contra su última línea en la angosta. Centrado dejaba media pantalla vacía a
-   la derecha, que es lo que hacía ver el bloque como un encabezado suelto en
-   vez de la apertura de una sección. */
 .section-head {
   margin: 0 0 64px;
 }
@@ -846,8 +771,6 @@ body.menu-open .burger span:nth-child(3) {
   .section-head .eyebrow {
     grid-column: 1;
     grid-row: 1;
-    /* Como ítem de grid, un inline-flex se estira a lo ancho de la celda: la
-       pastilla pasaría a ser una barra. */
     justify-self: start;
   }
   .section-head h2 {
@@ -892,10 +815,6 @@ body.menu-open .burger span:nth-child(3) {
   letter-spacing: -0.015em;
 }
 
-/* ── CASOS ─────────────────────────────────────────────────────── */
-/* Grilla asimétrica de seis columnas: el caso de mayor alcance ocupa cuatro y
-   el resto se reparte en dos filas de proporciones distintas. Cuatro tarjetas
-   iguales leen como catálogo; esto lee como una selección. */
 .cases {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -911,14 +830,10 @@ body.menu-open .burger span:nth-child(3) {
 .case:nth-child(4) {
   grid-column: span 3;
 }
-/* Cualquier caso que se agregue después cae en media fila y no rompe nada. */
 .case:nth-child(n + 5) {
   grid-column: span 3;
 }
 
-/* Doble borde: una bandeja clara con su propio hairline y, adentro, la placa
-   negra del contenido con el radio calculado para que las dos curvas sean
-   concéntricas. */
 .case {
   display: block;
   padding: 6px;
@@ -966,10 +881,6 @@ body.menu-open .burger span:nth-child(3) {
   gap: 16px;
 }
 
-/* Los logos llegan de los sitios de cada producto, con colores y proporciones
-   que no se eligieron acá. El gris de reposo los vuelve un sistema; el color
-   aparece sólo en la tarjeta que se está mirando. El brillo levanta los
-   marcados más oscuros, que sobre negro se perderían. */
 .case-mark {
   display: inline-flex;
   align-items: center;
@@ -1059,7 +970,6 @@ body.menu-open .burger span:nth-child(3) {
   white-space: nowrap;
 }
 
-/* La flecha vive dentro de su propio círculo, como el CTA del hero. */
 .case-go {
   display: inline-flex;
   align-items: center;
@@ -1082,8 +992,6 @@ body.menu-open .burger span:nth-child(3) {
   color: #0a0a0a;
 }
 
-/* ── PROCESO ───────────────────────────────────────────────────── */
-/* Los pasos como una lista numerada, sin adornos. */
 .steps {
   display: grid;
   gap: 0;
@@ -1129,11 +1037,6 @@ body.menu-open .burger span:nth-child(3) {
   letter-spacing: -0.015em;
 }
 
-/* ── NOTAS ─────────────────────────────────────────────────────── */
-/* El blog corre sobre el mismo sistema que la portada: mismo header, mismo
-   contenedor, mismo pie. Lo único que conserva su propia tipografía es el
-   cuerpo del artículo (`typeset`), que ya estaba resuelto y no gana nada con
-   ser reescrito acá. */
 .doc-page {
   padding: 0 var(--header-x);
 }
@@ -1193,9 +1096,6 @@ body.menu-open .burger span:nth-child(3) {
   font-size: var(--lede);
 }
 
-/* ── LISTA DE NOTAS ────────────────────────────────────────────── */
-/* La misma grilla y las mismas tarjetas de doble borde que los casos: es lo
-   que hace que el blog se lea como parte del sitio y no como un anexo. */
 .posts {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -1257,7 +1157,6 @@ body.menu-open .burger span:nth-child(3) {
   font-size: clamp(24px, 2.4vw, 32px);
   letter-spacing: -0.04em;
 }
-/* El área clicable es toda la tarjeta; el nombre accesible, sólo el titular. */
 .post-title a::before {
   content: "";
   position: absolute;
@@ -1298,7 +1197,6 @@ body.menu-open .burger span:nth-child(3) {
   color: #0a0a0a;
 }
 
-/* ── RESPUESTA CORTA ───────────────────────────────────────────── */
 .answer {
   max-width: 68ch;
   padding: 26px 0 26px 28px;
@@ -1319,7 +1217,6 @@ body.menu-open .burger span:nth-child(3) {
   letter-spacing: -0.02em;
 }
 
-/* ── CUERPO + ÍNDICE ───────────────────────────────────────────── */
 .doc-body {
   display: grid;
   gap: 48px 72px;
@@ -1364,7 +1261,6 @@ body.menu-open .burger span:nth-child(3) {
   color: #fff;
 }
 
-/* ── FAQ ───────────────────────────────────────────────────────── */
 .faq {
   max-width: 72ch;
 }
@@ -1392,7 +1288,6 @@ body.menu-open .burger span:nth-child(3) {
   letter-spacing: -0.015em;
 }
 
-/* ── AUTOR ─────────────────────────────────────────────────────── */
 .author {
   display: flex;
   flex-wrap: wrap;
@@ -1471,10 +1366,6 @@ body.menu-open .burger span:nth-child(3) {
   }
 }
 
-/* ── PIE ───────────────────────────────────────────────────────── */
-/* Cierra con la misma hairline interior que separa las secciones y termina en
-   la marca a sangre: es lo último que se ve y conviene que sea la firma, no
-   una lista de enlaces. */
 .foot {
   position: relative;
   padding-top: var(--section-y);
@@ -1582,8 +1473,6 @@ body.menu-open .burger span:nth-child(3) {
   color: #fff;
 }
 
-/* El único enlace del pie que es una acción y no un destino: se marca con el
-   mismo círculo que el CTA del hero en vez de con un color distinto. */
 .foot-cta {
   display: inline-flex;
   align-items: center;
@@ -1623,9 +1512,6 @@ body.menu-open .burger span:nth-child(3) {
   letter-spacing: 0.01em;
 }
 
-/* La firma final, cortada por el borde inferior. `container-type: inline-size`
-   para que el cuerpo salga del ancho del bloque y no del viewport: la palabra
-   entra completa y con el mismo aire lateral en cualquier pantalla. */
 .foot-mark {
   container-type: inline-size;
   height: 9vw;
@@ -1665,12 +1551,6 @@ body.menu-open .burger span:nth-child(3) {
   }
 }
 
-/* ── ENTRADA POR SCROLL ────────────────────────────────────────── */
-/* Nada aparece de golpe: cada bloque sube con un desenfoque que se resuelve.
-   El escalonado sale de `--i`, el índice que cada elemento declara en su
-   propio `style`. Sólo `transform`, `opacity` y `filter`: nada que dispare
-   layout. La clase la pone el script de `Chrome.astro` con un
-   IntersectionObserver, y si el script no corre el contenido queda visible. */
 .reveal {
   opacity: 0;
   transform: translateY(26px);
@@ -1708,7 +1588,6 @@ body.menu-open .burger span:nth-child(3) {
     gap: 24px;
     padding: 22px 20px 18px;
   }
-  /* Sin hover táctil, la elevación del reposo nunca se resolvería. */
   .case:hover {
     transform: none;
   }
@@ -1719,23 +1598,16 @@ body.menu-open .burger span:nth-child(3) {
   }
 }
 
-/* ── PRIMER CUADRO ─────────────────────────────────────────────── */
-/* Ya no hay lock de scroll: debajo del hero viven los casos y el
-    proceso. `.page` sigue midiendo exactamente un viewport, así que la
-    portada abre como un solo cuadro y lo demás aparece al bajar. */
 @media (min-width: 901px) {
   .page {
     height: 100vh;
     height: 100dvh;
   }
-  /* Las páginas de caso crecen con su contenido: la altura fija del primer
-     cuadro les cortaría todo lo que va debajo del header. */
   .page--flow {
     height: auto;
   }
 }
 
-/* ── RESPONSIVE TOKENS ─────────────────────────────────────────── */
 @media (min-width: 1600px) {
   :root {
     --logo: 17px;
@@ -1835,7 +1707,6 @@ body.menu-open .burger span:nth-child(3) {
   }
 }
 
-/* ── SHORT DESKTOP VIEWPORTS ───────────────────────────────────── */
 @media (min-width: 901px) and (max-height: 850px) {
   :root {
     --header-y: 14px;
@@ -1860,7 +1731,6 @@ body.menu-open .burger span:nth-child(3) {
   }
 }
 
-/* ── MOBILE ≤900 ───────────────────────────────────────────────── */
 @media (max-width: 900px) {
   html,
   body {
@@ -1964,7 +1834,6 @@ body.menu-open .burger span:nth-child(3) {
     max-width: 100%;
   }
 
-  /* El botón flota en una banda reservada bajo la prueba, nunca encima. */
   .wa {
     right: max(16px, env(safe-area-inset-right));
     bottom: max(16px, env(safe-area-inset-bottom));
@@ -2008,7 +1877,6 @@ body.menu-open .burger span:nth-child(3) {
   }
 }
 
-/* ── REDUCED MOTION ────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -2033,10 +1901,6 @@ body.menu-open .burger span:nth-child(3) {
   }
 }
 
-/* ── PÁGINAS DE CASO ───────────────────────────────────────────── */
-/* Mismo registro que la portada: filas separadas por una línea, nada de
-   tarjetas. Lo único con marco es el logo del cliente, que necesita un
-   fondo propio para no quedar flotando sobre el negro. */
 .case-page {
   padding: 0 var(--header-x) 24px;
 }

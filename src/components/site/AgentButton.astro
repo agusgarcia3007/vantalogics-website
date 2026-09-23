@@ -13,15 +13,6 @@ const { lang } = Astro.props
 const t = useTranslations(lang)
 ---
 
-<!-- El disparador del agente. Es HTML: no cuesta un byte de JavaScript, igual
-     que el resto del sitio. React, el sheet y el cliente del agente entran con
-     el primer clic y no antes.
-
-     Mismo pill que WhatsApp y apilado debajo: en una pila flotante el lugar
-     de abajo es el que la mano encuentra primero, y el agente es la invitación
-     principal —WhatsApp queda arriba, a un dedo de distancia. El sistema es
-     monocromo (design.md), de modo que la jerarquía la da la posición, no el
-     color. -->
 <button
   type="button"
   data-agent-open
@@ -32,8 +23,6 @@ const t = useTranslations(lang)
   aria-haspopup="dialog"
   class="group fixed end-[max(20px,env(safe-area-inset-right))] bottom-[max(20px,env(safe-area-inset-bottom))] z-50 flex items-center gap-0 rounded-pill border border-hairline bg-canvas/90 p-[13px] label-untitled text-bone backdrop-blur-sm transition-colors duration-(--duration-state) ease-(--ease-opx) hover:border-bone focus-visible:border-bone focus-visible:outline-none rtl:end-[max(20px,env(safe-area-inset-left))]"
 >
-  <!-- Burbuja de chat: mismo trazo que el resto de los glifos del sistema, así
-       no compite con el de WhatsApp apilado justo arriba. -->
   <HugeiconsIcon
     icon={BubbleChatIcon}
     size={22}
@@ -42,10 +31,6 @@ const t = useTranslations(lang)
     aria-hidden="true"
   />
 
-  <!-- La invitación va escrita: alguien que no sabe qué es un agente no la
-       descubre pasando el mouse por un círculo. En pantallas angostas, donde
-       el pill le comería el ancho al contenido, el rótulo sigue naciendo en
-       cero y sólo aparece con intención (hover/foco). -->
   <span
     class="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity,margin] duration-(--duration-geometry) ease-(--ease-opx) group-hover:ms-[11px] group-hover:max-w-[30ch] group-hover:opacity-100 group-focus-visible:ms-[11px] group-focus-visible:max-w-[30ch] group-focus-visible:opacity-100 sm:ms-[11px] sm:max-w-[30ch] sm:opacity-100"
   >
@@ -56,12 +41,6 @@ const t = useTranslations(lang)
 <script>
   import { installRefreshPreamble } from "@/lib/react-preamble"
 
-  // Carga bajo demanda. El primer clic trae el módulo del agente; los
-  // siguientes sólo emiten el evento de apertura, que el panel ya escucha.
-  //
-  // Escuchan todos los disparadores de la página —el flotante y los botones
-  // de las secciones—, no sólo este: el que abre el panel es siempre el mismo
-  // código, y la configuración (host, sitekey, idioma) sigue viviendo acá.
   const trigger = document.querySelector("[data-agent-open]")
   const triggers = document.querySelectorAll(
     "[data-agent-open], [data-agent-open-secondary]"

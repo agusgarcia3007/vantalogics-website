@@ -36,18 +36,6 @@ import {
   sparkVertex,
 } from "./shaders"
 
-/**
- * La luna del hero.
- *
- * Una sola dueña para todo: este módulo crea el canvas, el renderer, la
- * cámara, el loop, los observers y los listeners, y `dispose()` los suelta en
- * orden inverso. El resto de la página sólo le pasa un contenedor y le avisa
- * cuánto se scrolleó (`setScroll`), sin que la escena lea el DOM por cuadro.
- *
- * Unidades: la esfera tiene radio 1 en su espacio local; `world` la ubica y la
- * escala para que caiga en la fracción de pantalla que pide el layout.
- */
-
 const ACCENT = new Color("#6798ff")
 const FOV = 30
 const CAMERA_Z = 10
@@ -59,11 +47,8 @@ const INTRO_SECONDS = 2.8
 const TAU = Math.PI * 2
 
 export interface MoonOptions {
-  /** Sin animación continua: se dibuja el estado final y se detiene. */
   reducedMotion: boolean
-  /** Se llama cuando el primer cuadro ya está en pantalla. */
   onReady?: () => void
-  /** Se llama si el contexto WebGL se pierde. */
   onFail?: () => void
 }
 
@@ -73,10 +58,8 @@ export interface MoonScene {
 }
 
 interface Layout {
-  /** Centro en fracciones del canvas. */
   x: number
   y: number
-  /** Radio en píxeles CSS. */
   radius: number
 }
 
@@ -90,7 +73,6 @@ function layoutFor(width: number, height: number): Layout {
   return { x: 0.8, y: 0.12, radius: width * 0.36 }
 }
 
-/** Puntos repartidos de forma pareja sobre la esfera (espiral de Fibonacci). */
 function fibonacciSphere(count: number, radius: number): Float32Array {
   const out = new Float32Array(count * 3)
   const golden = Math.PI * (3 - Math.sqrt(5))
@@ -105,7 +87,6 @@ function fibonacciSphere(count: number, radius: number): Float32Array {
   return out
 }
 
-/** PRNG determinístico: la red se ve igual en cada visita. */
 function mulberry32(seed: number) {
   let a = seed
   return () => {
@@ -136,11 +117,6 @@ function buildNodes(random: () => number) {
   return { geometry, positions, hubIndices }
 }
 
-/**
- * Arcos de círculo máximo entre hubs cercanos, levantados apenas sobre la
- * superficie. Cada vértice lleva su posición relativa en el arco (`aT`) para
- * que el shader haga viajar un pulso.
- */
 function buildArcs(
   positions: Float32Array,
   hubIndices: number[],
@@ -274,7 +250,6 @@ export function createMoonScene(
   world.name = "moon-world"
   scene.add(world)
 
-  // El cuerpo gira; la órbita y el halo quedan fijos respecto de la cámara.
   const body = new Group()
   body.name = "moon-body"
   body.rotation.set(0.32, -0.6, 0.18)
@@ -288,7 +263,6 @@ export function createMoonScene(
   const pixelRatio = { value: 1 }
   const accent = { value: ACCENT }
 
-  // --- Halo (detrás) -------------------------------------------------------
   const HALO_SCALE = 3.2
   const haloMaterial = new ShaderMaterial({
     vertexShader: haloVertex,
@@ -309,7 +283,6 @@ export function createMoonScene(
   halo.renderOrder = 0
   world.add(halo)
 
-  // --- Luna ---------------------------------------------------------------
   const moonGeometry = new SphereGeometry(1, 144, 96)
   const moonMaterial = new ShaderMaterial({
     vertexShader: moonVertex,
@@ -327,7 +300,6 @@ export function createMoonScene(
   moon.renderOrder = 1
   body.add(moon)
 
-  // --- Red de nodos y arcos ------------------------------------------------
   const nodes = buildNodes(random)
   const nodesMaterial = new ShaderMaterial({
     vertexShader: nodesVertex,
@@ -362,7 +334,6 @@ export function createMoonScene(
   arcs.renderOrder = 2
   body.add(arcs)
 
-  // --- Órbita y chispa -----------------------------------------------------
   const orbitPlane = new Group()
   orbitPlane.name = "moon-orbit-plane"
   orbitPlane.rotation.set(0.32, 0, -0.42)
@@ -407,7 +378,6 @@ export function createMoonScene(
   spark.frustumCulled = false
   orbitPlane.add(spark)
 
-  // --- Polvo ---------------------------------------------------------------
   const dustGeometry = buildDust(random)
   const dustMaterial = new ShaderMaterial({
     vertexShader: dustVertex,
@@ -422,7 +392,6 @@ export function createMoonScene(
   dust.renderOrder = 0
   world.add(dust)
 
-  // --- Estado --------------------------------------------------------------
   const size = { width: 0, height: 0 }
   const placement = { x: 0, y: 0, scale: 1 }
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 }
@@ -454,7 +423,6 @@ export function createMoonScene(
     camera.aspect = width / height
     camera.updateProjectionMatrix()
 
-    // Píxeles CSS → unidades de mundo en el plano z = 0.
     const viewHeight = 2 * CAMERA_Z * Math.tan((FOV * Math.PI) / 360)
     const perPixel = viewHeight / height
     const layout = layoutFor(width, height)
@@ -466,7 +434,6 @@ export function createMoonScene(
   }
 
   const renderFrame = (dt: number) => {
-    // 1. Entrada y reloj.
     if (options.reducedMotion) {
       reveal.value = 1
     } else if (introStart >= 0) {
@@ -476,14 +443,12 @@ export function createMoonScene(
     }
     time.value = elapsed
 
-    // 2. Entradas amortiguadas.
     pointer.x = damp(pointer.x, pointer.tx, 2.6, dt)
     pointer.y = damp(pointer.y, pointer.ty, 2.6, dt)
     scroll.current = options.reducedMotion
       ? scroll.target
       : damp(scroll.current, scroll.target, 6, dt)
 
-    // 3. Transformaciones.
     const rise = (1 - reveal.value) * -0.9
     world.position.set(
       placement.x,
@@ -503,7 +468,6 @@ export function createMoonScene(
 
     dust.rotation.y = elapsed * 0.01 + pointer.x * 0.05
 
-    // La luz sigue apenas al puntero: el usuario mueve el terminador.
     light
       .set(
         lightBase.x + pointer.x * 0.35,
@@ -516,7 +480,6 @@ export function createMoonScene(
     camera.position.y = -pointer.y * 0.12
     camera.lookAt(0, 0, 0)
 
-    // 4. Render.
     renderer.render(scene, camera)
 
     if (!readySent) {
@@ -527,7 +490,6 @@ export function createMoonScene(
 
   const tick = (now: number) => {
     const seconds = now / 1000
-    // Pestaña oculta o pausa larga: no se simula el tiempo perdido.
     const dt = last === 0 ? 0 : Math.min(seconds - last, 1 / 20)
     last = seconds
     elapsed += dt
@@ -553,7 +515,6 @@ export function createMoonScene(
     else stop()
   }
 
-  // --- Suscripciones -------------------------------------------------------
   const resizeObserver = new ResizeObserver((entries) => {
     const box = entries[0]?.contentRect
     if (box) resize(Math.round(box.width), Math.round(box.height))
@@ -588,11 +549,9 @@ export function createMoonScene(
   }
   canvas.addEventListener("webglcontextlost", onContextLost)
 
-  // Primer tamaño sincrónico: el primer cuadro sale con la composición final.
   const rect = container.getBoundingClientRect()
   resize(Math.round(rect.width), Math.round(rect.height))
 
-  // Compilar antes del primer cuadro visible evita el tirón de la entrada.
   renderer.compile(scene, camera)
   if (options.reducedMotion) {
     renderFrame(0)
@@ -603,8 +562,6 @@ export function createMoonScene(
   return {
     setScroll(progress) {
       scroll.target = Math.min(Math.max(progress, 0), 1)
-      // Con el loop corriendo, el próximo cuadro ya lo toma. Sin loop (reduced
-      // motion) se redibuja acá; fuera de pantalla no hace falta dibujar.
       if (!running && !disposed && options.reducedMotion) renderFrame(0)
     },
     dispose() {

@@ -27,7 +27,6 @@ const pageUrl = new URL(path, SITE).href
 const sectorPath = solutionPath(lang, solution)
 const indexPath = solutionsIndexPath(lang)
 
-/** Los otros casos del mismo sector. El enlace lateral del silo. */
 const siblings = casesFor(solution).filter(
   (other) => other.slug.es !== useCase.slug.es
 )
@@ -43,14 +42,6 @@ const service = {
   audience: { "@type": "BusinessAudience", name: solution.sector[lang] },
   inLanguage: lang,
   url: pageUrl,
-  /**
-   * `isPartOf` apuntando a la página de sector.
-   *
-   * Es la declaración que convierte ocho páginas sueltas en dos silos. Sin
-   * ella, un motor de respuesta que llega por «agente de whatsapp para real
-   * estate developers» no tiene forma de saber que existe una página más
-   * general del mismo autor sobre el mismo rubro.
-   */
   isPartOf: { "@id": `${new URL(sectorPath, SITE).href}#service` },
 }
 

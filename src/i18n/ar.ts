@@ -1,19 +1,5 @@
 import type { Dictionary } from "./es"
 
-/**
- * Árabe estándar moderno (fusha), registro comercial del Golfo.
- *
- * Es el árabe que se lee y se escribe en los Emiratos: la prensa, los
- * contratos y los sitios de empresas están en fusha. El dialecto jaliyí es
- * oral —se habla en la reunión, no se publica— y un sitio escrito en dialecto
- * se lee como algo informal, casi como una broma, en un contexto B2B. Donde el
- * Golfo tiene término propio se usa el del Golfo y no el del Magreb o Egipto
- * («شركة» y no «مؤسسة» para empresa, «الدعم» para soporte).
- *
- * Los números van en cifras occidentales (30, 24/7) y no en índicas orientales
- * (٣٠): es lo estándar en la web comercial emiratí y evita el problema de
- * mezclar dos sistemas de dígitos en la misma línea con las métricas.
- */
 export const ar: Dictionary = {
   htmlLang: "ar",
   ogLocale: "ar_AE",

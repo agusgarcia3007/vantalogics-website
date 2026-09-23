@@ -18,15 +18,6 @@ const { lang } = Astro.props
 const t = useTranslations(lang)
 ---
 
-<!-- Selector de idioma.
-     Sólo los idiomas publicados (PUBLIC_LANGS). Es un desplegable, y está hecho con `details`/`summary` —igual que las preguntas
-     frecuentes— porque así no cuesta JavaScript: el navegador ya sabe abrir y
-     cerrar esto, y anunciarlo como control expandible. El script de abajo sólo
-     agrega lo que el elemento no trae: cerrar al hacer clic afuera o con Esc.
-
-     El rótulo del botón es el código ISO del idioma actual. Los nombres
-     completos van adentro, cada uno escrito en su propio idioma: es como un
-     lector árabe reconoce su versión sin tener que leer español. -->
 <details class="group relative" data-lang-menu>
   <summary
     class="flex h-9 cursor-pointer list-none items-center gap-[6px] rounded-full px-3 eyebrow text-ash transition-colors duration-(--duration-state) ease-(--ease-out) group-open:bg-iron group-open:text-bone hover:bg-iron hover:text-bone [&::-webkit-details-marker]:hidden"
@@ -41,8 +32,6 @@ const t = useTranslations(lang)
     />
   </summary>
 
-  <!-- `end-0`: el panel se alinea con el borde por el que termina de leerse la
-       página, así que en árabe cuelga del otro lado sin una regla aparte. -->
   <div
     class="absolute end-0 top-[calc(100%+8px)] z-50 min-w-[180px] origin-top-right rounded-[8px] border border-iron bg-graphite p-1"
   >

@@ -2,15 +2,6 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Lenis from "lenis"
 
-/**
- * Movimiento de la portada ligado al scroll.
- *
- * GSAP es el único reloj de esta capa: Lenis avanza desde `gsap.ticker` y le
- * avisa a ScrollTrigger en cada paso. Las entradas simples siguen siendo CSS
- * (`data-reveal`) y la luna tiene su propio loop, apagado fuera de pantalla.
- * Con reduced motion no se instala nada: la página queda como documento.
- */
-
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
 function smoothScroll() {
@@ -23,7 +14,6 @@ function smoothScroll() {
     autoRaf: false,
     lerp: 0.11,
     anchors: { offset: -(headerHeight + 16) },
-    // Paneles con scroll propio (menú móvil, panel del agente).
     prevent: (node) =>
       node.closest("[data-menu], [role='dialog'], [data-lenis-prevent]") !==
       null,
@@ -86,7 +76,6 @@ function processTrack() {
   const mm = gsap.matchMedia()
   mm.add("(min-width: 1024px)", () => {
     section.setAttribute("data-horizontal", "")
-    // En horizontal, los pasos no esperan al observer para aparecer.
     steps.forEach((step) => step.setAttribute("data-revealed", ""))
 
     const distance = () => Math.max(0, track.scrollWidth - track.clientWidth)
@@ -138,6 +127,5 @@ if (!reduced) {
   thesisWords()
   processTrack()
 
-  // Las posiciones dependen de la tipografía final.
   document.fonts?.ready.then(() => ScrollTrigger.refresh())
 }

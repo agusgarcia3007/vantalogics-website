@@ -1,15 +1,4 @@
 ---
-/**
- * Pie del sistema cinemático.
- *
- * El equivalente de `SiteFooter.astro` para las páginas que montan `Chrome`:
- * misma información y las mismas cadenas de `t.footer`, pero construido con
- * los tokens de `cine.css` y sin React, que es lo que permite que la portada y
- * las páginas de caso sigan sin mandar JavaScript de componentes.
- *
- * Va dentro de `.below`, que es lo que tiene fondo opaco: en la portada el
- * video está fijo detrás de todo y un pie transparente lo dejaría ver.
- */
 import { navHref, localizePath, useTranslations, type Lang } from "@/i18n"
 import {
   CONTACT_EMAIL,
@@ -152,7 +141,5 @@ const year = new Date().getFullYear()
     </div>
   </div>
 
-  <!-- La marca a sangre, cortada por el borde inferior de la página. Es
-       decorativa: el nombre accesible ya está en el logo de arriba. -->
   <div class="foot-mark" aria-hidden="true"><span>Vantalogics</span></div>
 </footer>

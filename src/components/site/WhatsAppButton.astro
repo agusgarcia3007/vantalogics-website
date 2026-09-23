@@ -14,11 +14,6 @@ const t = useTranslations(lang)
 const href = whatsappUrl(t.whatsapp.prefill)
 ---
 
-<!-- Contacto flotante. El sistema es monocromo (design.md: no color), así que
-     el botón usa el mismo pill de contorno que el resto de la interfaz: el
-     glifo de WhatsApp identifica el canal sin traer el verde de la marca.
-     El rótulo se despliega en hover/foco desde ancho cero para no competir con
-     el contenido. -->
 <a
   href={href}
   target="_blank"
@@ -35,8 +30,6 @@ const href = whatsappUrl(t.whatsapp.prefill)
     aria-hidden="true"
   />
 
-  <!-- El rótulo nace en 0px y crece: sólo aparece con intención (hover/foco).
-       Con reduced motion la transición se apaga desde global.css. -->
   <span
     class="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity,margin] duration-(--duration-geometry) ease-(--ease-opx) group-hover:ms-[11px] group-hover:max-w-[22ch] group-hover:opacity-100 group-focus-visible:ms-[11px] group-focus-visible:max-w-[22ch] group-focus-visible:opacity-100"
   >

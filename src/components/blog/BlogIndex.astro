@@ -1,9 +1,4 @@
 ---
-/**
- * Las notas corren sobre el sistema cinemático: `Chrome` trae el header, el
- * menú y el botón de WhatsApp, y `Foot` el pie. De ahí `floating={false}` en
- * el layout: los flotantes propios del layout duplicarían el de `Chrome`.
- */
 import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
 import Foot from "@/components/cine/Foot.astro"
@@ -23,11 +18,6 @@ const posts = await getPosts(lang)
 const path = localizePath(lang, "/blog/")
 const pageUrl = new URL(path, SITE).href
 
-/**
- * `Blog` + `ItemList`. El `ItemList` es lo que da el orden explícito: sin él,
- * un motor de respuesta que lee la portada del blog tiene que inferir cuál es
- * la nota más relevante por posición en el DOM.
- */
 const blogSchema = {
   "@context": "https://schema.org",
   "@type": "Blog",

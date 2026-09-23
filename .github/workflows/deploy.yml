@@ -1,14 +1,10 @@
 name: Deploy
 
-# El sitio se publica en cada push a main. Se puede disparar a mano desde la
-# pestaña Actions cuando hace falta re-deployar sin commitear.
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-# Si entran dos pushes seguidos, cancela el deploy viejo: solo importa que la
-# última versión de main quede publicada.
 concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
@@ -32,7 +28,6 @@ jobs:
 
       - run: bun run build
 
-      # wrangler.jsonc apunta a ./dist, así que el build tiene que correr antes.
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

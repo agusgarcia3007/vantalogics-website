@@ -1,15 +1,3 @@
-/**
- * Turnstile invisible + canje por un pase firmado.
- *
- * El desafío se resuelve solo, sin pedirle nada a la persona, y lo que se
- * guarda no es el token de Turnstile sino el pase que devuelve el worker: el
- * token sirve una sola vez, el pase abre el socket durante una hora.
- *
- * Falla cerrado a propósito. Si el desafío no pasa, el chat no se conecta y el
- * widget ofrece los canales de siempre. Dejarlo pasar convertiría todo esto en
- * un adorno, que es exactamente lo que se estaba tratando de evitar.
- */
-
 const SCRIPT_URL =
   "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
 const PASS_KEY = "vl-agent-pass"
@@ -53,16 +41,12 @@ function loadScript(): Promise<void> {
   return scriptPromise
 }
 
-/** Resuelve el desafío y devuelve el token, o falla. */
 function solve(sitekey: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const container = document.createElement("div")
     container.style.display = "none"
     document.body.appendChild(container)
 
-    // Turnstile invisible resuelve en cientos de milisegundos, pero si algo lo
-    // bloquea (una extensión, una red rara) el callback nunca llega y el widget
-    // se quedaría colgado esperando para siempre.
     const timeout = setTimeout(() => {
       cleanup()
       reject(new Error("Turnstile no respondió"))
@@ -90,10 +74,6 @@ function solve(sitekey: string): Promise<string> {
   })
 }
 
-/**
- * Devuelve el pase que habilita el socket. Reusa el de la pestaña si sigue
- * vigente, para no repetir el desafío en cada apertura del panel.
- */
 export async function getPass(host: string, sitekey: string): Promise<string> {
   const cached = sessionStorage.getItem(PASS_KEY)
   if (cached && Number(cached.split(".")[0]) > Date.now() + 60_000) {

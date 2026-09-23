@@ -2,15 +2,6 @@ import { useEffect, useState } from "react"
 
 import { getPass } from "./turnstile"
 
-/**
- * El pase que habilita el socket, pedido apenas monta quien lo use.
- *
- * Arranca junto con el chat y no cuando la persona escribe: para cuando termine
- * de leer el saludo, el desafío ya se resolvió y el socket está habilitado.
- *
- * Falla cerrado. `blocked` no es un error a reintentar en silencio: es la señal
- * de que hay que ofrecer los canales de siempre en vez del chat.
- */
 export function usePass(
   host: string,
   sitekey: string

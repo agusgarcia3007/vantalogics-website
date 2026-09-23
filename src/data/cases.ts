@@ -5,34 +5,16 @@ export type Localized = Partial<Record<Lang, string>> & {
   en: string
 }
 
-/**
- * Casos de éxito publicables.
- *
- * La portada sólo presenta los clientes y su cantidad de estudiantes. Cada
- * entrada de esta lista genera una página individual con el desglose completo.
- * Si la lista queda vacía, la navegación y el CTA del hero vuelven a apuntar a
- * las capacidades.
- *
- * Cada caso necesita datos reales y autorizados. Cuando todavía no existe una
- * línea de base de negocio publicable, las métricas describen el alcance real
- * del producto en producción y nunca se presentan como impacto.
- */
 export interface CaseStudy {
   slug: string
-  /** Nombre del cliente o descripción anónima autorizada. */
   client: Localized
-  /** Producto construido y resultado principal. */
   title: Localized
   start: Localized
   built: Localized
-  /** Cantidad actual de estudiantes o cuentas de alumno, autorizada. */
   students: number
-  /** Entre una y tres métricas verificables. */
   metrics: { value: string | Localized; label: Localized }[]
   integrations: Localized[]
-  /** Período de medición, p. ej. «mar–jun 2026». */
   period: Localized
-  /** Enlace al producto en producción. */
   href: Localized
 }
 
@@ -277,23 +259,11 @@ export const CASES: CaseStudy[] = [
   },
 ]
 
-/**
- * Estudiantes alcanzados por todos los productos en producción.
- *
- * Se deriva de la lista en vez de escribirse a mano: el número de la portada y
- * el de cada caso salen de la misma fuente, así que no pueden contradecirse.
- */
 export const TOTAL_STUDENTS: number = CASES.reduce(
   (total, study) => total + study.students,
   0
 )
 
-/**
- * El total, redondeado hacia abajo al millar y con un «+».
- *
- * Hacia abajo a propósito: el sufijo ya declara que hay más, y un número
- * redondeado hacia arriba sería una cifra que todavía no se alcanzó.
- */
 export function formatTotalStudents(lang: Lang): string {
   const floor = Math.floor(TOTAL_STUDENTS / 1000) * 1000
   return `${new Intl.NumberFormat(lang).format(floor)}+`

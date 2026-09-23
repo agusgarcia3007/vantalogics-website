@@ -14,23 +14,6 @@ const { lang } = Astro.props
 const copy = agentCopy(lang)
 ---
 
-{
-  /*
-  El agente, en la página.
-
-  Lo que se ve de entrada es HTML: la caja, el saludo y un campo de verdad. No
-  cuesta un byte de JavaScript, igual que el resto del sitio. React, Turnstile y
-  el cliente del agente entran cuando alguien toca el campo — y no antes.
-
-  El truco es que el campo estático es el mismo campo: lo que se llegó a
-  escribir viaja en data-attributes y el chat vivo lo recibe montado. Quien
-  escribe una pregunta y aprieta enviar ve su mensaje salir, no un formulario
-  que se vacía.
-
-  Alto fijo, igual que el chat que lo reemplaza, para que el reemplazo no
-  mueva la página.
-*/
-}
 <div
   id="vl-agent-inline"
   data-agent-lang={lang}
@@ -93,9 +76,6 @@ const copy = agentCopy(lang)
   if (host && input && form) {
     let loading: Promise<unknown> | null = null
 
-    // Una sola vez. El módulo se monta al importarse y reemplaza esta maqueta
-    // entera, así que un segundo import no haría nada — pero pedirlo dos veces
-    // sí duplicaría la petición de red.
     function hydrate() {
       if (loading) return loading
       loading = installRefreshPreamble().then(
@@ -104,13 +84,10 @@ const copy = agentCopy(lang)
       return loading
     }
 
-    // Tocar el campo alcanza para empezar a bajar el chat: para cuando termine
-    // de escribir la primera frase, ya está montado y el desafío resuelto.
     input.addEventListener("focus", () => void hydrate(), { once: true })
 
     input.addEventListener("input", () => {
       host!.dataset.agentDraft = input!.value
-      // El campo crece con lo que se escribe, igual que el del chat vivo.
       input!.style.height = "auto"
       input!.style.height = `${input!.scrollHeight}px`
     })
@@ -120,8 +97,6 @@ const copy = agentCopy(lang)
       if (!text) return
       host!.dataset.agentSent = text
       delete host!.dataset.agentDraft
-      // El campo queda deshabilitado y con el texto puesto hasta que el chat
-      // vivo lo reemplace: vaciarlo acá lo haría parpadear en blanco.
       input!.disabled = true
       void hydrate()
     }
@@ -131,7 +106,6 @@ const copy = agentCopy(lang)
       send()
     })
 
-    // Enter manda, Shift+Enter salta de línea. Mismo trato que en el chat.
     input.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault()

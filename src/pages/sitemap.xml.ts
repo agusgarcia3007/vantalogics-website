@@ -19,25 +19,15 @@ interface Entry {
   priority: string
   changefreq: string
   lastmod?: string
-  /** Pares por idioma. Sólo se emiten los que existen de verdad. */
   alternates: Partial<Record<string, string>>
 }
 
 const escape = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 
-/**
- * Sitemap generado, no escrito a mano.
- *
- * El anterior era un archivo estático en `public/` con las dos URLs de la
- * portada. Con notas y páginas de solución que se agregan solas, un sitemap a
- * mano se desactualiza en la primera publicación y deja de servir justo para
- * lo que existe: avisar que hay contenido nuevo.
- */
 export const GET: APIRoute = async () => {
   const entries: Entry[] = []
 
-  // Portadas.
   const homes = Object.fromEntries(
     LANGS.map((lang) => [lang, localizePath(lang)])
   )
@@ -50,7 +40,6 @@ export const GET: APIRoute = async () => {
     })
   }
 
-  // Índices del blog y de soluciones.
   for (const lang of LANGS) {
     entries.push({
       path: localizePath(lang, "/blog/"),
@@ -81,7 +70,6 @@ export const GET: APIRoute = async () => {
     })
   }
 
-  // Páginas de solución por sector.
   for (const solution of SOLUTIONS) {
     for (const lang of LANGS) {
       entries.push({
@@ -95,11 +83,6 @@ export const GET: APIRoute = async () => {
     }
   }
 
-  // Casos de uso de las industrias foco.
-  //
-  // Prioridad más alta que el resto de las páginas de solución, y no más baja
-  // por estar un nivel más abajo en la ruta: son las páginas con intención
-  // comercial del sitio y las que la agencia quiere que se indexen primero.
   for (const { solution, useCase } of USE_CASE_ROUTES) {
     for (const lang of LANGS) {
       entries.push({
@@ -113,7 +96,6 @@ export const GET: APIRoute = async () => {
     }
   }
 
-  // Casos reales de productos construidos.
   for (const study of CASES) {
     for (const lang of LANGS) {
       entries.push({
@@ -127,7 +109,6 @@ export const GET: APIRoute = async () => {
     }
   }
 
-  // Notas.
   const posts = await getAllPosts()
   for (const post of posts) {
     const lang = postLang(post)

@@ -10,10 +10,6 @@ const { lang } = Astro.props
 const t = useTranslations(lang).process
 ---
 
-<!-- En escritorio la sección se fija y los cinco pasos avanzan en horizontal
-     con el scroll (GSAP, `src/scripts/home-motion.ts`). Sin JavaScript, en
-     pantallas chicas o con reduced motion, es una lista que se scrollea
-     normalmente: el marcado es el mismo. -->
 <section
   id="proceso"
   aria-labelledby="proceso-titulo"
@@ -42,7 +38,6 @@ const t = useTranslations(lang).process
         </div>
 
         <div class="relative mt-16 lg:mt-20">
-          <!-- Riel con progreso. -->
           <div
             class="process-rail absolute top-[11px] right-0 left-0 hidden h-px bg-iron"
             aria-hidden="true"
@@ -84,7 +79,6 @@ const t = useTranslations(lang).process
 </section>
 
 <style>
-  /* Modo horizontal: sólo cuando GSAP lo toma (ver home-motion.ts). */
   [data-horizontal] .process-pin {
     display: flex;
     min-height: 100svh;

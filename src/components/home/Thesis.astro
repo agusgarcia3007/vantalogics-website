@@ -10,8 +10,6 @@ const { lang } = Astro.props
 const t = useTranslations(lang).thesis
 const words = t.title.split(" ")
 
-// Campo de puntos del «producto»: 26 × 14. Unos pocos marcados en índigo son
-// los casos que el sistema reconoce que no sabe y deriva.
 const COLS = 26
 const ROWS = 14
 const flagged = new Set([37, 88, 131, 170, 219, 262, 301, 347])
@@ -29,8 +27,6 @@ const field = Array.from({ length: COLS * ROWS }, (_, i) => ({
     {t.eyebrow}
   </p>
 
-  <!-- Las palabras se encienden a medida que se scrollea. Sin JavaScript o con
-       reduced motion, el titular está entero desde el principio. -->
   <h2
     id="tesis-titulo"
     class="mt-6 max-w-[20ch] display-lg text-bone"

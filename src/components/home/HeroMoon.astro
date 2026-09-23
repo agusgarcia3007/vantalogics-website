@@ -1,9 +1,5 @@
 ---
-/**
- * El lienzo de la luna. El HTML trae una luna estática en CSS que se ve desde
- * el primer pintado —sin JavaScript, sin WebGL o con ahorro de datos— y la
- * escena WebGL la reemplaza con un fundido cuando su primer cuadro está listo.
- */
+
 ---
 
 <div
@@ -48,14 +44,10 @@
         },
       })
       syncScroll()
-    } catch {
-      // Sin WebGL: queda la luna en CSS, que ya estaba en pantalla.
-    }
+    } catch {}
   }
 
   if (root && mount && !saveData) {
-    // El texto del hero es el LCP: la escena entra cuando el hilo principal
-    // se libera, no antes.
     const idle =
       window.requestIdleCallback ??
       ((cb: () => void) => window.setTimeout(cb, 200))
@@ -73,7 +65,6 @@
 </script>
 
 <style>
-  /* La luna estática usa la misma composición que la escena (layoutFor). */
   .moon {
     --moon-x: 80%;
     --moon-y: 12%;
@@ -136,7 +127,6 @@
       radial-gradient(circle at 60% 40%, #15161b, #0b0c0e 62%);
   }
 
-  /* Luz de borde: un anillo fino del lado de la luz. */
   .moon-fallback::after {
     background: radial-gradient(
       circle,

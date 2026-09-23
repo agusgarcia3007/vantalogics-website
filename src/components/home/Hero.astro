@@ -16,8 +16,6 @@ interface Props {
 const { lang, hasCases } = Astro.props
 const t = useTranslations(lang).hero
 
-// El titular se parte en palabras para la entrada. El texto del h1 sigue
-// siendo la frase completa: los espacios quedan entre los spans.
 const words = t.title.split(" ")
 ---
 
@@ -34,7 +32,6 @@ const words = t.title.split(" ")
 
   <HeroMoon />
 
-  <!-- Oscurece el lado del texto para que la luna nunca le quite contraste. -->
   <div
     class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,var(--color-carbon)_0%,rgb(10_10_10/0.7)_38%,transparent_62%)] max-lg:bg-[linear-gradient(180deg,transparent_0%,rgb(10_10_10/0.6)_30%,var(--color-carbon)_60%)]"
     aria-hidden="true"

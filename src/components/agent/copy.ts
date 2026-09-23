@@ -1,13 +1,5 @@
 import type { Lang } from "@/i18n"
 
-/**
- * Textos del widget y etiquetas de la traza.
- *
- * Los nombres de herramienta llegan crudos desde el worker (search, qualify,
- * hand_off…). Se traducen acá y no allá: el agente no tiene por qué saber cómo
- * se muestra, y así se puede cambiar la redacción sin volver a desplegarlo.
- */
-
 export interface AgentCopy {
   title: string
   subtitle: string
@@ -26,7 +18,6 @@ export interface AgentCopy {
     sent: string
     dismissed: string
   }
-  /** Botón de cierre. El agente manda el enlace; el rótulo lo pone el sitio. */
   cta: {
     booking: string
     whatsapp: string
@@ -139,7 +130,6 @@ export function agentCopy(lang: Lang): AgentCopy {
   return ES
 }
 
-/** Nombre legible de una herramienta; si es una desconocida, se muestra cruda. */
 export function stepLabel(copy: AgentCopy, name: string): string {
   return copy.steps[name] ?? name
 }

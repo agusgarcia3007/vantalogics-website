@@ -16,14 +16,11 @@ interface Props {
 const { lang } = Astro.props
 const t = useTranslations(lang)
 
-// «Casos» sólo aparece cuando hay casos publicables (ver src/data/cases.ts).
 const items = t.nav.items.filter(
   (item) => item.section !== "cases" || CASES.length > 0
 )
 ---
 
-<!-- Encabezado (design.md › Navigation Pill + Nav CTA Group). Transparente
-     sobre el hero; al scrollear toma el canvas translúcido y una regla. -->
 <header
   class="site-header sticky top-0 z-40 h-(--header-h) w-full border-b border-transparent transition-[background-color,border-color] duration-300 ease-(--ease-out) data-scrolled:border-iron data-scrolled:bg-carbon/75 data-scrolled:backdrop-blur-xl"
   data-header

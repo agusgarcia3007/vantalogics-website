@@ -27,7 +27,6 @@ const SITE = "https://vantalogics.com"
 const { lang, study } = Astro.props
 const strings = useTranslations(lang)
 const t = strings.cases
-/** El «volver» sigue al mismo destino que el ítem de clientes del menú. */
 const casesHref = navHref(
   lang,
   strings.nav.items.find((item) => item.section === "cases")?.href ?? "#casos"

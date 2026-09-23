@@ -1,16 +1,4 @@
-/**
- * GLSL de la luna del hero.
- *
- * Convenciones de todos los programas:
- * - Los colores se escriben ya en el espacio de la pantalla (sRGB). Ningún
- *   material incluye `colorspace_fragment`, así que la salida se convierte
- *   cero veces y lo que se escribe es lo que se ve.
- * - `uReveal` va de 0 a 1 durante la entrada y queda en 1.
- * - Las normales y la dirección de la luz están en espacio de mundo.
- */
-
-/** Simplex 3D (Ashima Arts / Ian McEwan, MIT). */
-const SIMPLEX = /* glsl */ `
+const SIMPLEX = `
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec4 permute(vec4 x) { return mod289(((x * 34.0) + 10.0) * x); }
@@ -60,7 +48,7 @@ float snoise(vec3 v) {
 }
 `
 
-export const moonVertex = /* glsl */ `
+export const moonVertex = `
 varying vec3 vObject;
 varying vec3 vNormal;
 varying vec3 vView;
@@ -74,7 +62,7 @@ void main() {
 }
 `
 
-export const moonFragment = /* glsl */ `
+export const moonFragment = `
 uniform float uTime;
 uniform float uReveal;
 uniform vec3 uLight;
@@ -102,18 +90,15 @@ void main() {
   vec3 V = normalize(vView);
   vec3 p = normalize(vObject);
 
-  // Superficie: mares amplios y relieve fino, todo en grises casi negros.
   float broad = fbm(p * 1.8);
   float fine = snoise(p * 9.0);
   float albedo = 0.060 + 0.050 * broad + 0.012 * fine;
 
-  // Terminador suave: la cara visible queda casi toda en sombra.
   float ndl = dot(N, uLight);
   float lit = smoothstep(-0.08, 0.95, ndl);
   vec3 color = vec3(albedo) * (0.22 + 2.1 * lit);
   color *= vec3(0.93, 0.96, 1.06);
 
-  // Retícula de meridianos y paralelos: el plano dibujado sobre la luna.
   float lat = asin(clamp(p.y, -1.0, 1.0));
   float lon = atan(p.z, p.x);
   vec2 g = vec2(lon / 6.28318 * 36.0, lat / 3.14159 * 18.0);
@@ -125,13 +110,11 @@ void main() {
   float fresnel = pow(1.0 - facing, 2.2);
   color += vec3(0.62, 0.70, 0.95) * grid * (0.03 + 0.11 * fresnel) * uReveal;
 
-  // Barrido: una franja de latitud que recorre la esfera, como un escaneo.
   float sweepY = sin(uTime * 0.23) * 0.92;
   float sweep = exp(-pow((p.y - sweepY) * 16.0, 2.0));
   color += uAccent * sweep * grid * 0.55 * uReveal;
   color += uAccent * sweep * 0.018 * uReveal;
 
-  // Luz de borde: índigo en el limbo, más intensa del lado iluminado.
   float rim = pow(1.0 - facing, 4.5);
   float side = smoothstep(-0.55, 0.85, dot(N, uLight));
   color += uAccent * rim * (0.18 + 1.25 * side);
@@ -141,7 +124,7 @@ void main() {
 }
 `
 
-export const nodesVertex = /* glsl */ `
+export const nodesVertex = `
 attribute float aSeed;
 attribute float aHub;
 
@@ -173,7 +156,7 @@ void main() {
 }
 `
 
-export const nodesFragment = /* glsl */ `
+export const nodesFragment = `
 uniform vec3 uAccent;
 
 varying float vAlpha;
@@ -187,7 +170,7 @@ void main() {
 }
 `
 
-export const arcsVertex = /* glsl */ `
+export const arcsVertex = `
 attribute float aT;
 attribute float aSeed;
 
@@ -202,7 +185,6 @@ void main() {
   vec3 v = normalize(cameraPosition - world.xyz);
   float limb = smoothstep(0.0, 0.35, dot(n, v));
 
-  // Un pulso recorre cada arco a su propio ritmo.
   float head = fract(uTime * (0.08 + aSeed * 0.1) + aSeed * 7.0) * 1.6 - 0.3;
   float pulse = exp(-pow((aT - head) * 9.0, 2.0));
   float reveal = smoothstep(0.35 + aSeed * 0.4, 0.75 + aSeed * 0.25, uReveal);
@@ -212,7 +194,7 @@ void main() {
 }
 `
 
-export const arcsFragment = /* glsl */ `
+export const arcsFragment = `
 uniform vec3 uAccent;
 varying float vAlpha;
 
@@ -221,7 +203,7 @@ void main() {
 }
 `
 
-export const orbitVertex = /* glsl */ `
+export const orbitVertex = `
 attribute float aAngle;
 varying float vAngle;
 
@@ -231,14 +213,13 @@ void main() {
 }
 `
 
-export const orbitFragment = /* glsl */ `
+export const orbitFragment = `
 uniform float uSpark;
 uniform float uReveal;
 uniform vec3 uAccent;
 varying float vAngle;
 
 void main() {
-  // Estela: brilla detrás de la chispa y se apaga a lo largo de la órbita.
   float behind = mod(uSpark - vAngle, 6.28318);
   float trail = exp(-behind * 1.35);
   float a = (0.07 + 0.9 * trail) * uReveal;
@@ -247,7 +228,7 @@ void main() {
 }
 `
 
-export const sparkVertex = /* glsl */ `
+export const sparkVertex = `
 uniform float uSize;
 uniform float uPixelRatio;
 
@@ -258,7 +239,7 @@ void main() {
 }
 `
 
-export const sparkFragment = /* glsl */ `
+export const sparkFragment = `
 uniform vec3 uAccent;
 uniform float uReveal;
 uniform float uTime;
@@ -268,7 +249,6 @@ void main() {
   float d2 = dot(c, c);
   float core = exp(-d2 * 900.0);
   float halo = exp(-d2 * 60.0) * (0.75 + 0.25 * sin(uTime * 3.1));
-  // Destello en cruz, muy fino.
   float cross = exp(-abs(c.x) * 180.0) * exp(-abs(c.y) * 9.0)
               + exp(-abs(c.y) * 180.0) * exp(-abs(c.x) * 9.0);
   vec3 color = vec3(1.0) * core + uAccent * (halo * 0.9 + cross * 0.45);
@@ -277,7 +257,7 @@ void main() {
 }
 `
 
-export const haloVertex = /* glsl */ `
+export const haloVertex = `
 varying vec2 vUv;
 
 void main() {
@@ -286,7 +266,7 @@ void main() {
 }
 `
 
-export const haloFragment = /* glsl */ `
+export const haloFragment = `
 uniform vec3 uAccent;
 uniform vec2 uLight2D;
 uniform float uReveal;
@@ -295,7 +275,6 @@ uniform float uScale;
 varying vec2 vUv;
 
 void main() {
-  // r = 1 en el borde de la luna.
   vec2 q = (vUv - 0.5) * uScale;
   float r = length(q);
   float outside = step(1.0, r);
@@ -307,7 +286,7 @@ void main() {
 }
 `
 
-export const dustVertex = /* glsl */ `
+export const dustVertex = `
 attribute float aSeed;
 uniform float uTime;
 uniform float uPixelRatio;
@@ -324,7 +303,7 @@ void main() {
 }
 `
 
-export const dustFragment = /* glsl */ `
+export const dustFragment = `
 varying float vAlpha;
 
 void main() {

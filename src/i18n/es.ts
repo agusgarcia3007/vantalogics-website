@@ -1,11 +1,3 @@
-/**
- * Todo el texto del sitio, en un solo lugar.
- *
- * Los titulares vienen partidos en dos: `muted` es la premisa y `bright` el
- * remate. La sección los imprime en dos tonos —gris y bone— para que el ojo
- * agarre la idea completa antes de leerla entera. Es la única concesión
- * tipográfica del sistema y sólo aplica a los h2.
- */
 export const es = {
   htmlLang: "es",
   ogLocale: "es_ES",
@@ -26,10 +18,6 @@ export const es = {
     logoAlt: "Logotipo de Vantalogics",
   },
 
-  /**
-   * `section` marca los ítems que apuntan a un bloque que puede no existir:
-   * mientras no haya casos publicables, «Casos» no se muestra.
-   */
   nav: {
     items: [
       { href: "#casos", label: "Clientes", section: "cases" },
@@ -43,14 +31,6 @@ export const es = {
     tagline: "Producto e ingeniería de IA para educación",
   },
 
-  /**
-   * El selector de idioma.
-   *
-   * `switchTo` es la invitación a ver el sitio *en este* idioma, escrita en
-   * este idioma: es la etiqueta que muestran los otros idiomas cuando enlazan
-   * acá. Con dos idiomas alcanzaba con guardar la del contrario; con tres, cada
-   * diccionario tiene que traer la suya.
-   */
   language: {
     label: "Idioma",
     name: "Español",
@@ -63,13 +43,8 @@ export const es = {
     lead: "Diseñamos agentes especializados, sistemas de evaluación y plataformas de aprendizaje completas. Desde la experiencia de usuario hasta los modelos, las integraciones y la infraestructura que los mantiene funcionando.",
     ctaPrimary: "Hablar de tu producto",
     ctaSecondary: "Ver nuestro trabajo",
-    /** Sin casos publicados, el secundario lleva a las capacidades. */
     ctaSecondaryFallback: "Ver qué construimos",
     note: "Estrategia de producto, IA e ingeniería de software en un mismo equipo.",
-    /**
-     * La tarjeta del hero: una traza de agente dibujada como interfaz real.
-     * Es un ejemplo y lo dice; no describe a ningún cliente.
-     */
     trace: {
       badge: "Ejemplo ilustrativo",
       title: "Agente de tutoría",
@@ -226,7 +201,6 @@ export const es = {
         ],
       },
     ],
-    /** Textos de las interfaces de ejemplo que acompañan cada capacidad. */
     visuals: {
       example: "Ejemplo",
       agents: {
@@ -423,14 +397,6 @@ export const es = {
     tags: "Producto · IA aplicada · Ingeniería de software",
   },
 
-  /**
-   * El blog.
-   *
-   * Se llama «Notas» y no «Blog» a propósito: lo que se publica son apuntes de
-   * trabajo —costos reales, fallas que vemos, criterios de decisión—, no
-   * artículos de captación. La diferencia importa porque es exactamente lo que
-   * las otras agencias no pueden copiar sin haberlo hecho.
-   */
   blog: {
     label: "Notas",
     rssTitle: "Notas",
@@ -470,7 +436,6 @@ export const es = {
     },
   },
 
-  /** Páginas de solución por sector. Ver `src/data/solutions.ts`. */
   solutions: {
     label: "Soluciones",
     breadcrumb: "Soluciones",

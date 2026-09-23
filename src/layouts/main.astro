@@ -8,22 +8,12 @@ import { useTranslations } from "@/i18n"
 interface Props {
   lang: Lang
   jsonLd?: unknown[]
-  /** Ruta de esta página en su propio idioma. Por defecto, la portada. */
   path?: string
   title?: string
   description?: string
   image?: string
   ogType?: string
-  /**
-   * Rutas equivalentes por idioma. Sólo se emite `hreflang` para las que
-   * existen de verdad: un alternate que devuelve 404 invalida el par entero
-   * ante Google, así que un post sin traducir no declara ninguno.
-   */
   alternates?: Partial<Record<Lang, string>>
-  /**
-   * Botones flotantes de WhatsApp y del agente. La portada trae el suyo y no
-   * scrollea, así que los apaga: `data-floating` nunca se activaría.
-   */
   floating?: boolean
 }
 
@@ -48,14 +38,23 @@ const imageUrl = new URL(image ?? ogImage(lang), SITE).href
 const pageTitle = title ?? t.meta.title
 const pageDescription = description ?? t.meta.description
 
-// Sólo los idiomas publicados declaran alternates; el árabe queda fuera del
-// descubrimiento (ver PUBLIC_LANGS) y sus páginas salen con noindex.
 const published = isPublicLang(lang)
 const hreflangs = alternates ?? { es: "/", en: "/en/" }
 const hreflangEntries = (Object.entries(hreflangs) as [Lang, string][]).filter(
   ([code, href]) => Boolean(href) && isPublicLang(code)
 )
 const xDefault = hreflangs.es ?? hreflangs.en
+
+const banner = `<!--
+
+  ██╗   ██╗ █████╗ ███╗   ██╗████████╗ █████╗ ██╗      ██████╗  ██████╗ ██╗ ██████╗███████╗
+  ██║   ██║██╔══██╗████╗  ██║╚══██╔══╝██╔══██╗██║     ██╔═══██╗██╔════╝ ██║██╔════╝██╔════╝
+  ██║   ██║███████║██╔██╗ ██║   ██║   ███████║██║     ██║   ██║██║  ███╗██║██║     ███████╗
+  ╚██╗ ██╔╝██╔══██║██║╚██╗██║   ██║   ██╔══██║██║     ██║   ██║██║   ██║██║██║     ╚════██║
+   ╚████╔╝ ██║  ██║██║ ╚████║   ██║   ██║  ██║███████╗╚██████╔╝╚██████╔╝██║╚██████╗███████║
+    ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ ╚═╝ ╚═════╝╚══════╝
+
+-->`
 ---
 
 <!doctype html>
@@ -96,8 +95,6 @@ const xDefault = hreflangs.es ?? hreflangs.en
       href={new URL(localizePath(lang, "/rss.xml"), SITE).href}
     />
 
-    <!-- `js` habilita los estados iniciales de las animaciones: sin script,
-         todo se ve desde el primer pintado. -->
     <script is:inline>
       document.documentElement.classList.add("js")
     </script>
@@ -113,7 +110,6 @@ const xDefault = hreflangs.es ?? hreflangs.en
     <meta name="author" content="Vantalogics" />
     <meta name="theme-color" content="#0a0a0a" />
 
-    <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Vantalogics" />
     <meta property="og:locale" content={t.ogLocale} />
@@ -125,7 +121,6 @@ const xDefault = hreflangs.es ?? hreflangs.en
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={t.meta.imageAlt} />
 
-    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
@@ -150,6 +145,7 @@ const xDefault = hreflangs.es ?? hreflangs.en
       {t.a11y.skip}
     </a>
 
+    <Fragment set:html={banner} />
     <slot />
 
     {floating && <WhatsAppButton lang={lang} />}
@@ -157,7 +153,6 @@ const xDefault = hreflangs.es ?? hreflangs.en
     {floating && <AgentButton lang={lang} />}
 
     <script is:inline>
-      // Botones flotantes: visibles después del primer pantallazo.
       ;(() => {
         const sync = () => {
           document.documentElement.toggleAttribute(
@@ -171,7 +166,6 @@ const xDefault = hreflangs.es ?? hreflangs.en
     </script>
 
     <script is:inline>
-      // Reveal al hacer scroll — una sola vez, desactivado con reduced motion.
       ;(() => {
         const nodes = document.querySelectorAll("[data-reveal]")
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -181,9 +175,6 @@ const xDefault = hreflangs.es ?? hreflangs.en
           return
         }
 
-        // Lo que ya está en pantalla se revela de entrada, sin esperar al
-        // observer: el titular del hero no puede depender de un callback que
-        // el navegador difiere cuando la pestaña no está enfocada.
         nodes.forEach((n) => {
           const box = n.getBoundingClientRect()
           if (box.top < window.innerHeight && box.bottom > 0) {

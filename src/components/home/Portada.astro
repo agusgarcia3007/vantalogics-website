@@ -1,15 +1,4 @@
 ---
-/**
- * Portada cinemática: un solo viewport, sin scroll en desktop.
- *
- * Trae su propio header y su botón de WhatsApp, así que el layout no monta los
- * flotantes (`floating={false}`): de lo contrario habría dos WhatsApp y el del
- * layout, que depende de `data-floating`, nunca aparecería en una página que
- * no scrollea.
- *
- * Inter sale de `--font-inter` (@fontsource-variable/inter, ya self-hosted).
- * La única fuente nueva es Instrument Serif, en public/fonts.
- */
 import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
 import Foot from "@/components/cine/Foot.astro"
@@ -25,12 +14,6 @@ const lang = "es" as const
 const t = useTranslations(lang)
 const pageUrl = new URL(localizePath(lang), SITE).href
 
-/**
- * Datos estructurados. Quedan los tres que siguen describiendo lo que la
- * página declara —la empresa, el sitio y esta portada— y se cae el `HowTo` del
- * proceso: sus pasos ya no están en pantalla, y los datos estructurados tienen
- * que reflejar el contenido visible.
- */
 const organization = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -87,8 +70,6 @@ const webPage = {
   floating={false}
 >
   <Chrome lang={lang} frame>
-    <!-- Dos copias del mismo clip: el loop nativo corta en seco al volver al
-         frame 0, así que el script funde una sobre la otra antes del final. -->
     <div class="hero-photo" slot="backdrop" aria-hidden="true">
       <div class="hero-plate">
         <video

@@ -10,16 +10,7 @@ const escape = (value: string) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
 
-/**
- * Feed por idioma.
- *
- * El `description` de cada ítem lleva la respuesta corta y no la bajada: los
- * agregadores y los lectores que sólo consumen el feed se quedan con eso, y la
- * respuesta es la unidad que tiene sentido leer suelta.
- */
 export async function renderFeed(lang: Lang): Promise<Response> {
-  // `dictionaries` en vez de `useTranslations`: el nombre `use…` hace que la
-  // regla de hooks de React trate a esta función como componente.
   const t = dictionaries[lang]
   const posts = await getPosts(lang)
   const feedPath = localizePath(lang, "/rss.xml")

@@ -1,23 +1,10 @@
 ---
-/**
- * Chrome compartido del sistema cinemático: grano, header, menú móvil, botón
- * de WhatsApp y el único script de la página.
- *
- * La portada y las páginas de caso montan esto mismo, así que la navegación,
- * los controles y el comportamiento del menú viven en un solo lugar. El
- * `frame` distingue los dos usos: la portada mide un viewport exacto y las
- * páginas de caso fluyen a lo largo.
- *
- * Los enlaces salen de `t.nav.items` vía `navHref`, igual que el header viejo:
- * si cambia un destino, cambia para todo el sitio a la vez.
- */
 import "@/styles/cine.css"
 import { localizePath, navHref, useTranslations, type Lang } from "@/i18n"
 import { SCHEDULE_URL, whatsappUrl } from "@/site"
 
 interface Props {
   lang: Lang
-  /** La portada ocupa un viewport exacto; el resto fluye. */
   frame?: boolean
 }
 
@@ -25,7 +12,6 @@ const { lang, frame = false } = Astro.props
 const t = useTranslations(lang)
 const waHref = whatsappUrl(t.whatsapp.prefill)
 
-/** Cada enlace entra con su propio retardo, alternando escala y deslizamiento. */
 const ENTRANCE = [
   { modifier: "appear--scale", delay: "0.16s" },
   { modifier: "appear--soft", delay: "0.28s" },
@@ -89,8 +75,6 @@ const ENTRANCE = [
   <slot />
 </div>
 
-<!-- Lo que va después del primer cuadro: queda fuera de `.page` para que la
-     altura de un viewport no lo comprima. -->
 <slot name="after" />
 
 <a
@@ -144,9 +128,6 @@ const ENTRANCE = [
       })
     })
 
-    // Loop sin corte: la copia que está por terminar le cede el paso a la
-    // otra, que arranca de cero un segundo antes. El fundido dura lo mismo
-    // que la transición de opacidad. Sólo corre en la portada.
     var videos = document.querySelectorAll(".hero-video")
     if (videos.length === 2) {
       var FADE = 1.2
@@ -176,9 +157,6 @@ const ENTRANCE = [
       })
     }
 
-    // Entrada por scroll de todo lo que vive debajo del primer cuadro.
-    // IntersectionObserver y no un listener de scroll: el listener recalcula
-    // en cada frame y en móvil se nota. Sin soporte, todo queda visible.
     var reveals = document.querySelectorAll(".reveal")
     if (reveals.length) {
       if (!("IntersectionObserver" in window)) {
@@ -191,7 +169,6 @@ const ENTRANCE = [
             entries.forEach(function (entry) {
               if (!entry.isIntersecting) return
               entry.target.classList.add("is-seen")
-              // Una sola vez: el bloque no se vuelve a esconder al subir.
               seen.unobserve(entry.target)
             })
           },

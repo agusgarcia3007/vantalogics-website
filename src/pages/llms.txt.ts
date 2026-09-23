@@ -14,19 +14,6 @@ const SITE = "https://vantalogics.com"
 
 const url = (path: string) => new URL(path, SITE).href
 
-/**
- * `llms.txt` generado.
- *
- * Antes era un archivo estático en `public/`. Se pasó a ruta por el mismo
- * motivo que el sitemap: es un índice, y un índice escrito a mano queda
- * desactualizado en la primera publicación.
- *
- * La parte de arriba —qué hace la empresa, cómo trabaja, los datos duros— sigue
- * siendo prosa fija y curada, porque eso no se deriva de ningún dato. Lo que se
- * genera es el listado de contenido, y cada nota entra con su respuesta corta:
- * un modelo que lee este archivo y no llega a visitar la página igual se lleva
- * la afirmación citable.
- */
 export const GET: APIRoute = async () => {
   const postsEs = await getPosts("es")
   const postsEn = await getPosts("en")

@@ -21,8 +21,6 @@ const visuals = [VisualAgents, VisualLearning, VisualAssessment, VisualPlatform]
 
 <Section id="capacidades" labelledby="capacidades-titulo" grid>
   <div class="grid gap-16 lg:grid-cols-12 lg:gap-8">
-    <!-- Columna fija: el índice acompaña el scroll y marca la capacidad que
-         está en pantalla. -->
     <div class="lg:col-span-4">
       <div class="lg:sticky lg:top-[calc(var(--header-h)+48px)]">
         <SectionHeading
@@ -131,7 +129,6 @@ const visuals = [VisualAgents, VisualLearning, VisualAssessment, VisualPlatform]
       progress.style.height = `${link.offsetHeight}px`
     }
 
-    // La capacidad activa es la que cruza la franja central de la pantalla.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

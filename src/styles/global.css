@@ -1,27 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-/* shadcn/typeset — tipografía de contenido renderizado (las notas del blog).
-   Se configura abajo, en `.typeset-nota`. */
 @import "./typeset.css";
 
-/* Inter carga la lectura; JetBrains Mono estampa las etiquetas (design.md). */
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
-/* Árabe: Inter no trae glifos árabes y el fallback del sistema cambia de
-   máquina en máquina. Noto Sans Arabic es la contraparte neutra de Inter. */
 @import "@fontsource-variable/noto-sans-arabic";
 
 @custom-variant dark (&:is(.dark *));
 
-/* ---------------------------------------------------------------------------
-   Sistema — design.md
-   Grilla de plano bajo una luna negra: canvas casi negro, superficies que
-   suben por luminancia y no por sombra, tipografía blanca y una sola chispa
-   índigo. Radio de 8px en todo lo que se toca; pill sólo en la navegación.
---------------------------------------------------------------------------- */
 @theme {
-  /* Paleta literal de design.md */
   --color-soft-indigo: #6798ff;
   --color-pure-black: #000000;
   --color-carbon: #0a0a0a;
@@ -33,14 +21,10 @@
   --color-ash: #a7a7a7;
   --color-bone: #ffffff;
 
-  /* Alias semánticos. Las páginas internas (notas, soluciones, casos) se
-     escribieron contra estos nombres; siguen funcionando con los valores
-     nuevos sin tocar cada componente. */
   --color-canvas: #0a0a0a;
   --color-surface: #141414;
   --color-hairline: #1e1e1e;
 
-  /* Familias */
   --font-inter:
     "Inter Variable", Inter, "Söhne", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
@@ -52,7 +36,6 @@
   --font-open-sans: var(--font-inter);
   --font-helvetica: var(--font-inter);
 
-  /* Escala tipográfica de design.md */
   --text-caption: 12px;
   --text-caption--line-height: 1.4;
   --text-body-sm: 14px;
@@ -72,16 +55,13 @@
   --text-display: 64px;
   --text-display--line-height: 1.13;
 
-  /* Espaciado de design.md (la escala de 4px de Tailwind queda debajo) */
   --spacing-page: clamp(20px, 4vw, 40px);
   --spacing-band: clamp(72px, 10vw, 128px);
 
-  /* Radios */
   --radius-tag: 4px;
   --radius-card: 8px;
   --radius-pill: 9999px;
 
-  /* Sin sombras: la profundidad es luminancia. */
   --shadow-2xs: 0 0 #0000;
   --shadow-xs: 0 0 #0000;
   --shadow-sm: 0 0 #0000;
@@ -91,8 +71,6 @@
   --shadow-xl: 0 0 #0000;
   --shadow-2xl: 0 0 #0000;
 
-  /* Curvas. `out` para todo lo que entra; `in-out` para lo que ya está en
-     pantalla y cambia de lugar. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-opx: var(--ease-out);
@@ -151,11 +129,6 @@
   --radius-4xl: 9999px;
 }
 
-/* ---------------------------------------------------------------------------
-   El sistema es sólo oscuro (design.md: «theme: dark», «nunca un canvas
-   blanco»). Los tokens de shadcn apuntan a la misma escala para que el panel
-   del agente y los componentes de ui hablen el mismo idioma.
---------------------------------------------------------------------------- */
 :root {
   color-scheme: dark;
 
@@ -205,7 +178,6 @@
   --hairline-width: 1px;
   --duration-state: 180ms;
   --duration-geometry: 700ms;
-  /* Alto del encabezado pegajoso: los anclas frenan debajo. */
   --header-h: 68px;
 }
 
@@ -247,10 +219,6 @@
   }
 }
 
-/* ---------------------------------------------------------------------------
-   Vocabulario del sistema
---------------------------------------------------------------------------- */
-
 @utility page-x {
   padding-inline: var(--spacing-page);
 }
@@ -259,7 +227,6 @@
   padding-block: var(--spacing-band);
 }
 
-/* Contenedor de 1200px de design.md. */
 @utility shell {
   width: 100%;
   max-width: calc(1200px + var(--spacing-page) * 2);
@@ -275,8 +242,6 @@
   border-bottom: var(--hairline-width) solid var(--color-iron);
 }
 
-/* Titulares. El tracking se ajusta con la escala: −0.036em a 64px, −0.012em a
-   20px. Los tamaños son fluidos pero nunca bajan de 40px en display. */
 @utility display {
   font-family: var(--font-inter);
   font-weight: var(--font-weight-medium);
@@ -333,7 +298,6 @@
   letter-spacing: -0.42px;
 }
 
-/* Botones y navegación: Inter 14/500. */
 @utility label-untitled {
   font-family: var(--font-inter);
   font-weight: var(--font-weight-medium);
@@ -342,8 +306,6 @@
   letter-spacing: -0.15px;
 }
 
-/* La etiqueta estampada: JetBrains Mono, mayúsculas, tracking abierto. Se lee
-   como metadato, no como texto. */
 @utility eyebrow {
   font-family: var(--font-jetbrains-mono);
   font-weight: 400;
@@ -381,9 +343,6 @@
   color: var(--color-mist);
 }
 
-/* La grilla de plano (design.md › Grid Background System). 1px, 48px de
-   celda, con un tinte azul-gris apenas perceptible. La máscara la desvanece
-   hacia los bordes para que no se lea como papel cuadriculado. */
 @utility blueprint {
   background-image:
     linear-gradient(to right, rgb(150 170 220 / 0.075) 1px, transparent 1px),
@@ -392,30 +351,11 @@
   background-position: calc(50% + 24px) 0;
 }
 
-/* Tarjeta: graphite sobre carbon, borde iron, 8px. */
 @utility card {
   background-color: var(--color-graphite);
   border: 1px solid var(--color-iron);
   border-radius: var(--radius-card);
 }
-
-/* ---------------------------------------------------------------------------
-   Preset de typeset para las notas.
-
-   shadcn/typeset trae la tipografía de contenido renderizado; acá sólo se lo
-   ata al sistema de la casa. Son dos ajustes y nada más:
-
-   1. Color. Typeset lee `--color-foreground`, `--color-muted-foreground` y
-      `--color-border`, y en este proyecto esos tokens quedaron con los valores
-      claros de shadcn en `:root` —el sitio nunca los usó, pinta todo con
-      `bone`/`ash`/`hairline`—. Sin redefinirlos acá, el cuerpo de la nota
-      saldría casi negro sobre el canvas negro. Se redefinen sobre el
-      contenedor, así que valen para todo lo que cuelgue de él y siguen el
-      cambio de tema solos.
-
-   2. Peso de los titulares. Typeset los pone en 600; design.md los quiere en
-      400–500. Van en 500.
---------------------------------------------------------------------------- */
 
 @layer components {
   .typeset-nota {
@@ -434,12 +374,6 @@
     --color-ring: var(--bone);
   }
 
-  /* La medida va en los bloques, no en el contenedor.
-     Si el ancho de 68ch lo lleva el contenedor, la tabla queda encerrada en la
-     medida de lectura y se corta a los tres cuartos incluso en un monitor
-     grande, con scroll horizontal donde había lugar de sobra. Poniéndola en
-     los hijos, el texto conserva su renglón corto y las tablas —que no se leen
-     renglón por renglón— usan todo el ancho de la columna. */
   .typeset-nota > * {
     max-width: 68ch;
   }
@@ -451,22 +385,15 @@
   .typeset-nota :is(h1, h2, h3, h4, h5, h6) {
     font-weight: var(--font-weight-medium);
     letter-spacing: -0.021em;
-    /* El encabezado pegajoso mide 104px: sin esto, un ancla del índice deja el
-       titular escondido detrás. */
     scroll-margin-block-start: 104px;
   }
 
-  /* La regla de arriba de cada h2 es el mismo hairline que separa las
-     secciones de la portada: hace que la nota se lea como parte del sitio y no
-     como una plantilla de blog pegada encima. */
   .typeset-nota :is(h2) {
     border-block-start: var(--hairline-width) solid var(--color-hairline);
     padding-block-start: var(--typeset-flow);
     margin-block-start: calc(var(--typeset-flow) * 2.2);
   }
 
-  /* Enlaces: subrayado en hairline que se enciende al pasar. El subrayado
-     lleno competía con el texto en una nota con veinte enlaces internos. */
   .typeset-nota :is(a) {
     text-decoration-color: var(--color-hairline);
     text-underline-offset: 4px;
@@ -477,11 +404,6 @@
     text-decoration-color: var(--indigo);
   }
 }
-
-/* ---------------------------------------------------------------------------
-   Movimiento. Todo lo que entra lo hace con `--ease-out`; lo que depende del
-   scroll lo maneja GSAP en `src/scripts/`. Con reduced motion, nada se mueve.
---------------------------------------------------------------------------- */
 
 @layer utilities {
   .js [data-reveal] {
@@ -501,7 +423,6 @@
     filter: none;
   }
 
-  /* Reglas que se dibujan solas cuando su bloque entra en pantalla. */
   .js [data-rule-draw] {
     transform: scaleX(0);
     transform-origin: left;
@@ -519,8 +440,6 @@
     border-radius: 4px;
   }
 
-  /* En la portada, los botones flotantes esperan a que el hero quede atrás
-     para no tapar su tarjeta. */
   html:has(#inicio) :is([data-whatsapp], [data-agent-open].fixed) {
     transition:
       opacity 0.4s var(--ease-out),
@@ -534,7 +453,6 @@
     pointer-events: none;
   }
 
-  /* Lenis toma el scroll en la portada: el `smooth` nativo competiría. */
   html.lenis,
   html.lenis body {
     height: auto;
@@ -560,17 +478,6 @@
   }
 }
 
-/* ---------------------------------------------------------------------------
-   Árabe — tipografía y dirección
-   El documento entero se voltea con `dir="rtl"` desde el layout. Acá van las
-   tres cosas que la propiedad lógica no resuelve sola.
---------------------------------------------------------------------------- */
-
-/* 1. La familia. Se sustituyen las variables del tema en vez de tocar cada
-      utilidad: `font-opx`, `font-untitled` y compañía leen estas variables, así
-      que el sitio entero cambia de tipografía con la cascada. Inter queda
-      detrás para los tramos latinos —«WhatsApp», «ERP», el propio nombre de la
-      marca—, que no deben caer en la árabe. */
 html[lang="ar"] {
   --font-inter:
     "Noto Sans Arabic Variable", "Inter Variable", Inter, ui-sans-serif,
@@ -590,27 +497,14 @@ html[lang="ar"] {
   --typeset-font-heading: var(--font-opx);
 }
 
-/* 2. El tracking. La escala display del sistema aprieta las letras hasta
-      −0.025em, que en latín es lo que la vuelve monumental y en árabe separa
-      glifos que van unidos: la palabra se lee cortada. El árabe no lleva
-      tracking, nunca. El selector gana por especificidad a las utilidades de
-      una clase; lo que va en `style=` —la marca a sangre del pie, que es
-      latina— sigue mandando por encima. Las islas marcadas `dir="ltr"` —el
-      lockup de la marca— quedan afuera: ahí el texto es latino y el tracking
-      es parte del logo. */
 html[lang="ar"] *:not([dir="ltr"], [dir="ltr"] *) {
   letter-spacing: normal;
 }
 
-/* 3. El interlineado de los titulares. La display latina baja hasta 1 porque
-      no hay descendentes que choquen; el árabe sí las tiene, y a 1 los puntos
-      de una línea tocan las astas de la siguiente. */
 html[lang="ar"] :is(h1, h2, h3) {
   line-height: 1.28;
 }
 
-/* Las reglas que se dibujan solas nacen del borde por el que empieza a leerse
-   la página. `transform-origin` no tiene variante lógica. */
 [dir="rtl"] .js [data-rule-draw] {
   transform-origin: right;
 }

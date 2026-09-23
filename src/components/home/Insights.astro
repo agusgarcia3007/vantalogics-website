@@ -16,7 +16,6 @@ const { lang } = Astro.props
 const dict = useTranslations(lang)
 const t = dict.insights
 
-// Primero las notas de educación; si no alcanzan, las más recientes.
 const posts = await getPosts(lang)
 const education = posts.filter(
   (post) => post.data.industry === "edtech-y-plataformas-educativas"

@@ -3,18 +3,10 @@ export interface Client {
   caseSlug: string
   logo: string
   logoAlt: string
-  /** Ajuste óptico: los archivos tienen proporciones muy distintas. */
   logoClass: string
   wordmark?: string
 }
 
-/**
- * Clientes publicables y enlaces a sus productos en producción.
- *
- * Los logos se sirven desde los sitios de cada producto para mantener siempre
- * la versión oficial. Si alguno cambia de dominio, conviene copiar el activo a
- * `public/clients/` y actualizar sólo este archivo.
- */
 export const CLIENTS: Client[] = [
   {
     name: "Apoyo Escolar RV",
@@ -48,14 +40,6 @@ export const CLIENTS: Client[] = [
   },
 ]
 
-/**
- * El cliente detrás de un caso, por slug.
- *
- * Los dos archivos se mantienen separados —el caso es contenido editorial, el
- * cliente es un activo de marca— pero la portada necesita cruzarlos para
- * mostrar el logo junto al caso. Devuelve `undefined` en vez de tirar: un caso
- * publicado sin logo todavía tiene que poder renderizar.
- */
 export function findClient(caseSlug: string): Client | undefined {
   return CLIENTS.find((client) => client.caseSlug === caseSlug)
 }

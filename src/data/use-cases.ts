@@ -8,58 +8,21 @@ import {
   type Solution,
 } from "@/data/solutions"
 
-/**
- * Casos de uso: el segundo nivel de la capa programática.
- *
- * La página de sector responde «cómo se automatiza con IA en mi rubro». Es una
- * consulta de investigación. Pero el volumen comercial no está ahí: está un
- * escalón más abajo, en sector + tarea concreta —«tutor de IA para una academia
- * online», «corrección automática de exámenes con IA»—, que es lo que
- * escribe alguien que ya decidió que quiere resolver eso y está eligiendo a
- * quién le compra.
- *
- * De ahí que estas páginas tengan otra forma que las de sector. No explican el
- * rubro: explican una implementación. Los cuatro bloques que las diferencian de
- * una landing de agencia son `steps` (cómo funciona de punta a punta, sin
- * abstracciones), `measures` (qué número se mueve y cómo se lo mide),
- * `requires` (qué tiene que existir del lado del cliente antes de empezar) y
- * `notThis`. Los cuatro se pueden verificar; una landing genérica no puede
- * escribir ninguno.
- *
- * Sólo las industrias foco tienen casos de uso. Multiplicar sector × tarea en
- * los seis rubros da treinta y seis páginas que nadie puede escribir con
- * sustancia, y treinta y seis páginas flojas valen menos que ocho buenas: los
- * motores de respuesta no premian la cobertura, premian la página que puede ser
- * citada sin agregarle nada.
- */
-
 export interface UseCase {
-  /** Slug español de la solución a la que pertenece. */
   solution: string
   slug: Localized
-  /** H1 de la página. */
   title: Localized
-  /** Meta description, 140–160 caracteres. */
   description: Localized
-  /** Respuesta corta y citable, 40–60 palabras. */
   answer: Localized
-  /** Dos párrafos: el problema tal como se vive, no tal como se vende. */
   intro: LocalizedList
-  /** Cómo funciona de punta a punta. */
   steps: Item[]
-  /** Qué número se mueve y cómo se mide. */
   measures: LocalizedList
-  /** Qué tiene que existir del lado del cliente antes de empezar. */
   requires: LocalizedList
-  /** Cuándo no conviene. */
   notThis: LocalizedList
   faq: { question: Localized; answer: Localized }[]
 }
 
 export const USE_CASES: UseCase[] = [
-  // ────────────────────────────────────────────────────────────────────────
-  // EdTech y plataformas educativas
-  // ────────────────────────────────────────────────────────────────────────
   {
     solution: "edtech-y-plataformas-educativas",
     slug: { es: "tutor-de-ia", en: "ai-tutor", ar: "ai-tutor" },
@@ -789,7 +752,6 @@ export const USE_CASES: UseCase[] = [
   },
 ]
 
-/** Segmento de la ruta por idioma, heredado del índice de soluciones. */
 export function casePath(
   lang: Lang,
   solution: Solution,
@@ -810,7 +772,6 @@ export function findCase(
   return casesFor(solution).find((useCase) => useCase.slug[lang] === slug)
 }
 
-/** Todos los pares sector + caso, para rutas, sitemap y `llms.txt`. */
 export const USE_CASE_ROUTES: { solution: Solution; useCase: UseCase }[] =
   USE_CASES.map((useCase) => {
     const solution = SOLUTIONS.find((s) => s.slug.es === useCase.solution)
