@@ -375,7 +375,7 @@ export const ar: Dictionary = {
         title: "موارد",
         links: [
           { href: "/blog/", label: "ملاحظات" },
-          { href: "/solutions/", label: "الحلول حسب القطاع" },
+          { href: "/solutions/", label: "الذكاء الاصطناعي لمنصات التعلّم" },
           { href: "/rss.xml", label: "RSS" },
         ],
       },

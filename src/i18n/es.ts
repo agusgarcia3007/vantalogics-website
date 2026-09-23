@@ -413,7 +413,7 @@ export const es = {
         title: "Recursos",
         links: [
           { href: "/blog/", label: "Notas" },
-          { href: "/soluciones/", label: "Soluciones por sector" },
+          { href: "/soluciones/", label: "IA para plataformas educativas" },
           { href: "/rss.xml", label: "RSS" },
         ],
       },

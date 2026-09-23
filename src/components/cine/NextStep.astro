@@ -1,0 +1,52 @@
+---
+import { useTranslations, type Lang } from "@/i18n"
+import { SCHEDULE_URL } from "@/site"
+
+interface Props {
+  lang: Lang
+  back?: { href: string; label: string }
+}
+
+const { lang, back } = Astro.props
+const t = useTranslations(lang).cta
+---
+
+<section class="section">
+  <div class="shell">
+    <div class="author reveal">
+      <div>
+        <p class="author-label">{t.label}</p>
+        <p class="author-name">{t.title}</p>
+        <p class="author-bio">{t.body}</p>
+      </div>
+
+      <div class="author-actions">
+        <a
+          class="btn btn-solid btn-lead"
+          href={SCHEDULE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {t.primary}
+          <span class="btn-pip" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M7 17L17 7M17 7H9M17 7V15"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"></path>
+            </svg>
+          </span>
+        </a>
+        {
+          back && (
+            <a class="btn btn-ghost" href={back.href}>
+              {back.label}
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

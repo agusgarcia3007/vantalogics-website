@@ -385,7 +385,7 @@ export const en: Dictionary = {
         title: "Resources",
         links: [
           { href: "/blog/", label: "Notes" },
-          { href: "/solutions/", label: "Solutions by sector" },
+          { href: "/solutions/", label: "AI for learning platforms" },
           { href: "/rss.xml", label: "RSS" },
         ],
       },

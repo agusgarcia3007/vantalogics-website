@@ -1,9 +1,9 @@
 ---
 import Layout from "@/layouts/main.astro"
-import SiteHeader from "@/components/site/SiteHeader.astro"
-import SiteFooter from "@/components/site/SiteFooter.astro"
-import CallToAction from "@/components/site/CallToAction.astro"
-import Frame from "@/components/site/Frame.astro"
+import Chrome from "@/components/cine/Chrome.astro"
+import Foot from "@/components/cine/Foot.astro"
+import LinkCard from "@/components/cine/LinkCard.astro"
+import NextStep from "@/components/cine/NextStep.astro"
 import { LANGS, localizePath, useTranslations, type Lang } from "@/i18n"
 import {
   FOCUS_SOLUTIONS,
@@ -66,86 +66,61 @@ const breadcrumb = {
     LANGS.map((code) => [code, solutionsIndexPath(code)])
   )}
   jsonLd={[itemList, breadcrumb]}
+  floating={false}
 >
-  <SiteHeader lang={lang} />
+  <Chrome lang={lang}>
+    <main class="doc-page" id="contenido">
+      <div class="shell">
+        <nav class="crumbs appear appear--soft" aria-label="Breadcrumb">
+          <a href={localizePath(lang)}>Vantalogics</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{t.solutions.breadcrumb}</span>
+        </nav>
 
-  <main id="contenido">
-    <Frame flush>
-      <nav aria-label="Breadcrumb">
-        <ol class="flex flex-wrap items-center gap-2">
-          <li>
-            <a
-              href={localizePath(lang)}
-              class="label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-            >
-              Vantalogics
-            </a>
-          </li>
-          <li class="label-untitled text-muted-ash" aria-hidden="true">/</li>
-          <li class="label-untitled text-muted-ash" aria-current="page">
-            {t.solutions.breadcrumb}
-          </li>
-        </ol>
-      </nav>
+        <div class="doc-head">
+          <span class="appear appear--scale eyebrow" style="--d:0.2s">
+            {t.solutions.focusLabel}
+          </span>
+          <h1 class="appear appear--soft" style="--d:0.3s">
+            {t.solutions.indexTitle}
+          </h1>
+          <p class="appear appear--soft" style="--d:0.42s">
+            {t.solutions.indexIntro}
+          </p>
+        </div>
+      </div>
+    </main>
 
-      <h1
-        class="mt-[clamp(32px,5vw,64px)] max-w-[18ch] display-lg text-balance text-bone"
-      >
-        {t.solutions.indexTitle}
-      </h1>
-
-      <p class="mt-[30px] max-w-[56ch] copy text-ash">
-        {t.solutions.indexIntro}
-      </p>
-    </Frame>
-
-    <Frame labelledby="foco">
-      <h2 id="foco" class="label-untitled text-muted-ash" data-reveal>
-        {t.solutions.focusLabel}
-      </h2>
-
-      <ul
-        class="mt-[clamp(28px,3.5vw,48px)] grid gap-x-[clamp(32px,5vw,72px)] md:grid-cols-2"
-      >
-        {
-          FOCUS_SOLUTIONS.map((solution, index) => (
-            <li
-              class="border-t border-hairline py-8 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(-n+2)]:pt-0"
-              data-reveal
-              style={`--reveal-delay: ${index * 50}ms;`}
-            >
-              <h3 class="text-[clamp(20px,2vw,26px)] leading-[1.24] tracking-[-0.02em] text-bone">
-                <a
+    <div class="below" slot="after">
+      {
+        FOCUS_SOLUTIONS.map((solution) => (
+          <section class="section">
+            <div class="shell">
+              <div class="posts">
+                <LinkCard
                   href={solutionPath(lang, solution)}
-                  class="transition-opacity duration-(--duration-state) ease-(--ease-opx) hover:opacity-70"
-                >
-                  {solution.sector[lang]}
-                </a>
-              </h3>
-              <p class="mt-3 max-w-[44ch] copy text-ash">
-                {solution.description[lang]}
-              </p>
-
-              <ul class="mt-6 flex flex-col">
-                {casesFor(solution).map((useCase) => (
-                  <li class="border-t border-hairline first:border-t-0">
-                    <a
-                      href={casePath(lang, solution, useCase)}
-                      class="block py-3 label-untitled text-ash transition-colors duration-(--duration-state) ease-(--ease-opx) hover:text-bone"
-                    >
-                      {useCase.title[lang]}
-                    </a>
-                  </li>
+                  eyebrow={solution.sector[lang]}
+                  title={solution.title[lang]}
+                  description={solution.description[lang]}
+                  featured
+                />
+                {casesFor(solution).map((useCase, index) => (
+                  <LinkCard
+                    href={casePath(lang, solution, useCase)}
+                    title={useCase.title[lang]}
+                    description={useCase.description[lang]}
+                    index={index + 1}
+                  />
                 ))}
-              </ul>
-            </li>
-          ))
-        }
-      </ul>
-    </Frame>
+              </div>
+            </div>
+          </section>
+        ))
+      }
 
-    <CallToAction lang={lang} />
-  </main>
+      <NextStep lang={lang} />
 
-  <SiteFooter lang={lang} />
+      <Foot lang={lang} />
+    </div>
+  </Chrome>
 </Layout>

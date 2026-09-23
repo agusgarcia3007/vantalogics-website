@@ -1,0 +1,48 @@
+---
+interface Props {
+  href: string
+  title: string
+  description: string
+  eyebrow?: string
+  featured?: boolean
+  index?: number
+}
+
+const {
+  href,
+  title,
+  description,
+  eyebrow,
+  featured = false,
+  index = 0,
+} = Astro.props
+---
+
+<article
+  class:list={["post", "reveal", featured && "post--featured"]}
+  style={`--i:${index}`}
+>
+  <div class="post-core">
+    {
+      eyebrow && (
+        <div class="post-meta">
+          <span>{eyebrow}</span>
+        </div>
+      )
+    }
+    <h3 class="post-title">
+      <a href={href}>{title}</a>
+    </h3>
+    <p class="post-desc">{description}</p>
+    <span class="post-go" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M7 17L17 7M17 7H9M17 7V15"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"></path>
+      </svg>
+    </span>
+  </div>
+</article>
