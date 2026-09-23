@@ -1778,7 +1778,7 @@ body.menu-open .burger span:nth-child(3) {
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: rgba(8, 8, 8, 0.42);
+    background: rgba(8, 8, 8, 0.9);
     opacity: 0;
     visibility: hidden;
     transition:
