@@ -5,16 +5,19 @@ import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
 import Foot from "@/components/cine/Foot.astro"
 import CaseCard from "@/components/cine/CaseCard.astro"
-import { CASES } from "@/data/cases"
+import { CASES, caseStudyPath } from "@/data/cases"
 import { SOLUTIONS, solutionPath } from "@/data/solutions"
 import { formatDate } from "@/lib/blog"
 import {
-  PLATFORMS_ROOT,
   getPlatformPages,
+  isPlatformsHub,
+  platformAlternates,
+  platformLang,
   platformPath,
+  platformsRoot,
   type PlatformPage,
 } from "@/lib/plataformas"
-import { localizePath, ogImage } from "@/i18n"
+import { localizePath, ogImage, useTranslations } from "@/i18n"
 import { SCHEDULE_URL } from "@/site"
 
 interface Props {
@@ -22,19 +25,22 @@ interface Props {
 }
 
 const SITE = "https://vantalogics.com"
-const lang = "es" as const
 const { page } = Astro.props
+const lang = platformLang(page)
+const t = useTranslations(lang)
 const { data } = page
 const { Content, headings } = await render(page)
 
+const root = platformsRoot(lang)!
 const path = platformPath(page)
 const pageUrl = new URL(path, SITE).href
-const rootUrl = new URL(PLATFORMS_ROOT, SITE).href
-const isRoot = path === PLATFORMS_ROOT
+const rootUrl = new URL(root, SITE).href
+const isRoot = isPlatformsHub(page)
 const toc = headings.filter((heading) => heading.depth === 2)
+const alternates = await platformAlternates(page)
 
-const allPages = await getPlatformPages()
-const hub = allPages.find((entry) => platformPath(entry) === PLATFORMS_ROOT)
+const allPages = await getPlatformPages(lang)
+const hub = allPages.find(isPlatformsHub)
 const siblings = allPages.filter((entry) => entry.id !== page.id)
 const cases = data.cases
   .map((slug) => CASES.find((study) => study.slug === slug))
@@ -55,9 +61,9 @@ const related = [
     ? [
         {
           href: solutionPath(lang, aiSolution),
-          eyebrow: "IA sobre la plataforma",
-          title: aiSolution.title.es,
-          description: aiSolution.description.es,
+          eyebrow: t.platforms.aiEyebrow,
+          title: aiSolution.title[lang],
+          description: aiSolution.description[lang],
         },
       ]
     : []),
@@ -86,8 +92,7 @@ const service = {
   ],
   audience: {
     "@type": "BusinessAudience",
-    audienceType:
-      "Academias online, instituciones educativas y empresas de educación",
+    audienceType: t.platforms.audience,
   },
   ...(isRoot ? {} : { isRelatedTo: { "@id": `${rootUrl}#service` } }),
 }
@@ -114,8 +119,8 @@ const webPage = {
     ? {
         mentions: cases.map((study) => ({
           "@type": "CreativeWork",
-          name: study.client.es,
-          url: new URL(`/casos/${study.slug}/`, SITE).href,
+          name: study.client[lang],
+          url: new URL(caseStudyPath(lang, study.slug), SITE).href,
         })),
       }
     : {}),
@@ -134,7 +139,7 @@ const breadcrumb = {
     {
       "@type": "ListItem",
       position: 2,
-      name: hub?.data.nav ?? "Plataformas educativas",
+      name: hub?.data.nav ?? t.platforms.label,
       item: rootUrl,
     },
     ...(isRoot
@@ -173,7 +178,7 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
   path={path}
   title={data.seoTitle}
   description={data.description}
-  alternates={{ es: path }}
+  alternates={alternates}
   jsonLd={jsonLd}
   floating={false}
 >
@@ -188,7 +193,7 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
               <span>{data.nav}</span>
             ) : (
               <>
-                <a href={PLATFORMS_ROOT}>{hub?.data.nav}</a>
+                <a href={root}>{hub?.data.nav ?? t.platforms.label}</a>
                 <span aria-hidden="true">/</span>
                 <span>{data.nav}</span>
               </>
@@ -201,7 +206,7 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
             {data.title}
           </h1>
           <p class="doc-updated appear appear--soft" style="--d:0.32s">
-            Actualizado el <time datetime={data.updated.toISOString()}
+            {t.blog.updatedOn} <time datetime={data.updated.toISOString()}
               >{formatDate(data.updated, lang)}</time
             >
           </p>
@@ -213,7 +218,7 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
       <section class="section">
         <div class="shell">
           <div class="answer reveal">
-            <p class="answer-label">La respuesta corta</p>
+            <p class="answer-label">{t.platforms.answerLabel}</p>
             <p class="answer-body" data-speakable>{data.answer}</p>
           </div>
         </div>
@@ -229,7 +234,7 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
             toc.length > 1 && (
               <nav class="toc" aria-labelledby="indice-pagina">
                 <p id="indice-pagina" class="toc-label">
-                  En esta página
+                  {t.platforms.tocLabel}
                 </p>
                 <ol>
                   {toc.map((heading) => (
@@ -249,11 +254,11 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
           <section class="section" id="casos">
             <div class="shell">
               <div class="section-head reveal">
-                <span class="eyebrow">En producción</span>
+                <span class="eyebrow">{t.platforms.casesEyebrow}</span>
                 <h2>
                   {isRoot
-                    ? "Plataformas que construimos"
-                    : "El caso detrás de esta página"}
+                    ? t.platforms.casesTitleHub
+                    : t.platforms.casesTitlePage}
                 </h2>
               </div>
               <div class:list={["cases", cases.length !== 4 && "cases--even"]}>
@@ -271,7 +276,7 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
           <section class="section">
             <div class="shell">
               <div class="section-head reveal">
-                <h2 id="preguntas">Preguntas frecuentes</h2>
+                <h2 id="preguntas">{t.platforms.faqTitle}</h2>
               </div>
               <dl class="faq">
                 {data.faq.map((entry, i) => (
@@ -290,13 +295,9 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
         <div class="shell">
           <div class="author reveal">
             <div>
-              <p class="author-label">Siguiente paso</p>
-              <p class="author-name">Contanos qué tenés hoy y qué te frena</p>
-              <p class="author-bio">
-                En una llamada de 30 minutos revisamos dónde está tu academia,
-                cómo cobrás y qué querés que cambie, y te proponemos la
-                plataforma que corresponde a tu etapa.
-              </p>
+              <p class="author-label">{t.platforms.nextLabel}</p>
+              <p class="author-name">{t.platforms.nextTitle}</p>
+              <p class="author-bio">{t.platforms.nextBody}</p>
             </div>
 
             <div class="author-actions">
@@ -306,7 +307,7 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Agendar una llamada
+                {t.platforms.nextButton}
                 <span class="btn-pip" aria-hidden="true">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                     <path
@@ -328,7 +329,7 @@ const jsonLd = [service, webPage, breadcrumb, faqPage].filter(Boolean)
           <section class="section">
             <div class="shell">
               <div class="section-head reveal">
-                <h2 id="relacionadas">Seguí por acá</h2>
+                <h2 id="relacionadas">{t.blog.relatedLabel}</h2>
               </div>
               <div class="posts">
                 {related.map((item, i) => (

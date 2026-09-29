@@ -10,7 +10,12 @@ import { getAllPosts, getTranslations, postLang, postPath } from "@/lib/blog"
 import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
 import { USE_CASE_ROUTES, casePath } from "@/data/use-cases"
 import { CASES, caseStudyPath } from "@/data/cases"
-import { getPlatformPages, platformPath } from "@/lib/plataformas"
+import {
+  getPlatformPages,
+  isPlatformsHub,
+  platformAlternates,
+  platformPath,
+} from "@/lib/plataformas"
 
 const SITE = "https://vantalogics.com"
 
@@ -60,13 +65,13 @@ export const GET: APIRoute = async () => {
   }
 
   for (const page of await getPlatformPages()) {
-    const path = platformPath(page)
+    const alternates = await platformAlternates(page)
     entries.push({
-      path,
-      priority: page.data.order === 0 ? "0.9" : "0.8",
+      path: platformPath(page),
+      priority: isPlatformsHub(page) ? "0.9" : "0.8",
       changefreq: "monthly",
       lastmod: page.data.updated.toISOString(),
-      alternates: {},
+      alternates: Object.keys(alternates).length > 1 ? alternates : {},
     })
   }
 

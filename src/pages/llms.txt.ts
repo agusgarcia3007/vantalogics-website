@@ -8,7 +8,11 @@ import {
 } from "@/data/solutions"
 import { casePath, casesFor } from "@/data/use-cases"
 import { CASES, caseStudyPath, formatStudents } from "@/data/cases"
-import { getPlatformPages, platformPath } from "@/lib/plataformas"
+import {
+  getPlatformPages,
+  platformKey,
+  platformPath,
+} from "@/lib/plataformas"
 
 const SITE = "https://vantalogics.com"
 
@@ -17,7 +21,8 @@ const url = (path: string) => new URL(path, SITE).href
 export const GET: APIRoute = async () => {
   const postsEs = await getPosts("es")
   const postsEn = await getPosts("en")
-  const platformPages = await getPlatformPages()
+  const platformPages = await getPlatformPages("es")
+  const platformPagesEn = await getPlatformPages("en")
 
   const preamble = `# Vantalogics
 
@@ -84,10 +89,13 @@ Desarrollo de academias online y plataformas educativas propias, y migración
 desde Hotmart, Tiendup, WordPress o Moodle.
 
 ${platformPages
-  .map(
-    (page) =>
-      `- [${page.data.title}](${url(platformPath(page))})\n  ${page.data.answer}`
-  )
+  .map((page) => {
+    const english = platformPagesEn.find(
+      (other) => platformKey(other) === platformKey(page)
+    )
+    const translation = english ? ` · [EN](${url(platformPath(english))})` : ""
+    return `- [${page.data.title}](${url(platformPath(page))})${translation}\n  ${page.data.answer}`
+  })
   .join("\n")}`
 
   const studies = `## Productos construidos
@@ -122,7 +130,7 @@ ${postsEn
 
   const links = `## Enlaces
 
-- [Plataformas educativas](${url("/plataformas-educativas/")})
+- [Plataformas educativas](${url("/plataformas-educativas/")}) · [Education platforms](${url("/en/education-platforms/")})
 - [Casos](${url("/#casos")})
 - [Proceso](${url("/#proceso")})
 - [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")})

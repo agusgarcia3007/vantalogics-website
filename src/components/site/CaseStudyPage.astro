@@ -16,6 +16,11 @@ import {
   useTranslations,
   type Lang,
 } from "@/i18n"
+import {
+  findPlatformPage,
+  platformPath,
+  platformsRoot,
+} from "@/lib/plataformas"
 import { SCHEDULE_URL } from "@/site"
 
 interface Props {
@@ -41,23 +46,19 @@ const clientName = pick(study.client)
 const title = pick(study.title)
 const description = pick(study.built)
 
-const platformLinks =
-  lang === "es"
-    ? [
-        {
-          href: "/plataformas-educativas/",
-          label: "Cómo desarrollamos plataformas educativas a medida",
-        },
-        ...(study.slug === "apoyo-escolar-rv"
-          ? [
-              {
-                href: "/plataformas-educativas/migracion/",
-                label: "Cómo migramos sus alumnos desde Tiendup y WooCommerce",
-              },
-            ]
-          : []),
-      ]
-    : []
+const platformsHref = platformsRoot(lang)
+const migration =
+  study.slug === "apoyo-escolar-rv"
+    ? await findPlatformPage(lang, "migracion")
+    : undefined
+const platformLinks = [
+  ...(platformsHref
+    ? [{ href: platformsHref, label: strings.platforms.hubLink }]
+    : []),
+  ...(migration
+    ? [{ href: platformPath(migration), label: strings.platforms.migrationLink }]
+    : []),
+]
 
 const breadcrumb = {
   "@context": "https://schema.org",

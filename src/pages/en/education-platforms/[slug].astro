@@ -8,7 +8,7 @@ import {
 } from "@/lib/plataformas"
 
 export async function getStaticPaths() {
-  const pages = await getPlatformPages("es")
+  const pages = await getPlatformPages("en")
   return pages
     .filter((page) => !isPlatformsHub(page))
     .map((page) => ({ params: { slug: platformSlug(page) }, props: { page } }))

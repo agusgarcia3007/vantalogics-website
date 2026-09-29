@@ -34,6 +34,7 @@ const plataformas = defineCollection({
     serviceType: z.string(),
     updated: z.coerce.date(),
     cases: z.array(z.string()).default([]),
+    translationOf: z.string().optional(),
     faq: z
       .array(z.object({ question: z.string(), answer: z.string() }))
       .default([]),

@@ -12,10 +12,8 @@ export const es = {
 
   a11y: {
     skip: "Saltar al contenido",
-    home: "Vantalogics, ir al inicio",
-    mainNav: "Principal",
-    mobileNav: "Principal, móvil",
-    logoAlt: "Logotipo de Vantalogics",
+    openMenu: "Abrir menú",
+    closeMenu: "Cerrar menú",
   },
 
   nav: {
@@ -27,80 +25,25 @@ export const es = {
     ],
     cta: "Hablar de tu producto",
     menu: "Menú",
-    close: "Cerrar",
-    tagline: "Producto e ingeniería de IA para educación",
-  },
-
-  language: {
-    label: "Idioma",
-    name: "Español",
-    switchTo: "Ver en español",
   },
 
   hero: {
     eyebrow: "Vantalogics · Producto e ingeniería de IA para educación",
     title: "Construimos la inteligencia detrás de los productos educativos.",
-    lead: "Diseñamos agentes especializados, sistemas de evaluación y plataformas de aprendizaje completas. Desde la experiencia de usuario hasta los modelos, las integraciones y la infraestructura que los mantiene funcionando.",
+    badge: "Producto · IA aplicada · Ingeniería",
+    headline: {
+      first: "Construimos la inteligencia detrás",
+      second: "de los",
+      emphasis: "productos educativos.",
+    },
+    lead: "Diseñamos agentes especializados, sistemas de evaluación y plataformas de aprendizaje completas. Producto, experiencia, IA e ingeniería en un mismo equipo.",
     ctaPrimary: "Hablar de tu producto",
     ctaSecondary: "Ver nuestro trabajo",
-    ctaSecondaryFallback: "Ver qué construimos",
-    note: "Estrategia de producto, IA e ingeniería de software en un mismo equipo.",
-    trace: {
-      badge: "Ejemplo ilustrativo",
-      title: "Agente de tutoría",
-      context: "Física II · Unidad 4",
-      tabs: ["Traza", "Fuentes"],
-      status: "En producción",
-      askLabel: "Alumno",
-      question:
-        "¿Por qué el trabajo de una fuerza conservativa no depende del camino?",
-      steps: [
-        {
-          label: "Contexto",
-          detail: "Cohorte 2026-B · Unidad 4 habilitada",
-        },
-        {
-          label: "Búsqueda",
-          detail: "3 fuentes del curso · Energía y trabajo",
-        },
-        {
-          label: "Regla",
-          detail: "Evaluación abierta: guía sin resolver el ejercicio 7",
-        },
-        {
-          label: "Respuesta",
-          detail: "Cita U4 §2.3 y propone un ejercicio de práctica",
-        },
-      ],
-      metrics: [
-        { label: "Fuente", value: "Validada" },
-        { label: "Latencia", value: "1,4 s" },
-        { label: "Revisión", value: "No requerida" },
-      ],
+    stats: {
+      students: "estudiantes",
+      products: "Productos educativos en producción",
+      response: "Respuesta en menos de 24 h hábiles",
     },
-  },
-
-  ecosystem: {
-    title: "Hecho para el ecosistema educativo.",
-    body: "Trabajamos sobre plataformas propias, LMS y operaciones educativas. Entendemos que una buena respuesta no alcanza: el producto también tiene que respetar permisos, secuencias de aprendizaje, evaluaciones, privacidad y costos por alumno.",
-    label: "Integraciones y estándares",
-    items: [
-      "Moodle",
-      "Canvas",
-      "Open edX",
-      "Google Classroom",
-      "LTI 1.3",
-      "xAPI",
-      "SCORM",
-      "SIS",
-      "Plataformas propias",
-    ],
-  },
-
-  clients: {
-    title: "Clientes con productos en producción",
-    visit: "Ver el caso de",
-    students: "estudiantes",
   },
 
   cases: {
@@ -108,14 +51,6 @@ export const es = {
     title: "Productos educativos en producción.",
     intro:
       "Cada caso muestra el desafío, el producto que construimos y su alcance verificable hoy. Resultados medibles cuando existen; alcance real cuando todavía no hay una línea de base publicable.",
-    labels: {
-      client: "Cliente",
-      start: "Punto de partida",
-      built: "Qué construimos",
-      impact: "Impacto",
-      integrations: "Componentes",
-      read: "Ver el producto",
-    },
     detail: {
       breadcrumb: "Casos",
       students: "estudiantes",
@@ -126,170 +61,6 @@ export const es = {
       visit: "Ver producto en producción",
       back: "Volver a todos los clientes",
       metaSuffix: "Caso de producto",
-    },
-  },
-
-  thesis: {
-    eyebrow: "Nuestra perspectiva",
-    title: "Agregar IA es fácil. Construir un producto confiable no.",
-    body: [
-      "Una demostración puede responder diez preguntas perfectas. Un producto educativo tiene que responder miles, respetar el contenido, reconocer lo que no sabe, proteger los datos del alumno y mantener un costo sostenible.",
-      "Por eso no empezamos eligiendo un modelo. Empezamos definiendo el producto: qué problema resuelve, qué puede hacer, dónde debe detenerse y cómo vamos a medirlo. Después diseñamos la experiencia y construimos la tecnología que la sostiene.",
-    ],
-    contrast: {
-      demo: "Una demo",
-      demoValue: "10 preguntas perfectas",
-      product: "Un producto",
-      productValue: "Miles, todos los días",
-    },
-  },
-
-  capabilities: {
-    eyebrow: "Qué construimos",
-    title: "Del concepto al producto en producción.",
-    items: [
-      {
-        index: "01",
-        title: "Agentes especializados",
-        summary:
-          "No son chats genéricos con acceso a documentos. Son agentes integrados al producto, capaces de interpretar contexto, consultar fuentes, utilizar herramientas y ejecutar acciones con límites explícitos.",
-        points: [
-          "Trabajan sobre contenido y datos propios.",
-          "Respetan usuarios, permisos y etapas.",
-          "Se conectan con APIs y herramientas internas.",
-          "Escalan decisiones sensibles a una persona.",
-          "Dejan registro de sus fuentes y acciones.",
-        ],
-      },
-      {
-        index: "02",
-        title: "Experiencias de aprendizaje con IA",
-        summary:
-          "Diseñamos nuevas maneras de buscar, practicar, recibir feedback y avanzar dentro de un producto educativo.",
-        points: [
-          "Acompañamiento contextual.",
-          "Búsqueda con fuentes y referencias.",
-          "Práctica y simulaciones interactivas.",
-          "Recomendaciones según progreso.",
-          "Feedback inmediato y personalizado.",
-        ],
-      },
-      {
-        index: "03",
-        title: "Evaluación y operaciones académicas",
-        summary:
-          "Construimos sistemas que asisten el trabajo académico sin ocultar el criterio ni reemplazar decisiones sensibles.",
-        points: [
-          "Corrección asistida con rúbricas.",
-          "Generación y validación de evaluaciones.",
-          "Análisis de respuestas y dificultades.",
-          "Herramientas para docentes y equipos académicos.",
-          "Revisión humana y trazabilidad.",
-        ],
-      },
-      {
-        index: "04",
-        title: "Plataformas y software educativo",
-        summary:
-          "Cuando el producto necesita algo más que una función de IA, construimos también el software que la rodea.",
-        points: [
-          "Plataformas educativas completas.",
-          "Portales para alumnos y docentes.",
-          "Herramientas de autor y administración.",
-          "Integraciones con LMS, SIS y sistemas propios.",
-          "Infraestructura, observabilidad y operación.",
-        ],
-      },
-    ],
-    visuals: {
-      example: "Ejemplo",
-      agents: {
-        title: "Sistema de agentes",
-        request: "Consulta de un alumno",
-        orchestrator: "Agente del curso",
-        tools: ["Contenido del curso", "Calendario académico", "SIS · legajo"],
-        guard: "Cambio de fecha de examen",
-        human: "Aprobación de coordinación",
-        log: [
-          "permiso: alumno · lectura",
-          "fuente: calendario 2026-B",
-          "acción: solicitud creada",
-          "escalado: coordinación",
-        ],
-      },
-      learning: {
-        title: "Estudio guiado",
-        question: "No entiendo cuándo usar integración por partes.",
-        answer:
-          "Conviene cuando el integrando es un producto y uno de los factores se simplifica al derivarlo. En tu apunte hay un criterio para elegirlo.",
-        sources: ["Unidad 3 · p. 42", "Clase 11 · 18:20"],
-        practice: "Practicar con 3 ejercicios",
-        progress: "Progreso de la unidad",
-      },
-      assessment: {
-        title: "Corrección asistida",
-        submission: "Entrega 14 de 62 · Informe de laboratorio",
-        criteria: [
-          { name: "Planteo del problema", score: 4, max: 4 },
-          { name: "Análisis de datos", score: 2, max: 4 },
-          { name: "Conclusiones", score: 3, max: 4 },
-        ],
-        note: "El análisis omite la incertidumbre de la medición (rúbrica 2.b).",
-        suggested: "Sugerencia",
-        decision: "Decide el docente",
-        approve: "Aprobar",
-        adjust: "Ajustar",
-      },
-      platform: {
-        title: "Arquitectura del producto",
-        layers: [
-          {
-            name: "Experiencia",
-            items: ["Portal de alumnos", "Portal docente", "Autoría"],
-          },
-          {
-            name: "Inteligencia",
-            items: ["Agentes", "Evaluación", "Búsqueda"],
-          },
-          {
-            name: "Plataforma",
-            items: ["APIs", "Permisos", "Datos"],
-          },
-          {
-            name: "Integraciones",
-            items: ["LTI 1.3", "xAPI", "SIS"],
-          },
-          {
-            name: "Operación",
-            items: ["Observabilidad", "Costos", "Evals"],
-          },
-        ],
-      },
-    },
-  },
-
-  difference: {
-    eyebrow: "Un solo equipo",
-    title: "No somos una software factory con una API de IA.",
-    body: [
-      "El producto educativo, la experiencia y la arquitectura se diseñan juntos. El mismo equipo que define cómo debe comportarse el sistema construye la interfaz, las integraciones, las evaluaciones y la infraestructura necesaria para operarlo.",
-      "Eso reduce traspasos, evita decisiones desconectadas y permite llegar antes a una versión que puede probarse con usuarios reales.",
-    ],
-    usual: {
-      label: "Lo habitual",
-      steps: ["Consultora", "Diseño", "Software factory", "Proveedor de IA"],
-      handoff: "traspaso",
-    },
-    ours: {
-      label: "Vantalogics",
-      disciplines: [
-        "Producto",
-        "Experiencia",
-        "IA aplicada",
-        "Ingeniería",
-        "Infraestructura",
-      ],
-      caption: "Mismo equipo, del criterio a la operación",
     },
   },
 
@@ -325,46 +96,11 @@ export const es = {
     ],
   },
 
-  principles: {
-    eyebrow: "Principios",
-    title: "Software educativo en el que se puede confiar.",
-    items: [
-      {
-        title: "El contenido manda",
-        body: "El sistema responde desde el material y las reglas de la institución, no desde la memoria general del modelo.",
-      },
-      {
-        title: "Las decisiones sensibles siguen siendo humanas",
-        body: "Las calificaciones definitivas, los casos de integridad académica y las decisiones con impacto sobre un alumno quedan bajo responsabilidad de una persona.",
-      },
-      {
-        title: "Todo se puede medir",
-        body: "Calidad, adopción, costo, latencia y correcciones humanas quedan registrados.",
-      },
-      {
-        title: "El producto queda en manos del cliente",
-        body: "Código, infraestructura, cuentas y documentación se entregan preparados para que el producto pueda crecer con o sin nosotros.",
-      },
-    ],
-    measures: ["Calidad", "Adopción", "Costo", "Latencia", "Correcciones"],
-  },
-
-  insights: {
-    eyebrow: "Lo que estamos aprendiendo",
-    title: "Notas desde la intersección entre educación, producto e IA.",
-    body: "Publicamos criterios de diseño, costos reales y problemas que aparecen cuando una función de IA deja la demo y empieza a ser utilizada por una cohorte completa.",
-    cta: "Leer nuestras notas",
-  },
-
   cta: {
     label: "Próximo paso",
     title: "¿Qué producto educativo querés que exista?",
     body: "Contanos qué estás construyendo, qué parte todavía no funciona o qué oportunidad de IA querés evaluar. En la primera conversación te diremos por dónde empezar, qué hace falta y qué no construiríamos.",
     primary: "Hablar con el equipo",
-    secondary: "Escribir a hello@vantalogics.com",
-    emailLabel: "Correo",
-    responseLabel: "Respuesta",
-    response: "En menos de 24 horas hábiles",
   },
 
   footer: {
@@ -375,10 +111,7 @@ export const es = {
         title: "Estudio",
         links: [
           { href: "/plataformas-educativas/", label: "Plataformas educativas" },
-          {
-            href: "/plataformas-educativas/migracion/",
-            label: "Migrar tu academia",
-          },
+          { href: "/plataformas-educativas/migracion/", label: "Migrar tu academia" },
           { href: "#casos", label: "Casos" },
           { href: "#proceso", label: "Cómo trabajamos" },
         ],
@@ -393,7 +126,6 @@ export const es = {
       },
     ],
     contactTitle: "Contacto",
-    socialTitle: "Seguinos",
     tags: "Producto · IA aplicada · Ingeniería de software",
   },
 
@@ -458,6 +190,24 @@ export const es = {
     requiresLabel: "Qué hace falta de tu lado",
     backToSector: "Ver todo el sector",
     notesLabel: "Notas sobre este sector",
+  },
+
+  platforms: {
+    label: "Plataformas educativas",
+    audience: "Academias online, instituciones educativas y empresas de educación",
+    answerLabel: "La respuesta corta",
+    tocLabel: "En esta página",
+    casesEyebrow: "En producción",
+    casesTitleHub: "Plataformas que construimos",
+    casesTitlePage: "El caso detrás de esta página",
+    faqTitle: "Preguntas frecuentes",
+    aiEyebrow: "IA sobre la plataforma",
+    nextLabel: "Siguiente paso",
+    nextTitle: "Contanos qué tenés hoy y qué te frena",
+    nextBody: "En una llamada de 30 minutos revisamos dónde está tu academia, cómo cobrás y qué querés que cambie, y te proponemos la plataforma que corresponde a tu etapa.",
+    nextButton: "Agendar una llamada",
+    hubLink: "Cómo desarrollamos plataformas educativas a medida",
+    migrationLink: "Cómo migramos sus alumnos desde Tiendup y WooCommerce",
   },
 
   agent: {

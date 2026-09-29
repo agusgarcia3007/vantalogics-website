@@ -2,8 +2,8 @@
 import PlatformPage from "@/components/cine/PlatformPage.astro"
 import { findPlatformPage } from "@/lib/plataformas"
 
-const page = await findPlatformPage("es", "index")
-if (!page) throw new Error("Falta src/content/plataformas/es/index.md")
+const page = await findPlatformPage("en", "index")
+if (!page) throw new Error("Missing src/content/plataformas/en/index.md")
 ---
 
 <PlatformPage page={page} />

@@ -2,17 +2,37 @@
 import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
 import Foot from "@/components/cine/Foot.astro"
-import { PUBLIC_LANGS, localizePath, ogImage, useTranslations } from "@/i18n"
+import {
+  PUBLIC_LANGS,
+  localizePath,
+  ogImage,
+  useTranslations,
+  type Lang,
+} from "@/i18n"
 import { CASES, formatTotalStudents } from "@/data/cases"
 import CaseCard from "@/components/cine/CaseCard.astro"
-import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL } from "@/site"
+import { platformsRoot } from "@/lib/plataformas"
+import {
+  CONTACT_EMAIL,
+  GITHUB_URL,
+  INSTAGRAM_URL,
+  SCHEDULE_URL,
+} from "@/site"
+
+interface Props {
+  lang: Lang
+}
 
 const SITE = "https://vantalogics.com"
 const HERO_VIDEO =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260818_072341_50851634-bbc3-4c33-9acc-7647d4db44aa.mp4"
-const lang = "es" as const
+const { lang } = Astro.props
 const t = useTranslations(lang)
 const pageUrl = new URL(localizePath(lang), SITE).href
+const platformsHref = platformsRoot(lang)
+const alternates = Object.fromEntries(
+  PUBLIC_LANGS.map((code) => [code, localizePath(code)])
+)
 
 const organization = {
   "@context": "https://schema.org",
@@ -55,7 +75,7 @@ const webPage = {
   "@type": "WebPage",
   "@id": `${pageUrl}#webpage`,
   url: pageUrl,
-  name: "Vantalogics — Producto e ingeniería de IA para educación",
+  name: t.meta.title,
   description: t.meta.description,
   inLanguage: lang,
   isPartOf: { "@id": `${SITE}/#website` },
@@ -65,7 +85,7 @@ const webPage = {
 
 <Layout
   lang={lang}
-  title="Vantalogics — Producto e ingeniería de IA para educación"
+  alternates={alternates}
   jsonLd={[organization, website, webPage]}
   floating={false}
 >
@@ -109,18 +129,20 @@ const webPage = {
               stroke-linejoin="round"
               stroke-width="1.5"></path></svg
           >
-          Producto · IA aplicada · Ingeniería
+          {t.hero.badge}
         </div>
 
         <h1>
           <span class="headline-line"
             ><span class="appear appear--mask" style="--d:0.42s"
-              >Construimos la inteligencia detrás</span
+              >{t.hero.headline.first}</span
             ></span
           >
           <span class="headline-line"
             ><span class="appear appear--mask" style="--d:0.62s"
-              >de los <em>productos educativos.</em></span
+              >{t.hero.headline.second && `${t.hero.headline.second} `}<em
+                >{t.hero.headline.emphasis}</em
+              ></span
             ></span
           >
         </h1>
@@ -129,20 +151,18 @@ const webPage = {
           class="lede appear appear--soft"
           style="--d:0.82s; animation-duration:1.25s"
         >
-          Diseñamos agentes especializados, sistemas de evaluación y plataformas
-          de aprendizaje completas. Producto, experiencia, IA e ingeniería en un
-          mismo equipo.
+          {t.hero.lead}
         </p>
 
         <div class="hero-actions">
           <a
             class="btn btn-solid btn-lead appear appear--btn"
-            href="https://cal.com/vantalogics"
+            href={SCHEDULE_URL}
             target="_blank"
             rel="noopener"
             style="--d:0.96s"
           >
-            Hablar de tu producto
+            {t.hero.ctaPrimary}
             <span class="btn-pip" aria-hidden="true">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                 <path
@@ -157,7 +177,7 @@ const webPage = {
           <a
             class="btn btn-ghost appear appear--side"
             href="#casos"
-            style="--d:1.10s">Ver nuestro trabajo</a
+            style="--d:1.10s">{t.hero.ctaSecondary}</a
           >
         </div>
       </div>
@@ -190,7 +210,7 @@ const webPage = {
             stroke-linejoin="round"
             stroke-width="1.5"></path></svg
         >
-        {formatTotalStudents(lang)} estudiantes
+        {formatTotalStudents(lang)} {t.hero.stats.students}
       </div>
 
       <div class="appear appear--stat" style="--d:1.28s">
@@ -210,7 +230,7 @@ const webPage = {
             stroke="currentColor"
             stroke-width="1.5"></path></svg
         >
-        Productos educativos en producción
+        {t.hero.stats.products}
       </div>
 
       <div class="appear appear--stat" style="--d:1.44s">
@@ -232,7 +252,7 @@ const webPage = {
             stroke-linejoin="round"
             stroke-width="1.5"></path></svg
         >
-        Respuesta en menos de 24 h hábiles
+        {t.hero.stats.response}
       </div>
     </footer>
 
@@ -252,11 +272,13 @@ const webPage = {
               ))
             }
           </div>
-          <p class="section-more reveal">
-            <a href="/plataformas-educativas/"
-              >Cómo desarrollamos plataformas educativas a medida</a
-            >
-          </p>
+          {
+            platformsHref && (
+              <p class="section-more reveal">
+                <a href={platformsHref}>{t.platforms.hubLink}</a>
+              </p>
+            )
+          }
         </div>
       </section>
 
