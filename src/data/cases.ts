@@ -8,6 +8,7 @@ export type Localized = Partial<Record<Lang, string>> & {
 export interface CaseStudy {
   slug: string
   client: Localized
+  kind: Localized
   title: Localized
   start: Localized
   built: Localized
@@ -34,6 +35,10 @@ export const CASES: CaseStudy[] = [
     client: {
       es: "Apoyo Escolar RV",
       en: "Apoyo Escolar RV",
+    },
+    kind: {
+      es: "plataforma de cursos para estudiantes universitarios",
+      en: "course platform for university students",
     },
     title: {
       es: "Una plataforma de aprendizaje que reúne cursos, progreso y acompañamiento en un solo lugar.",
@@ -92,6 +97,10 @@ export const CASES: CaseStudy[] = [
       es: "Lu Apuntes",
       en: "Lu Apuntes",
     },
+    kind: {
+      es: "venta y entrega automática de apuntes digitales",
+      en: "automated sale and delivery of digital study notes",
+    },
     title: {
       es: "Una biblioteca digital que automatiza la venta y entrega de apuntes universitarios.",
       en: "A digital library that automates the sale and delivery of university study notes.",
@@ -149,6 +158,10 @@ export const CASES: CaseStudy[] = [
       es: "Academia Dr. La Rosa",
       en: "Dr. La Rosa Academy",
     },
+    kind: {
+      es: "academia online de salud a medida",
+      en: "custom online health academy",
+    },
     title: {
       es: "Una academia digital que convierte conocimiento sobre salud en una experiencia de aprendizaje estructurada.",
       en: "A digital academy that turns health expertise into a structured learning experience.",
@@ -205,6 +218,10 @@ export const CASES: CaseStudy[] = [
     client: {
       es: "Academia SIED",
       en: "SIED Academy",
+    },
+    kind: {
+      es: "plataforma de educación médica continua",
+      en: "continuing medical education platform",
     },
     title: {
       es: "Educación médica continua para endoscopistas de toda Latinoamérica desde una sola plataforma.",

@@ -61,7 +61,6 @@ export const en: Dictionary = {
       components: "Product components",
       visit: "View live product",
       back: "Back to all clients",
-      metaSuffix: "Product case study",
     },
   },
 
@@ -112,7 +111,10 @@ export const en: Dictionary = {
         title: "Studio",
         links: [
           { href: "/education-platforms/", label: "Education platforms" },
-          { href: "/education-platforms/migration/", label: "Migrate your academy" },
+          {
+            href: "/education-platforms/migration/",
+            label: "Migrate your academy",
+          },
           { href: "#casos", label: "Case studies" },
           { href: "#proceso", label: "How we work" },
         ],
@@ -194,9 +196,23 @@ export const en: Dictionary = {
     notesLabel: "Notes on this industry",
   },
 
+  knowsAbout: [
+    "Custom education platform development",
+    "Online academies",
+    "Migration from Hotmart, Tiendup and WordPress",
+    "AI tutors",
+    "AI assisted grading",
+    "AI assessment generation",
+    "Semantic search",
+    "RAG over educational content",
+    "AI agent evaluation",
+    "EdTech",
+  ],
+
   platforms: {
     label: "Education platforms",
-    audience: "Online academies, educational institutions and education companies",
+    audience:
+      "Online academies, educational institutions and education companies",
     answerLabel: "The short answer",
     tocLabel: "On this page",
     casesEyebrow: "In production",
@@ -206,10 +222,12 @@ export const en: Dictionary = {
     aiEyebrow: "AI on the platform",
     nextLabel: "Next step",
     nextTitle: "Tell us what you have today and what is holding you back",
-    nextBody: "In a 30-minute call we review where your academy stands, how you take payments and what you want to change, and we propose the platform that fits your stage.",
+    nextBody:
+      "In a 30-minute call we review where your academy stands, how you take payments and what you want to change, and we propose the platform that fits your stage.",
     nextButton: "Book a call",
     hubLink: "How we build custom education platforms",
-    migrationLink: "How we migrated their students from Tiendup and WooCommerce",
+    migrationLink:
+      "How we migrated their students from Tiendup and WooCommerce",
   },
 
   agent: {

@@ -12,12 +12,7 @@ import {
 import { CASES, formatTotalStudents } from "@/data/cases"
 import CaseCard from "@/components/cine/CaseCard.astro"
 import { platformsRoot } from "@/lib/plataformas"
-import {
-  CONTACT_EMAIL,
-  GITHUB_URL,
-  INSTAGRAM_URL,
-  SCHEDULE_URL,
-} from "@/site"
+import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL, SCHEDULE_URL } from "@/site"
 
 interface Props {
   lang: Lang
@@ -36,11 +31,14 @@ const alternates = Object.fromEntries(
 
 const organization = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
+  "@type": ["Organization", "ProfessionalService"],
   "@id": `${SITE}/#organization`,
   name: "Vantalogics",
   url: SITE,
-  logo: `${SITE}/logo-va@2x.png`,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE}/logo-va@2x.png`,
+  },
   image: `${SITE}${ogImage(lang)}`,
   description: t.footer.tagline,
   email: CONTACT_EMAIL,
@@ -49,8 +47,9 @@ const organization = {
   sameAs: [GITHUB_URL, INSTAGRAM_URL],
   audience: {
     "@type": "BusinessAudience",
-    audienceType: t.hero.eyebrow,
+    audienceType: t.platforms.audience,
   },
+  knowsAbout: t.knowsAbout,
   areaServed: [
     { "@type": "Place", name: "Latin America" },
     { "@type": "Country", name: "Spain" },
@@ -210,7 +209,8 @@ const webPage = {
             stroke-linejoin="round"
             stroke-width="1.5"></path></svg
         >
-        {formatTotalStudents(lang)} {t.hero.stats.students}
+        {formatTotalStudents(lang)}
+        {t.hero.stats.students}
       </div>
 
       <div class="appear appear--stat" style="--d:1.28s">

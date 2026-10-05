@@ -45,6 +45,8 @@ const pageUrl = new URL(path, SITE).href
 const clientName = pick(study.client)
 const title = pick(study.title)
 const description = pick(study.built)
+const metaTitle = `${clientName}: ${pick(study.kind)} | Vantalogics`
+const metaDescription = `${title} ${formatStudents(lang, study.students)} ${t.detail.students}. ${description}`
 
 const platformsHref = platformsRoot(lang)
 const migration =
@@ -56,7 +58,12 @@ const platformLinks = [
     ? [{ href: platformsHref, label: strings.platforms.hubLink }]
     : []),
   ...(migration
-    ? [{ href: platformPath(migration), label: strings.platforms.migrationLink }]
+    ? [
+        {
+          href: platformPath(migration),
+          label: strings.platforms.migrationLink,
+        },
+      ]
     : []),
 ]
 
@@ -90,6 +97,7 @@ const creativeWork = {
   url: pageUrl,
   creator: {
     "@type": "Organization",
+    "@id": `${SITE}/#organization`,
     name: "Vantalogics",
     url: SITE,
   },
@@ -104,8 +112,8 @@ const creativeWork = {
 <Layout
   lang={lang}
   path={path}
-  title={`${clientName} — ${t.detail.metaSuffix} | Vantalogics`}
-  description={title}
+  title={metaTitle}
+  description={metaDescription}
   alternates={Object.fromEntries(
     LANGS.map((code) => [code, caseStudyPath(code, study.slug)])
   )}

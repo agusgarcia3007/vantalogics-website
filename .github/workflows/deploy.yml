@@ -34,3 +34,6 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: bun
           command: deploy
+
+      - run: bun scripts/indexnow.mjs
+        continue-on-error: true

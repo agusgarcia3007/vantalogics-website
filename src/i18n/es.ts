@@ -60,7 +60,6 @@ export const es = {
       components: "Componentes del producto",
       visit: "Ver producto en producción",
       back: "Volver a todos los clientes",
-      metaSuffix: "Caso de producto",
     },
   },
 
@@ -111,7 +110,10 @@ export const es = {
         title: "Estudio",
         links: [
           { href: "/plataformas-educativas/", label: "Plataformas educativas" },
-          { href: "/plataformas-educativas/migracion/", label: "Migrar tu academia" },
+          {
+            href: "/plataformas-educativas/migracion/",
+            label: "Migrar tu academia",
+          },
           { href: "#casos", label: "Casos" },
           { href: "#proceso", label: "Cómo trabajamos" },
         ],
@@ -193,9 +195,23 @@ export const es = {
     notesLabel: "Notas sobre este sector",
   },
 
+  knowsAbout: [
+    "Desarrollo de plataformas educativas a medida",
+    "Academias online",
+    "Migración desde Hotmart, Tiendup y WordPress",
+    "Tutores de IA",
+    "Corrección asistida por IA",
+    "Generación de evaluaciones con IA",
+    "Búsqueda semántica",
+    "RAG sobre contenido educativo",
+    "Evaluación de agentes de IA",
+    "EdTech",
+  ],
+
   platforms: {
     label: "Plataformas educativas",
-    audience: "Academias online, instituciones educativas y empresas de educación",
+    audience:
+      "Academias online, instituciones educativas y empresas de educación",
     answerLabel: "La respuesta corta",
     tocLabel: "En esta página",
     casesEyebrow: "En producción",
@@ -205,7 +221,8 @@ export const es = {
     aiEyebrow: "IA sobre la plataforma",
     nextLabel: "Siguiente paso",
     nextTitle: "Contanos qué tenés hoy y qué te frena",
-    nextBody: "En una llamada de 30 minutos revisamos dónde está tu academia, cómo cobrás y qué querés que cambie, y te proponemos la plataforma que corresponde a tu etapa.",
+    nextBody:
+      "En una llamada de 30 minutos revisamos dónde está tu academia, cómo cobrás y qué querés que cambie, y te proponemos la plataforma que corresponde a tu etapa.",
     nextButton: "Agendar una llamada",
     hubLink: "Cómo desarrollamos plataformas educativas a medida",
     migrationLink: "Cómo migramos sus alumnos desde Tiendup y WooCommerce",

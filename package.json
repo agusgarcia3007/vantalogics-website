@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,astro}\"",
     "typecheck": "astro check",
-    "deploy": "bun run build && wrangler deploy"
+    "deploy": "bun run build && wrangler deploy",
+    "indexnow": "bun scripts/indexnow.mjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.65",
