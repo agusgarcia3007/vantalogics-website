@@ -24,3 +24,5 @@ pnpm-debug.log*
 # Cloudflare Wrangler
 .wrangler/
 .dev.vars*
+film/out/
+film/node_modules/
