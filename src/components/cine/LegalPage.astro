@@ -1,0 +1,85 @@
+---
+import { render } from "astro:content"
+
+import Layout from "@/layouts/main.astro"
+import Chrome from "@/components/cine/Chrome.astro"
+import Foot from "@/components/cine/Foot.astro"
+import { formatDate } from "@/lib/blog"
+import { legalAlternates, legalLang, type LegalPage } from "@/lib/legal"
+import { localizePath, useTranslations } from "@/i18n"
+
+interface Props {
+  page: LegalPage
+}
+
+const SITE = "https://vantalogics.com"
+const { page } = Astro.props
+const lang = legalLang(page)
+const t = useTranslations(lang)
+const { data } = page
+const { Content } = await render(page)
+const pageUrl = new URL(data.path, SITE).href
+const alternates = await legalAlternates(page)
+
+const webPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${pageUrl}#webpage`,
+  url: pageUrl,
+  name: data.seoTitle,
+  description: data.description,
+  inLanguage: lang,
+  dateModified: data.updated.toISOString(),
+  isPartOf: { "@id": `${SITE}/#website` },
+  publisher: {
+    "@type": "Organization",
+    "@id": `${SITE}/#organization`,
+    name: "Vantalogics",
+    url: SITE,
+  },
+}
+---
+
+<Layout
+  lang={lang}
+  path={data.path}
+  title={data.seoTitle}
+  description={data.description}
+  alternates={alternates}
+  jsonLd={[webPage]}
+  floating={false}
+>
+  <Chrome lang={lang}>
+    <main class="doc-page" id="contenido">
+      <div class="shell">
+        <nav class="crumbs appear appear--soft" aria-label="Breadcrumb">
+          <a href={localizePath(lang)}>Vantalogics</a>
+          <span aria-hidden="true">/</span>
+          <span>{data.title}</span>
+        </nav>
+
+        <header class="doc-head">
+          <h1 class="appear appear--soft" style="--d:0.2s">{data.title}</h1>
+          <p class="doc-updated appear appear--soft" style="--d:0.32s">
+            {t.blog.updatedOn}
+            <time datetime={data.updated.toISOString()}
+              >{formatDate(data.updated, lang)}</time
+            >
+          </p>
+        </header>
+      </div>
+    </main>
+
+    <div class="below" slot="after">
+      <section class="section">
+        <div class="doc-body shell">
+          <div class="typeset typeset-nota">
+            <Content />
+          </div>
+        </div>
+      </section>
+
+      <Foot lang={lang} />
+    </div>
+  </Chrome>
+</Layout>

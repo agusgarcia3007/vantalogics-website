@@ -127,6 +127,7 @@ export const ar: Dictionary = {
     ],
     contactTitle: "تواصل",
     tags: "المنتج · الذكاء الاصطناعي التطبيقي · هندسة البرمجيات",
+    privacy: { href: "/en/privacy/", label: "سياسة الخصوصية" },
   },
 
   blog: {

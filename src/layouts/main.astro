@@ -2,6 +2,7 @@
 import "@/styles/global.css"
 import WhatsAppButton from "@/components/site/WhatsAppButton.astro"
 import AgentButton from "@/components/site/AgentButton.astro"
+import MetaPixel from "@/components/site/MetaPixel.astro"
 import { isPublicLang, langDir, localizePath, ogImage, type Lang } from "@/i18n"
 import { useTranslations } from "@/i18n"
 
@@ -136,6 +137,8 @@ const consoleBanner = `console.log(${JSON.stringify(`%c${art}`)}, "font-family: 
         />
       ))
     }
+
+    <MetaPixel />
   </head>
   <body>
     <a

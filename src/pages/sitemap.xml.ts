@@ -16,6 +16,7 @@ import {
   platformAlternates,
   platformPath,
 } from "@/lib/plataformas"
+import { getLegalPages, legalAlternates } from "@/lib/legal"
 
 const SITE = "https://vantalogics.com"
 
@@ -112,6 +113,17 @@ export const GET: APIRoute = async () => {
         ),
       })
     }
+  }
+
+  for (const page of await getLegalPages()) {
+    const alternates = await legalAlternates(page)
+    entries.push({
+      path: page.data.path,
+      priority: "0.3",
+      changefreq: "yearly",
+      lastmod: page.data.updated.toISOString(),
+      alternates: Object.keys(alternates).length > 1 ? alternates : {},
+    })
   }
 
   const posts = await getAllPosts()

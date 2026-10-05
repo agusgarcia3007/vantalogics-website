@@ -127,6 +127,7 @@ export const es = {
     ],
     contactTitle: "Contacto",
     tags: "Producto · IA aplicada · Ingeniería de software",
+    privacy: { href: "/privacidad/", label: "Política de privacidad" },
   },
 
   blog: {

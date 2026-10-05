@@ -1,0 +1,8 @@
+---
+import LegalPage from "@/components/cine/LegalPage.astro"
+import { findLegalPage } from "@/lib/legal"
+
+const page = await findLegalPage("es/privacidad")
+---
+
+<LegalPage page={page} />

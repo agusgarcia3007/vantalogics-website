@@ -1511,6 +1511,12 @@ body.menu-open .burger span:nth-child(3) {
   font-size: 12px;
   letter-spacing: 0.01em;
 }
+.foot-legal {
+  transition: color 0.55s var(--ease-plate);
+}
+.foot-legal:hover {
+  color: #fff;
+}
 
 .foot-mark {
   container-type: inline-size;

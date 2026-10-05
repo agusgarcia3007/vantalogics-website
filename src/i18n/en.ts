@@ -128,6 +128,7 @@ export const en: Dictionary = {
     ],
     contactTitle: "Contact",
     tags: "Product · Applied AI · Software engineering",
+    privacy: { href: "/en/privacy/", label: "Privacy policy" },
   },
 
   blog: {

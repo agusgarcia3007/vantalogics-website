@@ -41,4 +41,16 @@ const plataformas = defineCollection({
   }),
 })
 
-export const collections = { blog, plataformas }
+const legal = defineCollection({
+  loader: glob({ base: "./src/content/legal", pattern: "**/*.md" }),
+  schema: z.object({
+    title: z.string(),
+    seoTitle: z.string(),
+    description: z.string(),
+    updated: z.coerce.date(),
+    path: z.string(),
+    translationOf: z.string().optional(),
+  }),
+})
+
+export const collections = { blog, plataformas, legal }
