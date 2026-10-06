@@ -99,7 +99,7 @@ Compartir la cuenta es la forma más común de pérdida en una academia. En Lu A
 
 ### Protección de contenido: cerrar lo fácil, rastrear lo difícil
 
-Ninguna plataforma impide una grabación de pantalla. Lo que funciona es otra cosa: que no existan enlaces permanentes a los PDFs ni a los videos, que el video se sirva por streaming con enlaces que vencen, y que cada PDF lleve estampados los datos del comprador. En una auditoría encontramos que la reventa de material no venía de grabaciones sino de una ruta de la API que entregaba enlaces a quien no había comprado. En Apoyo Escolar RV la marca personal quedó en los PDFs; en el video la probamos y la sacamos, porque un sello sobre el reproductor se recorta fácil y tapa la clase.
+Ninguna plataforma impide una grabación de pantalla. Lo que funciona es otra cosa: que no existan enlaces permanentes a los PDFs ni a los videos, que el video se sirva por streaming con enlaces que vencen, y que cada PDF lleve estampados los datos del comprador. En una auditoría encontramos que la reventa de material no venía de grabaciones sino de una ruta de la API que entregaba enlaces a quien no había comprado. En Apoyo Escolar RV la marca personal quedó en los PDFs; en el video la probamos y la sacamos, porque un sello sobre el reproductor se recorta fácil y tapa la clase. El detalle, con los números de ese caso, está en [cómo proteger los videos y PDFs de una academia](/plataformas-educativas/proteccion-de-contenido/).
 
 ### Producción no se toca a mano
 

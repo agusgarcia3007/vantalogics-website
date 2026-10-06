@@ -100,7 +100,7 @@ Account sharing is the most common source of loss for an academy. At Lu Apuntes 
 
 ### Content protection: close off the easy paths, trace the hard ones
 
-No platform can prevent a screen recording. What works is something else: no permanent links to PDFs or videos, video served by streaming with expiring links, and every PDF stamped with the buyer's details. In one audit we found that the resale of material did not come from recordings but from an API route that handed out links to people who had not bought. At Apoyo Escolar RV the personal watermark stayed on the PDFs; on video we tried it and removed it, because a stamp over the player is easy to crop and covers the lesson.
+No platform can prevent a screen recording. What works is something else: no permanent links to PDFs or videos, video served by streaming with expiring links, and every PDF stamped with the buyer's details. In one audit we found that the resale of material did not come from recordings but from an API route that handed out links to people who had not bought. At Apoyo Escolar RV the personal watermark stayed on the PDFs; on video we tried it and removed it, because a stamp over the player is easy to crop and covers the lesson. The full detail, with the numbers from that case, is in [how to protect an academy's videos and PDFs](/en/education-platforms/content-protection/).
 
 ### Production is never touched by hand
 
