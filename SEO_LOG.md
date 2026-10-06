@@ -113,6 +113,8 @@ La MCP de GSC no conectó (timeout). Los datos salieron directo de la API de Sea
 - Sitemap reenviado a GSC y URL Inspection de las URLs nuevas.
 - IndexNow a mano: `200 for 48 URLs` (confirma que la clave y el endpoint funcionan).
 - Sitemap reenviado (48 URLs). URL Inspection de las dos URLs nuevas: "URL is unknown to Google" a minutos del deploy, como era de esperar. La API no permite pedir indexación de páginas comunes: queda en manos del sitemap y del link desde el hub.
+- Validación con la MCP de GSC (mismo servidor, levantado a mano por stdio porque la sesión no la reconectó): Google bajó el sitemap a las 12:39, media hora después del deploy, con 48 URLs válidas y 0 errores. Las dos páginas nuevas pasaron a "Discovered - currently not indexed": ya están en la cola de rastreo. Hub ES/EN, home, `/en/` y caso SIED siguen indexados con Breadcrumbs válidos. Las métricas de 28 d coinciden con las de la API (4 clics, 77 impresiones, posición 15,1).
+- El timeout de la MCP al iniciar la sesión era `uvx` resolviendo el paquete. Con el caché caliente arranca en ~3 s.
 
 ### Pendientes / hipótesis para próximas corridas
 - Siguen abiertos los pendientes de la corrida 1: decisión del dueño sobre la nota de costos con rangos en USD, autor con nombre para E-E-A-T y las dos notas solo en ES.
