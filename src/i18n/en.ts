@@ -137,14 +137,14 @@ export const en: Dictionary = {
     label: "Notes",
     rssTitle: "Notes",
     meta: {
-      title: "Notes — Vantalogics",
+      title: "Notes on AI in education and agents in production — Vantalogics",
       description:
-        "Real costs, decision criteria and the production failures we keep running into on AI automation projects. Working notes, not lead-gen articles.",
+        "What an AI tutor costs per student, how to evaluate it before launch, why RAG fails on course content and what breaks an AI agent in production.",
     },
     titleMuted: "What we learned",
-    titleBright: "shipping agents to production.",
+    titleBright: "putting AI into education products.",
     intro:
-      "Real costs, criteria for deciding, and the failures that only show up once the agent is handling actual customers. We publish what we wish we had read first.",
+      "Per-student costs, criteria for deciding what to build first, and the failures that only show up once a tutor or an agent is handling real users. We publish what we wish we had read first.",
     empty: "No notes published yet.",
     readMore: "Read the note",
     backToIndex: "All notes",

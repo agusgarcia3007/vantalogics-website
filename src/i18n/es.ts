@@ -136,14 +136,14 @@ export const es = {
     label: "Notas",
     rssTitle: "Notas",
     meta: {
-      title: "Notas — Vantalogics",
+      title: "Notas sobre IA en educación y agentes en producción — Vantalogics",
       description:
-        "Costos reales, criterios de decisión y fallas de producción en proyectos de automatización con IA. Apuntes de trabajo, no artículos de captación.",
+        "Cuánto cuesta un tutor de IA por alumno, cómo evaluarlo antes de abrirlo, por qué falla el RAG sobre un curso y qué rompe a un agente en producción.",
     },
     titleMuted: "Lo que aprendimos",
-    titleBright: "poniendo agentes en producción.",
+    titleBright: "poniendo IA en productos educativos.",
     intro:
-      "Costos reales, criterios para decidir y las fallas que aparecen recién cuando el agente atiende clientes de verdad. Publicamos lo que nos hubiera servido leer antes de empezar.",
+      "Costos por alumno, criterios para decidir qué construir primero y las fallas que aparecen recién cuando un tutor o un agente atiende usuarios de verdad. Publicamos lo que nos hubiera servido leer antes de empezar.",
     empty: "Todavía no hay notas publicadas.",
     readMore: "Leer la nota",
     backToIndex: "Todas las notas",
