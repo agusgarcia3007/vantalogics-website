@@ -121,3 +121,54 @@ La MCP de GSC no conectó (timeout). Los datos salieron directo de la API de Sea
 - **Las dos notas solo-ES** (`agente-de-ia-para-whatsapp-que-carga-pedidos`, `n8n-make-o-agente-a-medida`) están indexadas y sin impresiones en 28 d. Son temas fuera del foco EdTech y violan la regla EN = ES. Opciones a decidir con el dueño: traducirlas o despublicarlas con 301 a `/blog/`. No se tocan sin esa decisión.
 - Próximos huecos del cluster de plataformas con evidencia propia: cobro y acceso (Mercado Pago, transferencias vía Talo y acceso por permisos, en el repo de `luapuntes`) y certificados/evaluaciones. Solo hacerlos si la página de protección indexa y muestra impresiones.
 - 2026-10-19: revisar CTR de casos, entidad y Bing (`site:vantalogics.com`).
+
+---
+
+## 2026-10-07 — Corrida 3
+
+### Métricas generales (GSC, datos hasta 2026-10-05)
+
+| Ventana | Clics | Impresiones | Posición |
+|---|---|---|---|
+| Últimos 28 d (09-10 → 10-07) por página | 3 | ~85 | — |
+| Días 10-01 → 10-05 | 0 | 13 | 1,7–11,6 por día |
+
+- Sin datos nuevos relevantes respecto de ayer: el último día con datos es el 10-05 y el 10-06 sale en 0. Volumen de 0 a 6 impresiones por día.
+- Por página (28 d vs 28 d anteriores): `/en/` 20 imp, pos 11,6 → 5,2, 2 clics. `/` 7 imp, pos 3,6, 1 clic. El blog sigue en primera página sin clics: `/blog/` 6 imp, pos 3,3; `/en/blog/` 4 imp, pos 4,8. `/soluciones/.../busqueda-semantica/` 10 imp, pos 3,4, 0 clics.
+- Las notas de automatización genérica (`por-que-fallan-los-agentes...`, `cuanto-cuesta-automatizar...`) pasaron de 15–16 imp a 0: Google ya no las muestra para esas queries desde el pivot. Las notas EdTech empiezan a sumar (RAG educativo 4 imp, pos 7,2; tutor o búsqueda 4 imp, pos 7,2; tutor por alumno 2 imp, pos 6,5).
+- Query nueva: "how much does it cost to add ai tutoring to our university?" → `/en/blog/how-much-does-an-ai-tutor-cost-per-student/` (1 imp, pos 10). Una sola impresión: se anota, no se actúa.
+
+### Indexación
+
+- **Las dos páginas de protección de contenido ya están indexadas** ("Submitted and indexed"; ES rastreada el 10-07, EN el 10-06). Pasaron de "Discovered" a indexadas en ~1 día.
+- `/casos/academia-dr-la-rosa/` se volvió a rastrear el 10-07 (ya con el título nuevo). SIED sigue con último rastreo del 09-16.
+- Sitemap: 48 URLs, 0 errores. Reenviado hoy a las 12:03.
+
+### Evaluación de cambios anteriores
+
+- Cambios 1–5 con 1–2 días: sin evaluación todavía (revisiones 10-19 y 10-20).
+- IndexNow en CI confirmado: el paso del deploy de hoy devolvió `IndexNow: 200 for 48 URLs`.
+- Bing / motores de IA: "vantalogics plataformas educativas" en un buscador no-Google sigue sin devolver el sitio. "Cómo proteger los videos de mis cursos online" sigue dominada por vdocipher (6 de 9), SendPulse y Red Points; nuestra página todavía no aparece (tiene 1 día).
+
+### Auditoría técnica
+
+- Producción: home, `/en/`, blog ES/EN, casos y hub con 200, JSON-LD válido.
+- **El logo de Apoyo Escolar RV era un SVG de 609 KB** (un PNG de 4096×1411 embebido en base64) que se cargaba en home, `/en/`, hubs de plataformas y páginas que listan casos. Tres de los cuatro logos de clientes venían de dominios externos, y dos de `cdn.uselearnbase.com`, lo que dejaba el nombre de LearnBase en el HTML de cada página con casos (regla: no mencionar LearnBase).
+- Las `img` sin `alt` que marcó la corrida 2 son logos decorativos con el nombre del cliente al lado (`alt=""`): es lo correcto, no se cambian.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 6 | Home, `/en/`, hubs de plataformas, casos, protección de contenido | Logos de clientes servidos desde `/clients/` en el propio dominio. Apoyo Escolar RV pasa de SVG de 609 KB a WebP de 610×210 de 27 KB. Ningún HTML del sitio referencia ya `uselearnbase`. | 609 KB de imagen en la home y en el hub que rankea en pos 4,6; dependencia de 3 hosts externos; nombre de LearnBase visible para crawlers y LLMs. | Menos peso y menos conexiones externas en las páginas clave; sin efecto directo en ranking a corto plazo, pero mejor LCP/peso en mobile. | Peso de la home; Core Web Vitals en GSC cuando haya datos de CrUX (hoy no hay volumen). | 2026-10-21 |
+| 7 | `/blog/` y `/en/blog/` | Title "Notas — Vantalogics" → "Notas sobre IA en educación y agentes en producción — Vantalogics" (EN: "Notes on AI in education and agents in production — Vantalogics"). Meta con los cuatro temas reales (costo de tutor por alumno, evaluar antes de abrir, RAG sobre un curso, agentes en producción). H1 "Lo que aprendimos poniendo IA en productos educativos" e intro alineada al foco EdTech. Afecta también la descripción del RSS y el schema `Blog`. | `/blog/` 6 imp pos 3,3 y `/en/blog/` 4 imp pos 4,8, 0 clics en 28 d. El title no decía nada del contenido y la meta hablaba de "automatización con IA", que es el foco anterior al pivot (las notas de ese tema ya no reciben impresiones). | Más CTR del índice del blog cuando aparece en primera página y señal temática coherente con la entidad (IA para educación). | CTR e impresiones de `/blog/` y `/en/blog/` (28 d). | 2026-10-21 |
+
+### Envíos
+- Deploy por push a `main` (run 37618241954, ok). IndexNow desde CI: 200 para 48 URLs.
+- Sitemap reenviado a GSC.
+
+### Pendientes / hipótesis para próximas corridas
+- Siguen abiertos: decisión del dueño sobre la nota de costos con rangos en USD, autor con nombre para E-E-A-T y las dos notas solo en ES. Dato nuevo para esa decisión: la nota de costos de automatización bajó de 15 imp (pos 45) a 0 en los últimos 28 d, igual que "por qué fallan los agentes"; el sitio ya no rankea para automatización genérica.
+- `/soluciones/edtech-y-plataformas-educativas/busqueda-semantica/`: 10 imp, pos 3,4, 0 clics, pero las queries están anonimizadas. Con 10 impresiones, 0 clics en pos 3 no es concluyente. Si llega a ~30 imp sin clics, reescribir title/meta.
+- Página de protección de contenido indexada: mirar impresiones y queries desde el 10-10. Si aparecen, encarar el siguiente hueco del cluster (cobro y acceso).
+- No tocar casos (10-19), hub y protección (10-20) ni blog index (10-21) antes de su revisión.
