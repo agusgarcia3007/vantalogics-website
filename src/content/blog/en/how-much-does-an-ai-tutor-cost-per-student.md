@@ -1,9 +1,10 @@
 ---
 title: "What an AI tutor costs per student, and why the math comes before the prototype"
-seoTitle: "Cost per student of an AI tutor in EdTech — Vantalogics"
-description: "How to calculate model cost per active student in a learning platform, what drives it up, and the four levers that bring it down without degrading the answer."
-answer: "An AI tutor's cost is measured per active student per month, not per query. It depends on three variables: messages per student, context retrieved per message, and the model chosen. In EdTech the unit economics are tight, so the math comes before the prototype: if it exceeds the margin of the plan selling the feature, there's no product."
+seoTitle: "How much does an AI tutor cost per student? A worked example — Vantalogics"
+description: "At public October 2026 prices, 40 messages per student per month cost between $0.03 and $3.33 in model fees. What explains that 126x gap and how to close it."
+answer: "An AI tutor's cost is measured per active student per month, not per query. It depends on three variables: messages per student, context retrieved per message, and the model chosen. In EdTech the unit economics are tight, so the math comes before the prototype: if it exceeds the margin of the plan selling the feature, there's no product. As a reference, at public October 2026 prices, 40 messages per student per month cost $0.03 with tight retrieval and a small model, and $3.33 with a large model fed the whole unit."
 date: 2026-08-09
+updated: 2026-10-08
 cluster: costos
 industry: edtech-y-plataformas-educativas
 translationOf: cuanto-cuesta-un-tutor-de-ia-por-alumno
@@ -13,6 +14,8 @@ tags:
   - AI tutor
   - RAG
 faq:
+  - question: "How much does it cost to add AI tutoring to a university?"
+    answer: "Model cost depends on active students, not enrolled ones. Using the example in this note, 3,000 active students sending 40 messages a month cost between $79 and $9,984 per month depending on the architecture, at public October 2026 prices. Development, content preparation and operations come on top, and they don't scale per student."
   - question: "Can the cost be estimated before building anything?"
     answer: "To a precision sufficient for deciding, yes. You need three numbers the platform already has: monthly active students, an estimate of messages per student taken from forum or support usage, and the typical length of the material that would be retrieved. That bounds the range, and the range is enough to know whether the project closes."
   - question: "Big model or small model?"
@@ -38,6 +41,28 @@ The calculation has three variables:
 **The model chosen.** With an order-of-magnitude difference between the small and large models of the same family.
 
 Multiplied out, they give the number you compare against the plan's margin.
+
+## A worked example
+
+To make the difference visible, the same usage under two architectures. The assumptions are illustrative and should be replaced with each platform's own:
+
+- 40 messages per active student per month.
+- 1,500 tokens of fixed instructions, 100 of question and 400 of answer per message.
+- Fast architecture: the whole unit as context (30,000 tokens) and the full history (8,000 tokens on average).
+- Careful architecture: 4 retrieved passages of 500 tokens and the history summarized into 1,000 tokens.
+
+Public Anthropic API prices as of October 8, 2026, per million tokens: Claude Haiku 5.5, $0.10 input and $0.50 output; Claude Sonnet 5.5, $2 and $10. No caching or batch discounts.
+
+| Architecture | Input tokens per message | Model | Cost per message | Per active student per month | 3,000 active students per month |
+|---|---|---|---|---|---|
+| Whole unit + full history | 39,600 | Large | $0.083 | $3.33 | $9,984 |
+| Tight retrieval + summarized history | 4,600 | Large | $0.013 | $0.53 | $1,584 |
+| Same, with 80% of questions on the small model | 4,600 | Routed | $0.003 | $0.13 | $380 |
+| Same, all on the small model | 4,600 | Small | $0.0007 | $0.03 | $79 |
+
+Between the first row and the last there's a 126x difference for the same student and the same number of messages. The model explains part of it, but changing only the context, without touching the model, already cuts cost by six.
+
+Two caveats. This is model cost, not project cost: development, content preparation, evaluation and operations are paid separately and don't grow with each student. And per-token prices drop often, so the calculation is worth more for the ratio between architectures than for the exact number.
 
 ## What drives the cost up
 

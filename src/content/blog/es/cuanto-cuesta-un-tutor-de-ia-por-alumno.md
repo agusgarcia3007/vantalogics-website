@@ -1,9 +1,10 @@
 ---
 title: "Cuánto cuesta un tutor de IA por alumno, y por qué el cálculo va antes del prototipo"
-seoTitle: "Costo por alumno de un tutor de IA en EdTech — Vantalogics"
-description: "Cómo se calcula el costo de modelo por alumno activo en una plataforma educativa, qué lo dispara y las cuatro palancas que lo bajan sin degradar la respuesta."
-answer: "El costo de un tutor de IA se mide por alumno activo por mes, no por consulta. Depende de tres variables: mensajes por alumno, contexto recuperado por mensaje y modelo elegido. En EdTech la unidad económica es ajustada, así que el cálculo se hace antes del prototipo: si supera el margen del plan que vende la función, no hay producto."
+seoTitle: "¿Cuánto cuesta un tutor de IA por alumno? Ejemplo con números — Vantalogics"
+description: "Con precios públicos de octubre de 2026, 40 mensajes por alumno al mes cuestan entre US$ 0,03 y US$ 3,33 de modelo. Qué explica esa diferencia de 126 veces y cómo bajarla."
+answer: "El costo de un tutor de IA se mide por alumno activo por mes, no por consulta. Depende de tres variables: mensajes por alumno, contexto recuperado por mensaje y modelo elegido. En EdTech la unidad económica es ajustada, así que el cálculo se hace antes del prototipo: si supera el margen del plan que vende la función, no hay producto. Como referencia, con precios públicos de octubre de 2026, 40 mensajes por alumno al mes cuestan US$ 0,03 con recuperación acotada y un modelo chico, y US$ 3,33 con un modelo grande que recibe la unidad entera."
 date: 2026-08-09
+updated: 2026-10-08
 cluster: costos
 industry: edtech-y-plataformas-educativas
 tags:
@@ -12,6 +13,8 @@ tags:
   - tutor de IA
   - RAG
 faq:
+  - question: "¿Cuánto cuesta sumar un tutor de IA a una universidad?"
+    answer: "El costo de modelo depende de los alumnos activos, no de los inscriptos. Con el ejemplo de esta nota, 3.000 alumnos activos que mandan 40 mensajes al mes cuestan entre US$ 79 y US$ 9.984 por mes según la arquitectura, con precios públicos de octubre de 2026. A eso se suma el desarrollo, la preparación del material y la operación, que no escalan por alumno."
   - question: "¿Se puede estimar el costo sin haber construido nada?"
     answer: "Con una precisión suficiente para decidir, sí. Hacen falta tres números que la plataforma ya tiene: alumnos activos por mes, una estimación de mensajes por alumno tomada del uso del foro o del soporte, y el largo típico del material que habría que recuperar. Con eso se acota el rango, y el rango alcanza para saber si el proyecto cierra."
   - question: "¿Conviene un modelo grande o uno chico?"
@@ -37,6 +40,28 @@ El cálculo tiene tres variables:
 **Modelo elegido.** Con una diferencia de un orden de magnitud entre los modelos chicos y los grandes de la misma familia.
 
 Multiplicadas, dan el número que hay que comparar contra el margen del plan.
+
+## Un ejemplo con números
+
+Para que la diferencia se vea, el mismo uso con dos arquitecturas. Los supuestos son ilustrativos y conviene reemplazarlos por los de cada plataforma:
+
+- 40 mensajes por alumno activo por mes.
+- 1.500 tokens de instrucciones fijas, 100 de pregunta y 400 de respuesta por mensaje.
+- Arquitectura rápida: la unidad entera como contexto (30.000 tokens) y el historial completo (8.000 tokens en promedio).
+- Arquitectura cuidada: 4 pasajes recuperados de 500 tokens y el historial resumido en 1.000 tokens.
+
+Precios públicos de la API de Anthropic al 8 de octubre de 2026, por millón de tokens: Claude Haiku 5.5, US$ 0,10 de entrada y US$ 0,50 de salida; Claude Sonnet 5.5, US$ 2 y US$ 10. Sin caché ni descuentos por lote.
+
+| Arquitectura | Tokens de entrada por mensaje | Modelo | Costo por mensaje | Por alumno activo al mes | 3.000 alumnos activos al mes |
+|---|---|---|---|---|---|
+| Unidad entera + historial completo | 39.600 | Grande | US$ 0,083 | US$ 3,33 | US$ 9.984 |
+| Recuperación acotada + historial resumido | 4.600 | Grande | US$ 0,013 | US$ 0,53 | US$ 1.584 |
+| Lo mismo, con 80 % de las preguntas en el modelo chico | 4.600 | Ruteado | US$ 0,003 | US$ 0,13 | US$ 380 |
+| Lo mismo, todo en el modelo chico | 4.600 | Chico | US$ 0,0007 | US$ 0,03 | US$ 79 |
+
+Entre la primera fila y la última hay 126 veces de diferencia para el mismo alumno y la misma cantidad de mensajes. El modelo explica una parte, pero solo cambiar el contexto, sin tocar el modelo, ya divide el costo por seis.
+
+Dos aclaraciones. Este es el costo de modelo, no el del proyecto: el desarrollo, la preparación del material, la evaluación y la operación se pagan aparte y no crecen con cada alumno. Y los precios por token bajan seguido, así que la cuenta vale por la proporción entre arquitecturas más que por el número exacto.
 
 ## Lo que dispara el costo
 
