@@ -172,3 +172,52 @@ La MCP de GSC no conectó (timeout). Los datos salieron directo de la API de Sea
 - `/soluciones/edtech-y-plataformas-educativas/busqueda-semantica/`: 10 imp, pos 3,4, 0 clics, pero las queries están anonimizadas. Con 10 impresiones, 0 clics en pos 3 no es concluyente. Si llega a ~30 imp sin clics, reescribir title/meta.
 - Página de protección de contenido indexada: mirar impresiones y queries desde el 10-10. Si aparecen, encarar el siguiente hueco del cluster (cobro y acceso).
 - No tocar casos (10-19), hub y protección (10-20) ni blog index (10-21) antes de su revisión.
+
+---
+
+## 2026-10-08 — Corrida 4
+
+### Métricas generales (GSC, datos hasta 2026-10-06)
+
+| Ventana | Clics | Impresiones | Posición |
+|---|---|---|---|
+| Últimos 28 d (09-10 → 10-08) por página | 4 | ~150 sumadas por URL | — |
+| Día 10-06 | 1 | 3 | 7,0 |
+
+- Volumen sigue en 0–6 impresiones por día. Entró el clic del 10-06 (`/en/`, que ya suma 3 clics en 28 d, pos 5,1).
+- Solo 5 queries visibles. La única que crece es **"how much does it cost to add ai tutoring to our university?"** → `/en/blog/how-much-does-an-ai-tutor-cost-per-student/`: pasó de 1 a 3 imp (2 de ellas el 10-06), pos 9,7. Es una pregunta conversacional típica de un decisor de una institución.
+- Países (28 d): USA desktop 24 imp pos 27,5; Colombia 7 (pos 5,3); Argentina 7 (2 clics); México 5 (pos 3,8); Brasil 4.
+- `/ar/*` sigue sumando alguna impresión suelta (`/ar/`, `/ar/blog/...`): responde con `noindex, follow` y `/ar/solutions/ecommerce/` hace 301. Se van a caer solas; no hay nada que hacer.
+
+### Indexación
+- Protección de contenido ES/EN, blog ES/EN, hub de plataformas y las dos notas de costo de tutor: "Submitted and indexed", Breadcrumbs válidos.
+- `/blog/` y `/en/blog/` no se volvieron a rastrear desde el cambio de title de ayer (último rastreo 10-03).
+- SIED sigue con último rastreo 09-16.
+
+### Evaluación de cambios anteriores
+- Cambios 1–7 tienen entre 1 y 3 días: sin evaluación (revisiones 10-19, 10-20 y 10-21).
+- IndexNow desde CI: `200 for 48 URLs` en el deploy de hoy.
+- Bing / motores de IA: "vantalogics" en un buscador no-Google sigue sin devolver el sitio (Vantage Logistics, Vanteon, Virage Logic).
+
+### GEO / SERP
+- "how much does it cost to add AI tutoring to a university per student": la respuesta la arman ibl.ai (vendedor de plataforma self-hosted, con supuestos de 1.000 tokens de entrada + 1.500 de salida por sesión y Sonnet 4.6), openeducat (calculadora de ROI) y liveinthefuture. Todos dan una cifra. Nuestra nota no tenía ningún número, solo el método: por eso no compite para la intención "cuánto cuesta" ni es citable.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 8 | `/blog/cuanto-cuesta-un-tutor-de-ia-por-alumno/` + `/en/blog/how-much-does-an-ai-tutor-cost-per-student/` | Nueva sección "Un ejemplo con números" con tabla de 4 arquitecturas (unidad entera + historial completo con modelo grande → recuperación acotada + historial resumido → ruteo 80/20 → todo en modelo chico): costo por mensaje, por alumno activo al mes y para 3.000 alumnos activos (US$ 9.984 → US$ 79 al mes; 126 veces de diferencia). Supuestos explícitos (40 mensajes/alumno/mes, tokens por mensaje) y precios públicos de la API de Anthropic verificados en claude.com/pricing el 2026-10-08 (Haiku 5.5 US$ 0,10/0,50; Sonnet 5.5 US$ 2/10 por MTok). Aclaración de que es costo de modelo, no de proyecto. `answer` con la cifra de referencia; FAQ nueva "¿Cuánto cuesta sumar un tutor de IA a una universidad?"; title "¿Cuánto cuesta un tutor de IA por alumno? Ejemplo con números"; meta con el rango; `updated: 2026-10-08`. Sin precios de Vantalogics. | Query "how much does it cost to add ai tutoring to our university?" 3 imp pos 9,7, creciendo; la página 5 imp pos 8,8 y 0 clics en 28 d. La SERP la ganan páginas con cifras y la nuestra no tenía ninguna. | La página pasa de pos ~10 a primera mitad de la página 1 para queries de costo de tutor IA (EN/ES) y empieza a ser citada por motores de IA por la tabla. | Posición e impresiones de las 2 URLs y de queries con "cost"/"cuesta" + "tutor"; CTR; aparición en web search para "AI tutor cost per student". | 2026-10-22 |
+
+La versión árabe de la nota (`/ar/blog/...`) no se tocó: está en noindex.
+
+### Envíos
+- Deploy por push a `main` (run 37774307053, ok). IndexNow desde CI: 200 para 48 URLs.
+- Sitemap reenviado a GSC (12:05).
+- Verificado en producción: title nuevo y tabla en ES y EN, `dateModified` y `lastmod` 2026-10-08.
+
+### Pendientes / hipótesis para próximas corridas
+- Siguen abiertos: decisión del dueño sobre la nota de costos de automatización con rangos en USD, autor con nombre para E-E-A-T y las dos notas solo en ES.
+- **Links internos hacia la nota de costo**: las páginas de solución (`/soluciones/edtech-y-plataformas-educativas/tutor-de-ia/`, 4 imp pos 9) no enlazan a ninguna nota del blog; `UseCasePage.astro` solo lista otros casos de uso. Sumar un bloque de "notas relacionadas" por caso de uso (campo nuevo en `src/data/use-cases.ts`) es el próximo cambio de enlazado si la nota de costo empieza a subir.
+- Revisar cada 2–3 meses los precios de modelos citados en la nota de costo: si cambian, actualizar la tabla y `updated`.
+- Protección de contenido indexada: mirar queries desde el 10-10.
+- No tocar casos (10-19), hub y protección (10-20), blog index (10-21) ni la nota de costo de tutor (10-22) antes de su revisión.
