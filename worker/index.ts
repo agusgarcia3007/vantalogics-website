@@ -105,6 +105,19 @@ const REDIRECTS: Record<string, string> = {
   "/blog/crm-inmobiliario-antes-de-automatizar/": BLOG_INDEX.es,
   "/en/blog/real-estate-crm-before-automating/": BLOG_INDEX.en,
   "/ar/blog/real-estate-crm-before-automating/": BLOG_INDEX.ar,
+
+  "/blog/agente-de-ia-para-whatsapp-que-carga-pedidos/": BLOG_INDEX.es,
+  "/blog/n8n-make-o-agente-a-medida/": BLOG_INDEX.es,
+  "/blog/cuanto-cuesta-automatizar-un-proceso-con-ia/":
+    "/blog/cuanto-cuesta-un-tutor-de-ia-por-alumno/",
+  "/en/blog/how-much-does-it-cost-to-automate-a-process-with-ai/":
+    "/en/blog/how-much-does-an-ai-tutor-cost-per-student/",
+  "/ar/blog/how-much-does-it-cost-to-automate-a-process-with-ai/":
+    "/ar/blog/how-much-does-an-ai-tutor-cost-per-student/",
+  "/blog/por-que-fallan-los-agentes-de-ia-en-produccion/":
+    "/blog/evals-para-agentes-de-ia/",
+  "/en/blog/why-ai-agents-fail-in-production/": "/en/blog/evals-for-ai-agents/",
+  "/ar/blog/why-ai-agents-fail-in-production/": "/ar/blog/evals-for-ai-agents/",
 }
 
 export default {

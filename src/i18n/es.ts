@@ -136,9 +136,9 @@ export const es = {
     label: "Notas",
     rssTitle: "Notas",
     meta: {
-      title: "Notas sobre IA en educación y agentes en producción — Vantalogics",
+      title: "Notas sobre IA en educación: costos, evaluación y RAG — Vantalogics",
       description:
-        "Cuánto cuesta un tutor de IA por alumno, cómo evaluarlo antes de abrirlo, por qué falla el RAG sobre un curso y qué rompe a un agente en producción.",
+        "Cuánto cuesta un tutor de IA por alumno, cómo evaluarlo antes de abrirlo, por qué falla el RAG sobre un curso y cuándo alcanza con búsqueda semántica.",
     },
     titleMuted: "Lo que aprendimos",
     titleBright: "poniendo IA en productos educativos.",
@@ -180,7 +180,7 @@ export const es = {
     indexIntro:
       "Qué construimos primero en una plataforma educativa, con qué sistemas se integra y dónde dejamos a una persona decidiendo.",
     focusLabel: "Educación",
-    processesLabel: "Qué automatizamos primero",
+    processesLabel: "Qué construimos primero",
     stackLabel: "Con qué se integra",
     humanLabel: "Qué queda con aprobación humana",
     startLabel: "Por dónde se empieza",

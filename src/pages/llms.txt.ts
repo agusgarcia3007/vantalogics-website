@@ -68,8 +68,8 @@ xAPI, SCORM, SIS y plataformas propias.
 
   const focus = `## IA para plataformas educativas
 
-Cada página describe qué se automatiza primero, con qué sistemas se integra, qué queda con aprobación
-humana y —explícitamente— cuándo no conviene automatizar.
+Cada página describe qué se construye primero, con qué sistemas se integra, qué queda con aprobación
+humana y —explícitamente— cuándo no conviene construirlo.
 
 ${FOCUS_SOLUTIONS.map((solution) => {
   const cases = casesFor(solution)

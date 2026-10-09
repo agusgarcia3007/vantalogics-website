@@ -137,9 +137,9 @@ export const en: Dictionary = {
     label: "Notes",
     rssTitle: "Notes",
     meta: {
-      title: "Notes on AI in education and agents in production — Vantalogics",
+      title: "Notes on AI in education: costs, evaluation and RAG — Vantalogics",
       description:
-        "What an AI tutor costs per student, how to evaluate it before launch, why RAG fails on course content and what breaks an AI agent in production.",
+        "What an AI tutor costs per student, how to evaluate it before launch, why RAG fails on course content and when semantic search is enough.",
     },
     titleMuted: "What we learned",
     titleBright: "putting AI into education products.",
@@ -181,7 +181,7 @@ export const en: Dictionary = {
     indexIntro:
       "What we build first in a learning platform, which systems it integrates with, and where a person stays in the loop.",
     focusLabel: "Education",
-    processesLabel: "What we automate first",
+    processesLabel: "What we build first",
     stackLabel: "What it integrates with",
     humanLabel: "What stays under human approval",
     startLabel: "Where to start",
