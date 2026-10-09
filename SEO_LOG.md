@@ -270,8 +270,9 @@ El dueño pidió sacar los precios ("SÁCALE ESOS PRECIOS"). Se resuelve así el
 Queda una sola mención de montos en todo el sitio: la comparativa de comisiones de Hotmart en el pilar `/plataformas-educativas/` y su EN (9,9 % + USD 0,50 por venta; ejemplo de USD 12.480 por año). La memoria del proyecto dice que comparar lo que cobra la competencia está permitido, y el pilar está bloqueado hasta su revisión del 10-20, así que no se tocó. **Confirmar con el dueño si eso también sale.**
 
 ### Envíos
-- Deploy por push a `main` (IndexNow desde CI).
-- Sitemap reenviado a GSC.
+- Dos deploys por push a `main` (runs 37940474824 y el de `d0bfce7`, ambos ok). IndexNow desde CI: `200 for 48 URLs`.
+- Verificado en producción: 0 montos en las notas de tutor, automatización (ES/EN) y n8n; bloque de notas relacionadas visible en el caso de uso tutor de IA.
+- Sitemap reenviado a GSC (14:00).
 
 ### Pendientes / hipótesis para próximas corridas
 - Siguen abiertos: autor con nombre para E-E-A-T y las dos notas solo en ES.
