@@ -11,6 +11,7 @@ import {
   type Solution,
 } from "@/data/solutions"
 import { casePath, casesFor, type UseCase } from "@/data/use-cases"
+import { getPosts, postPath, postSlug } from "@/lib/blog"
 
 interface Props {
   lang: Lang
@@ -26,6 +27,13 @@ const path = casePath(lang, solution, useCase)
 const pageUrl = new URL(path, SITE).href
 const sectorPath = solutionPath(lang, solution)
 const indexPath = solutionsIndexPath(lang)
+
+const posts = await getPosts(lang)
+const reading = (useCase.reading ?? []).flatMap((slug) =>
+  posts.filter(
+    (post) => postSlug(post) === slug || post.data.translationOf === slug
+  )
+)
 
 const siblings = casesFor(solution).filter(
   (other) => other.slug.es !== useCase.slug.es
@@ -230,6 +238,29 @@ const lists = [
           </dl>
         </div>
       </section>
+
+      {
+        reading.length > 0 && (
+          <section class="section" aria-labelledby="seguir-leyendo">
+            <div class="shell">
+              <div class="section-head reveal">
+                <h2 id="seguir-leyendo">{t.blog.relatedLabel}</h2>
+              </div>
+              <div class="posts">
+                {reading.map((post, index) => (
+                  <LinkCard
+                    href={postPath(post)}
+                    title={post.data.title}
+                    description={post.data.description}
+                    featured={reading.length % 2 === 1 && index === 0}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      }
 
       {
         siblings.length > 0 && (

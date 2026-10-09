@@ -20,12 +20,18 @@ export interface UseCase {
   requires: LocalizedList
   notThis: LocalizedList
   faq: { question: Localized; answer: Localized }[]
+  reading?: string[]
 }
 
 export const USE_CASES: UseCase[] = [
   {
     solution: "edtech-y-plataformas-educativas",
     slug: { es: "tutor-de-ia", en: "ai-tutor", ar: "ai-tutor" },
+    reading: [
+      "cuanto-cuesta-un-tutor-de-ia-por-alumno",
+      "evaluar-un-tutor-de-ia-antes-de-abrirlo",
+      "por-que-falla-el-rag-sobre-contenido-educativo",
+    ],
     title: {
       es: "Tutor de IA sobre el contenido de tu propia plataforma",
       en: "An AI tutor over your own platform's content",
@@ -570,6 +576,10 @@ export const USE_CASES: UseCase[] = [
 
   {
     solution: "edtech-y-plataformas-educativas",
+    reading: [
+      "tutor-de-ia-o-busqueda-semantica",
+      "por-que-falla-el-rag-sobre-contenido-educativo",
+    ],
     slug: {
       es: "busqueda-semantica",
       en: "semantic-search",

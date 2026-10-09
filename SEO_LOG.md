@@ -221,3 +221,48 @@ La versión árabe de la nota (`/ar/blog/...`) no se tocó: está en noindex.
 - Revisar cada 2–3 meses los precios de modelos citados en la nota de costo: si cambian, actualizar la tabla y `updated`.
 - Protección de contenido indexada: mirar queries desde el 10-10.
 - No tocar casos (10-19), hub y protección (10-20), blog index (10-21) ni la nota de costo de tutor (10-22) antes de su revisión.
+
+---
+
+## 2026-10-09 — Corrida 5
+
+### Métricas generales (GSC, datos hasta 2026-10-08)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-11 → 10-09) | 4 | 82 | 4,9 % | 14,7 |
+| 10-01 → 10-08 | 1 | 20 | 5 % | — |
+
+- Volumen igual que ayer: de 1 a 3 impresiones por día. Entraron el 10-07 (3 imp, pos 2,3) y el 10-08 (1 imp, pos 10).
+- Queries visibles en 28 d: las mismas 5. "how much does it cost to add ai tutoring to our university?" sigue en 3 imp, pos 9,7 (sin datos nuevos desde el cambio #8).
+- **Primera impresión de la página de protección de contenido**: `/en/education-platforms/content-protection/` 1 imp, pos 10, entre el 10-01 y el 10-08. La ES todavía no tiene impresiones.
+- 7 d vs 7 d anteriores por página: sin movimientos fuera del ruido (ninguna URL pasa de 4 impresiones por semana).
+- Países (28 d): USA desktop 27 imp pos 24,7; Colombia 7 (pos 5,3); Argentina 7 (2 clics); México 5 (pos 3,8); Brasil 4.
+
+### Indexación
+- Protección de contenido ES (rastreada 10-07) y EN (10-06), hub y migración (09-30), nota de costo de tutor EN (10-06), Dr. La Rosa (10-07): "Submitted and indexed", Breadcrumbs válidos.
+- SIED sigue con último rastreo 09-16 (todavía sin el título nuevo).
+- `/en/solutions/accounting-firms/` figura "Submitted and indexed" con último rastreo 08-19, pero en producción responde 301 a `/en/solutions/`. Google todavía no lo volvió a rastrear; no hay nada que corregir. `/ar/solutions/ecommerce/` ya figura como excluida por noindex.
+
+### Evaluación de cambios anteriores
+- Cambios 1–8 tienen entre 1 y 4 días: sin evaluación (revisiones 10-19 a 10-22).
+- **Bing (cambio #1)**: primera señal positiva. Una búsqueda `site:vantalogics.com` en DuckDuckGo (usa el índice de Bing) devolvió URLs del sitio: `/`, `/en/`, `/en/blog/`, `/en/solutions/`, la solución EdTech EN, `ai-tutor` y `assessment-generation` en EN, el caso Apoyo Escolar RV y una URL vieja de real estate (ya con 301). La búsqueda de marca "vantalogics" en web search todavía no devuelve el sitio.
+
+### Error de proceso de esta corrida
+- Arranqué con la copia local atrasada 4 commits (sin las corridas del 10-07 y del 10-08) y llegué a rehacer el cambio #8 en la nota de costo de tutor. Lo detecté al ir a pushear, descarté esos cambios y la nota queda como la dejó la corrida 4. **Antes de leer el log: `git fetch` y `git merge --ff-only origin/main`.**
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 9 | `/soluciones/edtech-y-plataformas-educativas/tutor-de-ia/`, `/busqueda-semantica/` y sus EN (`ai-tutor`, `semantic-search`); AR también, pero en noindex | Bloque "Seguí por acá" / "Keep reading" en `UseCasePage.astro` con las notas relacionadas de cada caso de uso (campo nuevo `reading` en `src/data/use-cases.ts`, con los slugs ES; el idioma se resuelve por `translationOf`). Tutor de IA → costo por alumno, evaluar antes de abrir, por qué falla el RAG. Búsqueda semántica → tutor o búsqueda, por qué falla el RAG. Corrección asistida y generación de evaluaciones quedan sin bloque: no hay notas que les correspondan. | Pendiente que dejó la corrida 4. Las páginas de caso de uso no enlazaban a ninguna nota: búsqueda semántica tiene 10 imp en pos 3,4 y tutor de IA 4 imp en pos 9, y la nota de costo actualizada el 10-08 (query de universidad en pos 9,7) solo recibía links desde el hub de plataformas y el blog. | Las notas se rastrean y se reevalúan antes, y Google y los LLMs ven el cluster tutor → costo → evaluación → RAG como una unidad temática. Se mezcla con el cambio #8 en la nota de costo: con 3 impresiones por semana no se puede separar el efecto de cada uno, y no vale la pena esperar para eso. | Último rastreo de las 5 notas enlazadas; impresiones y posición de la nota de costo y de las notas de evaluación y RAG; clics internos si alguna vez hay analytics. | 2026-10-22 |
+
+### Envíos
+- Deploy por push a `main` (IndexNow desde CI).
+- Sitemap reenviado a GSC.
+
+### Pendientes / hipótesis para próximas corridas
+- Siguen abiertos: decisión del dueño sobre la nota de costos de automatización con rangos en USD, autor con nombre para E-E-A-T y las dos notas solo en ES.
+- Protección de contenido: ya tiene su primera impresión (EN, pos 10). Mirar queries desde el 10-10 y, si aparecen, encarar el siguiente hueco del cluster (cobro y acceso).
+- Bing: confirmar la marca en web search y `site:` el 10-19.
+- No tocar casos (10-19), hub y protección (10-20), blog index (10-21), nota de costo de tutor y bloques de notas relacionadas (10-22) antes de su revisión.
