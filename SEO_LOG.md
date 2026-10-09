@@ -257,12 +257,24 @@ La versión árabe de la nota (`/ar/blog/...`) no se tocó: está en noindex.
 |---|---|---|---|---|---|---|
 | 9 | `/soluciones/edtech-y-plataformas-educativas/tutor-de-ia/`, `/busqueda-semantica/` y sus EN (`ai-tutor`, `semantic-search`); AR también, pero en noindex | Bloque "Seguí por acá" / "Keep reading" en `UseCasePage.astro` con las notas relacionadas de cada caso de uso (campo nuevo `reading` en `src/data/use-cases.ts`, con los slugs ES; el idioma se resuelve por `translationOf`). Tutor de IA → costo por alumno, evaluar antes de abrir, por qué falla el RAG. Búsqueda semántica → tutor o búsqueda, por qué falla el RAG. Corrección asistida y generación de evaluaciones quedan sin bloque: no hay notas que les correspondan. | Pendiente que dejó la corrida 4. Las páginas de caso de uso no enlazaban a ninguna nota: búsqueda semántica tiene 10 imp en pos 3,4 y tutor de IA 4 imp en pos 9, y la nota de costo actualizada el 10-08 (query de universidad en pos 9,7) solo recibía links desde el hub de plataformas y el blog. | Las notas se rastrean y se reevalúan antes, y Google y los LLMs ven el cluster tutor → costo → evaluación → RAG como una unidad temática. Se mezcla con el cambio #8 en la nota de costo: con 3 impresiones por semana no se puede separar el efecto de cada uno, y no vale la pena esperar para eso. | Último rastreo de las 5 notas enlazadas; impresiones y posición de la nota de costo y de las notas de evaluación y RAG; clics internos si alguna vez hay analytics. | 2026-10-22 |
 
+### Cambio pedido por el dueño durante la corrida: fuera todos los precios
+
+El dueño pidió sacar los precios ("SÁCALE ESOS PRECIOS"). Se resuelve así el pendiente abierto desde la corrida 1 y se revierte la parte en dólares del cambio #8.
+
+| # | URL | Qué cambió | Por qué | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 10 | `/blog/cuanto-cuesta-un-tutor-de-ia-por-alumno/` + EN | Se sacaron todos los montos en dólares y los precios de la API de Anthropic. La tabla del ejemplo queda con los mismos supuestos en tokens y una columna de **costo relativo por alumno** (126×, 20×, 4,8×, 1×); el modelo grande se describe como "token unas 20 veces más caro que el chico". `answer`, FAQ de universidad, title ("Cómo calcularlo") y meta sin cifras de moneda. `updated: 2026-10-09`. | Decisión del dueño: el sitio no publica precios, tampoco de terceros ni estimaciones en dólares. | La nota pierde la cifra puntual que buscaba la query de universidad, pero conserva el método, los supuestos y la proporción de 126 veces, que también es citable. | Posición e impresiones de "how much does it cost to add ai tutoring to our university?" y de queries de costo de tutor. | 2026-10-22 |
+| 11 | `/blog/cuanto-cuesta-automatizar-un-proceso-con-ia/` + EN + AR (noindex) | Fuera todos los rangos en USD (inversión, operación mensual, costo hora, ejemplo de repago). La tabla de tres cajones pasa a "qué es / qué define el costo / operación mensual" en términos cualitativos; el ejemplo de repago queda en horas (22 h/semana, 70 % automatizable ≈ 800 h/año). Se mantienen los porcentajes (30–50 % más barato con API y sandbox, 20–40 % de horas extra por guardrails, 15–25 % anual de mantenimiento, 60–80 % de casos resueltos, repago a 18 meses). Title "qué mueve el costo". `updated: 2026-10-09`. | Pendiente de la corrida 1 resuelto por el dueño. La nota ya no tenía impresiones (bajó de 15 imp en pos 45 a 0 desde el pivot), así que el riesgo de perder tráfico es nulo. | Sin efecto medible en tráfico; elimina el conflicto con la regla de no publicar precios. | Impresiones de la nota (esperado: siguen en ~0). | 2026-10-23 |
+| 12 | `/blog/n8n-make-o-agente-a-medida/` | Fuera "USD 500 al mes" y "USD 20–500/mes" de Make/Zapier; queda "crece con cada operación". | Misma decisión. | Ninguna sobre tráfico. | — | — |
+
+Queda una sola mención de montos en todo el sitio: la comparativa de comisiones de Hotmart en el pilar `/plataformas-educativas/` y su EN (9,9 % + USD 0,50 por venta; ejemplo de USD 12.480 por año). La memoria del proyecto dice que comparar lo que cobra la competencia está permitido, y el pilar está bloqueado hasta su revisión del 10-20, así que no se tocó. **Confirmar con el dueño si eso también sale.**
+
 ### Envíos
 - Deploy por push a `main` (IndexNow desde CI).
 - Sitemap reenviado a GSC.
 
 ### Pendientes / hipótesis para próximas corridas
-- Siguen abiertos: decisión del dueño sobre la nota de costos de automatización con rangos en USD, autor con nombre para E-E-A-T y las dos notas solo en ES.
+- Siguen abiertos: autor con nombre para E-E-A-T y las dos notas solo en ES.
 - Protección de contenido: ya tiene su primera impresión (EN, pos 10). Mirar queries desde el 10-10 y, si aparecen, encarar el siguiente hueco del cluster (cobro y acceso).
 - Bing: confirmar la marca en web search y `site:` el 10-19.
 - No tocar casos (10-19), hub y protección (10-20), blog index (10-21), nota de costo de tutor y bloques de notas relacionadas (10-22) antes de su revisión.

@@ -17,7 +17,7 @@ faq:
   - question: "¿Se puede empezar en no-code y migrar después?"
     answer: "Sí, y suele ser la ruta correcta. Un prototipo en Make durante un mes te dice si el proceso vale la pena automatizarlo, con una inversión mínima. Lo que no conviene es dejarlo ahí cuando el volumen creció: a partir de cierto punto el costo por operación y la fragilidad de los conectores superan lo que costaba hacerlo bien."
   - question: "¿Cuándo el costo de la herramienta no-code se vuelve un problema?"
-    answer: "Cuando el precio por operación empieza a pesar más que el desarrollo. Con volúmenes de decenas de miles de ejecuciones mensuales, los planes por operación de Make o Zapier pueden superar los USD 500 al mes, cifra a la que el mismo flujo autoalojado en n8n cuesta el hosting y poco más."
+    answer: "Cuando el precio por operación empieza a pesar más que el desarrollo. Con volúmenes de decenas de miles de ejecuciones mensuales, la factura de los planes por operación de Make o Zapier crece con cada ejecución, mientras que el mismo flujo autoalojado en n8n cuesta el hosting y poco más."
 ---
 
 La pregunta llega siempre de la misma forma: «vi que con n8n se puede hacer esto mismo, ¿por qué necesitaría algo a medida?». Es una buena pregunta y muchas veces la respuesta es que no lo necesitás.
@@ -34,7 +34,7 @@ Las tres opciones se confunden porque todas se venden como «automatización», 
 | Integraciones | Conectores oficiales | Conectores y código | Cualquier cosa |
 | Datos | En el proveedor | Donde vos decidas | Donde vos decidas |
 | Buena para | Flujos lineales | Flujos complejos | Decisiones |
-| Costo típico | USD 20–500/mes | Hosting | Proyecto + operación |
+| Costo típico | Crece con cada operación | Hosting | Proyecto + operación |
 
 La distinción que más importa está en las dos últimas filas. Make y n8n ejecutan un camino que vos definiste de antemano: cuando llega X, hacé A, después B, después C. Un agente elige el camino.
 
