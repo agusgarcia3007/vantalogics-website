@@ -274,8 +274,25 @@ Queda una sola mención de montos en todo el sitio: la comparativa de comisiones
 - Verificado en producción: 0 montos en las notas de tutor, automatización (ES/EN) y n8n; bloque de notas relacionadas visible en el caso de uso tutor de IA.
 - Sitemap reenviado a GSC (14:00).
 
+### Cambio pedido por el dueño: fuera las notas de automatización genérica
+
+El dueño mostró cómo describe a Vantalogics una herramienta de investigación de empresas: "AI automation agency building production-ready chatbots… WhatsApp and CRMs… transparent execution logs", con keywords ai automation, chatbot development, whatsapp bot, crm integration, erp automation, document processing. Ese texto coincide con la portada EN anterior al 2026-09-16 (commit `ed3f8c7`): la herramienta usa una foto vieja del sitio. El sitio en vivo estaba bien (title, meta, Organization, `knowsAbout` y llms.txt dicen IA para educación), pero seguían publicadas 4 notas sin una sola mención de educación y con ~30 menciones de WhatsApp, ERP y CRM. El dueño eligió despublicarlas con 301.
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 13 | `/blog/agente-de-ia-para-whatsapp-que-carga-pedidos/`, `/blog/n8n-make-o-agente-a-medida/` | Borradas. 301 a `/blog/`. | Solo en ES (violaban EN = ES), 0 impresiones en 28 d, temas del posicionamiento anterior. | Menos señales de "agencia de chatbots" para crawlers y LLMs. | Que Google y Bing pasen las URLs a "Page with redirect". | 2026-10-23 |
+| 14 | `/blog/cuanto-cuesta-automatizar-un-proceso-con-ia/` + EN + AR | Borradas (anula los cambios #11). 301 a la nota de costo de tutor de IA en cada idioma. | 0 impresiones desde el pivot (antes 15 en pos 45); fuente de "erp automation" y "document processing". | Lo poco que quede de señal pasa a la nota de costo EdTech. | Ídem; impresiones de la nota de tutor. | 2026-10-23 |
+| 15 | `/blog/por-que-fallan-los-agentes-de-ia-en-produccion/` + EN + AR | Borradas. 301 a la nota de evals en cada idioma (mismo cluster de confiabilidad). | 0 impresiones en 28 d; ejemplos de pedidos, ERP y CRM. | Ídem. | Ídem. | 2026-10-23 |
+| 16 | `/blog/`, `/en/blog/`, `/ar/blog/`, páginas de solución, llms.txt | Title y meta del índice del blog sin "agentes en producción" (la nota ya no existe): "Notas sobre IA en educación: costos, evaluación y RAG". AR: meta, título e intro del índice sin "proyectos de automatización". Etiqueta de solución "Qué automatizamos primero" → "Qué construimos primero" (ES/EN/AR). llms.txt: "qué se construye primero". | El índice del blog citaba una nota borrada; los textos de "automatizar" refuerzan el posicionamiento viejo. Se toca el índice del blog antes de su revisión del 10-21 porque nombraba contenido que ya no existe. | Entidad coherente en todas las páginas. | CTR de `/blog/` (se mezcla con el cambio #7). | 2026-10-21 |
+
+El blog queda con 5 notas por idioma, todas de educación o evaluación, y ES = EN = AR. Sitemap: 42 URLs.
+
+Envíos: deploy `2e76804` ok, IndexNow desde CI con las 42 URLs del sitemap. Además se mandaron a IndexNow una sola vez las 77 URLs que redirigen según `worker/index.ts` (sectores retirados, real estate y las notas de hoy): `200`, para que Bing pase de la copia vieja al 301. Sitemap reenviado a GSC (14:38).
+
+Lo que no se puede arreglar desde el repo: herramientas que usan una foto vieja del sitio (Common Crawl, cachés propios) y perfiles externos (LinkedIn, Instagram, directorios) que todavía digan "automatización". Esos los tiene que revisar el dueño.
+
 ### Pendientes / hipótesis para próximas corridas
-- Siguen abiertos: autor con nombre para E-E-A-T y las dos notas solo en ES.
+- Siguen abiertos: autor con nombre para E-E-A-T. Las dos notas solo en ES ya no existen (cambio #13).
 - Protección de contenido: ya tiene su primera impresión (EN, pos 10). Mirar queries desde el 10-10 y, si aparecen, encarar el siguiente hueco del cluster (cobro y acceso).
 - Bing: confirmar la marca en web search y `site:` el 10-19.
 - No tocar casos (10-19), hub y protección (10-20), blog index (10-21), nota de costo de tutor y bloques de notas relacionadas (10-22) antes de su revisión.
