@@ -296,3 +296,70 @@ Lo que no se puede arreglar desde el repo: herramientas que usan una foto vieja 
 - Protección de contenido: ya tiene su primera impresión (EN, pos 10). Mirar queries desde el 10-10 y, si aparecen, encarar el siguiente hueco del cluster (cobro y acceso).
 - Bing: confirmar la marca en web search y `site:` el 10-19.
 - No tocar casos (10-19), hub y protección (10-20), blog index (10-21), nota de costo de tutor y bloques de notas relacionadas (10-22) antes de su revisión.
+
+---
+
+## 2026-10-12 — Corrida 6
+
+### Métricas generales (GSC, datos hasta 2026-10-11)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-14 → 10-11) | 5 | 89 | 5,6 % | 12,3 |
+| 28 d anteriores (08-17 → 09-13, suma diaria) | 2 | ~88 | ~2,3 % | ~45 |
+| Últimos 7 d (10-05 → 10-11) | 2 | 21 | 9,5 % | ~5,6 |
+| 7 d anteriores (09-28 → 10-04) | 0 | 22 | 0 % | ~15 |
+
+- Mismo volumen que hace 28 d, pero con posición 45 → 12,3 y el doble de clics: Google ya ubica al sitio en el tema correcto. Los dos clics de la semana son de marca (`/` pos 1 y `/en/` pos 2,5).
+- Queries visibles en 28 d: 6. La única que crece es **"how much does it cost to add ai tutoring to our university?"** → nota de costo EN: 3 → 5 imp, pos 9,7 → 9,0. La nota EN suma 7 imp en 28 d, pos 8,6 (4 de ellas en los últimos 7 d).
+- Protección de contenido: ES 1 imp en pos 1, EN 2 imp en pos 5,5 (los primeros 5 días indexada). Queries anonimizadas.
+- `/en/solutions/` 8 imp pos 4,4 y `/soluciones/.../busqueda-semantica/` 8 imp pos 3,2, ambas sin clics; todavía lejos del umbral de ~30 imp para reescribir metadata.
+- Países (28 d): USA desktop 26 imp pos 18,9; Argentina 11 imp (3 clics); Colombia 8; Brasil 4; México 4. Clics sueltos desde Países Bajos y Sudáfrica (marca).
+
+### Indexación
+- Sitemap: 42 URLs, 0 errores, último download 10-09 14:38. Reenviado hoy 12:06.
+- URL Inspection (20 URLs): todas "Submitted and indexed". **Lo importante: Google no volvió a rastrear las páginas que cambiamos.** Nota de costo ES último rastreo 09-29 y EN 10-06, o sea que todavía indexa la versión anterior a los cambios #8 y #10; páginas de caso de uso tutor (09-26) y búsqueda semántica (09-22), sin el bloque de notas del cambio #9; blog index 10-03; SIED 09-16. La home es la URL con el rastreo más reciente (10-11).
+- Las notas despublicadas el 10-09 (`cuanto-cuesta-automatizar...` último rastreo 08-17, `n8n-make...` 09-29) y `/en/blog/how-much-does-an-ai-agent-for-a-real-estate-developer-cost/` (08-18) siguen "indexed" porque Google no las volvió a pedir. Las tres responden 301 al destino correcto.
+
+### Evaluación de cambios anteriores
+- Cambios 1–16 tienen entre 3 y 7 días. Nada llega a su fecha de revisión (10-19 a 10-23).
+- Cambio #8/#10 (nota de costo): la query de universidad sube de impresiones, pero Google todavía no rastreó la versión nueva, así que el aumento no se le puede atribuir.
+- Bing / IA (#1): la búsqueda de marca "vantalogics" en web search sigue sin devolver el sitio (Racelogic, Vantage Logistics, Vanteon). IndexNow desde CI: `200 for 42 URLs` hoy.
+
+### Auditoría técnica (crawl de producción)
+- 42/42 URLs del sitemap con 200, canonical self, un H1, JSON-LD presente. robots.txt con los crawlers de IA permitidos, llms.txt al día. Redirects de las notas y sectores retirados con 301 al destino correcto.
+- **Hueco de enlazado**: la home, que es la página que Google rastrea más seguido, no enlazaba a ninguna nota del blog ni a protección de contenido. Las notas solo se alcanzaban vía `/blog/` (sin rastrear desde el 10-03) y protección solo desde el hub (sin rastrear desde el 09-30).
+- **Restos del posicionamiento anterior**: el saludo del agente de chat decía "Contame qué proceso te está comiendo el mes y vemos si tiene sentido automatizarlo" (ES/EN/AR). Se renderiza del lado del cliente, así que no lo ven los crawlers, pero sí cada visitante que abre el chat. Además quedan strings sin uso en el diccionario (`blog.ctaBody`, "qué conviene automatizar primero") que no se renderizan en ningún lado; no se tocaron.
+
+### GEO / SERP
+- "how much does it cost to add AI tutoring to a university": la siguen armando ibl.ai (3 notas de costo para universidades: per-seat vs usage, "cost math CFOs love"), quadc.io y liveinthefuture. Todas con montos. Nosotros no publicamos montos (decisión del dueño); la carta que nos queda es la proporción de 126× y el método.
+- "cómo cobrar cursos online con Mercado Pago y dar acceso automático": la SERP es débil (ayuda de Tiendanube y páginas programáticas de openeducat). Hueco real para el cluster de plataformas, con evidencia propia (Lu Apuntes, Apoyo Escolar RV). El hub ya lo cubre en dos subsecciones, así que una página dedicada se decide después de la revisión del hub (10-20) para no canibalizarlo.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 17 | `/` y `/en/` (también `/ar/`, en noindex) | Sección "Notas para decidir antes de construir" antes del footer, con las 4 notas actualizadas más recientemente (costo de tutor, evaluar antes de abrir, tutor o búsqueda, RAG) y link a todas las notas. Reusa `PostCard` y los estilos de `.posts`. | La home es la URL con el rastreo más reciente (10-11) y no enlazaba a ninguna nota. La nota de costo tiene la única query que crece (5 imp, pos 9) y Google no la volvió a rastrear desde el 09-29 (ES) y el 10-06 (EN), antes de los cambios #8 y #10. | Google rastrea las notas en los próximos días (en particular la de costo con la versión nueva) y les pasa más autoridad interna. Se mezcla con el cambio #9; no hay volumen para separar los efectos. | Último rastreo de las 4 notas en URL Inspection (esperado: antes del 10-19); impresiones y posición de la nota de costo y de la query de universidad. | 2026-10-19 |
+| 18 | Footer de todo el sitio (ES/EN) | Link "Proteger tus cursos" / "Protect your courses" a la página de protección de contenido, en la columna Estudio. AR no tiene páginas de plataformas. | La página tiene sus primeras impresiones (ES pos 1, EN pos 5,5) y solo la enlazaba el hub, que Google no rastrea desde el 09-30. | Más señal interna para la página nueva desde las 42 URLs. | Impresiones y queries de las 2 URLs de protección. | 2026-10-20 |
+| 19 | Agente de chat (todas las páginas, ES/EN/AR) | Saludo nuevo: "Contame qué querés construir para tu plataforma o academia y vemos por dónde conviene empezar". | Era el último texto visible con el posicionamiento de automatización de procesos (ver corrida 5, cambio #16). | Coherencia de marca para quien abre el chat; sin efecto en buscadores (render del cliente). | — | — |
+
+### Envíos
+- Deploy por push a `main` (commit `592341f`, run 38246838758, ok). IndexNow desde CI: `200 for 42 URLs`.
+- Verificado en producción: `id="notas"` en `/` y `/en/`, link a protección en el footer de una nota del blog.
+- Sitemap reenviado a GSC (12:06).
+
+### Pendientes / hipótesis para próximas corridas
+- **10-19**: revisar casos (#3), entidad (#2), Bing (#1) y si Google rastreó las notas desde la home (#17). Si la nota de costo se rastreó, ver si la query de universidad sube de la pos 9.
+- **10-20**: hub y protección (#4, #5, #18). Si la protección sigue sumando impresiones, decidir la página de cobro y acceso (Mercado Pago, PayPal, Talo, permisos) sabiendo que el hub ya cubre el tema en dos subsecciones: la página nueva tiene que ir más hondo (webhooks, pagos repetidos, transferencias que se acreditan solas) y el hub tiene que quedar como resumen con link.
+- Para el dueño: Bing sigue sin devolver la marca. Conviene verificar el sitio en Bing Webmaster Tools (se puede importar desde GSC) para ver cobertura y errores; IndexNow solo no da visibilidad. También sumar a `sameAs` los perfiles reales que existan (LinkedIn de la empresa, perfil del fundador): hoy solo están GitHub e Instagram.
+- Siguen abiertos: autor con nombre para E-E-A-T y la confirmación del dueño sobre los montos de comisión de Hotmart en el pilar.
+- No tocar casos (10-19), hub y protección (10-20), blog index (10-21), nota de costo y bloques de notas relacionadas (10-22) antes de su revisión.
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
