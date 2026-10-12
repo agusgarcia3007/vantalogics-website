@@ -151,6 +151,9 @@ export const ar: Dictionary = {
     answerLabel: "إجابة مختصرة",
     faqLabel: "أسئلة ذات صلة",
     relatedLabel: "تابع من هنا",
+    homeTitle: "ملاحظات تساعدك على القرار قبل البناء.",
+    homeIntro:
+      "كم يكلّف مدرّس الذكاء الاصطناعي لكل طالب، وكيف تقيّمه قبل فتحه للطلاب، ولماذا يفشل RAG على مادة المقرر.",
     shareLabel: "مشاركة",
     authorLabel: "بقلم",
     author: "فريق Vantalogics",

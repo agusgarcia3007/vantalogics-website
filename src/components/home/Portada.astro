@@ -11,6 +11,8 @@ import {
 } from "@/i18n"
 import { CASES, formatTotalStudents } from "@/data/cases"
 import CaseCard from "@/components/cine/CaseCard.astro"
+import PostCard from "@/components/blog/PostCard.astro"
+import { getPosts } from "@/lib/blog"
 import { platformsRoot } from "@/lib/plataformas"
 import { CONTACT_EMAIL, GITHUB_URL, INSTAGRAM_URL, SCHEDULE_URL } from "@/site"
 
@@ -25,6 +27,14 @@ const { lang } = Astro.props
 const t = useTranslations(lang)
 const pageUrl = new URL(localizePath(lang), SITE).href
 const platformsHref = platformsRoot(lang)
+const blogHref = localizePath(lang, "/blog/")
+const notes = (await getPosts(lang))
+  .sort(
+    (a, b) =>
+      (b.data.updated ?? b.data.date).valueOf() -
+      (a.data.updated ?? a.data.date).valueOf()
+  )
+  .slice(0, 4)
 const alternates = Object.fromEntries(
   PUBLIC_LANGS.map((code) => [code, localizePath(code)])
 )
@@ -304,6 +314,29 @@ const webPage = {
           </div>
         </div>
       </section>
+
+      {
+        notes.length > 0 && (
+          <section class="section" id="notas">
+            <div class="shell">
+              <div class="section-head reveal">
+                <span class="eyebrow">{t.blog.label}</span>
+                <h2>{t.blog.homeTitle}</h2>
+                <p>{t.blog.homeIntro}</p>
+              </div>
+
+              <div class="posts">
+                {notes.map((post, index) => (
+                  <PostCard post={post} index={index} />
+                ))}
+              </div>
+              <p class="section-more reveal">
+                <a href={blogHref}>{t.blog.backToIndex}</a>
+              </p>
+            </div>
+          </section>
+        )
+      }
 
       <Foot lang={lang} />
     </div>

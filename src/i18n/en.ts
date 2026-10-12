@@ -115,6 +115,10 @@ export const en: Dictionary = {
             href: "/education-platforms/migration/",
             label: "Migrate your academy",
           },
+          {
+            href: "/education-platforms/content-protection/",
+            label: "Protect your courses",
+          },
           { href: "#casos", label: "Case studies" },
           { href: "#proceso", label: "How we work" },
         ],
@@ -155,6 +159,9 @@ export const en: Dictionary = {
     answerLabel: "Short answer",
     faqLabel: "Related questions",
     relatedLabel: "Keep reading",
+    homeTitle: "Notes for deciding before you build.",
+    homeIntro:
+      "What an AI tutor costs per student, how to evaluate it before students see it and why RAG fails on course material.",
     shareLabel: "Share",
     authorLabel: "Written by",
     author: "The Vantalogics team",

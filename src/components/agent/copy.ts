@@ -32,7 +32,7 @@ const ES: AgentCopy = {
   placeholder: "Escribí tu mensaje",
   send: "Enviar",
   greeting:
-    "Soy el agente de Vantalogics. Contame qué proceso te está comiendo el mes y vemos si tiene sentido automatizarlo.",
+    "Soy el agente de Vantalogics. Contame qué querés construir para tu plataforma o academia y vemos por dónde conviene empezar.",
   thinking: "pensando",
   error: "Se cortó la conexión. Probá de nuevo o escribinos por WhatsApp.",
   blocked:
@@ -65,7 +65,7 @@ const EN: AgentCopy = {
   placeholder: "Type your message",
   send: "Send",
   greeting:
-    "I'm the Vantalogics agent. Tell me which process is eating your month and we'll see whether automating it makes sense.",
+    "I'm the Vantalogics agent. Tell me what you want to build for your platform or academy and we'll see where it makes sense to start.",
   thinking: "thinking",
   error: "The connection dropped. Try again or reach us on WhatsApp.",
   blocked:
@@ -98,7 +98,7 @@ const AR: AgentCopy = {
   placeholder: "اكتب رسالتك",
   send: "إرسال",
   greeting:
-    "أنا وكيل Vantalogics. أخبرني أي عملية تلتهم شهرك، ولنرَ إن كان من المنطقي أتمتتها.",
+    "أنا وكيل Vantalogics. أخبرني ماذا تريد أن تبني لمنصتك أو أكاديميتك، ولنرَ من أين يجدر أن نبدأ.",
   thinking: "يفكّر",
   error: "انقطع الاتصال. حاول مرة أخرى أو راسلنا على واتساب.",
   blocked:

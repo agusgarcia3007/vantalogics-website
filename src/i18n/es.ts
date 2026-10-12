@@ -114,6 +114,10 @@ export const es = {
             href: "/plataformas-educativas/migracion/",
             label: "Migrar tu academia",
           },
+          {
+            href: "/plataformas-educativas/proteccion-de-contenido/",
+            label: "Proteger tus cursos",
+          },
           { href: "#casos", label: "Casos" },
           { href: "#proceso", label: "Cómo trabajamos" },
         ],
@@ -154,6 +158,9 @@ export const es = {
     answerLabel: "Respuesta corta",
     faqLabel: "Preguntas relacionadas",
     relatedLabel: "Seguí por acá",
+    homeTitle: "Notas para decidir antes de construir.",
+    homeIntro:
+      "Cuánto cuesta un tutor de IA por alumno, cómo evaluarlo antes de abrirlo a los alumnos y por qué falla el RAG sobre el material de un curso.",
     shareLabel: "Compartir",
     authorLabel: "Escrito por",
     author: "Equipo Vantalogics",
