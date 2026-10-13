@@ -363,3 +363,58 @@ Lo que no se puede arreglar desde el repo: herramientas que usan una foto vieja 
 | 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
 | 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
 | 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+
+---
+
+## 2026-10-13 — Corrida 7
+
+### Métricas generales (GSC, datos hasta 2026-10-12)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-15 → 10-12) | 5 | 90 | 5,6 % | 12,2 |
+| Últimos 7 d (10-06 → 10-12) | 2 | 20 | 10 % | ~5,8 |
+| 7 d anteriores (09-29 → 10-05) | 0 | 24 | 0 % | ~15 |
+
+- Sin cambios fuera del ruido respecto de ayer: entró un solo día nuevo (10-12, 1 impresión en pos 6).
+- Queries visibles en 28 d: las mismas 6. "how much does it cost to add ai tutoring to our university?" sigue en 5 imp, pos 9. Las impresiones de la semana en la nota de costo EN vienen de Rusia, Brasil y Alemania, todas desktop.
+- Por página (7 d): `/en/` 5 imp pos 3,2 (1 clic), nota de costo EN 4 imp pos 8,8, `/en/blog/` 3 imp, `/en/solutions/` 3 imp pos 4,3, RAG EN 2 imp pos 3, protección EN 2 imp pos 5,5 y ES 1 imp pos 1.
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed", Breadcrumbs válidos. **Google sigue sin volver a rastrear lo que cambiamos**: nota de costo ES 09-29 y EN 10-06, notas de evaluación, tutor o búsqueda y RAG 09-16, `/blog/` y `/en/blog/` 10-03, `/en/` 09-30, SIED 09-16, caso de uso tutor 09-26 y búsqueda semántica 09-22. La home (10-11) se rastreó antes del cambio #17 (10-12).
+- Causa probable que sí podemos corregir: **22 de las 42 URLs del sitemap no tenían `<lastmod>`**, justo las que más cambiamos (home ES/EN, índices del blog y de soluciones, 8 casos, solución EdTech y sus 8 casos de uso). Google no tenía forma de saber que esas páginas cambiaron.
+
+### Evaluación de cambios anteriores
+- Cambios 1–19 con 1–8 días: ninguno llega a su fecha de revisión (10-19 a 10-23). Sin rastreo de las páginas cambiadas no hay nada que atribuir.
+- Bing / IA (#1): "vantalogics" en web search sigue sin devolver el sitio (Racelogic, Vantage Logistics, Vanteon). IndexNow desde CI: `200 for 42 URLs`.
+
+### GEO / SERP
+- "how much does it cost to add AI tutoring to a university per student": igual que ayer (ibl.ai con 3 notas, quadc.io, liveinthefuture, getmonetizely). Todas con montos.
+- "cómo evitar que compartan la cuenta de un curso online": cside, vdocipher, learnybox y rupt.dev (vendedores de anti-sharing, en inglés o traducidos). Ninguno con datos de una academia real. Nuestra página de protección cubre el tema (sesión única, reproducción simultánea, 1.248 alertas en 60 días) pero todavía no aparece; tiene 7 días.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 20 | `sitemap.xml` (42 URLs) y `/casos/*` + `/en/cases/*` | `<lastmod>` en todas las URLs con la fecha real del último cambio de contenido: home = máx(2026-10-12, nota más reciente del idioma); índice del blog = máx(2026-10-09, nota más reciente); casos 2026-10-05; solución EdTech e índice de soluciones 2026-10-09; casos de uso tutor y búsqueda semántica 2026-10-09, corrección asistida y generación de evaluaciones 2026-08-16 (fechas sacadas de `git blame`). Campo `updated` nuevo en `src/data/{cases,solutions,use-cases}.ts` y constantes `HOME_UPDATED` / `BLOG_INDEX_UPDATED` en `src/site.ts`. Los casos publican `dateModified` en su `CreativeWork`. **Cada vez que se cambie el contenido de una de esas páginas hay que actualizar su fecha**, si no el `lastmod` deja de ser confiable y Google lo ignora. | 22/42 URLs sin `lastmod`; las páginas cambiadas entre el 10-05 y el 10-12 siguen con rastreos del 09-16 al 10-06. | Google usa `lastmod` cuando es consistente: rastrea home, `/en/`, índices, casos y casos de uso en los próximos 3–7 días, y con eso entran en el índice los cambios #3, #7, #9, #16 y #17. | `last_crawled` en URL Inspection de `/en/`, `/blog/`, SIED, caso de uso tutor y nota de costo ES (esperado: posterior al 10-13 antes del 10-19). | 2026-10-19 |
+
+### Envíos
+- Deploy por push a `main` (commit `50362b1`, run 38394514320, ok). IndexNow desde CI: `200 for 42 URLs`.
+- Verificado en producción: 42 `<lastmod>` en el sitemap, `dateModified` en el caso SIED, 200 en las URLs clave, 301 en la nota despublicada.
+- Sitemap reenviado a GSC (12:04).
+
+### Pendientes / hipótesis para próximas corridas
+- **10-19**: además de lo ya agendado (casos #3, entidad #2, Bing #1, notas desde la home #17), mirar si el `lastmod` (#20) destrabó el rastreo. Si las páginas siguen sin rastrearse, el cuello es la demanda de rastreo de un dominio nuevo con poco volumen, y la palanca pasa a ser externa (links y menciones), no técnica.
+- **10-20**: hub y protección (#4, #5, #18) y decisión sobre la página de cobro y acceso.
+- Para el dueño: verificar el sitio en Bing Webmaster Tools (importando desde GSC) y sumar a `sameAs` los perfiles reales (LinkedIn de la empresa, perfil del fundador). La marca sigue sin aparecer en Bing a 8 días de IndexNow. Siguen abiertos el autor con nombre para E-E-A-T y los montos de comisión de Hotmart en el pilar.
+- No tocar casos (10-19), hub y protección (10-20), blog index (10-21), nota de costo y bloques de notas relacionadas (10-22) antes de su revisión.
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
