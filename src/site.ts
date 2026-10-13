@@ -1,5 +1,9 @@
 export const SITE_URL = "https://vantalogics.com"
 
+export const HOME_UPDATED = "2026-10-12"
+
+export const BLOG_INDEX_UPDATED = "2026-10-09"
+
 export const SCHEDULE_URL = "https://cal.com/vantalogics"
 
 export const CONTACT_EMAIL = "hello@vantalogics.com"

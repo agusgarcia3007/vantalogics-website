@@ -17,6 +17,7 @@ export interface CaseStudy {
   integrations: Localized[]
   period: Localized
   href: Localized
+  updated: string
 }
 
 export function caseStudyPath(lang: Lang, slug: string): string {
@@ -82,6 +83,7 @@ export const CASES: CaseStudy[] = [
       { es: "Progreso", en: "Progress" },
       { es: "Evaluaciones", en: "Assessments" },
     ],
+    updated: "2026-10-05",
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
@@ -143,6 +145,7 @@ export const CASES: CaseStudy[] = [
       { es: "Biblioteca", en: "Library" },
       { es: "Visor", en: "Reader" },
     ],
+    updated: "2026-10-05",
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
@@ -204,6 +207,7 @@ export const CASES: CaseStudy[] = [
       { es: "Evaluaciones", en: "Assessments" },
       { es: "Progreso", en: "Progress" },
     ],
+    updated: "2026-10-05",
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
@@ -265,6 +269,7 @@ export const CASES: CaseStudy[] = [
       { es: "Evaluaciones", en: "Assessments" },
       { es: "Certificados", en: "Certificates" },
     ],
+    updated: "2026-10-05",
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",

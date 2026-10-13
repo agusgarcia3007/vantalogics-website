@@ -95,6 +95,7 @@ const creativeWork = {
   description,
   inLanguage: lang,
   url: pageUrl,
+  dateModified: new Date(study.updated).toISOString(),
   creator: {
     "@type": "Organization",
     "@id": `${SITE}/#organization`,

@@ -31,11 +31,13 @@ export interface Solution {
   start: LocalizedList
   notThis: LocalizedList
   faq: { question: Localized; answer: Localized }[]
+  updated: string
 }
 
 export const SOLUTIONS: Solution[] = [
   {
     focus: true,
+    updated: "2026-10-09",
     slug: {
       es: "edtech-y-plataformas-educativas",
       en: "edtech-and-learning-platforms",

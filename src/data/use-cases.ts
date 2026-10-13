@@ -21,11 +21,13 @@ export interface UseCase {
   notThis: LocalizedList
   faq: { question: Localized; answer: Localized }[]
   reading?: string[]
+  updated: string
 }
 
 export const USE_CASES: UseCase[] = [
   {
     solution: "edtech-y-plataformas-educativas",
+    updated: "2026-10-09",
     slug: { es: "tutor-de-ia", en: "ai-tutor", ar: "ai-tutor" },
     reading: [
       "cuanto-cuesta-un-tutor-de-ia-por-alumno",
@@ -210,6 +212,7 @@ export const USE_CASES: UseCase[] = [
 
   {
     solution: "edtech-y-plataformas-educativas",
+    updated: "2026-08-16",
     slug: {
       es: "correccion-asistida",
       en: "assisted-grading",
@@ -393,6 +396,7 @@ export const USE_CASES: UseCase[] = [
 
   {
     solution: "edtech-y-plataformas-educativas",
+    updated: "2026-08-16",
     slug: {
       es: "generacion-de-evaluaciones",
       en: "assessment-generation",
@@ -576,6 +580,7 @@ export const USE_CASES: UseCase[] = [
 
   {
     solution: "edtech-y-plataformas-educativas",
+    updated: "2026-10-09",
     reading: [
       "tutor-de-ia-o-busqueda-semantica",
       "por-que-falla-el-rag-sobre-contenido-educativo",

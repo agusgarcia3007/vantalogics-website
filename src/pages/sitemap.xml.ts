@@ -17,6 +17,7 @@ import {
   platformPath,
 } from "@/lib/plataformas"
 import { getLegalPages, legalAlternates } from "@/lib/legal"
+import { BLOG_INDEX_UPDATED, HOME_UPDATED } from "@/site"
 
 const SITE = "https://vantalogics.com"
 
@@ -28,11 +29,22 @@ interface Entry {
   alternates: Partial<Record<string, string>>
 }
 
+const isoDate = (value: string | Date) => new Date(value).toISOString()
+
+const latest = (...dates: (string | Date)[]) =>
+  isoDate(new Date(Math.max(...dates.map((date) => new Date(date).valueOf()))))
+
 const escape = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 
 export const GET: APIRoute = async () => {
   const entries: Entry[] = []
+
+  const posts = await getAllPosts()
+  const latestPost = (lang: string) =>
+    posts
+      .filter((post) => postLang(post) === lang)
+      .map((post) => post.data.updated ?? post.data.date)
 
   const homes = Object.fromEntries(
     LANGS.map((lang) => [lang, localizePath(lang)])
@@ -42,6 +54,7 @@ export const GET: APIRoute = async () => {
       path: localizePath(lang),
       priority: lang === DEFAULT_LANG ? "1.0" : "0.9",
       changefreq: "weekly",
+      lastmod: latest(HOME_UPDATED, ...latestPost(lang)),
       alternates: homes,
     })
   }
@@ -51,6 +64,7 @@ export const GET: APIRoute = async () => {
       path: localizePath(lang, "/blog/"),
       priority: lang === DEFAULT_LANG ? "0.8" : "0.7",
       changefreq: "weekly",
+      lastmod: latest(BLOG_INDEX_UPDATED, ...latestPost(lang)),
       alternates: Object.fromEntries(
         LANGS.map((code) => [code, localizePath(code, "/blog/")])
       ),
@@ -59,6 +73,7 @@ export const GET: APIRoute = async () => {
       path: solutionsIndexPath(lang),
       priority: lang === DEFAULT_LANG ? "0.8" : "0.7",
       changefreq: "monthly",
+      lastmod: latest(...SOLUTIONS.map((solution) => solution.updated)),
       alternates: Object.fromEntries(
         LANGS.map((code) => [code, solutionsIndexPath(code)])
       ),
@@ -82,6 +97,7 @@ export const GET: APIRoute = async () => {
         path: solutionPath(lang, solution),
         priority: solution.focus ? "0.9" : "0.7",
         changefreq: "monthly",
+        lastmod: isoDate(solution.updated),
         alternates: Object.fromEntries(
           LANGS.map((code) => [code, solutionPath(code, solution)])
         ),
@@ -95,6 +111,7 @@ export const GET: APIRoute = async () => {
         path: casePath(lang, solution, useCase),
         priority: "0.8",
         changefreq: "monthly",
+        lastmod: isoDate(useCase.updated),
         alternates: Object.fromEntries(
           LANGS.map((code) => [code, casePath(code, solution, useCase)])
         ),
@@ -108,6 +125,7 @@ export const GET: APIRoute = async () => {
         path: caseStudyPath(lang, study.slug),
         priority: "0.8",
         changefreq: "monthly",
+        lastmod: isoDate(study.updated),
         alternates: Object.fromEntries(
           LANGS.map((code) => [code, caseStudyPath(code, study.slug)])
         ),
@@ -126,7 +144,6 @@ export const GET: APIRoute = async () => {
     })
   }
 
-  const posts = await getAllPosts()
   for (const post of posts) {
     const lang = postLang(post)
     if (!isPublicLang(lang)) continue
