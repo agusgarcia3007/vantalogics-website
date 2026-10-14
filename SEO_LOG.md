@@ -418,3 +418,71 @@ Lo que no se puede arreglar desde el repo: herramientas que usan una foto vieja 
 | 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
 | 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
 | 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+
+---
+
+## 2026-10-14 — Corrida 8
+
+### Métricas generales (GSC, datos hasta 2026-10-13)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-16 → 10-13) | 5 | 93 | 5,4 % | 12,1 |
+| Últimos 7 d (10-07 → 10-13) | 2 | 24 | 8,3 % | ~5,7 |
+| 7 d anteriores (09-30 → 10-06) | 1 | 21 | 4,8 % | ~15,8 |
+
+- El 10-13 es el mejor día desde el pivot: 7 impresiones, 1 clic (marca, `/` en pos 1). Dr. La Rosa sumó 5 impresiones ese día (ES 3 en pos 8,3, EN 2 en pos 4), `/soluciones/` 1 en pos 1, protección ES 1 en pos 1.
+- Queries visibles en 28 d: 6, las mismas. "how much does it cost to add ai tutoring to our university?" sigue en 5 imp, pos 9; no hay impresiones nuevas desde el 10-11.
+- Casos de uso de evaluación, sin clics y sin links desde ninguna nota: generación de evaluaciones EN 6 imp pos 8,8 y ES 5 imp pos 6,8; corrección asistida EN 5 imp pos 6. Sumados, son el grupo de casos de uso con más impresiones después de búsqueda semántica (8 imp, pos 3,2).
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed", Breadcrumbs válidos. **El `lastmod` del 10-13 (#20) todavía no destrabó el rastreo**: Google bajó el sitemap el 10-13 a las 12:04, pero las páginas cambiadas siguen con los rastreos de antes (home 10-11, `/en/` 09-30, `/blog/` 10-03, nota de costo ES 09-29 y EN 10-06, SIED 09-16, casos de uso tutor 09-26 y búsqueda 09-22). La única URL rastreada después es `/en/solutions/` (10-14). Es pronto: el plazo que se fijó para ver el efecto es el 10-19.
+- Sitemap: 42 URLs, 0 errores. Las notas despublicadas el 10-09 siguen "indexed" con rastreos de agosto y septiembre; responden 301.
+
+### Evaluación de cambios anteriores
+- Cambios 1–20 con 1–9 días: ninguno llega a su fecha de revisión (10-19 a 10-23).
+- **Bing (#1): primera vez que la marca devuelve el sitio.** La búsqueda "vantalogics" en DuckDuckGo (índice de Bing) devuelve `vantalogics.com`, `/en/`, `/en/blog/`, `/en/solutions/` y la solución EdTech EN. El web search de la sesión (otro índice) sigue sin devolverlo (Racelogic, Vantage Logistics, Vanteon). IndexNow desde CI: `200 for 42 URLs`.
+
+### Auditoría técnica (crawl de producción)
+- 42/42 URLs del sitemap con 200, canonical self, un H1, JSON-LD presente. robots.txt con los crawlers de IA permitidos y llms.txt con 200.
+- **Hueco de enlazado**: las 5 notas tenían **0 links dentro del contenido** y ninguna enlazaba a la página de caso de uso que corresponde a lo que explica. Solo enlazaban a la solución EdTech en general (en la línea de metadatos). Las páginas de servicio recibían links solo desde el índice de soluciones, la solución EdTech y el hub. El cambio #9 había hecho solo la mitad del camino (caso de uso → nota).
+- **Último resto del posicionamiento anterior en el blog**: la nota de evals (`/blog/evals-para-agentes-de-ia/` + EN + AR) tenía 0 menciones de educación y todos sus ejemplos eran de pedidos, clientes y facturación ("¿me llegó el pedido de las cajas?", "estado de pedido", "pedido de descuento fuera de política"). Es el mismo problema que llevó a despublicar 4 notas el 10-09, pero esta sí recibe tráfico (2 imp pos 4 en 28 d) y es destino del 301 de "por qué fallan los agentes", así que se reorienta en vez de borrarla.
+- **EN ≠ ES**: la versión EN de la nota de evals no tenía la sección "El juez, cuando hace falta" que sí tiene la ES (calibrar el juez contra juicio humano). La AR tampoco.
+
+### GEO / SERP
+- "generar preguntas de evaluación con IA a partir del material del curso": educaciontrespuntocero, smallpdf, memberpress, guías de universidades (UV, UChile, UCA). Listas de herramientas y tutoriales de prompts; nadie habla de objetivos de aprendizaje, distractores sacados de errores reales ni calibración por estadística de ítem, que es lo que cubre nuestra página de generación de evaluaciones.
+- "AI assisted grading with rubrics": papers (arXiv, ASEE), UZH, Gradescope y 8allocate. Coinciden con nuestra página de corrección asistida (rúbrica explícita, borrador con evidencia, docente que firma); a ninguno lo publica un estudio que construye el sistema.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 21 | Las 5 notas × ES/EN/AR (15 URLs, 10 indexables) | Bloque "Dónde lo construimos" / "Where we build this" antes del autor, con las páginas de caso de uso que corresponden a la nota (campo nuevo `useCases` en el frontmatter, se valida en build). Costo y evaluar tutor → tutor de IA; tutor o búsqueda y RAG → búsqueda semántica + tutor; evals → corrección asistida + tutor. El `BlogPosting` suma `mentions` con el `@id` del `Service` de cada caso de uso. No cambia el texto de las notas, así que su `updated` no se toca (salvo evals, ver #22). | Las notas rankean en pos 2–9 (evaluar tutor 4 imp pos 2, RAG EN 2 imp pos 3, nota de costo EN 7 imp pos 8,6) y no pasaban ningún link a las páginas de servicio, que tienen impresiones en pos 3–9 sin clics. Era la mitad que faltaba del cambio #9. | Cluster nota ↔ caso de uso cerrado en los dos sentidos: Google y los LLMs asocian cada nota con el servicio que la respalda, y los casos de uso ganan autoridad interna. Efecto visible recién cuando Google rastree las notas (hoy: rastreos del 09-16 al 10-06). | Último rastreo de las notas y de los casos de uso tutor, búsqueda y corrección asistida; impresiones y posición de esos 3 casos de uso (28 d). | 2026-10-28 |
+| 22 | `/blog/evals-para-agentes-de-ia/` + `/en/blog/evals-for-ai-agents/` (+ AR, noindex) | Reorientada a educación sin cambiar estructura, cifras ni FAQ: ejemplos de alumnos, tutor y docente en lugar de pedidos y clientes ("derivar al docente" en vez de "escalar a una persona", casos ambiguos de alumnos inscriptos en varios cursos, casos hostiles de alumnos que piden la respuesta de la evaluación). Title "Evals para agentes de IA en educación…" (la URL no cambia). Dos links en el contenido: a "cómo evaluar un tutor antes de abrirlo" (los 5 tipos de caso) y a corrección asistida (el juez calibrado contra el docente es el mismo problema). EN y AR suman la sección del juez que solo tenía la ES. `industry: edtech`, `updated: 2026-10-14`. | 0 menciones de educación y 6 de "pedido" en una nota que aparece en pos 4 y es destino de un 301; EN sin una sección de la ES. | Entidad coherente en todo el blog (las 5 notas pasan a hablar de educación) y la nota pasa a competir por "evals para IA en educación" en vez de "evals para agentes" genérico. Riesgo bajo: tenía 2 impresiones en 28 d. | Impresiones, queries y posición de la nota ES/EN; clics internos a corrección asistida si alguna vez hay analytics. | 2026-10-28 |
+| 23 | `/soluciones/edtech-y-plataformas-educativas/correccion-asistida/` + EN (`assisted-grading`) + AR | Bloque "Seguí por acá" con la nota de evals (campo `reading`); `updated: 2026-10-14`. | Corrección asistida EN 5 imp pos 6, sin links desde notas; la nota de evals ahora explica la calibración del corrector. | Ídem #21. | Ídem #21. | 2026-10-28 |
+| 24 | `/` y `/en/` (también `/ar/`) | La sección de notas de la home muestra las 5 notas en lugar de las 4 más recientes (la primera, destacada, para que la grilla cierre). `HOME_UPDATED = 2026-10-14`. | Con la nota de evals actualizada hoy, la home iba a dejar de enlazar a la de RAG (ES 4 imp pos 7,2, EN 2 imp pos 3), en medio de la prueba del cambio #17. El blog tiene solo 5 notas. | Ninguna nota pierde el link desde la página más rastreada. | Ídem #17. | 2026-10-19 |
+
+Generación de evaluaciones queda sin bloque de notas: ninguna nota le corresponde y escribir una ahora canibalizaría la propia página de caso de uso.
+
+### Envíos
+- Deploy por push a `main` (commit `8372f07`, run 38561517912, ok). IndexNow desde CI: `200 for 42 URLs`.
+- Verificado en producción: bloque "Dónde lo construimos" en las notas de evals y de costo, bloque de notas en corrección asistida, 5 notas en `/` y `/en/`, 8 URLs con `lastmod` 2026-10-14 en el sitemap, 0 links rotos en la nota de evals. `astro check` sin errores.
+- Sitemap reenviado a GSC (12:09).
+
+### Pendientes / hipótesis para próximas corridas
+- **10-19**: casos (#3), entidad (#2), Bing (#1, hoy con primera señal en el buscador que usa su índice), notas desde la home (#17, #24) y si el `lastmod` (#20) destrabó el rastreo. Si para el 10-19 Google sigue sin rastrear las páginas cambiadas, el cuello es la demanda de rastreo de un dominio nuevo y la palanca es externa: links y menciones, perfiles con `sameAs`, Bing Webmaster Tools.
+- **10-20**: hub y protección (#4, #5, #18) y decisión sobre la página de cobro y acceso.
+- **Regla nueva para notas futuras**: toda nota declara `useCases` (el build falla si el slug no existe) y, si corresponde, el caso de uso la suma en `reading`.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre para E-E-A-T y los montos de comisión de Hotmart en el pilar.
+- No tocar casos (10-19), hub y protección (10-20), blog index (10-21), nota de costo y bloques de notas relacionadas (10-22) ni las notas y casos de uso de hoy (10-28) antes de su revisión.
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
