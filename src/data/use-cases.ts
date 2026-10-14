@@ -212,7 +212,8 @@ export const USE_CASES: UseCase[] = [
 
   {
     solution: "edtech-y-plataformas-educativas",
-    updated: "2026-08-16",
+    updated: "2026-10-14",
+    reading: ["evals-para-agentes-de-ia"],
     slug: {
       es: "correccion-asistida",
       en: "assisted-grading",

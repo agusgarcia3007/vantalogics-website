@@ -158,6 +158,7 @@ export const es = {
     answerLabel: "Respuesta corta",
     faqLabel: "Preguntas relacionadas",
     relatedLabel: "Seguí por acá",
+    useCasesLabel: "Dónde lo construimos",
     homeTitle: "Notas para decidir antes de construir.",
     homeIntro:
       "Cuánto cuesta un tutor de IA por alumno, cómo evaluarlo antes de abrirlo a los alumnos y por qué falla el RAG sobre el material de un curso.",

@@ -5,6 +5,9 @@ description: "Criteria for choosing a learning platform's first AI feature: what
 answer: "In a learning platform it's better to build semantic search first and the tutor second. They share the same content work, but search costs an order of magnitude less, cannot assert anything incorrect, and produces the missing data for sizing the tutor: what students ask and how often."
 date: 2026-08-14
 cluster: decision
+useCases:
+  - busqueda-semantica
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 translationOf: tutor-de-ia-o-busqueda-semantica
 tags:

@@ -5,6 +5,9 @@ description: "The five reasons retrieval over course material fails more than ov
 answer: "RAG over educational content fails for reasons specific to the material: untranscribed video stays out of the index, blind chunking cuts examples in half, students ask using words that aren't in the text, the pedagogical sequence gets broken, and material has versions. None of them is fixed by changing model."
 date: 2026-08-12
 cluster: confiabilidad
+useCases:
+  - busqueda-semantica
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 translationOf: por-que-falla-el-rag-sobre-contenido-educativo
 tags:

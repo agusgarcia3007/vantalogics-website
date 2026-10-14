@@ -6,6 +6,8 @@ answer: "El costo de un tutor de IA se mide por alumno activo por mes, no por co
 date: 2026-08-09
 updated: 2026-10-09
 cluster: costos
+useCases:
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 tags:
   - edtech

@@ -5,6 +5,9 @@ description: "Criterios para decidir la primera función de IA de una plataforma
 answer: "En una plataforma educativa conviene construir primero la búsqueda semántica y después el tutor. Comparten el mismo trabajo de contenido, pero la búsqueda cuesta un orden de magnitud menos, no puede afirmar nada incorrecto y produce el dato que falta para dimensionar el tutor: qué preguntan los alumnos y con qué frecuencia."
 date: 2026-08-14
 cluster: decision
+useCases:
+  - busqueda-semantica
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 tags:
   - edtech

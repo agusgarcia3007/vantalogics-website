@@ -5,6 +5,8 @@ description: "El set de evaluación de un tutor educativo: los cinco tipos de ca
 answer: "Un tutor de IA se evalúa con cinco tipos de caso: preguntas con respuesta en el material, preguntas cuya respuesta correcta es «no está en el curso», la consigna evaluada textual, preguntas de una unidad no habilitada y preguntas con vocabulario de alumno. El caso que casi nadie prueba —la abstención correcta— es el que decide si el tutor es confiable."
 date: 2026-08-16
 cluster: confiabilidad
+useCases:
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 tags:
   - edtech

@@ -5,6 +5,8 @@ description: "مجموعة تقييم المرشد التعليمي: أنواع 
 answer: "يُقيَّم المرشد الذكي بخمسة أنواع من الحالات: أسئلة إجابتها في المادة، وأسئلة إجابتها الصحيحة «هذا غير وارد في المقرر»، ونصّ التكليف المُقيَّم حرفيًا، وأسئلة من وحدة غير مفتوحة، وأسئلة بمفردات المتعلّمين. والحالة التي لا يكاد أحد يختبرها — الامتناع الصحيح — هي التي تحسم إن كان المرشد جديرًا بالثقة."
 date: 2026-08-16
 cluster: confiabilidad
+useCases:
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 translationOf: evaluar-un-tutor-de-ia-antes-de-abrirlo
 tags:

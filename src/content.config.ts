@@ -13,6 +13,7 @@ const blog = defineCollection({
     updated: z.coerce.date().optional(),
     cluster: z.enum(["costos", "decision", "confiabilidad", "casos"]),
     industry: z.enum(["edtech-y-plataformas-educativas"]).optional(),
+    useCases: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     translationOf: z.string().optional(),
     faq: z

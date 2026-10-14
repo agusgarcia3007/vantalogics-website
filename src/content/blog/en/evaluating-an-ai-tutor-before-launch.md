@@ -5,6 +5,8 @@ description: "The evaluation set for an educational tutor: the five case types i
 answer: "An AI tutor is evaluated with five case types: questions answered in the material, questions whose correct answer is \"that isn't in the course\", the graded assignment prompt verbatim, questions from an unlocked-later unit, and questions in student vocabulary. The case almost nobody tests — correct abstention — is the one that decides whether the tutor is trustworthy."
 date: 2026-08-16
 cluster: confiabilidad
+useCases:
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 translationOf: evaluar-un-tutor-de-ia-antes-de-abrirlo
 tags:

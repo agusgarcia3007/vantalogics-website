@@ -6,6 +6,8 @@ answer: "An AI tutor's cost is measured per active student per month, not per qu
 date: 2026-08-09
 updated: 2026-10-09
 cluster: costos
+useCases:
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 translationOf: cuanto-cuesta-un-tutor-de-ia-por-alumno
 tags:

@@ -159,6 +159,7 @@ export const en: Dictionary = {
     answerLabel: "Short answer",
     faqLabel: "Related questions",
     relatedLabel: "Keep reading",
+    useCasesLabel: "Where we build this",
     homeTitle: "Notes for deciding before you build.",
     homeIntro:
       "What an AI tutor costs per student, how to evaluate it before students see it and why RAG fails on course material.",

@@ -5,6 +5,9 @@ description: "معايير اختيار أول ميزة ذكاء اصطناعي 
 answer: "في المنصة التعليمية يُستحسن بناء البحث الدلالي أولًا والمرشد ثانيًا. فهما يتشاركان عمل المحتوى نفسه، لكن البحث يكلّف رتبة أقل، ولا يستطيع الجزم بشيء خاطئ، وينتج البيانات الناقصة لتحديد حجم المرشد: ماذا يسأل المتعلّمون وبأي تواتر."
 date: 2026-08-14
 cluster: decision
+useCases:
+  - busqueda-semantica
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 translationOf: tutor-de-ia-o-busqueda-semantica
 tags:

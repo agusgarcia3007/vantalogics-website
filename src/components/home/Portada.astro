@@ -34,7 +34,7 @@ const notes = (await getPosts(lang))
       (b.data.updated ?? b.data.date).valueOf() -
       (a.data.updated ?? a.data.date).valueOf()
   )
-  .slice(0, 4)
+  .slice(0, 5)
 const alternates = Object.fromEntries(
   PUBLIC_LANGS.map((code) => [code, localizePath(code)])
 )
@@ -327,7 +327,11 @@ const webPage = {
 
               <div class="posts">
                 {notes.map((post, index) => (
-                  <PostCard post={post} index={index} />
+                  <PostCard
+                    post={post}
+                    index={index}
+                    featured={notes.length % 2 === 1 && index === 0}
+                  />
                 ))}
               </div>
               <p class="section-more reveal">

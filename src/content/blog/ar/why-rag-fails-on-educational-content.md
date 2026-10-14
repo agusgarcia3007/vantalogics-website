@@ -5,6 +5,9 @@ description: "الأسباب الخمسة التي تجعل الاسترجاع �
 answer: "يفشل الاسترجاع المعزَّز على المحتوى التعليمي لأسباب خاصة بالمادة: الفيديو غير المفرَّغ يبقى خارج الفهرس، والتقسيم الأعمى يشطر الأمثلة، والمتعلّم يسأل بكلمات ليست في النص، والتسلسل التربوي يُكسر، والمادة لها إصدارات. ولا يُعالَج أي منها بتغيير النموذج."
 date: 2026-08-12
 cluster: confiabilidad
+useCases:
+  - busqueda-semantica
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 translationOf: por-que-falla-el-rag-sobre-contenido-educativo
 tags:

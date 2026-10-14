@@ -5,6 +5,9 @@ description: "Las cinco razones por las que la recuperación sobre material de u
 answer: "El RAG sobre contenido educativo falla por razones propias del material: el video sin transcribir queda afuera del índice, la partición ciega corta ejemplos por la mitad, el alumno pregunta con palabras que no están en el texto, la secuencia pedagógica se rompe y el material tiene versiones. Ninguna se arregla cambiando de modelo."
 date: 2026-08-12
 cluster: confiabilidad
+useCases:
+  - busqueda-semantica
+  - tutor-de-ia
 industry: edtech-y-plataformas-educativas
 tags:
   - edtech

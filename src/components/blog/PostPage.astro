@@ -5,6 +5,7 @@ import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
 import Foot from "@/components/cine/Foot.astro"
 import PostCard from "@/components/blog/PostCard.astro"
+import LinkCard from "@/components/cine/LinkCard.astro"
 import { localizePath, ogImage, useTranslations } from "@/i18n"
 import {
   formatDate,
@@ -16,6 +17,7 @@ import {
   type Post,
 } from "@/lib/blog"
 import { findSolution, solutionPath } from "@/data/solutions"
+import { USE_CASES, casePath } from "@/data/use-cases"
 import { SCHEDULE_URL } from "@/site"
 
 interface Props {
@@ -40,6 +42,18 @@ const industrySolution = post.data.industry
   ? findSolution("es", post.data.industry)
   : undefined
 
+const useCases = post.data.useCases.flatMap((slug) => {
+  const useCase = USE_CASES.find((entry) => entry.slug.es === slug)
+  const solution = useCase && findSolution("es", useCase.solution)
+  if (!useCase || !solution) {
+    throw new Error(
+      `La nota «${post.id}» apunta al caso de uso «${slug}», que no existe en USE_CASES.`
+    )
+  }
+  const href = casePath(lang, solution, useCase)
+  return [{ useCase, href, url: new URL(href, SITE).href }]
+})
+
 const alternates = {
   [lang]: path,
   ...Object.fromEntries(
@@ -63,6 +77,9 @@ const article = {
           "@id": `${new URL(solutionPath(lang, industrySolution), SITE).href}#service`,
         },
       }
+    : {}),
+  ...(useCases.length > 0
+    ? { mentions: useCases.map(({ url }) => ({ "@id": `${url}#service` })) }
     : {}),
   keywords: post.data.tags.join(", "),
   inLanguage: lang,
@@ -224,6 +241,29 @@ const jsonLd = [article, breadcrumb, faqPage].filter(Boolean)
                   </div>
                 ))}
               </dl>
+            </div>
+          </section>
+        )
+      }
+
+      {
+        useCases.length > 0 && (
+          <section class="section" aria-labelledby="donde-lo-construimos">
+            <div class="shell">
+              <div class="section-head reveal">
+                <h2 id="donde-lo-construimos">{t.blog.useCasesLabel}</h2>
+              </div>
+              <div class="posts">
+                {useCases.map(({ useCase, href }, index) => (
+                  <LinkCard
+                    href={href}
+                    title={useCase.title[lang]}
+                    description={useCase.description[lang]}
+                    featured={useCases.length % 2 === 1 && index === 0}
+                    index={index}
+                  />
+                ))}
+              </div>
             </div>
           </section>
         )
