@@ -486,3 +486,75 @@ Generación de evaluaciones queda sin bloque de notas: ninguna nota le correspon
 | 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
 | 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
 | 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+
+---
+
+## 2026-10-15 — Corrida 9
+
+### Métricas generales (GSC, datos hasta 2026-10-14)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-17 → 10-14) | 5 | 90 | 5,6 % | 12,3 |
+| Últimos 7 d (10-08 → 10-14) | 2 | 23 | 8,7 % | 5,8 |
+| 7 d anteriores (10-01 → 10-07) | 1 | 19 | 5,3 % | 14,7 |
+
+- Entró un solo día nuevo (10-14: 2 imp, pos 2). Los últimos tres días suman impresiones en páginas del cluster que antes no aparecían juntas: migración EN 3 imp (pos 6–8), Dr. La Rosa ES/EN 5, `/en/blog/` 2 (pos 4), búsqueda semántica EN 1 (pos 2).
+- Queries visibles en 28 d: las mismas 6. "how much does it cost to add ai tutoring to our university?" sigue en 5 imp, pos 9, sin impresiones nuevas desde el 10-11.
+- Países (28 d): Argentina desktop 7 imp, 3 clics (pos 4,4); Colombia 7 (pos 5,3); Argentina mobile 5 (1 clic); Brasil 4. Sin movimientos fuera del ruido.
+
+### Indexación
+- **El `lastmod` (#20) empezó a destrabar el rastreo.** Google rastreó después de los cambios `/en/` (10-15, antes 09-30), `/blog/` (10-14, antes 10-03), `/en/blog/` (10-15), el hub `/plataformas-educativas/` (10-15, antes 09-30) y `/en/solutions/` (10-14). Todavía sin rastreo nuevo: home ES (10-11), nota de costo ES 09-29 y EN 10-06, notas de evals ES 10-01 y EN 09-27, RAG y evaluar tutor 09-16, SIED 09-16, casos de uso tutor 09-26, búsqueda semántica 09-22 y generación de evaluaciones 09-25. Primero entran los índices; las páginas hoja vienen detrás.
+- Sitemap: 42 URLs válidas, último download 10-14 12:09. Reenviado hoy (12:09) con 44.
+
+### Evaluación de cambios anteriores
+- Cambios 1–24 con 1–10 días: ninguno llega a su fecha de revisión (10-19 a 10-28).
+- **Bing (#1): confirmado.** "vantalogics" en DuckDuckGo (índice de Bing) devuelve `/en/` y `/` como primeros resultados, más el GitHub de la empresa. IndexNow desde CI: `200 for 44 URLs`.
+
+### Auditoría técnica (crawl de producción)
+- 42/42 URLs con 200, canonical self, un H1, JSON-LD que parsea en todas. 51 destinos de links internos, 0 rotos ni redirigidos. robots.txt con los crawlers de IA permitidos, llms.txt 200, clave de IndexNow 200.
+- Pendientes menores ya conocidos y bloqueados por revisión: descriptions de casos de 232–307 caracteres (revisión 10-19) y title de la nota de costo EN de 77 caracteres (10-22).
+
+### GEO / SERP
+- "corrección automática de cuestionarios con IA": vendedores de herramientas (OpExams, Corrector Web), PDFs de universidades españolas y un material de CATEDU sobre corrección automática vs asistida. Nadie publica mediciones de un caso real.
+- "LLM grading inconsistency same answer different grade": papers (Grade Guard en arXiv, BMC Medical Education, "Grade Like a Human"). Describen la inconsistencia en general. Ninguno la cuantifica sobre las respuestas de una academia en producción ni propone sacar a la IA del veredicto.
+- "migrate online academy from Hotmart to own platform": LearnWorlds, Mentortools, Academy of Mine, Scenes, ayuda de Hotmart. Todos venden su plataforma. Nuestra guía de migración no aparece en el buscador que usa la sesión, aunque en Google suma 9 imp en pos 6–8. No se toca: no hay dato que justifique reescribirla.
+
+### Evidencia nueva encontrada
+El repo de Apoyo Escolar RV tiene `docs/propuestas/correccion-automatica.md`, un documento de diseño con mediciones propias de ago/2026: 5.563 respuestas de desarrollo pendientes (97,8 % del total), 99,4 % corregibles sin juicio humano, la IA como juez sobre 185 respuestas reales (se contradice en 9 de 12 ejercicios, 43 % de alumnos afectados, resuelve bien 24 de 25 veces), consenso de alumnos en 581 preguntas de opción múltiple (97,8 %; en al menos 4 de 13 desacuerdos la clave estaba mal), validación del motor contra 115 correcciones manuales (110/110 donde decide) y el hallazgo del orden de campos en la salida. Además, el commit `73327ade` (2026-09-28) suma el botón «No lo sé» y el rechazo de respuestas de relleno.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 25 | `/blog/correccion-automatica-de-cuestionarios-con-ia/` + `/en/blog/automatic-quiz-grading-with-ai/` (nuevas) | Nota del cluster `casos`, answer-first. Arranca con el dato (99,4 % sin IA al corregir; 43 % de alumnos con veredicto opuesto cuando la IA dictaminaba) y sigue con tabla de forma de las respuestas, tabla de la IA como juez, "95 claves en vez de 5.563 correcciones", motor de comparación (unidades, fracciones, multiparte, abstención), validación contra 115 correcciones, construcción de la clave con fuentes independientes, experimento de las 581 preguntas, orden de campos, unidades aprendidas (7 de 8), tabla "quién hace qué" y red de seguridad. 4 FAQ. Links en el contenido al caso Apoyo Escolar RV, a generación de evaluaciones, a corrección asistida y a la nota de evals. `useCases`: corrección asistida + generación de evaluaciones. Sin nombres de personas, sin nombres internos de herramientas o modelos, sin montos, sin LearnBase. AR no se creó (noindex). | Los casos de uso de evaluación son el grupo con más impresiones sin clics después de búsqueda semántica (generación de evaluaciones ES 4 imp pos 7,8 y EN 5 imp pos 9,4; corrección asistida EN 4 imp pos 6,8) y generación de evaluaciones no tenía ninguna nota que la respaldara. La SERP del tema son vendedores y papers, sin datos de un caso real. Sin dato de GSC propio para la query (no había página): hipótesis basada en la SERP, como el cambio #4. | Indexación en 1–2 semanas (las hojas tardan más que los índices, ver Indexación). Impresiones para "corrección automática", "AI grading", "LLM as grader". Cita en motores de IA por las cifras (43 %, 99,4 %, 24 de 25, orden de campos). Más señal para los dos casos de uso. | Estado en URL Inspection; impresiones y queries de las 2 URLs; impresiones y posición de generación de evaluaciones y corrección asistida (28 d); web search de "corrección automática de cuestionarios con IA" y "LLM grading inconsistency". | 2026-10-29 |
+| 26 | `/soluciones/edtech-y-plataformas-educativas/generacion-de-evaluaciones/` + EN (`assessment-generation`) | Primer bloque "Seguí por acá" (campo `reading`) con la nota nueva; `updated: 2026-10-15`. | Página con 9 imp en 28 d (pos 7,8–9,4), sin links desde ninguna nota y sin rastreo desde el 09-25. Corrida 8: "Generación de evaluaciones queda sin bloque de notas: ninguna nota le corresponde". Ahora sí hay una, y no canibaliza: la nota es un caso de corrección y la página es el servicio de generación. | El `lastmod` nuevo provoca el rastreo y el cluster evaluación queda cerrado nota ↔ caso de uso. | Último rastreo; impresiones y posición (28 d). | 2026-10-29 |
+| 27 | `/soluciones/edtech-y-plataformas-educativas/correccion-asistida/` + EN | La nota nueva se suma primera al bloque de lecturas, antes de la de evals; `updated: 2026-10-15`. | Es la página de servicio que más se parece al tema de la nota. Cambio aditivo sobre el #23 (bloque de lecturas, revisión 10-28): no cambia el texto de la página. | Ídem #26. Se mezcla con el #23. | Ídem #26. | 2026-10-28 |
+| 28 | `/` y `/en/` | La sección de notas muestra hasta 6 (antes 5): con 6 notas la grilla cierra sin destacada. | Con `slice(0, 5)`, la nota nueva hubiera sacado de la home a la de RAG, que es justo lo que el #24 evitó. | Ninguna nota pierde el link desde la home. Las fechas de la home y de los índices del blog pasan solas a 10-15 por la nota nueva. | Ídem #17. | 2026-10-19 |
+
+### Envíos
+- Deploy por push a `main` (commit `6ce459f`, run 38732446452, ok). IndexNow desde CI: `200 for 44 URLs`.
+- Verificado en producción: las 2 notas responden 200 con BlogPosting + BreadcrumbList + FAQPage válidos, hreflang es/en/x-default, canonical self, 0 links internos rotos, bloque "Dónde lo construimos" presente. Generación de evaluaciones, `/` y `/en/` ya enlazan a la nota. `astro check`: 0 errores. Sitemap con 44 URLs y `lastmod` 2026-10-15 en las páginas tocadas.
+- Sitemap reenviado a GSC (12:09).
+
+### Error de proceso
+- El commit `6ce459f` salió con una línea `Co-Authored-By` de atribución, y la regla global del dueño lo prohíbe. Está pusheado a `main`. No se reescribió el historial con force push sin confirmación del dueño. En los commits siguientes, nada de atribución.
+
+### Pendientes / hipótesis para próximas corridas
+- **10-19**: casos (#3), entidad (#2), Bing (#1, confirmado hoy), notas desde la home (#17, #24, #28) y cuánto avanzó el rastreo de las páginas hoja después del `lastmod` (#20). Si la home ES y las notas siguen sin rastreo nuevo para el 10-19, la palanca pasa a ser externa.
+- **10-20**: hub y protección (#4, #5, #18) y decisión sobre la página de cobro y acceso.
+- La evidencia de corrección automática da para más: el motor de unidades, el modo sombra y la reversión en bloque. No escribir otra nota del tema hasta ver si la #25 indexa y recibe impresiones.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre para E-E-A-T, los montos de comisión de Hotmart en el pilar y si quiere reescribir el commit `6ce459f` para sacarle la atribución.
+- No tocar casos (10-19), hub y protección (10-20), blog index (10-21), nota de costo y bloques de notas relacionadas (10-22), notas, evals y corrección asistida (10-28) ni la nota nueva y generación de evaluaciones (10-29) antes de su revisión.
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
