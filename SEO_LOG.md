@@ -558,3 +558,70 @@ El repo de Apoyo Escolar RV tiene `docs/propuestas/correccion-automatica.md`, un
 | 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
 | 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
 | 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
+
+---
+
+## 2026-10-16 — Corrida 10
+
+### Métricas generales (GSC, datos hasta 2026-10-15)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-18 → 10-15) | 5 | 95 | 5,3 % | 11,9 |
+| Últimos 7 d (10-09 → 10-15) | 2 | 23 | 8,7 % | 5,3 |
+| 7 d anteriores (10-02 → 10-08) | 1 | 21 | 4,8 % | 13,8 |
+
+- Entró el 10-15: 5 impresiones en pos 3,8. La nota de RAG ES sumó 2 en pos 2 (rastreada por última vez el 09-16), el hub `/plataformas-educativas/` 2 en pos 7 y `/en/` 1 en pos 1.
+- Queries visibles en 28 d: las mismas 6. "how much does it cost to add ai tutoring to our university?" sigue en 5 imp, pos 9, sin impresiones nuevas desde el 10-11.
+- Por página (28 d), las que tienen impresiones en primera página sin clics: `/en/solutions/` 8 imp pos 3,9; búsqueda semántica 8 pos 3,2; hub 8 pos 4,9; SIED 8 pos 8,9; Dr. La Rosa ES 7 pos 5,4 + EN 2 pos 4; nota de costo EN 7 pos 8,6; RAG ES 6 pos 5,5. Los 4 casos suman 25 impresiones y 0 clics.
+
+### Indexación
+- **Las dos notas de corrección automática (#25) ya están indexadas**, rastreadas el 10-15, un día después de publicarlas. Como la protección de contenido (#4): lo que se enlaza desde la home y el índice del blog entra en 1 día.
+- **Se rastrearon páginas que esperaban**: home ES 10-16 (antes 10-11; ya con la sección de notas #17/#24/#28), `/en/` 10-15 y **nota de costo EN 10-16** (antes 10-06): Google ya indexa la versión de los cambios #8/#10.
+- Siguen sin rastreo nuevo: nota de costo ES (09-29), evals ES 10-01 y EN 09-27, RAG y evaluar tutor 09-16, SIED 09-16, casos de uso tutor 09-26, búsqueda semántica 09-22, generación de evaluaciones 09-25, migración ES/EN 09-30. Lo que tarda son las páginas hoja que solo se enlazan desde otras hojas.
+- Sitemap: 44 URLs, todas con `lastmod`. Reenviado 12:05.
+
+### Evaluación de cambios anteriores
+- Cambios 1–28 con 1–11 días: ninguno llega a su fecha de revisión (10-19 a 10-29).
+- `lastmod` (#20): confirmado que funciona para índices y home; las hojas siguen lentas.
+- Bing / IA (#1): el web search de la sesión (otro índice) sigue sin devolver la marca. En el índice de Bing ya aparecía desde el 10-14. IndexNow desde CI: `200 for 44 URLs`.
+
+### Auditoría técnica (crawl de producción)
+- 44/44 URLs del sitemap con 200, canonical self, un H1, JSON-LD que parsea, hreflang es/en/x-default en todas. 53 destinos de links internos, 0 rotos ni redirigidos.
+- **Hueco de enlazado y de contenido en los casos**: las 4 páginas de caso tenían solo métricas y dos párrafos, y ninguna enlazaba a las notas y guías que usan sus datos. Apoyo Escolar RV es la fuente de la guía de migración, de la de protección de contenido y de la nota de corrección automática, y Lu Apuntes de la parte de sesión única. Solo existía el link a migración, cableado en el componente para Apoyo Escolar RV.
+
+### GEO / SERP
+- "por qué falla el RAG sobre contenido educativo": papers en arXiv (EduGuard, RAG en CS), un survey y un newsletter de educative.io. Nadie lo cuenta desde un producto en producción. La nota ES ya aparece en pos 2 en Google con 2 impresiones del 10-15.
+- "corrección automática de respuestas abiertas con IA": papers académicos (UMA con ChatGPT, G-Rubric de la UNED, Tecnura). Ninguno con datos de una academia en producción. La nota nueva tiene 1 día indexada.
+- "migrar cursos de Hotmart a plataforma propia": Hotmart (blog y ayuda), guiadesoftware, Capterra y Scribd. Una de las respuestas recomienda pasarse a Teachable/Thinkific. La guía de migración no aparece en este índice.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 29 | `/casos/apoyo-escolar-rv/`, `/casos/lu-apuntes/` y sus EN (AR sin bloque: no tiene guías ni la nota nueva) | Bloque "Lo que aprendimos en este proyecto" / "What we learned on this project" con tarjetas (título + descripción) hacia las guías y notas que usan los datos del caso. Apoyo Escolar RV → migración, protección de contenido y corrección automática. Lu Apuntes → protección de contenido. Campos nuevos `guides` y `reading` en `src/data/cases.ts` (el build falla si un slug no existe en ES/EN). El `CreativeWork` del caso suma `subjectOf` con el `@id` de cada página. Sale el link a migración cableado para un solo caso y el string `migrationLink`, que queda sin uso. `updated: 2026-10-16` en los dos casos. **No cambian title ni meta**, así que la prueba del #3 (CTR de casos, revisión 10-19) no se contamina. SIED y Dr. La Rosa quedan sin bloque: ninguna nota usa sus datos todavía. | Los 4 casos suman 25 impresiones en pos 4–9 y 0 clics en 28 d, y eran páginas finas sin salida hacia el contenido que respaldan. La nota #25 y las guías de migración y protección solo recibían links desde notas, hubs y footer, y migración no se rastrea desde el 09-30. | Evidencia conectada en los dos sentidos (nota → caso ya existía, ahora caso → nota): Google y los LLMs ven el caso como fuente de las cifras que citan las notas, y las guías ganan un link contextual más. El `lastmod` nuevo hace que Google rastree los dos casos (Apoyo Escolar RV y Lu Apuntes no tienen rastreo desde el 10-05). | Último rastreo de los 2 casos y de migración ES/EN; impresiones y posición de migración, protección y corrección automática (28 d). | 2026-10-30 |
+
+### Envíos
+- Deploy por push a `main` (commit `c08f255`, run 38897993514, ok). IndexNow desde CI: `200 for 44 URLs`.
+- Verificado en producción: bloque presente en `/casos/apoyo-escolar-rv/` y `/en/cases/lu-apuntes/`, `subjectOf` en el JSON-LD, `lastmod` 2026-10-16 en los dos casos, 0 links rotos en el crawl posterior. `astro check`: 0 errores.
+- Sitemap reenviado a GSC (12:05).
+
+### Pendientes / hipótesis para próximas corridas
+- **10-19**: casos (#3: CTR por title/meta; el #29 no los toca), entidad (#2), Bing (#1), notas desde la home (#17, #24, #28; la home ES ya se rastreó con la sección) y cuánto avanzó el rastreo de hojas. Si la nota de costo EN (rastreada hoy) mueve la query de universidad, se ve desde el 10-19.
+- **10-20**: hub y protección (#4, #5, #18) y decisión sobre la página de cobro y acceso.
+- Las hojas que solo reciben links desde otras hojas (migración, evals, RAG, evaluar tutor, SIED) siguen sin rastrearse. Si el 10-19 siguen igual, considerar que la home o el índice del blog enlacen también a las guías de plataformas (hoy solo el footer enlaza a protección).
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre para E-E-A-T, los montos de comisión de Hotmart en el pilar y el commit `6ce459f` con atribución.
+- No tocar casos (title/meta hasta 10-19; bloque nuevo hasta 10-30), hub y protección (10-20), blog index (10-21), nota de costo y bloques de notas relacionadas (10-22), notas, evals y corrección asistida (10-28) ni la nota de corrección y generación de evaluaciones (10-29).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
