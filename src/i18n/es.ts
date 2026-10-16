@@ -60,6 +60,7 @@ export const es = {
       components: "Componentes del producto",
       visit: "Ver producto en producción",
       back: "Volver a todos los clientes",
+      learned: "Lo que aprendimos en este proyecto",
     },
   },
 
@@ -233,7 +234,6 @@ export const es = {
       "En una llamada de 30 minutos revisamos dónde está tu academia, cómo cobrás y qué querés que cambie, y te proponemos la plataforma que corresponde a tu etapa.",
     nextButton: "Agendar una llamada",
     hubLink: "Cómo desarrollamos plataformas educativas a medida",
-    migrationLink: "Cómo migramos sus alumnos desde Tiendup y WooCommerce",
   },
 
   agent: {

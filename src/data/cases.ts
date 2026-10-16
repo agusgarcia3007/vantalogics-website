@@ -18,6 +18,8 @@ export interface CaseStudy {
   period: Localized
   href: Localized
   updated: string
+  guides?: string[]
+  reading?: string[]
 }
 
 export function caseStudyPath(lang: Lang, slug: string): string {
@@ -83,7 +85,9 @@ export const CASES: CaseStudy[] = [
       { es: "Progreso", en: "Progress" },
       { es: "Evaluaciones", en: "Assessments" },
     ],
-    updated: "2026-10-05",
+    updated: "2026-10-16",
+    guides: ["migracion", "proteccion-de-contenido"],
+    reading: ["correccion-automatica-de-cuestionarios-con-ia"],
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
@@ -145,7 +149,8 @@ export const CASES: CaseStudy[] = [
       { es: "Biblioteca", en: "Library" },
       { es: "Visor", en: "Reader" },
     ],
-    updated: "2026-10-05",
+    updated: "2026-10-16",
+    guides: ["proteccion-de-contenido"],
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",

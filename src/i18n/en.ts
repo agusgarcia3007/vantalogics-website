@@ -61,6 +61,7 @@ export const en: Dictionary = {
       components: "Product components",
       visit: "View live product",
       back: "Back to all clients",
+      learned: "What we learned on this project",
     },
   },
 
@@ -234,8 +235,6 @@ export const en: Dictionary = {
       "In a 30-minute call we review where your academy stands, how you take payments and what you want to change, and we propose the platform that fits your stage.",
     nextButton: "Book a call",
     hubLink: "How we build custom education platforms",
-    migrationLink:
-      "How we migrated their students from Tiendup and WooCommerce",
   },
 
   agent: {

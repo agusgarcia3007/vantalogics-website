@@ -2,7 +2,9 @@
 import Layout from "@/layouts/main.astro"
 import Chrome from "@/components/cine/Chrome.astro"
 import Foot from "@/components/cine/Foot.astro"
+import LinkCard from "@/components/cine/LinkCard.astro"
 import { CLIENTS } from "@/data/clients"
+import { getPosts, postPath, postSlug } from "@/lib/blog"
 import {
   caseStudyPath,
   formatStudents,
@@ -49,23 +51,58 @@ const metaTitle = `${clientName}: ${pick(study.kind)} | Vantalogics`
 const metaDescription = `${title} ${formatStudents(lang, study.students)} ${t.detail.students}. ${description}`
 
 const platformsHref = platformsRoot(lang)
-const migration =
-  study.slug === "apoyo-escolar-rv"
-    ? await findPlatformPage(lang, "migracion")
-    : undefined
-const platformLinks = [
-  ...(platformsHref
-    ? [{ href: platformsHref, label: strings.platforms.hubLink }]
-    : []),
-  ...(migration
+const platformLinks = platformsHref
+  ? [{ href: platformsHref, label: strings.platforms.hubLink }]
+  : []
+
+const guides = (
+  await Promise.all(
+    (study.guides ?? []).map(async (key) => {
+      const page = await findPlatformPage(lang, key)
+      if (!page && lang !== "ar") {
+        throw new Error(
+          `El caso «${study.slug}» apunta a la guía «${key}», que no existe en ${lang}.`
+        )
+      }
+      return page
+    })
+  )
+).flatMap((page) =>
+  page
     ? [
         {
-          href: platformPath(migration),
-          label: strings.platforms.migrationLink,
+          href: platformPath(page),
+          title: page.data.title,
+          description: page.data.description,
+          id: `${new URL(platformPath(page), SITE).href}#webpage`,
         },
       ]
-    : []),
-]
+    : []
+)
+
+const posts = await getPosts(lang)
+const notes = (study.reading ?? []).flatMap((slug) => {
+  const post = posts.find(
+    (entry) => postSlug(entry) === slug || entry.data.translationOf === slug
+  )
+  if (!post && lang !== "ar") {
+    throw new Error(
+      `El caso «${study.slug}» apunta a la nota «${slug}», que no existe en ${lang}.`
+    )
+  }
+  return post
+    ? [
+        {
+          href: postPath(post),
+          title: post.data.title,
+          description: post.data.description,
+          id: `${new URL(postPath(post), SITE).href}#article`,
+        },
+      ]
+    : []
+})
+
+const learned = [...guides, ...notes]
 
 const breadcrumb = {
   "@context": "https://schema.org",
@@ -107,6 +144,9 @@ const creativeWork = {
     name: clientName,
     url: pick(study.href),
   },
+  ...(learned.length > 0
+    ? { subjectOf: learned.map(({ id }) => ({ "@id": id })) }
+    : {}),
 }
 ---
 
@@ -227,6 +267,29 @@ const creativeWork = {
           }
         </div>
       </section>
+
+      {
+        learned.length > 0 && (
+          <section class="section" aria-labelledby="aprendimos">
+            <div class="shell">
+              <div class="section-head reveal">
+                <h2 id="aprendimos">{t.detail.learned}</h2>
+              </div>
+              <div class="posts">
+                {learned.map((item, index) => (
+                  <LinkCard
+                    href={item.href}
+                    title={item.title}
+                    description={item.description}
+                    featured={learned.length % 2 === 1 && index === 0}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )
+      }
 
       <Foot lang={lang} />
     </div>
