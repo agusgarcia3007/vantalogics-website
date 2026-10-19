@@ -61,6 +61,7 @@ export const es = {
       visit: "Ver producto en producción",
       back: "Volver a todos los clientes",
       learned: "Lo que aprendimos en este proyecto",
+      others: "Otros casos",
     },
   },
 

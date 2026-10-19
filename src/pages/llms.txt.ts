@@ -7,7 +7,7 @@ import {
   solutionsIndexPath,
 } from "@/data/solutions"
 import { casePath, casesFor } from "@/data/use-cases"
-import { CASES, caseStudyPath, formatStudents } from "@/data/cases"
+import { CASES, caseStudyPath } from "@/data/cases"
 import {
   getPlatformPages,
   platformKey,
@@ -104,7 +104,7 @@ Casos de productos educativos en producción, con alcance verificable.
 
 ${CASES.map(
   (study) =>
-    `- [${study.client.es}](${url(caseStudyPath("es", study.slug))}) · [EN](${url(caseStudyPath("en", study.slug))}) — ${formatStudents("es", study.students)} estudiantes\n  ${study.title.es}`
+    `- [${study.client.es}](${url(caseStudyPath("es", study.slug))}) · [EN](${url(caseStudyPath("en", study.slug))}) — ${study.title.es}\n  ${study.summary.es}`
 ).join("\n")}`
 
   const notes = `## Notas

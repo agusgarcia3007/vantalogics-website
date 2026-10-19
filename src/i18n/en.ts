@@ -62,6 +62,7 @@ export const en: Dictionary = {
       visit: "View live product",
       back: "Back to all clients",
       learned: "What we learned on this project",
+      others: "Other cases",
     },
   },
 

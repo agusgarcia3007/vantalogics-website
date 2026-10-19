@@ -6,6 +6,7 @@ import LinkCard from "@/components/cine/LinkCard.astro"
 import { CLIENTS } from "@/data/clients"
 import { getPosts, postPath, postSlug } from "@/lib/blog"
 import {
+  CASES,
   caseStudyPath,
   formatStudents,
   type CaseStudy,
@@ -48,7 +49,7 @@ const clientName = pick(study.client)
 const title = pick(study.title)
 const description = pick(study.built)
 const metaTitle = `${clientName}: ${pick(study.kind)} | Vantalogics`
-const metaDescription = `${title} ${formatStudents(lang, study.students)} ${t.detail.students}. ${description}`
+const metaDescription = pick(study.summary)
 
 const platformsHref = platformsRoot(lang)
 const platformLinks = platformsHref
@@ -103,6 +104,14 @@ const notes = (study.reading ?? []).flatMap((slug) => {
 })
 
 const learned = [...guides, ...notes]
+
+const others = CASES.filter((entry) => entry.slug !== study.slug).map(
+  (entry) => ({
+    href: caseStudyPath(lang, entry.slug),
+    title: `${pick(entry.client)}: ${pick(entry.kind)}`,
+    description: pick(entry.summary),
+  })
+)
 
 const breadcrumb = {
   "@context": "https://schema.org",
@@ -290,6 +299,27 @@ const creativeWork = {
           </section>
         )
       }
+
+      <section class="section" aria-labelledby="otros-casos">
+        <div class="shell">
+          <div class="section-head reveal">
+            <h2 id="otros-casos">{t.detail.others}</h2>
+          </div>
+          <div class="posts">
+            {
+              others.map((item, index) => (
+                <LinkCard
+                  href={item.href}
+                  title={item.title}
+                  description={item.description}
+                  featured={others.length % 2 === 1 && index === 0}
+                  index={index}
+                />
+              ))
+            }
+          </div>
+        </div>
+      </section>
 
       <Foot lang={lang} />
     </div>

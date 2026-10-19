@@ -17,6 +17,7 @@ export interface CaseStudy {
   integrations: Localized[]
   period: Localized
   href: Localized
+  summary: Localized
   updated: string
   guides?: string[]
   reading?: string[]
@@ -85,7 +86,11 @@ export const CASES: CaseStudy[] = [
       { es: "Progreso", en: "Progress" },
       { es: "Evaluaciones", en: "Assessments" },
     ],
-    updated: "2026-10-16",
+    summary: {
+      es: "Plataforma de cursos para 22.000+ estudiantes de 5 universidades: catálogo, videos, progreso, evaluaciones y consultas con la docente. Caso de Vantalogics.",
+      en: "Course platform for 22,000+ students across 5 university pathways: catalog, video lessons, progress, assessments and instructor Q&A. A Vantalogics case.",
+    },
+    updated: "2026-10-19",
     guides: ["migracion", "proteccion-de-contenido"],
     reading: ["correccion-automatica-de-cuestionarios-con-ia"],
     period: {
@@ -149,7 +154,11 @@ export const CASES: CaseStudy[] = [
       { es: "Biblioteca", en: "Library" },
       { es: "Visor", en: "Reader" },
     ],
-    updated: "2026-10-16",
+    summary: {
+      es: "Venta y entrega automática de apuntes para 600+ estudiantes: transferencias que se acreditan solas, biblioteca personal y visor móvil. Caso de Vantalogics.",
+      en: "Automated sale and delivery of study notes for 600+ students: self-confirming bank transfers, a personal library and a mobile reader. A Vantalogics case.",
+    },
+    updated: "2026-10-19",
     guides: ["proteccion-de-contenido"],
     period: {
       es: "Producto revisado en sep. 2026",
@@ -212,7 +221,11 @@ export const CASES: CaseStudy[] = [
       { es: "Evaluaciones", en: "Assessments" },
       { es: "Progreso", en: "Progress" },
     ],
-    updated: "2026-10-05",
+    summary: {
+      es: "Academia online de salud con 600+ alumnos, 154 clases en video y 14 autoevaluaciones, con acceso desde el celular y la TV. Caso de Vantalogics.",
+      en: "Online health academy with 600+ students, 154 video lessons and 14 self-assessments, on mobile and TV. A Vantalogics case.",
+    },
+    updated: "2026-10-19",
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
@@ -274,7 +287,11 @@ export const CASES: CaseStudy[] = [
       { es: "Evaluaciones", en: "Assessments" },
       { es: "Certificados", en: "Certificates" },
     ],
-    updated: "2026-10-05",
+    summary: {
+      es: "Educación médica continua para endoscopistas de Latinoamérica: 850+ alumnos, 51 clases, 33 h de formación y certificados oficiales. Caso de Vantalogics.",
+      en: "Continuing medical education for endoscopists across Latin America: 850+ students, 51 lessons, 33 h of training, official certificates. A Vantalogics case.",
+    },
+    updated: "2026-10-19",
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
