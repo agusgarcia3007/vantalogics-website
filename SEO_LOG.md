@@ -625,3 +625,72 @@ El repo de Apoyo Escolar RV tiene `docs/propuestas/correccion-automatica.md`, un
 | 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
 | 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
 | 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+
+---
+
+## 2026-10-19 — Corrida 11
+
+### Métricas generales (GSC, datos hasta 2026-10-18)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-21 → 10-18) | 6 | 103 | 5,8 % | 8,6 |
+| Últimos 7 d (10-12 → 10-18) | 2 | 28 | 7,1 % | 6,6 |
+| 7 d anteriores (10-05 → 10-11) | 2 | 21 | 9,5 % | 6,0 |
+
+- Primera vez que el sitio pasa las 100 impresiones en 28 d y la posición media baja de 10 (11,9 → 8,6). Parte de la mejora es que el 09-20 (pos 175) salió de la ventana.
+- **Primer clic no de marca**: `/plataformas-educativas/proteccion-de-contenido/` el 10-17 en pos 1. La página suma 5 imp en pos 1,4 y 1 clic en 28 d (la EN 2 imp, pos 5,5).
+- **La nota de costo EN sube después del rastreo del 10-16**: 10 imp en 28 d (antes 7), pos 7,3. Los días 10-17 y 10-18 aparece en pos 4–4,5 (antes promediaba 8,6). La query "how much does it cost to add ai tutoring to our university?" pasa de 5 imp en pos 9 a 6 imp en pos 7,7.
+- Corrección automática (#25), primeras impresiones: ES 1 en pos 9 y EN 2 en pos 6 y 21.
+- Query nueva visible: "apoyo escolar rv" → `/casos/apoyo-escolar-rv/`, 4 imp, pos 18,8 (24 el 10-17 y el 10-18). Es la marca del cliente, con intención de ir a su sitio. Que su producto quede arriba es lo esperable. No se actúa.
+- Países (28 d vs 28 d anteriores): Argentina 18 imp y 5 clics (antes 2 imp y 1 clic), con la posición de 50 a 7,6. México 4 imp en pos 3. USA ya no aparece entre los primeros: casi todas sus impresiones eran de páginas retiradas.
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed", Breadcrumbs válidos.
+- Rastreadas desde la corrida anterior: home ES 10-16, nota de costo ES y EN 10-16, Apoyo Escolar RV y Lu Apuntes 10-17 (un día después del `updated` del #29), `/blog/` 10-18, RAG ES 10-19 y migración ES 10-19.
+- Siguen sin rastreo nuevo: **SIED ES 09-16** (EN 09-30), evaluar tutor 09-16, casos de uso tutor 09-26, búsqueda semántica 09-22 y generación de evaluaciones 09-25, evals ES 10-01, migración EN 09-30 y protección ES 10-07.
+- Crawl de links internos: SIED y Dr. La Rosa tenían 4 páginas de origen cada uno, el mínimo del sitio (los casos no se enlazaban entre sí y `/casos/` no existe). Apoyo Escolar RV tenía 7 y Lu Apuntes 5, y son los que se rastrearon.
+
+### Evaluación de cambios anteriores (revisión 10-19)
+- **#1 IndexNow / Bing: funcionó, se consolida.** "vantalogics" en DuckDuckGo (índice de Bing) devuelve `/en/`, `/`, GitHub, Instagram, `/en/solutions/`, la solución EdTech EN y `/en/blog/`. El web search de la sesión usa otro índice y todavía no devuelve la marca. IndexNow desde CI: `200 for 44 URLs` en cada deploy.
+- **#2 Organization: correcto, se mantiene.** El JSON-LD parsea y tiene `audience`, `knowsAbout`, logo ImageObject y `@id` enlazado desde casos y notas. No hay panel de marca en Google ni queries de marca visibles (están anonimizadas). El límite es externo: `sameAs` solo tiene GitHub e Instagram.
+- **#3 Títulos de casos: no concluyente.** Del 10-06 al 10-18 los casos tuvieron 11 impresiones (Dr. La Rosa 5, Apoyo Escolar RV 5, Lu Apuntes 1) y 0 clics. Antes habían sido 18 impresiones y 0 clics. SIED, el caso con más impresiones, nunca se volvió a rastrear, así que su título nuevo no llegó al índice. Los títulos se quedan. Lo que sí se corrige es la meta description: medía 232–307 caracteres y Google la cortaba (ver #30).
+- **#17/#24/#28 Notas en la home: funcionó en parte.** La home se rastreó el 10-16 con la sección, y ese mismo día entraron la nota de costo ES y EN, y el 10-19 la de RAG. Evaluar tutor (09-16) y evals (10-01) siguen sin rastreo nuevo, aunque también están enlazadas desde la home. La única señal en ranking es la nota de costo EN (pos 4–4,5 los días 10-17 y 10-18).
+- **#20 `lastmod`: funcionó, se consolida.** Las páginas con `updated` nuevo y más de 5 links internos se rastrean en 1–3 días: casos #29 (1 día), notas #25 (1 día), índices. Las hojas con pocos links entrantes siguen sin rastreo nuevo. El cuello ahora es el enlazado interno, no la señal de cambio.
+
+### GEO / SERP
+- "how much does it cost to add AI tutoring to a university per student": quadc.io, ibl.ai (3 notas), fabric.so y liveinthefuture. Todos con montos. Nuestra nota sube en Google sin montos (ver Métricas). No se toca hasta el 10-22.
+- "vantalogics" en el web search de la sesión: sigue sin devolver el sitio (Racelogic, Vantage Logistics, Vanteon).
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 30 | `/casos/*` y `/en/cases/*` (8 URLs; AR usa el texto EN y está en noindex) | Meta description propia por caso (campo nuevo `summary` en `src/data/cases.ts`), de 122 a 155 caracteres, que arranca por lo que es y sigue con los datos del caso. Ej.: "Educación médica continua para endoscopistas de Latinoamérica: 850+ alumnos, 51 clases, 33 h de formación y certificados oficiales. Caso de Vantalogics." Antes se armaba con título + alumnos + "lo que construimos" (232–307 caracteres). llms.txt usa el mismo `summary` debajo del título de cada caso. Títulos sin cambios. | Revisión del #3: 0 clics en 28 d con 29 impresiones de casos en pos 4–9, y descriptions de casi el doble de lo que muestra Google. | El snippet completo y con cifras mejora el CTR de los casos cuando aparecen en primera página, y los LLMs tienen un resumen citable por caso. | CTR e impresiones de los 8 casos (28 d); que el snippet muestre la description nueva. | 2026-11-02 |
+| 31 | Los 4 casos × ES/EN/AR | Bloque "Otros casos" / "Other cases" al final, con los otros 3 casos (título `Cliente: tipo` + `summary`). Reusa `LinkCard` y la grilla `.posts`. `updated: 2026-10-19` en los 4 casos, así que el sitemap pasa a `lastmod` 2026-10-19 en las 8 URLs. | SIED ES sin rastreo desde el 09-16 y Dr. La Rosa con solo 4 páginas de origen. Los dos casos que tienen más links y `updated` nuevo (Apoyo Escolar RV, Lu Apuntes) se rastrearon al día siguiente. | Google llega a SIED y a Dr. La Rosa desde los casos que ya rastrea seguido, y por fin indexa el título del #3 para SIED. Cada caso pasa de 4–7 a 7–10 páginas de origen. | Último rastreo de SIED ES/EN y Dr. La Rosa ES/EN (esperado: antes del 10-23); impresiones de SIED. | 2026-10-26 |
+
+### Envíos
+- Deploy por push a `main` (commit `22acd78`, ok). IndexNow desde CI: `200 for 44 URLs`.
+- Verificado en producción: description nueva y bloque `#otros-casos` en `/casos/academia-sied/`. Crawl posterior: 44/44 con 200, 53 destinos internos, 0 rotos, 0 issues. `astro check` sin errores.
+- Sitemap reenviado a GSC (12:05).
+
+### Pendientes / hipótesis para próximas corridas
+- **10-20**: hub y protección (#4, #5, #18). Protección ya tiene el primer clic no de marca (pos 1–2), y con eso está la señal que se pedía para decidir la página de cobro y acceso. Antes de escribirla, mirar qué queries tiene el hub y escribir la página para que vaya más hondo que el hub sin canibalizarlo.
+- **Hojas que no se rastrean** (evaluar tutor, casos de uso tutor, búsqueda semántica, generación de evaluaciones, migración EN): si el 10-23 siguen igual, sumarles links desde páginas que Google rastrea seguido (índice del blog, home, casos).
+- **10-22**: nota de costo. Si la posición 4–5 se sostiene, no tocar nada. Corregir el title EN de 77 caracteres solo si hace falta.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales (LinkedIn de la empresa, perfil del fundador), autor con nombre para E-E-A-T, los montos de comisión de Hotmart en el pilar y el commit `6ce459f` con atribución.
+- No tocar hub y protección (10-20), blog index (10-21), nota de costo y bloques de notas relacionadas (10-22), bloque "Otros casos" (10-26), notas, evals y corrección asistida (10-28), nota de corrección y generación de evaluaciones (10-29), bloque de aprendizajes de casos (10-30) ni metas de casos (11-02) antes de su revisión.
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
