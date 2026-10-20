@@ -694,3 +694,92 @@ El repo de Apoyo Escolar RV tiene `docs/propuestas/correccion-automatica.md`, un
 | 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
 | 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
 | 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+
+---
+
+## 2026-10-20 — Corrida 12
+
+### Métricas generales (GSC, datos hasta 2026-10-19)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-22 → 10-19) | 6 | 103 | 5,8 % | 8,5 |
+| Últimos 7 d (10-13 → 10-19) | 2 | 30 | 6,7 % | ~6,6 |
+| 7 d anteriores (10-06 → 10-12) | 2 | 20 | 10 % | ~5,8 |
+
+- La semana tuvo 30 impresiones, un 50 % más que la anterior. Es la mejor semana desde el pivot, aunque el volumen sigue siendo chico. El 10-19 entró con 3 impresiones en pos 4,3.
+- **Migración ES apareció en pos 1 el 10-19**, el mismo día que Google la volvió a rastrear. Suma 6 imp en pos 6,2 en 28 d, y la EN 5 en pos 7,2.
+- Nota de costo EN: 11 imp en pos 7,3 en 28 d. En 7 d pasó de pos 8,8 a pos 5 con las mismas 4 imp. Se sostiene desde el rastreo del 10-16.
+- Queries visibles: las mismas 6. "how much does it cost to add ai tutoring to our university?" tiene 6 imp en pos 7,7.
+- Países (28 d): Argentina desktop 12 imp y 4 clics (pos 6,5); Colombia desktop 9 (pos 4,6); Argentina mobile 6 (1 clic); Brasil 5; Uruguay mobile 4.
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed", Breadcrumbs válidos.
+- Rastreos nuevos: **SIED EN 10-20** (el bloque "Otros casos" #31 se publicó ayer), `/en/` 10-20, migración ES 10-19, `/blog/` 10-18, Dr. La Rosa ES 10-15, hub 10-15.
+- Siguen sin rastreo nuevo: SIED ES 09-16, evaluar tutor 09-16, casos de uso tutor 09-26, búsqueda semántica 09-22 y generación de evaluaciones 09-25, evals ES 10-01, migración EN 09-30, hub EN 09-29 y protección ES 10-07 y EN 10-06.
+
+### Evaluación de cambios anteriores (revisión 10-20)
+- **#4 Protección de contenido: funcionó, se consolida.** Se indexó en 1 día. La ES suma 5 imp en pos 1,4 y 1 clic (10-17), que es el **primer clic no de marca del sitio**; la EN suma 2 imp en pos 5,5. Las queries están anonimizadas. La SERP del tema siguen siendo vendedores de DRM. No se toca.
+- **#5 Link desde el hub: cumplió su objetivo** (la página se descubrió y se indexó en 1 día). El hub no se movió: 8 imp, pos 4,9. Era lo esperado.
+- **#18 Link en el footer: sin efecto medible.** Protección no se volvió a rastrear desde el 10-07, a pesar de tener el link en las 44 páginas. Se deja, porque no cuesta nada.
+- **Decisión pendiente desde la corrida 6: página de cobro y acceso.** La condición era que protección sumara impresiones y clics, y se cumplió. Ver #32.
+- Bing (#1): "vantalogics" en DuckDuckGo devuelve `/en/` y `/` primero. El web search de la sesión sigue sin devolver la marca.
+
+### Auditoría técnica (crawl de producción)
+- 44/44 URLs con 200, canonical self, un H1, JSON-LD que parsea y 0 links internos rotos (45 destinos). robots.txt con los crawlers de IA permitidos y llms.txt con 200.
+- Hay titles de 66–84 caracteres y descriptions de 164–206 en notas y casos de uso. No se tocan: las notas están bloqueadas hasta el 10-22/10-28 y no hay dato de CTR que lo justifique.
+
+### GEO / SERP
+- "cómo cobrar cursos online con Mercado Pago y dar acceso automático": ayuda de Tiendanube sobre pagos recurrentes y 7 páginas programáticas de openeducat. Nadie explica qué pasa después del pago.
+- "vender cursos online transferencia bancaria acreditación automática": FAQs de academias que dicen que la transferencia tarda de 1 a 3 días y pide comprobante, y SendPulse con "marcá el pago a mano".
+- "webhook Mercado Pago pago aprobado habilitar acceso curso idempotencia": la documentación de Mercado Pago, un proyecto en mintlify y un blog de desarrollo. Hablan de buenas prácticas sin datos de producción.
+
+### Evidencia nueva
+Repos de Apoyo Escolar RV y Lu Apuntes, verificada contra los commits:
+- `2ede3b51` (2026-06-17): 16 de 205 pagos aprobados de MP en 4 días sin compra; conciliación cada 10 min sobre los últimos 180 min.
+- `1b389781` (2026-07-27): MP vuelve a notificar al liberar los fondos (~35 días) y eso generó 358 compras duplicadas desde mayo.
+- `5f09f78a` (2026-09-08): las bajas ya no borran la compra y no se acreditan solos los pagos de más de 24 h.
+- `a6dd9fb3` (2026-10-13): devolución automática del pago doble y ventana de renovación de 15 días.
+- Talo desde abril de 2026, con un CVU por orden. Estados UNDERPAID, OVERPAID y EXPIRED en Lu Apuntes. La pantalla de la orden consulta cada 3 s y la reconciliación corre como mucho cada 15 s.
+- `5ad288f` (2026-08-12): el formulario de comprobantes de Lu Apuntes se borró al día siguiente con 0 solicitudes.
+- PayPal manual desde `0492adb0` (2026-06-04).
+
+**Criterio aplicado**: no se publican huecos de seguridad de los sistemas de los clientes (verificación de firma de webhooks, chequeos que faltan), solo errores ya resueltos. Tampoco se publica la comisión del proveedor de transferencias, porque es un precio.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 32 | `/plataformas-educativas/cobros-y-acceso/` + `/en/education-platforms/payments-and-access/` (nuevas, `order: 3`) | Página del cluster de plataformas, answer-first con el dato de 16 de 205. Tabla "del pago al acceso" (momento / qué hace / qué no hacer). Secciones: webhook y no pantalla de gracias; conciliación; avisos repetidos (358 duplicados y las 4 reglas que lo resolvieron); pago doble; transferencias con CVU por orden y tabla de estados; tabla de medios de pago; acceso como permiso (migrados, manual, upgrade, contenido con fecha de baja); vencimientos y renovaciones; 6 pruebas antes de abrir la venta. 6 FAQ. Service + WebPage + BreadcrumbList + FAQPage. Sin montos, sin LearnBase, sin nombres de personas, sin recomendar competidores. | Condición fijada en la corrida 6 y cumplida: protección (#4) tiene 5 imp en pos 1,4 y el primer clic no de marca. La SERP del tema son ayudas de SaaS y páginas programáticas sin datos de producción. El hub cubre el tema en dos párrafos, y la página nueva va más hondo (conciliación, duplicados, estados de transferencia, renovaciones) sin repetirlo. Sin dato de GSC propio para la query: hipótesis basada en la SERP, como #4 y #25. | Indexación en 1–2 días (como #4 y #25, que entraron por el link desde el hub). Impresiones para "cobrar cursos online", "acceso automático", "Mercado Pago webhook curso" y "transferencia acreditación automática". Que los motores de IA citen el 16 de 205 y los 358 duplicados. | Estado en URL Inspection; impresiones, queries y posición de las 2 URLs (28 d); web search de "cómo cobrar cursos online con Mercado Pago y dar acceso automático". | 2026-11-03 |
+| 33 | `/plataformas-educativas/` + `/en/education-platforms/` | Una oración con link contextual al final de "El pago lo confirma el proveedor". La sección de páginas relacionadas suma sola la página nueva (también en migración y protección). `updated: 2026-10-20` en el hub, porque cambia su contenido. | El mismo patrón que #5, que hizo indexar protección en 1 día. El hub EN no se rastrea desde el 09-29, y el `lastmod` nuevo es la palanca que funcionó con los índices (#20). | La página nueva se descubre rápido y el hub EN se vuelve a rastrear. El hub no debería moverse de pos ~5. | Último rastreo del hub ES/EN y de las 2 URLs nuevas; posición del hub. | 2026-11-03 |
+
+La AR no se creó: no tiene páginas de plataformas y está en noindex.
+
+### Envíos
+- Deploy por push a `main` (commit `90ef42a`, run 39420202805, ok). IndexNow desde CI: `200 for 46 URLs`.
+- Verificado en producción: las 2 páginas responden 200 con canonical self, hreflang es/en/x-default y JSON-LD válido. El hub y migración ya enlazan a la página nueva. El crawl posterior da 46 URLs en el sitemap, 47 destinos internos y 0 rotos. `astro check`: 0 errores.
+- Sitemap reenviado a GSC (12:11). URL Inspection de las 2 URLs nuevas: "URL is unknown to Google", lo esperable a minutos del deploy.
+
+### Pendientes / hipótesis para próximas corridas
+- **10-21**: índice del blog (#7, #16).
+- **10-22**: nota de costo (#8, #10) y bloques de notas en los casos de uso (#9). Si la nota EN sigue en pos 4–5, no tocar nada. Corregir el title EN de 77 caracteres solo si el CTR sigue en 0 con más impresiones.
+- **10-23**: hojas sin rastreo (evaluar tutor, casos de uso tutor, búsqueda semántica, generación de evaluaciones, migración EN, SIED ES). Si siguen igual, sumarles links desde páginas que se rastrean seguido.
+- **10-30** (revisión del bloque de aprendizajes de casos, #29): sumar `cobros-y-acceso` a `guides` de Apoyo Escolar RV y Lu Apuntes. Hoy no se hizo para no tocar los casos por tercera vez en 5 días.
+- La evidencia de pagos todavía da para más: el motor de vencimientos y el registro de auditoría. No escribir otra página del tema hasta ver si la #32 recibe impresiones.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre para E-E-A-T y el commit `6ce459f` con atribución. **Los montos de comisión de Hotmart en el pilar** (9,9 % + USD 0,50; ejemplo de USD 12.480 por año) siguen ahí. La regla de "ningún monto en moneda" del 10-09 choca con eso, y hace falta la decisión del dueño.
+- No tocar blog index (10-21), nota de costo y bloques de notas (10-22), "Otros casos" (10-26), notas, evals y corrección asistida (10-28), nota de corrección y generación de evaluaciones (10-29), bloque de aprendizajes de casos (10-30), metas de casos (11-02) ni cobros y acceso con el hub (11-03).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 12 (10-20) | 09-22 → 10-19 | 6 | 103 | 8,5 |
