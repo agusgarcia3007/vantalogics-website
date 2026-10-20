@@ -6,7 +6,7 @@ answer: "An education platform of your own is your academy with your brand, your
 nav: "Education platforms"
 order: 0
 serviceType: "Custom education platform and online academy development"
-updated: 2026-09-23
+updated: 2026-10-20
 translationOf: index
 cases:
   - apoyo-escolar-rv
@@ -92,7 +92,7 @@ A student can have access because they bought, because they came from the previo
 
 ### The provider confirms the payment, not the thank-you page
 
-The page the student lands on after paying proves nothing. Access is granted when the payment processor's notification arrives, and even then the payment is checked again against its API and the amount and currency are verified against the order. Each notification is recorded only once: a transfer can go through "incomplete payment" and then "credited", and discarding the second notification as a duplicate leaves a student who paid without their course.
+The page the student lands on after paying proves nothing. Access is granted when the payment processor's notification arrives, and even then the payment is checked again against its API and the amount and currency are verified against the order. Each notification is recorded only once: a transfer can go through "incomplete payment" and then "credited", and discarding the second notification as a duplicate leaves a student who paid without their course. Lost notifications, repeated ones and double payments, with the numbers from two academies, are covered in [how to charge for courses and grant access automatically](/en/education-platforms/payments-and-access/).
 
 ### One active session per account
 

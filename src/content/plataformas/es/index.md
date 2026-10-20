@@ -6,7 +6,7 @@ answer: "Una plataforma educativa propia es tu academia con tu marca, tus alumno
 nav: "Plataformas educativas"
 order: 0
 serviceType: "Desarrollo de plataformas educativas y academias online a medida"
-updated: 2026-09-23
+updated: 2026-10-20
 cases:
   - apoyo-escolar-rv
   - lu-apuntes
@@ -91,7 +91,7 @@ Un alumno puede tener acceso porque compró, porque venía de la plataforma ante
 
 ### El pago lo confirma el proveedor, no la pantalla de gracias
 
-La página a la que vuelve el alumno después de pagar no prueba nada. El acceso se habilita cuando llega el aviso del procesador de pagos, y aun así se vuelve a consultar el pago a su API y se verifica el monto y la moneda contra la orden. Cada aviso se registra una sola vez: una transferencia puede pasar por "pago incompleto" y después por "acreditado", y descartar el segundo aviso por repetido deja a un alumno que pagó sin su curso.
+La página a la que vuelve el alumno después de pagar no prueba nada. El acceso se habilita cuando llega el aviso del procesador de pagos, y aun así se vuelve a consultar el pago a su API y se verifica el monto y la moneda contra la orden. Cada aviso se registra una sola vez: una transferencia puede pasar por "pago incompleto" y después por "acreditado", y descartar el segundo aviso por repetido deja a un alumno que pagó sin su curso. Los avisos que se pierden, los que se repiten y los pagos dobles, con los números de dos academias, están en [cómo cobrar los cursos y dar acceso automático](/plataformas-educativas/cobros-y-acceso/).
 
 ### Una sesión activa por cuenta
 
