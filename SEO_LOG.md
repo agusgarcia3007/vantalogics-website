@@ -830,8 +830,9 @@ La AR no se creó: no tiene páginas de plataformas y está en noindex.
 No se hizo nada más a propósito. El resto de las páginas con señal está bloqueado hasta su revisión: la nota de corrección hasta el 10-29, la nota de costo hasta el 10-22, los casos hasta el 10-26/10-30/11-02 y el hub y cobros hasta el 11-03. Busqué evidencia nueva en el repo de Apoyo Escolar RV para otra guía (foro por módulo, gamificación, portal del curso), pero son planes sin implementar ni medir, así que no alcanzan para una página con datos propios.
 
 ### Envíos
-- Deploy por push a `main`. IndexNow desde CI.
-- Sitemap reenviado a GSC.
+- Deploy por push a `main` (commit `96a93de`, ok). IndexNow desde CI: `200 for 46 URLs`.
+- Verificado en producción: el link a cobros aparece en el footer de `/blog/`. `astro check` sin errores.
+- Sitemap reenviado a GSC (12:05).
 
 ### Pendientes / hipótesis para próximas corridas
 - **10-22**: nota de costo (#8, #10) y bloques de notas en casos de uso (#9). Tutor de IA y búsqueda semántica se rastrearon el 10-21 con el bloque, así que el efecto se puede empezar a ver desde el 10-24. Si la nota EN se sostiene en pos 4–7, no tocar nada. El title EN de 77 caracteres se corrige solo si el CTR sigue en 0 con más impresiones.
