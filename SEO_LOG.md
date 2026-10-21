@@ -783,3 +783,75 @@ La AR no se creó: no tiene páginas de plataformas y está en noindex.
 | 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
 | 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
 | 12 (10-20) | 09-22 → 10-19 | 6 | 103 | 8,5 |
+
+---
+
+## 2026-10-21 — Corrida 13
+
+### Métricas generales (GSC, datos hasta 2026-10-20)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-23 → 10-20) | 8 | 107 | 7,5 % | 8,8 |
+| Últimos 7 d (10-14 → 10-20) | 3 | 34 | 8,8 % | ~7,1 |
+| 7 d anteriores (10-07 → 10-13) | 2 | 24 | 8,3 % | ~5,7 |
+
+- El 10-20 es el mejor día desde el pivot: 9 impresiones y 2 clics (los dos en `/`, pos 1, de marca). La semana suma 34 impresiones, un 40 % más que la anterior. La posición media empeora porque entran impresiones de la nota de corrección EN en pos 21–43 para "automatic grading", que es un término genérico.
+- **Corrección automática EN (#25) es la nota que más crece**: 6 imp en 5 días, y el 10-20 sumó 3 en pos 5,3. Query visible: "automatic grading" en pos 43.
+- **Cobros y acceso (#32) tuvo su primera impresión el mismo día que se publicó** (10-20, pos 2).
+- Nota de costo EN: 12 imp en pos 7,1 en 28 d. "how much does it cost to add ai tutoring to our university?" tiene 6 imp en pos 7,7.
+- Por país (28 d): Argentina desktop tiene 14 imp y 6 de los 8 clics. Le siguen Colombia desktop (9, pos 4,7), Argentina mobile (5, 1 clic), Brasil (5) y España (4).
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed", con Breadcrumbs válidos.
+- **Cobros y acceso ES/EN se indexó el mismo día del deploy** (rastreada el 10-20). Es la tercera página del cluster que entra en ≤1 día por el link desde el hub.
+- Rastreos nuevos: los casos de uso **tutor de IA y búsqueda semántica el 10-21** (antes 09-26 y 09-22; ya con el bloque de notas #9) y Dr. La Rosa ES el 10-21.
+- Siguen sin rastreo nuevo: SIED ES (09-16), evaluar tutor (09-16), generación de evaluaciones (09-25), hub EN (09-29), migración EN y Dr. La Rosa EN (09-30), evals ES (10-01) y protección ES (10-07).
+
+### Evaluación de cambios anteriores (revisión 10-21)
+- **#7/#16, índice del blog: no concluyente, se mantiene.** Antes del cambio (09-10 → 10-07) `/blog/` tuvo 6 imp en pos 2–9 y `/en/blog/` 5 en pos 2–6. Después (10-08 → 10-20) `/blog/` tuvo 1 imp (pos 4) y `/en/blog/` 5 (pos 4–7,5). En los dos períodos hubo 0 clics. Con 1–5 impresiones por período no se puede medir CTR. El title nuevo describe lo que hay en el índice y está alineado con la entidad, así que no hay motivo para revertirlo. Los índices se rastrearon el 10-17 y el 10-18.
+- **#6, logos locales: funcionó, se consolida.** La home pesa 36 KB de HTML y los 4 logos se sirven desde `/clients/` (entre 0,6 y 41 KB). Ningún HTML referencia `uselearnbase`.
+- Bing (#1): el web search de la sesión sigue sin devolver la marca (Racelogic, Vantage Logistics, Vanteon). En el índice de Bing (DuckDuckGo) aparece desde el 10-14.
+
+### Auditoría técnica (crawl de producción)
+- 46/46 URLs del sitemap con 200, canonical self, un H1 y JSON-LD que parsea. 47 destinos de links internos, 0 rotos ni redirigidos. robots.txt sigue permitiendo los crawlers de IA y llms.txt ya incluye cobros y acceso.
+- **Las páginas con menos links entrantes del sitio son cobros y acceso ES/EN: 3 páginas de origen cada una** (el hub, migración y protección). Migración y protección están en el footer de las 46 URLs y cobros no.
+
+### GEO / SERP
+- "cómo cobrar cursos online con Mercado Pago y dar acceso automático": siguen la ayuda de Tiendanube, 4 páginas programáticas de openeducat, yo-facturo y global66. La respuesta generada dice que "los detalles de cómo configurar el acceso automático requerirían información adicional". Es justo lo que cubre la página #32, que tiene 1 día.
+- "automatic quiz grading with AI real case": todo son papers (GAOKAO-Eval, Grade Guard, Texas A&M con GPT-4o, Fobizz). No aparece ningún caso en producción. La nota #25 ya aparece en Google en pos 5 en algunos días.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 34 | Footer de todo el sitio (ES/EN; AR no tiene páginas de plataformas) | Link "Cobrar y dar acceso" / "Payments and access" a la guía de cobros, en la columna Estudio, después de "Proteger tus cursos". No cambia el contenido de ninguna página, así que no se toca ningún `updated`. | Cobros y acceso ES/EN tiene 3 páginas de origen, el mínimo del sitio. Tuvo impresión en pos 2 el día que se publicó. Migración y protección ya están en el footer. | La guía pasa de 3 a 46 páginas de origen y se consolida como parte del cluster. El #18 no aceleró el rastreo de protección, pero esta página ya está indexada y lo que se busca es autoridad interna, no descubrimiento. | Impresiones y posición de las 2 URLs de cobros (28 d). | 2026-11-03 (junto con #32) |
+
+No se hizo nada más a propósito. El resto de las páginas con señal está bloqueado hasta su revisión: la nota de corrección hasta el 10-29, la nota de costo hasta el 10-22, los casos hasta el 10-26/10-30/11-02 y el hub y cobros hasta el 11-03. Busqué evidencia nueva en el repo de Apoyo Escolar RV para otra guía (foro por módulo, gamificación, portal del curso), pero son planes sin implementar ni medir, así que no alcanzan para una página con datos propios.
+
+### Envíos
+- Deploy por push a `main`. IndexNow desde CI.
+- Sitemap reenviado a GSC.
+
+### Pendientes / hipótesis para próximas corridas
+- **10-22**: nota de costo (#8, #10) y bloques de notas en casos de uso (#9). Tutor de IA y búsqueda semántica se rastrearon el 10-21 con el bloque, así que el efecto se puede empezar a ver desde el 10-24. Si la nota EN se sostiene en pos 4–7, no tocar nada. El title EN de 77 caracteres se corrige solo si el CTR sigue en 0 con más impresiones.
+- **10-23**: hojas sin rastreo (SIED ES, evaluar tutor, generación de evaluaciones, hub EN, migración EN, Dr. La Rosa EN).
+- **10-29**: si la nota de corrección EN sigue sumando impresiones en "automatic grading", evaluar si conviene darle más peso al ángulo "AI grading" en EN (title, H2) sin perder la intención de caso real.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre para E-E-A-T, el commit `6ce459f` con atribución y **los montos de comisión de Hotmart en el pilar** (9,9 % + USD 0,50; USD 12.480 por año), que chocan con la regla de ningún monto en moneda.
+- No tocar la nota de costo y los bloques de notas (10-22), "Otros casos" (10-26), las notas, evals y corrección asistida (10-28), la nota de corrección y generación de evaluaciones (10-29), el bloque de aprendizajes de casos (10-30), las metas de casos (11-02) ni cobros, el hub y el footer de cobros (11-03).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 12 (10-20) | 09-22 → 10-19 | 6 | 103 | 8,5 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |

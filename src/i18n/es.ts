@@ -120,6 +120,10 @@ export const es = {
             href: "/plataformas-educativas/proteccion-de-contenido/",
             label: "Proteger tus cursos",
           },
+          {
+            href: "/plataformas-educativas/cobros-y-acceso/",
+            label: "Cobrar y dar acceso",
+          },
           { href: "#casos", label: "Casos" },
           { href: "#proceso", label: "Cómo trabajamos" },
         ],

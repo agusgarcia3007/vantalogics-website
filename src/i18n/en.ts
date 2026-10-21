@@ -121,6 +121,10 @@ export const en: Dictionary = {
             href: "/education-platforms/content-protection/",
             label: "Protect your courses",
           },
+          {
+            href: "/education-platforms/payments-and-access/",
+            label: "Payments and access",
+          },
           { href: "#casos", label: "Case studies" },
           { href: "#proceso", label: "How we work" },
         ],
