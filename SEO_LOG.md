@@ -905,7 +905,9 @@ No se hizo nada más a propósito. El resto de las páginas con señal está blo
 No se tocó la nota de costo: está subiendo y no hay que pisar el cambio.
 
 ### Envíos
-- Ver al final de la corrida (deploy, IndexNow, sitemap).
+- Deploy por push a `main` (commit `55c3f3f`, ok). IndexNow desde CI: `200 for 46 URLs`.
+- Verificado en producción: tutor o búsqueda ES/EN enlaza 2 veces a la nota de costo (texto + tarjeta) y corrección ES una vez (tarjeta). `astro check` sin errores; el crawl previo dio 46/46 con 200 y 0 links rotos.
+- Sitemap reenviado a GSC (12:06).
 
 ### Pendientes / hipótesis para próximas corridas
 - **10-23**: hojas sin rastreo con cambios que Google no vio (lista en Indexación). La prioridad es evals ES (#22) y SIED ES (#3/#30/#31). Si siguen igual, sumarles links desde las páginas que Google rastrea seguido (casos de uso tutor/búsqueda ES, migración ES, tutor o búsqueda y RAG ES, `/en/`). Las notas borradas (#13–#15) se revisan el mismo día; solo falta n8n.
