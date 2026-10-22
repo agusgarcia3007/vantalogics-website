@@ -856,3 +856,77 @@ No se hizo nada más a propósito. El resto de las páginas con señal está blo
 | 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
 | 12 (10-20) | 09-22 → 10-19 | 6 | 103 | 8,5 |
 | 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+
+---
+
+## 2026-10-22 — Corrida 14
+
+### Métricas generales (GSC, datos hasta 2026-10-21)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-24 → 10-21) | 7 | 100 | 7 % | ~9,8 |
+| Últimos 7 d (10-15 → 10-21) | 3 | 38 | 7,9 % | ~8,4 |
+| 7 d anteriores (10-08 → 10-14) | 2 | 23 | 8,7 % | ~5,8 |
+
+- **La semana tuvo 38 impresiones, un 65 % más que la anterior** y la mejor desde el pivot. La posición media empeora porque entran impresiones genéricas de la nota de corrección EN ("automatic grading", pos 43–48 los días 10-19 y 10-21). Sin esas, la semana queda en pos ~6.
+- La ventana de 28 d pierde el 09-23 (1 clic), por eso baja de 8 a 7 clics aunque la semana creció.
+- Por página (28 d): `/en/` 17 imp y 2 clics; nota de costo EN 11 imp en pos 6,8; hub 9 imp en pos 4,6; `/` 8 imp y 4 clics; corrección EN 7 imp en pos 19,1; protección ES 6 imp en pos 2,5 con 1 clic; migración ES 6 en pos 5,5.
+- Queries visibles: las mismas de siempre. "how much does it cost to add ai tutoring to our university?" tiene 6 imp en pos 7,7 en 28 d, y **el 10-17 apareció en pos 1**.
+
+### Indexación
+- URL Inspection (30 URLs): todas las del sitemap "Submitted and indexed" con Breadcrumbs válidos.
+- Rastreos nuevos: tutor de IA y búsqueda semántica ES el 10-21, cobros ES/EN el 10-20, `/en/` el 10-20, tutor o búsqueda y RAG ES el 10-19, evaluar tutor EN el 10-17.
+- Sin rastreo desde cambios que Google todavía no vio: SIED ES (09-16; títulos #3, meta #30, "Otros casos" #31), evaluar tutor ES (09-16; bloque #21), generación de evaluaciones ES (09-25; #26), hub EN (09-29; #33), migración EN y Dr. La Rosa EN (09-30), evals ES (10-01; **la reorientación a educación #22 sigue sin llegar al índice**), tutor de IA EN (10-06; #9) y protección ES (10-07).
+- Notas borradas (#13–#15): `cuanto-cuesta-automatizar` y la nota inmobiliaria EN ya figuran como "Page with redirect". `n8n-make-o-agente-a-medida` sigue "Submitted and indexed" con último rastreo 09-29 (antes del 301 del 10-09), y tuvo 1 imp el 10-08. Se va a resolver sola cuando Google la vuelva a rastrear. El 301 responde bien.
+
+### Evaluación de cambios anteriores (revisión 10-22)
+- **#8/#10, nota de costo: funcionó, se consolida.** Google la rastreó el 10-16 (ES y EN). Antes del rastreo la EN tenía 6 imp en pos 5–10 (promedio ~8,3). Después tuvo 5 imp en pos 4–6 (promedio ~4,9), y la query de universidad salió en pos 1 el 10-17. Sacar los montos (#10) no le hizo perder posición: el método, los supuestos y la proporción de 126 veces alcanzaron. La SERP de la query sigue siendo ibl.ai, quadc y liveinthefuture con montos en dólares, que nosotros no vamos a publicar.
+- **Title EN de 77 caracteres: no se toca.** Tiene 0 clics, pero son 5 impresiones desde que mejoró la posición, y con eso no se puede medir CTR. Cambiar el title ahora mezclaría dos variables justo cuando la página está subiendo. Se vuelve a mirar el 11-05.
+- **#9, bloques de notas en los casos de uso: no concluyente, se mantiene.** Tutor de IA y búsqueda semántica ES se rastrearon con el bloque recién el 10-21. Las notas que enlazan ya se habían rastreado por la home (#17). No hay forma de separar el efecto y no cuesta nada dejarlo.
+
+### Auditoría técnica (crawl de producción)
+- 46/46 URLs con 200, canonical self, un H1, JSON-LD que parsea, 0 links internos rotos. robots.txt y llms.txt sin cambios.
+- **La nota de costo era la menos enlazada del sitio entre las notas: 5 páginas de origen por idioma, y ninguna era otra nota.** El bloque "Notas relacionadas" muestra 3 notas: elige primero las de la misma industria (las 6 lo son) y después las del mismo cluster, y desempata por fecha de publicación. La nota de costo es la única del cluster `costos` y es de las más viejas, así que no salía en el bloque de ninguna otra nota. Encima, ninguna nota la enlazaba en el texto. Es la única página con una query no de marca que llegó a pos 1.
+- Cuatro notas por idioma no tienen ningún link en el cuerpo del texto (costo, evaluar tutor, RAG, tutor o búsqueda).
+
+### GEO / SERP
+- "how much does it cost to add AI tutoring to a university per student": ibl.ai (3 notas), quadc, liveinthefuture y getmonetizely, todos con montos por alumno. No cambió desde el 10-19.
+- "cuánto cuesta un tutor de IA por alumno": no hay ningún resultado en español que responda la pregunta. Aparecen vendedores de tutores en inglés, TechCrunch y un hackathon. La respuesta generada dice que "no hay detalles de precios". Nuestra nota ES responde exactamente esto, pero tiene 1 impresión en 28 d. Falta autoridad, no contenido.
+- "vantalogics" en el web search de la sesión: sigue sin devolver el sitio.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 35 | Las 6 notas ES/EN y las 5 AR (`getRelated` en `src/lib/blog.ts`) | "Notas relacionadas" muestra 4 notas en vez de 3. No cambia el criterio de orden. La grilla es de 2 columnas, así que pasa de una fila de 2 más una tarjeta suelta a 2×2. Ninguna nota pierde links. La de costo pasa de 0 a 2 notas que la enlazan en cada idioma (corrección y tutor o búsqueda). No se toca ningún `updated`, porque no cambia el texto de ninguna nota (mismo criterio que #21). | La nota de costo EN llegó a pos 1 en su query el 10-17, pero tenía 5 páginas de origen y ninguna era otra nota. | Más autoridad interna para la única página que rankea por una query no de marca. Ayuda a sostener el top 5 y a subir la ES, que hoy tiene 1 impresión. | Posición e impresiones de la nota de costo ES/EN y de la query de universidad (28 d). | 2026-11-05 |
+| 36 | `/blog/tutor-de-ia-o-busqueda-semantica/` + `/en/blog/ai-tutor-or-semantic-search/` | Link contextual en el tercer argumento ("de eso depende todo el **cálculo de costo por alumno**"), hacia la nota de costo. Es la oración donde la nota ya hablaba del costo. Sin `updated`, porque es un link, no contenido nuevo (mismo criterio que #5). AR no se tocó (noindex). | Igual que #35. Un link dentro del texto, con anchor descriptivo, pesa más que una tarjeta. La nota de tutor o búsqueda se rastrea seguido (última vez el 10-19). | Igual que #35. Se mezcla con #35 a propósito: con 1–2 impresiones por día no se pueden separar los efectos. | Igual que #35. | 2026-11-05 |
+
+No se tocó la nota de costo: está subiendo y no hay que pisar el cambio.
+
+### Envíos
+- Ver al final de la corrida (deploy, IndexNow, sitemap).
+
+### Pendientes / hipótesis para próximas corridas
+- **10-23**: hojas sin rastreo con cambios que Google no vio (lista en Indexación). La prioridad es evals ES (#22) y SIED ES (#3/#30/#31). Si siguen igual, sumarles links desde las páginas que Google rastrea seguido (casos de uso tutor/búsqueda ES, migración ES, tutor o búsqueda y RAG ES, `/en/`). Las notas borradas (#13–#15) se revisan el mismo día; solo falta n8n.
+- **10-29**: nota de corrección EN. "automatic grading" sigue en pos 43–48 y tira para abajo la posición media. Si no se acerca a la página 1, no perseguir el término genérico.
+- **11-05**: nota de costo (title EN de 77 caracteres, CTR) y los cambios #35/#36.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre para E-E-A-T, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: "Otros casos" (10-26), notas, evals y corrección asistida (10-28), nota de corrección y generación de evaluaciones (10-29), aprendizajes de casos (10-30), metas de casos (11-02), cobros, hub y footer de cobros (11-03), ni la nota de costo y las notas relacionadas (11-05).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 12 (10-20) | 09-22 → 10-19 | 6 | 103 | 8,5 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 14 (10-22) | 09-24 → 10-21 | 7 | 100 | ~9,8 |

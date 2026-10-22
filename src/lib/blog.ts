@@ -65,7 +65,7 @@ export async function getPostsByIndustry(
   )
 }
 
-export async function getRelated(post: Post, limit = 3): Promise<Post[]> {
+export async function getRelated(post: Post, limit = 4): Promise<Post[]> {
   const pool = (await getPosts(postLang(post))).filter((p) => p.id !== post.id)
 
   const score = (other: Post) =>

@@ -53,7 +53,7 @@ And the verification is concrete. If search doesn't return the correct passage f
 
 **Two: search can't lie.** It returns passages from the material or it returns nothing. In an educational product, where the user is precisely the person unable to detect a content error, that property is worth a great deal during the first months.
 
-**Three: it produces the missing data.** The question nobody can answer before launching a tutor is how many messages per student per month there will be, and the entire cost calculation depends on it. Search answers it: what gets asked, in what words, at what point in the course, how often. That's the difference between estimating and measuring.
+**Three: it produces the missing data.** The question nobody can answer before launching a tutor is how many messages per student per month there will be, and the entire [per-student cost calculation](/en/blog/how-much-does-an-ai-tutor-cost-per-student/) depends on it. Search answers it: what gets asked, in what words, at what point in the course, how often. That's the difference between estimating and measuring.
 
 ## When to skip search
 

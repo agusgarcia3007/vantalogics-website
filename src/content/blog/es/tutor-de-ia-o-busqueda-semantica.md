@@ -52,7 +52,7 @@ Y la verificación es concreta. Si con la pregunta real de un alumno la búsqued
 
 **Dos: la búsqueda no puede mentir.** Devuelve pasajes del material o no devuelve nada. En un producto educativo, donde el usuario es exactamente quien no puede detectar un error de contenido, esa propiedad vale mucho durante los primeros meses.
 
-**Tres: produce el dato que falta.** La pregunta que nadie puede responder antes de lanzar un tutor es cuántos mensajes por alumno por mes va a haber, y de eso depende todo el cálculo de costo. La búsqueda lo responde: qué se pregunta, con qué palabras, en qué momento del curso, con qué frecuencia. Es la diferencia entre estimar y medir.
+**Tres: produce el dato que falta.** La pregunta que nadie puede responder antes de lanzar un tutor es cuántos mensajes por alumno por mes va a haber, y de eso depende todo el [cálculo de costo por alumno](/blog/cuanto-cuesta-un-tutor-de-ia-por-alumno/). La búsqueda lo responde: qué se pregunta, con qué palabras, en qué momento del curso, con qué frecuencia. Es la diferencia entre estimar y medir.
 
 ## Cuándo saltear la búsqueda
 
