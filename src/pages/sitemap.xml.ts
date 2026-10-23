@@ -9,7 +9,12 @@ import {
 import { getAllPosts, getTranslations, postLang, postPath } from "@/lib/blog"
 import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
 import { USE_CASE_ROUTES, casePath } from "@/data/use-cases"
-import { CASES, caseStudyPath } from "@/data/cases"
+import {
+  CASES,
+  CASES_INDEX_UPDATED,
+  casesIndexPath,
+  caseStudyPath,
+} from "@/data/cases"
 import {
   getPlatformPages,
   isPlatformsHub,
@@ -117,6 +122,22 @@ export const GET: APIRoute = async () => {
         ),
       })
     }
+  }
+
+  const casesIndexes = Object.fromEntries(
+    LANGS.map((lang) => [lang, casesIndexPath(lang)!])
+  )
+  for (const lang of LANGS) {
+    entries.push({
+      path: casesIndexPath(lang)!,
+      priority: lang === DEFAULT_LANG ? "0.8" : "0.7",
+      changefreq: "monthly",
+      lastmod: latest(
+        CASES_INDEX_UPDATED,
+        ...CASES.map((study) => study.updated)
+      ),
+      alternates: casesIndexes,
+    })
   }
 
   for (const study of CASES) {

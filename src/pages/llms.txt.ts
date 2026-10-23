@@ -7,12 +7,8 @@ import {
   solutionsIndexPath,
 } from "@/data/solutions"
 import { casePath, casesFor } from "@/data/use-cases"
-import { CASES, caseStudyPath } from "@/data/cases"
-import {
-  getPlatformPages,
-  platformKey,
-  platformPath,
-} from "@/lib/plataformas"
+import { CASES, casesIndexPath, caseStudyPath } from "@/data/cases"
+import { getPlatformPages, platformKey, platformPath } from "@/lib/plataformas"
 
 const SITE = "https://vantalogics.com"
 
@@ -101,10 +97,11 @@ ${platformPages
   const studies = `## Productos construidos
 
 Casos de productos educativos en producción, con alcance verificable.
+Índice con la comparación de los casos: ${url(casesIndexPath("es")!)} · ${url(casesIndexPath("en")!)}
 
 ${CASES.map(
   (study) =>
-    `- [${study.client.es}](${url(caseStudyPath("es", study.slug))}) · [EN](${url(caseStudyPath("en", study.slug))}) — ${study.title.es}\n  ${study.summary.es}`
+    `- [${study.client.es}](${url(caseStudyPath("es", study.slug))}) · [EN](${url(caseStudyPath("en", study.slug))}) — ${study.title.es}\n  ${study.summary.es}\n  ${study.highlight.es}`
 ).join("\n")}`
 
   const notes = `## Notas
@@ -131,7 +128,7 @@ ${postsEn
   const links = `## Enlaces
 
 - [Plataformas educativas](${url("/plataformas-educativas/")}) · [Education platforms](${url("/en/education-platforms/")})
-- [Casos](${url("/#casos")})
+- [Casos](${url(casesIndexPath("es")!)}) · [Case studies](${url(casesIndexPath("en")!)})
 - [Proceso](${url("/#proceso")})
 - [Notas](${url("/blog/")}) · [Notes](${url("/en/blog/")})
 - [Soluciones](${url(solutionsIndexPath("es"))}) · [Solutions](${url(solutionsIndexPath("en"))})

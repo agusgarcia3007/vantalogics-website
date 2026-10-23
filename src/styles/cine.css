@@ -1234,6 +1234,10 @@ body.menu-open .burger span:nth-child(3) {
 .doc-body .typeset {
   min-width: 0;
 }
+.doc-body .cases-table {
+  width: 100%;
+  min-width: 34rem;
+}
 .toc-label {
   color: #6f6f6f;
   font-size: 11px;

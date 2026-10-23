@@ -18,6 +18,7 @@ export interface CaseStudy {
   period: Localized
   href: Localized
   summary: Localized
+  highlight: Localized
   updated: string
   guides?: string[]
   reading?: string[]
@@ -27,6 +28,10 @@ export function caseStudyPath(lang: Lang, slug: string): string {
   const root =
     lang === "es" ? "/casos" : lang === "en" ? "/en/cases" : "/ar/cases"
   return `${root}/${slug}/`
+}
+
+export function casesIndexPath(lang: Lang): string | null {
+  return lang === "es" ? "/casos/" : lang === "en" ? "/en/cases/" : null
 }
 
 export function formatStudents(lang: Lang, count: number): string {
@@ -90,6 +95,10 @@ export const CASES: CaseStudy[] = [
       es: "Plataforma de cursos para 22.000+ estudiantes de 5 universidades: catálogo, videos, progreso, evaluaciones y consultas con la docente. Caso de Vantalogics.",
       en: "Course platform for 22,000+ students across 5 university pathways: catalog, video lessons, progress, assessments and instructor Q&A. A Vantalogics case.",
     },
+    highlight: {
+      es: "Migramos sus ventas de Tiendup y WooCommerce a la plataforma propia, cobramos con Mercado Pago, transferencias y PayPal, y corregimos sus cuestionarios contra una clave verificada: el 99,4 % de 5.563 respuestas se puede corregir sin IA. En desarrollo continuo desde diciembre de 2024.",
+      en: "We migrated its sales from Tiendup and WooCommerce to its own platform, take payments through Mercado Pago, bank transfers and PayPal, and grade its quizzes against a verified answer key: 99.4% of 5,563 answers can be graded without AI. In continuous development since December 2024.",
+    },
     updated: "2026-10-19",
     guides: ["migracion", "proteccion-de-contenido"],
     reading: ["correccion-automatica-de-cuestionarios-con-ia"],
@@ -141,7 +150,7 @@ export const CASES: CaseStudy[] = [
         },
       },
       {
-        value: "1.147",
+        value: { es: "1.147", en: "1,147" },
         label: {
           es: "páginas de contenido",
           en: "pages of study content",
@@ -157,6 +166,10 @@ export const CASES: CaseStudy[] = [
     summary: {
       es: "Venta y entrega automática de apuntes para 600+ estudiantes: transferencias que se acreditan solas, biblioteca personal y visor móvil. Caso de Vantalogics.",
       en: "Automated sale and delivery of study notes for 600+ students: self-confirming bank transfers, a personal library and a mobile reader. A Vantalogics case.",
+    },
+    highlight: {
+      es: "Cobra solo por transferencia: cada orden tiene su propia cuenta virtual y el apunte se habilita cuando entra el dinero, sin revisar comprobantes. Cada cuenta tiene una sola sesión activa, para que no se comparta.",
+      en: "It only takes bank transfers: every order gets its own virtual account and the notes unlock when the money arrives, with no receipts to check. Each account has a single active session so it cannot be shared.",
     },
     updated: "2026-10-19",
     guides: ["proteccion-de-contenido"],
@@ -225,6 +238,10 @@ export const CASES: CaseStudy[] = [
       es: "Academia online de salud con 600+ alumnos, 154 clases en video y 14 autoevaluaciones, con acceso desde el celular y la TV. Caso de Vantalogics.",
       en: "Online health academy with 600+ students, 154 video lessons and 14 self-assessments, on mobile and TV. A Vantalogics case.",
     },
+    highlight: {
+      es: "154 clases en video en el curso principal, 14 autoevaluaciones y la misma cuenta y el mismo progreso en el celular, la computadora y la TV.",
+      en: "154 video lessons in the flagship course, 14 self-assessments, and the same account and progress on phone, computer and TV.",
+    },
     updated: "2026-10-19",
     period: {
       es: "Producto revisado en sep. 2026",
@@ -291,6 +308,10 @@ export const CASES: CaseStudy[] = [
       es: "Educación médica continua para endoscopistas de Latinoamérica: 850+ alumnos, 51 clases, 33 h de formación y certificados oficiales. Caso de Vantalogics.",
       en: "Continuing medical education for endoscopists across Latin America: 850+ students, 51 lessons, 33 h of training, official certificates. A Vantalogics case.",
     },
+    highlight: {
+      es: "Forma a endoscopistas de toda Latinoamérica con docentes internacionales, programas asincrónicos, evaluaciones y certificados oficiales al terminar.",
+      en: "Trains endoscopists across Latin America with international faculty, asynchronous programs, assessments and official certificates on completion.",
+    },
     updated: "2026-10-19",
     period: {
       es: "Producto revisado en sep. 2026",
@@ -311,4 +332,43 @@ export const TOTAL_STUDENTS: number = CASES.reduce(
 export function formatTotalStudents(lang: Lang): string {
   const floor = Math.floor(TOTAL_STUDENTS / 1000) * 1000
   return `${new Intl.NumberFormat(lang).format(floor)}+`
+}
+
+export const CASES_INDEX_UPDATED = "2026-10-23"
+
+export const CASES_INDEX = {
+  es: {
+    nav: "Casos",
+    metaTitle:
+      "Casos de plataformas educativas a medida en producción | Vantalogics",
+    title: "Plataformas educativas que construimos y siguen en producción",
+    answer: (count: number, total: string, list: string) =>
+      `Vantalogics tiene ${count} plataformas educativas a medida en producción, con más de ${total} estudiantes en total: ${list}.`,
+    item: (client: string, students: string, kind: string) =>
+      `${client} (${students} estudiantes, ${kind})`,
+    description: (count: number, total: string) =>
+      `${count} plataformas educativas a medida en producción y más de ${total} estudiantes: cursos universitarios, apuntes, una academia de salud y educación médica continua.`,
+    tableTitle: "Los casos, uno al lado del otro",
+    columns: ["Caso", "Estudiantes", "Alcance"],
+    solvedTitle: "Qué resolvimos en cada caso",
+    readingLabel: "Guías y notas con datos de este caso",
+    caseLink: "Ver el caso completo",
+  },
+  en: {
+    nav: "Case studies",
+    metaTitle:
+      "Custom education platform case studies in production | Vantalogics",
+    title: "Education platforms we built that are still in production",
+    answer: (count: number, total: string, list: string) =>
+      `Vantalogics has ${count} custom education platforms in production, with more than ${total} students in total: ${list}.`,
+    item: (client: string, students: string, kind: string) =>
+      `${client} (${students} students, ${kind})`,
+    description: (count: number, total: string) =>
+      `${count} custom education platforms in production and more than ${total} students: university courses, study notes, a health academy and continuing medical education.`,
+    tableTitle: "The cases side by side",
+    columns: ["Case", "Students", "Scope"],
+    solvedTitle: "What we solved in each case",
+    readingLabel: "Guides and notes with data from this case",
+    caseLink: "Read the full case",
+  },
 }

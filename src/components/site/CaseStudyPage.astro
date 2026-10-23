@@ -4,9 +4,10 @@ import Chrome from "@/components/cine/Chrome.astro"
 import Foot from "@/components/cine/Foot.astro"
 import LinkCard from "@/components/cine/LinkCard.astro"
 import { CLIENTS } from "@/data/clients"
-import { getPosts, postPath, postSlug } from "@/lib/blog"
+import { caseReading } from "@/lib/cases"
 import {
   CASES,
+  casesIndexPath,
   caseStudyPath,
   formatStudents,
   type CaseStudy,
@@ -19,11 +20,7 @@ import {
   useTranslations,
   type Lang,
 } from "@/i18n"
-import {
-  findPlatformPage,
-  platformPath,
-  platformsRoot,
-} from "@/lib/plataformas"
+import { platformsRoot } from "@/lib/plataformas"
 import { SCHEDULE_URL } from "@/site"
 
 interface Props {
@@ -35,10 +32,13 @@ const SITE = "https://vantalogics.com"
 const { lang, study } = Astro.props
 const strings = useTranslations(lang)
 const t = strings.cases
-const casesHref = navHref(
-  lang,
-  strings.nav.items.find((item) => item.section === "cases")?.href ?? "#casos"
-)
+const casesIndex = casesIndexPath(lang)
+const casesHref =
+  casesIndex ??
+  navHref(
+    lang,
+    strings.nav.items.find((item) => item.section === "cases")?.href ?? "#casos"
+  )
 const client = CLIENTS.find((entry) => entry.caseSlug === study.slug)!
 const pick = (value: Localized) => value[lang] ?? value.en
 const metricValue = (value: string | Localized) =>
@@ -56,54 +56,7 @@ const platformLinks = platformsHref
   ? [{ href: platformsHref, label: strings.platforms.hubLink }]
   : []
 
-const guides = (
-  await Promise.all(
-    (study.guides ?? []).map(async (key) => {
-      const page = await findPlatformPage(lang, key)
-      if (!page && lang !== "ar") {
-        throw new Error(
-          `El caso «${study.slug}» apunta a la guía «${key}», que no existe en ${lang}.`
-        )
-      }
-      return page
-    })
-  )
-).flatMap((page) =>
-  page
-    ? [
-        {
-          href: platformPath(page),
-          title: page.data.title,
-          description: page.data.description,
-          id: `${new URL(platformPath(page), SITE).href}#webpage`,
-        },
-      ]
-    : []
-)
-
-const posts = await getPosts(lang)
-const notes = (study.reading ?? []).flatMap((slug) => {
-  const post = posts.find(
-    (entry) => postSlug(entry) === slug || entry.data.translationOf === slug
-  )
-  if (!post && lang !== "ar") {
-    throw new Error(
-      `El caso «${study.slug}» apunta a la nota «${slug}», que no existe en ${lang}.`
-    )
-  }
-  return post
-    ? [
-        {
-          href: postPath(post),
-          title: post.data.title,
-          description: post.data.description,
-          id: `${new URL(postPath(post), SITE).href}#article`,
-        },
-      ]
-    : []
-})
-
-const learned = [...guides, ...notes]
+const learned = await caseReading(lang, study)
 
 const others = CASES.filter((entry) => entry.slug !== study.slug).map(
   (entry) => ({
@@ -123,9 +76,19 @@ const breadcrumb = {
       name: "Vantalogics",
       item: new URL(localizePath(lang), SITE).href,
     },
+    ...(casesIndex
+      ? [
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: t.detail.breadcrumb,
+            item: new URL(casesIndex, SITE).href,
+          },
+        ]
+      : []),
     {
       "@type": "ListItem",
-      position: 2,
+      position: casesIndex ? 3 : 2,
       name: clientName,
       item: pageUrl,
     },

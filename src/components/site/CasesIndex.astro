@@ -1,0 +1,246 @@
+---
+import Layout from "@/layouts/main.astro"
+import Chrome from "@/components/cine/Chrome.astro"
+import Foot from "@/components/cine/Foot.astro"
+import CaseCard from "@/components/cine/CaseCard.astro"
+import NextStep from "@/components/cine/NextStep.astro"
+import {
+  CASES,
+  CASES_INDEX,
+  CASES_INDEX_UPDATED,
+  TOTAL_STUDENTS,
+  casesIndexPath,
+  caseStudyPath,
+  formatStudents,
+  type Localized,
+} from "@/data/cases"
+import { caseReading } from "@/lib/cases"
+import { formatDate } from "@/lib/blog"
+import { localizePath, ogImage, useTranslations } from "@/i18n"
+
+interface Props {
+  lang: "es" | "en"
+}
+
+const SITE = "https://vantalogics.com"
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const copy = CASES_INDEX[lang]
+const pick = (value: Localized) => value[lang] ?? value.en
+const metricValue = (value: string | Localized) =>
+  typeof value === "string" ? value : pick(value)
+
+const path = casesIndexPath(lang)!
+const pageUrl = new URL(path, SITE).href
+const updated = new Date(CASES_INDEX_UPDATED)
+const total = new Intl.NumberFormat(lang).format(
+  Math.floor(TOTAL_STUDENTS / 1000) * 1000
+)
+
+const studies = await Promise.all(
+  [...CASES]
+    .sort((a, b) => b.students - a.students)
+    .map(async (study) => ({
+      study,
+      href: caseStudyPath(lang, study.slug),
+      reading: await caseReading(lang, study),
+    }))
+)
+
+const answer = copy.answer(
+  studies.length,
+  total,
+  new Intl.ListFormat(lang, { type: "conjunction" }).format(
+    studies.map(({ study }) =>
+      copy.item(
+        pick(study.client),
+        formatStudents(lang, study.students),
+        pick(study.kind)
+      )
+    )
+  )
+)
+const description = copy.description(studies.length, total)
+
+const organization = { "@id": `${SITE}/#organization` }
+
+const collection = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${pageUrl}#webpage`,
+  url: pageUrl,
+  name: copy.metaTitle,
+  description,
+  abstract: answer,
+  inLanguage: lang,
+  dateModified: updated.toISOString(),
+  isPartOf: { "@id": `${SITE}/#website` },
+  publisher: organization,
+  about: organization,
+  image: new URL(ogImage(lang), SITE).href,
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["[data-speakable]"],
+  },
+  mainEntity: {
+    "@type": "ItemList",
+    "@id": `${pageUrl}#list`,
+    numberOfItems: studies.length,
+    itemListElement: studies.map(({ study, href }, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: `${pick(study.client)}: ${pick(study.kind)}`,
+      url: new URL(href, SITE).href,
+      item: { "@id": `${new URL(href, SITE).href}#case-study` },
+    })),
+  },
+}
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Vantalogics",
+      item: new URL(localizePath(lang), SITE).href,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: copy.nav,
+      item: pageUrl,
+    },
+  ],
+}
+---
+
+<Layout
+  lang={lang}
+  path={path}
+  title={copy.metaTitle}
+  description={description}
+  alternates={{ es: casesIndexPath("es")!, en: casesIndexPath("en")! }}
+  jsonLd={[collection, breadcrumb]}
+  floating={false}
+>
+  <Chrome lang={lang}>
+    <main class="doc-page" id="contenido">
+      <div class="shell">
+        <nav class="crumbs appear appear--soft" aria-label="Breadcrumb">
+          <a href={localizePath(lang)}>Vantalogics</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{copy.nav}</span>
+        </nav>
+
+        <header class="doc-head">
+          <span class="appear appear--scale eyebrow" style="--d:0.16s">
+            {t.cases.eyebrow}
+          </span>
+          <h1 class="appear appear--soft" style="--d:0.26s" data-speakable>
+            {copy.title}
+          </h1>
+          <p class="appear appear--soft" style="--d:0.38s">{t.cases.intro}</p>
+          <p class="doc-updated appear appear--soft" style="--d:0.46s">
+            {t.blog.updatedOn}
+            <time datetime={updated.toISOString()}
+              >{formatDate(updated, lang)}</time
+            >
+          </p>
+        </header>
+      </div>
+    </main>
+
+    <div class="below" slot="after">
+      <section class="section">
+        <div class="shell">
+          <div class="answer reveal">
+            <p class="answer-label">{t.platforms.answerLabel}</p>
+            <p class="answer-body" data-speakable>{answer}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="casos">
+        <div class="shell">
+          <div class="cases">
+            {
+              studies.map(({ study }, i) => (
+                <CaseCard lang={lang} item={study} index={i} />
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="doc-body shell">
+          <div class="typeset typeset-nota">
+            <h2 id="comparacion">{copy.tableTitle}</h2>
+            <div class="typeset-scroll">
+              <table class="cases-table">
+                <thead>
+                  <tr>{copy.columns.map((column) => <th>{column}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {
+                    studies.map(({ study, href }) => (
+                      <tr>
+                        <td>
+                          <a href={href}>{pick(study.client)}</a>
+                          <br />
+                          {pick(study.kind)}
+                        </td>
+                        <td>{formatStudents(lang, study.students)}</td>
+                        <td>
+                          {study.metrics.map((metric, index) => (
+                            <>
+                              {index > 0 && <br />}
+                              {`${metricValue(metric.value)} ${pick(metric.label)}`}
+                            </>
+                          ))}
+                        </td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <h2 id="que-resolvimos">{copy.solvedTitle}</h2>
+            {
+              studies.map(({ study, href, reading }) => (
+                <>
+                  <h3>
+                    <a href={href}>{pick(study.client)}</a>
+                  </h3>
+                  <p>{pick(study.highlight)}</p>
+                  {reading.length > 0 && (
+                    <>
+                      <p>{copy.readingLabel}:</p>
+                      <ul>
+                        {reading.map((item) => (
+                          <li>
+                            <a href={item.href}>{item.title}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                  <p>
+                    <a href={href}>{copy.caseLink}</a>
+                  </p>
+                </>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <NextStep lang={lang} />
+
+      <Foot lang={lang} />
+    </div>
+  </Chrome>
+</Layout>
