@@ -932,3 +932,84 @@ No se tocó la nota de costo: está subiendo y no hay que pisar el cambio.
 | 12 (10-20) | 09-22 → 10-19 | 6 | 103 | 8,5 |
 | 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
 | 14 (10-22) | 09-24 → 10-21 | 7 | 100 | ~9,8 |
+
+---
+
+## 2026-10-23 — Corrida 15
+
+### Métricas generales (GSC, datos hasta 2026-10-22)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-25 → 10-22) | 7 | 108 | 6,5 % | 10,0 |
+| Últimos 7 d (10-16 → 10-22) | 3 | 40 | 7,5 % | ~9,7 |
+| 7 d anteriores (10-09 → 10-15) | 2 | 24 | 8,3 % | ~5,5 |
+
+- **Segunda semana seguida de récord: 40 impresiones, un 67 % más que la anterior.** El 10-22 sumó 8. La posición media empeora por el mismo motivo que ayer: entran impresiones de páginas nuevas en posiciones bajas, como "automatic grading" (pos 45–48) y protección ES en pos 30 el 10-22.
+- Nota de costo EN: 14 imp en 28 d, pos 7,7. En 7 d pasó de 2 a 8 imp, pero el 10-22 salió 3 veces en pos 11, cuando el promedio venía en 4–6. Es un solo día. Se revisa el 11-05, como estaba previsto.
+- Corrección automática ES: el 10-22 tuvo 2 imp en pos 9, el mismo día que Google la volvió a rastrear. La EN suma 7 imp en pos 19,1.
+- Queries visibles: las mismas 7. "how much does it cost to add ai tutoring to our university?" sigue con 6 imp en pos 7,7, y "apoyo escolar rv" con 5 imp en pos 16,6.
+- Los casos suman 20 de las 108 impresiones (18 %) y 0 clics: Apoyo Escolar RV 6, Dr. La Rosa ES 4 y EN 2, Lu Apuntes ES 4 y EN 1, SIED ES 3 y EN 1.
+- Por país (28 d): Argentina desktop tiene 15 imp y 5 clics (pos 6,1). Le siguen Colombia desktop (7, pos 4,9), Brasil (5), España desktop y mobile (4 + 4) y Argentina mobile (4, 1 clic).
+
+### Indexación
+- URL Inspection (32 URLs): todas las del sitemap siguen "Submitted and indexed" con Breadcrumbs válidos.
+- Rastreos nuevos: generación de evaluaciones ES y corrección automática ES el 10-22, Dr. La Rosa ES el 10-21 y SIED EN el 10-20.
+- **Siguen sin rastreo nuevo:** corrección asistida ES (**08-18**, la más vieja del sitio), SIED ES y evaluar tutor ES (09-16), evals EN (09-27), hub EN (09-29), migración EN y Dr. La Rosa EN (09-30), evals ES (10-01), generación de evaluaciones EN (10-02), tutor de IA EN (10-06) y protección ES (10-07) y EN (10-06).
+- n8n (#13): sigue "Submitted and indexed" con último rastreo 09-29 y 1 imp el 10-08. El 301 a `/blog/` responde bien. La nota inmobiliaria EN figura "Page with redirect" (rastreada el 10-17).
+
+### Evaluación de cambios anteriores (revisión 10-23)
+- **Hojas sin rastreo: más links internos no las destraban.** Conté las páginas de origen en producción. Todas tienen entre 6 y 12, y las enlazan páginas que Google rastreó esta semana: la nota de corrección ES (10-22) enlaza a evals ES y a corrección asistida ES, y Dr. La Rosa ES (10-21) enlaza a SIED ES. El hub EN tiene 23 páginas de origen (está en el footer) y tampoco se rastrea desde el 09-29. El cuello es la demanda de rastreo de un dominio chico y nuevo. Más enlazado interno sería ruido. **No se suman links a las hojas.** La palanca que queda es autoridad externa (Bing Webmaster Tools, perfiles y menciones), que depende del dueño.
+- **#13–#15 notas borradas: funcionó.** Costo de automatización, la nota inmobiliaria EN y agentes en producción ya figuran "Page with redirect". n8n se va a resolver sola en el próximo rastreo: no tiene sentido tocarla.
+
+### Auditoría técnica (crawl de producción antes del cambio)
+- 46/46 URLs con 200, canonical self, un H1 y JSON-LD que parsea. 0 links internos rotos.
+- **`/casos/` y `/en/cases/` daban 404.** El breadcrumb visible de cada caso decía "Casos" y llevaba a `/#casos`, y el BreadcrumbList saltaba de Vantalogics al cliente. No había ninguna página que juntara los cuatro casos, cuando son el 18 % de las impresiones.
+- **Lu Apuntes EN mostraba "1.147 pages"** con el separador de miles del español.
+
+### GEO / SERP
+- "casos de éxito plataforma educativa a medida academia online Latinoamérica": un PDF de beecrowd, una presentación de Zalvadora, notas de prensa sobre Platzi y un informe del BID. Nadie presenta casos de academias con cifras comparables una al lado de la otra.
+- "custom online academy platform case study migrated from Hotmart students results": un caso de Academy of Mine (ahorro de costos, sin cifras de alumnos), FreshLearn y comparadores. La respuesta generada dice que "no hay un caso de migración de Hotmart a una plataforma propia con resultados de alumnos".
+- "vantalogics" en el web search de la sesión sigue sin devolver el sitio.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 37 | `/casos/` + `/en/cases/` (nuevas). También el breadcrumb y el footer de todo el sitio | Índice de casos, answer-first: "Vantalogics tiene 4 plataformas educativas a medida en producción, con más de 24.000 estudiantes en total: …" con cada caso, su cantidad de alumnos y qué es. Después vienen las tarjetas de los 4 casos, la tabla "Los casos, uno al lado del otro" (caso, estudiantes y alcance) y "Qué resolvimos en cada caso": un párrafo por caso (campo nuevo `highlight` en `src/data/cases.ts`, con datos ya publicados en las guías y notas, sin cifras nuevas) y sus guías y notas. Schema `CollectionPage` + `ItemList` que apunta al `#case-study` de cada caso + `BreadcrumbList`. El BreadcrumbList de los 8 casos pasa a tres niveles (Vantalogics › Casos › cliente). El breadcrumb visible, el link "Ver todos los casos" y "Casos" en el footer ahora llevan al índice, no a `/#casos`. La resolución de guías y notas de cada caso pasó a `src/lib/cases.ts`, sin cambiar el HTML de los casos. llms.txt suma el índice y el `highlight` de cada caso. Sitemap: 48 URLs. Sin `updated` nuevo en los casos. AR no tiene índice (noindex) y su breadcrumb sigue igual. | Los casos son el 18 % de las impresiones (20 de 108) y tienen 0 clics. La URL madre daba 404. En la SERP de casos no hay ninguna página que compare casos de academias con cifras. | El índice se indexa en 1–3 días, como las páginas del cluster de plataformas que se enlazan desde el footer. Recibe impresiones para búsquedas de casos y portfolio ("casos plataformas educativas", "custom education platform case studies"). Los motores de IA tienen una sola página citable con los 4 casos y sus cifras. | Estado en URL Inspection; impresiones y queries de las 2 URLs (28 d); que el snippet de los casos muestre "Casos" en el breadcrumb; impresiones de los 8 casos. | 2026-11-06 |
+| 38 | `/en/cases/lu-apuntes/` y `/en/cases/` | "1.147 pages" → "1,147 pages" (el valor de la métrica ahora se traduce). | Era un error de formato en la versión EN. | Ninguna sobre tráfico. Es una corrección. | — | — |
+
+No se tocó ninguna página bloqueada. El texto de los casos no cambió (salvo el #38), así que no se mezcla con "Otros casos" (#31, 10-26), los aprendizajes (#29, 10-30) ni las metas (#30, 11-02).
+
+### Envíos
+- Deploy por push a `main` (commit `384902a`, run 39951452749, ok). IndexNow desde CI: `200 for 48 URLs`.
+- Antes del push se verificó el build local: 48/48 URLs con 200, canonical self, un H1, JSON-LD válido, 57 destinos internos y 0 rotos. `astro check` sin errores. `bun run lint` tiene los mismos 5 errores que antes, en `agent/` y `ui/`, ningún archivo tocado hoy. La página se revisó renderizada en desktop y mobile (en mobile la tabla scrollea horizontal, igual que las demás del sitio).
+- Verificado en producción: `/casos/` y `/en/cases/` responden 200, SIED tiene el BreadcrumbList de tres niveles, el footer de `/blog/` enlaza a `/casos/` y llms.txt incluye el índice.
+- Sitemap reenviado a GSC (12:12). URL Inspection de las 2 URLs nuevas: "URL is unknown to Google", lo esperable a minutos del deploy.
+
+### Pendientes / hipótesis para próximas corridas
+- **10-24/10-25**: ver si el índice de casos se indexó. Si después de 3 días sigue "unknown", es otra señal de que el problema es la demanda de rastreo y no la estructura.
+- **10-26**: "Otros casos" (#31). Con el índice publicado, el criterio pasa a ser si SIED ES se rastrea. Ya no hace falta sumarle más links.
+- **10-29**: nota de corrección EN. Si "automatic grading" no se acerca a la página 1, no perseguir el término genérico.
+- **10-30**: sumar `cobros-y-acceso` a `guides` de Apoyo Escolar RV y Lu Apuntes. Va a aparecer también en el índice de casos.
+- **11-05**: nota de costo (title EN de 77 caracteres, CTR, la caída a pos 11 del 10-22) y los cambios #35/#36.
+- **Para el dueño (es la palanca que queda para el rastreo):** dar de alta Bing Webmaster Tools, sumar a `sameAs` perfiles reales (LinkedIn de la empresa, perfil del fundador) y conseguir menciones o links desde los sitios de los clientes (por ejemplo, un "desarrollado por Vantalogics" en el footer de las 4 plataformas). Siguen abiertos el autor con nombre para E-E-A-T, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: "Otros casos" (10-26), notas, evals y corrección asistida (10-28), nota de corrección y generación de evaluaciones (10-29), aprendizajes de casos (10-30), metas de casos (11-02), cobros, hub y footer de cobros (11-03), nota de costo y notas relacionadas (11-05) ni el índice de casos (11-06).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 7 (10-13) | 09-15 → 10-12 | 5 | 90 | 12,2 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 9 (10-15) | 09-17 → 10-14 | 5 | 90 | 12,3 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 12 (10-20) | 09-22 → 10-19 | 6 | 103 | 8,5 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 14 (10-22) | 09-24 → 10-21 | 7 | 100 | ~9,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
