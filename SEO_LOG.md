@@ -1013,3 +1013,76 @@ No se tocó ninguna página bloqueada. El texto de los casos no cambió (salvo e
 | 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
 | 14 (10-22) | 09-24 → 10-21 | 7 | 100 | ~9,8 |
 | 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+
+---
+
+## 2026-10-26 — Corrida 16
+
+### Métricas generales (GSC, datos hasta 2026-10-25)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-28 → 10-25) | 6 | 119 | 5 % | 9,3 |
+| Últimos 7 d (10-19 → 10-25) | 2 | 48 | 4,2 % | 9,7 |
+| 7 d anteriores (10-12 → 10-18) | 2 | 28 | 7,1 % | 6,6 |
+
+- **Tercera semana seguida de récord: 48 impresiones, un 71 % más que la anterior.** Es también el máximo de 28 d (119). La posición media empeora por lo mismo que en las corridas 14 y 15: entran páginas nuevas en posiciones bajas ("automatic grading" en pos 43–48 y protección ES en pos 30 el 10-22).
+- **Corrección automática ES es la página que más sube.** Tuvo 7 impresiones en 4 días (10-22 → 10-25), en pos 8,7–11, desde el rastreo del 10-22. Está en la parte de abajo de la página 1, pero bloqueada hasta el 10-29.
+- Nota de costo EN: 14 imp en pos 6,9 en 28 d. El 10-25 tuvo 2 imp en pos 2. La caída a pos 11 del 10-22 fue un solo día. Queda bloqueada hasta el 11-05.
+- Migración ES: 9 imp en pos 6,7, con 5 días seguidos de impresiones en pos 1–11. La EN suma 6 en pos 6,2 y el 10-25 salió en pos 1. Son 15 impresiones sin clics: con ese volumen, el CTR todavía no dice nada.
+- Queries visibles (9): "apoyo escolar rv" tiene 8 imp en pos 17,1 hacia el caso ES. Es la marca del cliente y su propio sitio va primero, así que no se persigue. La de universidad sigue con 6 imp en pos 6,2.
+- Por país (28 d vs 28 d anteriores): Argentina desktop pasa de 4 a 20 imp y de 2 a 5 clics, y su posición mejora de 25,5 a 8,1. España mobile tiene 4 imp en pos 5,5 y antes no tenía ninguna.
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed" con Breadcrumbs válidos.
+- **El índice de casos (#37) se indexó el mismo día que se publicó.** `/casos/` y `/en/cases/` figuran rastreadas el 10-23. Es la página que más rápido entró de todo el sitio.
+- Casos: Apoyo Escolar RV ES 10-22 y EN 10-21, Lu Apuntes ES 10-20 y EN 10-23, Dr. La Rosa ES 10-21 y SIED EN 10-20. **SIED ES sigue en 09-16.** La inspección detallada no muestra nada raro: canonical de Google = el declarado, fetch ok, robots ok. Como única página de referencia muestra el hub.
+- Sin rastreo nuevo desde la corrida 15: corrección asistida ES (08-18), hub EN (09-29), evals ES (10-01) y Dr. La Rosa EN (09-30). n8n sigue indexada con el rastreo del 09-29, y el 301 responde bien.
+
+### Evaluación de cambios anteriores
+- **#31 "Otros casos" (revisión 10-26): funcionó a medias y se consolida sin cambios.** En la semana siguiente se volvieron a rastrear 7 de los 8 casos: Dr. La Rosa ES por primera vez desde el cambio (10-21), los dos de Apoyo Escolar RV, los dos de Lu Apuntes y SIED EN. El que quedó afuera es SIED ES, justo el que buscaba destrabar. Los 8 casos sumaron 22 impresiones en 28 d (antes 20). No se le suman más links a SIED ES: ya la enlazan el índice de casos, los otros 3 casos y el hub, y el criterio del 10-23 era que el cuello está en la demanda de rastreo.
+- **#37 índice de casos:** se indexó en 0 días. No tiene impresiones todavía. La revisión sigue en el 11-06.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs con 200, canonical self, un H1 y JSON-LD que parsea. 57 destinos internos, 0 rotos y 0 redirigidos. robots.txt sin cambios (permite los 8 bots de IA). llms.txt responde 200 e incluye los casos.
+- Detalle conocido sin tocar: el title de Apoyo Escolar RV ES tiene 84 caracteres. Los títulos de los casos no cambian mientras corran el #29 y el #30.
+
+### GEO / Bing
+- **Bing ya indexa el sitio, pero solo una foto vieja.** Por primera vez desde el 10-05, `site:vantalogics.com` en DuckDuckGo (usa el índice de Bing) devuelve 10 URLs: `/`, `/en/`, `/soluciones/`, `/en/solutions/`, la solución EdTech EN, los 4 casos de uso EN, `/en/blog/` y Lu Apuntes EN. Los títulos tienen el formato viejo ("— Vantalogics"), y el índice del blog EN muestra la descripción anterior al pivot ("AI automation projects"). **No figura ninguna página del cluster de plataformas, ninguna nota ni el índice de casos.** El buscador de la sesión tampoco encuentra la guía de migración para "cómo migrar una academia online de Hotmart a plataforma propia". Su respuesta dice que nadie explica cómo exportar alumnos y accesos, que es justo lo que cubre nuestra guía.
+- **Causa probable (inferida):** cada deploy le mandaba a IndexNow las 48 URLs, cambiaran o no. Eso pasaba unas 2 veces por día, porque el commit del log también desplegaba: alrededor de 40 envíos completos desde el 10-05, casi todos de URLs sin cambios. La guía de IndexNow pide avisar solo URLs agregadas, cambiadas o borradas.
+- "corrección automática de cuestionarios con IA en una academia online": tesis y material docente (CATEDU, UB, Ecuador). La respuesta generada cierra con "si necesitás casos de academias privadas, esta búsqueda no los cubrió". Es el hueco que llena nuestra nota, pero solo si Bing la indexa.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 39 | Todo el sitio (CI: `scripts/indexnow.mjs`, `.github/workflows/deploy.yml`) | Antes del deploy, CI baja el sitemap en producción. Después compara `<loc>` + `<lastmod>` con el del build y le avisa a IndexNow solo las URLs nuevas, las que cambiaron de `lastmod` y las borradas. Si no hay sitemap anterior, manda todas, como antes. Si nada cambió, no manda nada. Además, un push que solo toca `SEO_LOG.md` ya no dispara un deploy (`paths-ignore`). Probado en local (1 cambio → 1 URL; una URL borrada → se avisa; sin archivo anterior → 48) y en CI: "no URL changed, nothing sent". | Bing indexó 10 URLs de una foto vieja y ninguna de las páginas que más impresiones tienen en Google (cluster de plataformas, notas, casos), después de ~40 envíos completos de 46–48 URLs. ChatGPT search y Copilot dependen de ese índice. | Cada aviso a Bing pasa a ser una señal real de cambio. En 2–4 semanas, Bing indexa las páginas nuevas o actualizadas que se publiquen de acá en adelante, y refresca los títulos viejos cuando esas URLs cambien. | `site:vantalogics.com` vía DuckDuckGo (cantidad de URLs, si aparecen plataformas o notas, títulos actualizados); salida del paso IndexNow en cada deploy. | 2026-11-09 |
+
+No se tocó contenido: todas las páginas con señal están bloqueadas por revisiones en curso, y la única libre con impresiones (migración) entró en página 1 hace una semana.
+
+### Envíos
+- Deploy por push a `main` (commit `18a793b`, run 40319883582, ok). IndexNow: "no URL changed, nothing sent", lo correcto porque no cambió ninguna página. El sitemap no se reenvió, por el mismo motivo.
+
+### Pendientes / hipótesis para próximas corridas
+- **10-28**: notas, evals y corrección asistida (#21–#23, #27).
+- **10-29**: nota de corrección EN ("automatic grading" sigue en pos 43–48, así que no conviene perseguirla) y **corrección ES, la que más sube** (pos 9–11). Si se sostiene en página 1, es la candidata a recibir un link contextual desde la nota de evals o desde corrección asistida.
+- **Migración (sin bloqueo, sin tocar desde el 09-23):** si sigue en pos 5–7 con más de 25 impresiones y 0 clics al 11-02, probar el title y la meta. Hueco de contenido posible: la migración por etapas (seguir vendiendo en la plataforma anterior mientras la nueva entrega el acceso), que las respuestas generadas mencionan y nuestra guía solo trata en el paso 7. Solo con evidencia del caso, sin recomendar quedarse en Hotmart.
+- **11-09**: Bing (#39). Si a esa fecha sigue sin aparecer ninguna página del cluster, la palanca que queda es Bing Webmaster Tools (lo tiene que hacer el dueño), con envío manual de URLs y del sitemap.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas, evals y corrección asistida (10-28), nota de corrección y generación de evaluaciones (10-29), aprendizajes de casos (10-30), metas de casos (11-02), cobros, hub y footer de cobros (11-03), nota de costo y notas relacionadas (11-05), índice de casos (11-06) ni IndexNow (11-09).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 14 (10-22) | 09-24 → 10-21 | 7 | 100 | ~9,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
