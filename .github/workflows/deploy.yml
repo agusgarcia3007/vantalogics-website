@@ -3,6 +3,8 @@ name: Deploy
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - SEO_LOG.md
   workflow_dispatch:
 
 concurrency:
@@ -28,6 +30,8 @@ jobs:
 
       - run: bun run build
 
+      - run: curl -sf https://vantalogics.com/sitemap.xml -o previous-sitemap.xml || true
+
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -35,5 +39,5 @@ jobs:
           packageManager: bun
           command: deploy
 
-      - run: bun scripts/indexnow.mjs
+      - run: bun scripts/indexnow.mjs previous-sitemap.xml
         continue-on-error: true
