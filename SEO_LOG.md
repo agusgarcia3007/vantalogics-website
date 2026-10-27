@@ -1086,3 +1086,73 @@ No se tocó contenido: todas las páginas con señal están bloqueadas por revis
 | 14 (10-22) | 09-24 → 10-21 | 7 | 100 | ~9,8 |
 | 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
 | 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+
+---
+
+## 2026-10-27 — Corrida 17
+
+### Métricas generales (GSC, datos hasta 2026-10-26)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-29 → 10-26) | 7 | 125 | 5,6 % | ~9,2 |
+| Últimos 7 d (10-20 → 10-26) | 3 | 49 | 6,1 % | ~9,1 |
+| 7 d anteriores (10-13 → 10-19) | 2 | 32 | 6,3 % | ~7,5 |
+
+- **Cuarta semana seguida de récord: 49 impresiones, un 53 % más que la anterior.** Los 28 d también son máximo (125). La posición sigue en ~9 por el mismo motivo que en las corridas 14 a 16: entran páginas nuevas en posiciones bajas ("automatic grading" en pos 45, el caso Apoyo Escolar RV en pos 15–22 por la marca del cliente).
+- **Segundo clic no de marca del sitio: migración ES el 10-26, en pos 4.** La guía suma 10 imp en pos 6,4 y 1 clic. La EN suma 7 imp en pos 5,9, y salió en pos 1 el 10-25 y en pos 4 el 10-26. Entre las dos son 17 impresiones en 28 d.
+- Corrección automática ES: 10 imp en pos 9,2 en 28 d. Tuvo impresiones 5 días seguidos (10-22 → 10-26), siempre en pos 8,7–11. Se sostiene en la parte de abajo de la página 1.
+- Nota de costo EN: 14 imp en pos 6,9. "how much does it cost to add ai tutoring to our university?" tiene 6 imp en pos 6,2.
+- Queries visibles (9): aparecen "sied" (2 imp en pos 22 hacia el caso EN) y "proviamo" (1 imp en pos 3, sin relación con el sitio). Las demás son las de siempre.
+- Por país (28 d): Argentina desktop tiene 20 imp y 5 de los 7 clics (pos 8,1). Le siguen Colombia desktop (7, pos 4,9), España desktop (7, pos 8,1), Brasil (6) y España mobile (4, pos 5,5).
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed" con Breadcrumbs válidos.
+- Rastreos nuevos desde la corrida 16: **migración EN 10-24** (antes 09-30), **protección ES 10-24** (antes 10-07) y corrección automática EN 10-23.
+- Siguen sin rastreo nuevo: corrección asistida ES (08-18), SIED ES (09-16), evals EN (09-27), hub EN (09-29), Dr. La Rosa EN (09-30) y evals ES (10-01). La inspección detallada de corrección asistida ES no muestra nada raro: fetch ok, canonical de Google = el declarado, robots ok. Es demanda de rastreo, como se concluyó el 10-23.
+- n8n (#13) sigue "indexed" con el rastreo del 09-29. El 301 responde bien.
+
+### Evaluación de cambios anteriores
+- Ningún cambio llega hoy a su fecha de revisión. La próxima es mañana (10-28: #21–#23, #27).
+- Migración no tiene bloqueo, pero no se toca. El criterio de la corrida 16 era probar title y meta si al 11-02 seguía con más de 25 impresiones y 0 clics. Ya tuvo su primer clic con el title actual y está subiendo. Cambiarla ahora mezclaría variables justo cuando empieza a rendir.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200 y `lastmod`, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 49 destinos de links internos, 0 rotos y 0 redirigidos.
+- robots.txt sin cambios (permite los 8 bots de IA). llms.txt responde 200 e incluye el índice de casos, migración y cobros.
+- Titles largos ya conocidos y bloqueados: Apoyo Escolar RV ES (84 caracteres, metas de casos hasta el 11-02) y la nota de costo EN (77 caracteres, hasta el 11-05).
+
+### GEO / Bing
+- `site:vantalogics.com` en DuckDuckGo (índice de Bing): la misma foto vieja del 10-26, con 9 URLs (home EN, índices, solución EdTech y 3 casos de uso EN, `/soluciones/` y una URL de real estate retirada). No aparece nada del cluster de plataformas, ninguna nota ni los casos. Es lo esperable: el #39 tiene 1 día y desde entonces no se publicó ninguna página nueva que IndexNow pudiera avisar.
+- "vantalogics" en el web search de la sesión sigue sin devolver el sitio (Virage Logic, Vanteon, Vantage Logistics).
+- "migrar academia online de Hotmart a plataforma propia alumnos y accesos": aparecen la ayuda de Hotmart (que explica la migración inversa, hacia Hotmart Club), guiadesoftware, Capterra y b2bstack. La respuesta generada dice que "no hubo resultados sobre el proceso concreto de trasladar alumnos y sus accesos (cuentas, contraseñas, progreso y certificados)". Eso es justo lo que cubre nuestra guía, que ya gana clics en Google. El hueco no es de contenido sino de índice: ese buscador no tiene la página.
+- "migrate online course students from Tiendup WooCommerce to own platform": servicios de migración de carritos (Thinkific/Teachable → WooCommerce), Tutor LMS y LearnDash. No aparece nadie que hable de Tiendup ni un caso real.
+
+### Cambios
+Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso. La única libre con impresiones, migración, acaba de dar su primer clic y no se toca. Las hojas que no se rastrean tienen entre 6 y 23 páginas de origen: sumarles links no las destrabó el 10-23 y no hay dato nuevo que cambie esa conclusión. Hacer un cambio solo para tener algo que deployar iría contra la regla de darle tiempo a Google.
+
+### Envíos
+- No hubo deploy ni cambio de URLs, así que no se mandó nada a IndexNow ni se reenvió el sitemap.
+
+### Pendientes / hipótesis para próximas corridas
+- **10-28**: notas, evals y corrección asistida (#21–#23, #27). Evals ES/EN y corrección asistida ES nunca se volvieron a rastrear después de sus cambios, así que lo más probable es que la revisión dé "no concluyente por falta de rastreo".
+- **10-29**: nota de corrección. La ES se sostiene en pos 9–11 hace 5 días. Si sigue así, es la candidata a un empujón en la propia página (title o el H2 que coincida con la query, cuando aparezca una visible). La EN no persigue "automatic grading".
+- **Migración**: si al 11-02 suma otro clic o sube a pos 1–3, se consolida y no se toca. Si se estanca en pos 5–7, primero el title EN y después el hueco de la migración por etapas, siempre con evidencia del caso.
+- **11-09**: Bing (#39). Si a esa fecha sigue sin aparecer nada del cluster, la palanca es Bing Webmaster Tools (lo tiene que hacer el dueño).
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas, evals y corrección asistida (10-28), nota de corrección y generación de evaluaciones (10-29), aprendizajes de casos (10-30), metas de casos (11-02), cobros, hub y footer de cobros (11-03), nota de costo y notas relacionadas (11-05), índice de casos (11-06) ni IndexNow (11-09).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
