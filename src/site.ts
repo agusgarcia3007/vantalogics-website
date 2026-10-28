@@ -1,6 +1,6 @@
 export const SITE_URL = "https://vantalogics.com"
 
-export const HOME_UPDATED = "2026-10-14"
+export const HOME_UPDATED = "2026-10-28"
 
 export const BLOG_INDEX_UPDATED = "2026-10-09"
 
