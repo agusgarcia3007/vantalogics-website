@@ -1156,3 +1156,79 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
 | 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
 | 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+
+---
+
+## 2026-10-28 — Corrida 18
+
+### Métricas generales (GSC, datos hasta 2026-10-27; el 10-27 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (09-30 → 10-27) | 7 | 137 | 5,1 % | 8,6 |
+| Últimos 7 d (10-21 → 10-27) | 1 | 58 | 1,7 % | 8,2 |
+| 7 d anteriores (10-14 → 10-20) | 3 | 34 | 8,8 % | 7,0 |
+
+- **Quinta semana seguida de récord: 58 impresiones, un 71 % más que la anterior.** Los 28 d también son máximo (137). La posición media de 28 d mejora de ~9,2 a 8,6.
+- **El 10-27 es el mejor día del sitio: 18 impresiones en pos 3,8**, pero el dato es preliminar (por página/país/dispositivo solo devuelve una fila). Por página: `/en/` 9 imp en pos 3,6, `/en/privacy/` 6 en pos 1,7, `/privacidad/` 3, `/en/solutions/` 3. Home más privacidad y soluciones juntas, en pos 1–5, es el patrón de sitelinks en una búsqueda de marca. Se confirma cuando el dato quede firme.
+- Corrección automática ES: 12 imp en pos 8,5 en 28 d (11 en los últimos 7 d). El 10-27 salió en pos 5. La EN tuvo 2 imp en pos 2,5 ese día, la primera vez que sale en página 1 (en 28 d sigue en pos 14,5 por "automatic grading").
+- Nota de costo EN: 16 imp en pos 6,5. La query de universidad sube a 7 imp en pos 5,4 (antes 6 en pos 6,2). Google la volvió a rastrear hoy.
+- Migración: ES 10 imp en pos 6,6 con 1 clic. EN 9 imp en pos 5,4 (4 en los últimos 7 d, en pos 3,2).
+- **Protección ES baja:** del 10-10 al 10-18 salió 5 veces en pos 1–2 (1 clic). Desde el 10-21, 4 veces en pos 8–30. Google la rastreó el 10-24. Con una impresión por día y las queries ocultas, puede ser otra query y no una caída. No se toca. Se vigila hasta el 11-04.
+- Por país (28 d): USA desktop 29 imp, pos 12,1. Argentina desktop 20, pos 8,1, con 5 de los 7 clics. Brasil 7, Colombia 6 (pos 4,5) y España desktop 6. Sudáfrica tuvo 1 clic.
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed" con Breadcrumbs válidos.
+- Rastreos nuevos: nota de costo EN 10-28, tutor de IA EN 10-24, migración EN 10-24, corrección asistida EN 10-23, corrección automática ES 10-22 y EN 10-23, RAG ES 10-22, tutor de IA ES 10-21 y búsqueda semántica ES 10-21.
+- Siguen sin rastreo nuevo: corrección asistida ES (08-18), evaluar tutor ES (09-16), RAG EN (09-26), evals EN (09-27), tutor o búsqueda EN (09-28) y evals ES (10-01).
+
+### Evaluación de cambios anteriores (revisión 10-28)
+- **#21 (bloque "Dónde lo construimos" en las notas): no movió los casos de uso. Se deja como está.** Desde el 10-14 Google rastreó 5 de las 10 notas indexables y 5 de los 6 casos de uso de destino, así que los links ya los vio. Aun así, los 8 casos de uso suman 5 impresiones en 28 d (assisted grading EN 3, semantic search EN 1, assessment generation EN 1). Los 4 ES tienen 0 desde el 09-23. En el período anterior parecían tener ~30, pero 17 eran de un pico de dos días (09-22 y 09-23, el día del pivot). La señal de fondo era de ~13 y ahora es 5. Las notas se quedan con esos temas: corrección automática ES suma 12 imp, mientras que corrección asistida ES no tiene ninguna. **Aprendizaje:** el link interno no genera demanda. Los casos de uso son páginas de servicio sin datos propios, y la página que tiene evidencia es la que gana. No se revierte nada: los links sirven para el usuario y para los LLMs, y no hacen daño.
+- **#22 (nota de evals reorientada a educación): no concluyente.** Google no volvió a rastrear ninguna de las dos (ES 10-01, EN 09-27), así que todavía indexa la versión anterior. Tuvo 1 impresión en 28 d (ES, pos 3). Se vuelve a mirar cuando se rastree.
+- **#23 y #27 (lecturas en corrección asistida): no concluyente en ES y neutral en EN.** La ES no se rastrea desde el 08-18. La EN se rastreó el 10-23 y tiene 3 imp en pos 7,3 (antes 4 en pos 5). No hay efecto medible.
+- **Consecuencia para próximas corridas:** si se quiere que los casos de uso rankeen, la palanca es la evidencia y no más links. Corrección asistida y generación de evaluaciones pueden apoyarse en el caso Apoyo Escolar RV. Tutor de IA y búsqueda semántica no tienen ningún caso en producción que los respalde. No se hace hoy: los casos están bloqueados hasta el 10-30 y el 11-02, y el tema se cruza con la nota de corrección, que se revisa mañana.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, `index, follow`, un H1 y JSON-LD que parsea. robots.txt permite los 8 bots de IA y llms.txt responde 200.
+- **Error encontrado: el H1 de la home pegaba dos palabras en el HTML.** Las dos líneas del titular son `<span>` que el CSS pasa a bloque, y Astro no dejaba espacio entre ellas. En el HTML crudo, que es lo que leen GPTBot, ClaudeBot, PerplexityBot y cualquier parser que no aplica CSS, quedaba "Construimos la inteligencia **detrásde** los productos educativos" y "We build the intelligence **behindeducation** products". Es la frase principal de la entidad, en la página más rastreada. Se revisaron los H1 y H2 de las 66 páginas del build y no hay otro caso.
+
+### GEO / Bing
+- No hubo lectura del índice de Bing. DuckDuckGo pidió captcha, y Bing en headless devolvió resultados que no tenían nada que ver con la búsqueda (anti-bot). No se puede comparar con el 10-27. El #39 se sigue revisando el 11-09.
+- **Primer aviso real del #39:** el deploy de hoy le mandó a IndexNow solo las 2 URLs que cambiaron (`IndexNow: 200 for 2 URLs`: `/` y `/en/`). Las dos son de la foto vieja que Bing tiene del sitio, así que es la primera prueba de si un aviso puntual hace que Bing refresque una URL.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 40 | `/` y `/en/` (también `/ar/`, en noindex) | Espacio entre las dos líneas del H1 en `src/components/home/Portada.astro`. El texto visible no cambia. `HOME_UPDATED = 2026-10-28`, porque cambia el texto que ven los crawlers que no renderizan. Por eso el sitemap y el aviso a IndexNow incluyen las dos homes. | El H1 crudo decía "detrásde" y "behindeducation". La home EN es la página con más impresiones del sitio (26 en 28 d) y la que Bing tiene con un título viejo. | Los LLMs y Bing leen bien la frase de la entidad. Bing vuelve a rastrear la home por el aviso puntual y actualiza el título y la descripción. En Google no debería verse nada (renderiza con CSS). | Título y descripción de la home en Bing (`site:vantalogics.com`, cuando se pueda leer sin captcha); la salida de IndexNow ya dio 200. | 2026-11-09 (junto con #39) |
+
+### Envíos
+- Deploy por push a `main` (commit `94e6640`, run 40684965397, ok). En producción, los dos H1 ya salen con espacio.
+- IndexNow: 200 para 2 URLs (`/`, `/en/`).
+- Sitemap reenviado a GSC (12:06).
+
+### Pendientes / hipótesis para próximas corridas
+- **10-29**: nota de corrección (#25) y generación de evaluaciones (#26). La ES suma 12 imp en pos 8,5 y salió en pos 5 el 10-27. Si se sostiene en página 1, el siguiente paso es la propia página (title o el H2 de la query visible). Por ahora el link desde corrección asistida ES no sirve, porque esa página no se rastrea desde el 08-18.
+- **Confirmar el 10-27** cuando el dato quede firme: si las 18 impresiones de home, privacidad y soluciones son sitelinks de una búsqueda de marca.
+- **Protección ES**: si al 11-04 sigue en pos 8–30, mirar las queries con impresiones de la página y si cobros y acceso (publicada el 10-20) le está sacando alguna.
+- **Migración**: mismo criterio del 10-27 (decisión el 11-02).
+- **11-09**: Bing (#39 y #40). Si a esa fecha sigue sin aparecer nada del cluster, la palanca es Bing Webmaster Tools (lo tiene que hacer el dueño).
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: nota de corrección y generación de evaluaciones (10-29), aprendizajes de casos (10-30), metas de casos (11-02), cobros, hub y footer de cobros (11-03), nota de costo y notas relacionadas (11-05), índice de casos (11-06), IndexNow y H1 de la home (11-09).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
