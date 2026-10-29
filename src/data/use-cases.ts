@@ -212,7 +212,7 @@ export const USE_CASES: UseCase[] = [
 
   {
     solution: "edtech-y-plataformas-educativas",
-    updated: "2026-10-15",
+    updated: "2026-10-29",
     reading: [
       "correccion-automatica-de-cuestionarios-con-ia",
       "evals-para-agentes-de-ia",
@@ -395,12 +395,24 @@ export const USE_CASES: UseCase[] = [
           ar: "لا نفعل، لأن كواشف اليوم لديها معدل إيجابيات كاذبة غير مقبول حين تكون النتيجة اتهامًا بعدم النزاهة الأكاديمية. أما ما يمكن فعله فهو إعادة تصميم التكليف ليطلب عمليةً وتكرارًا وسياقًا شخصيًا، وهو ما لا يستطيع نموذج اختلاقه.",
         },
       },
+      {
+        question: {
+          es: "¿Y si las respuestas de desarrollo son números o fórmulas?",
+          en: "What if the open answers are numbers or formulas?",
+          ar: "وماذا لو كانت الإجابات المفتوحة أرقامًا أو صيغًا؟",
+        },
+        answer: {
+          es: "Entonces no hace falta rúbrica ni borrador: se corrigen comparando contra una clave verificada, sin IA en el momento de corregir. En una academia con 5.563 respuestas de desarrollo de física y química, el 99,4 % se resolvió así y solo el 0,6 % quedó para la docente. La corrección asistida con rúbrica es para lo que no entra en una clave: producción escrita, código, casos y proyectos.",
+          en: "Then you don't need a rubric or a draft: they are graded by comparing against a verified answer key, with no AI at grading time. At an academy with 5,563 open answers in physics and chemistry, 99.4% were handled that way and only 0.6% were left for the teacher. Rubric-based assisted grading is for what doesn't fit a key: written work, code, cases and projects.",
+          ar: "عندها لا حاجة إلى سلّم تقييم ولا إلى مسودة: تُصحَّح بالمقارنة مع مفتاح إجابة مُتحقَّق منه، دون ذكاء اصطناعي لحظة التصحيح. في أكاديمية لديها 5563 إجابة مفتوحة في الفيزياء والكيمياء، عولج 99.4% منها بهذه الطريقة ولم يبقَ للمعلّمة سوى 0.6%. أما التصحيح المُعان وفق سلّم تقييم فهو لما لا يدخل في مفتاح: الإنتاج الكتابي والبرمجة ودراسات الحالة والمشاريع.",
+        },
+      },
     ],
   },
 
   {
     solution: "edtech-y-plataformas-educativas",
-    updated: "2026-10-15",
+    updated: "2026-10-29",
     reading: ["correccion-automatica-de-cuestionarios-con-ia"],
     slug: {
       es: "generacion-de-evaluaciones",
@@ -578,6 +590,18 @@ export const USE_CASES: UseCase[] = [
           es: "Técnicamente sí, y hay que pensarlo dos veces. Si cada alumno recibe ítems distintos, las notas dejan de ser comparables salvo que todos los ítems estén calibrados al mismo nivel de dificultad, y eso requiere un banco maduro. La ruta razonable es variantes de ítems ya calibrados, no generación al vuelo.",
           en: "Technically yes, and it deserves a second thought. If each student gets different items, grades stop being comparable unless every item is calibrated to the same difficulty — which requires a mature bank. The reasonable route is variants of already-calibrated items, not generation on the fly.",
           ar: "تقنيًا نعم، ويستحق الأمر تفكيرًا ثانيًا. فإن حصل كل متعلّم على أسئلة مختلفة، لم تعد الدرجات قابلة للمقارنة إلا إذا عُوير كل سؤال على مستوى الصعوبة نفسه، وهذا يستلزم بنكًا ناضجًا. والطريق المعقول هو صياغات بديلة لأسئلة مُعايَرة سلفًا، لا توليد لحظي.",
+        },
+      },
+      {
+        question: {
+          es: "¿Cómo se detecta una pregunta con la respuesta correcta mal cargada?",
+          en: "How do you catch a question whose correct answer was entered wrong?",
+          ar: "كيف يُكتشف سؤال أُدخلت إجابته الصحيحة خطأً؟",
+        },
+        answer: {
+          es: "Comparando la clave con lo que contestan los alumnos. En 581 preguntas de opción múltiple de una academia real, la opción más votada coincidió con la clave en el 97,8 % de los casos, y en al menos 4 de los 13 desacuerdos la que estaba mal era la clave guardada. Por eso un ítem no se da por bueno al aprobarlo: el uso encuentra errores que la revisión previa no vio.",
+          en: "By comparing the key against what students answer. Across 581 multiple-choice questions at a real academy, the most-chosen option matched the key 97.8% of the time, and in at least 4 of the 13 disagreements it was the stored key that was wrong. That's why an item isn't considered good just because it was approved: use finds errors that the prior review missed.",
+          ar: "بمقارنة المفتاح بما يجيب به المتعلّمون. في 581 سؤال اختيار من متعدّد في أكاديمية حقيقية، طابق الخيار الأكثر اختيارًا المفتاحَ في 97.8% من الحالات، وفي 4 على الأقل من حالات الخلاف الـ13 كان المفتاح المحفوظ هو الخاطئ. لذلك لا يُعدّ السؤال جيدًا لمجرد اعتماده: الاستخدام يكشف أخطاء لم ترها المراجعة السابقة.",
         },
       },
     ],

@@ -1,7 +1,7 @@
 ---
 title: "Automatic quiz grading with AI: what we measured on 5,563 real answers"
 seoTitle: "Automatic quiz grading with AI: a real case — Vantalogics"
-description: "We measured where AI goes wrong when grading a real academy's answers, and why the grade comes from a verified answer key, not from the model."
+description: "5,563 real answers from an academy: 99.4% can be graded against a verified answer key. When the AI gave the grade, 43% of students got an inconsistent verdict."
 answer: "At an academy with 5,563 ungraded open answers, 99.4% can be graded without AI at grading time: by comparing against a verified answer key. When the AI ruled answer by answer, 80 of 185 students (43%) got the opposite verdict to another student with the same answer. AI is useful for building the key and for writing the feedback, not for giving the grade."
 date: 2026-10-15
 cluster: casos

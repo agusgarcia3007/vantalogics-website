@@ -1,7 +1,7 @@
 ---
 title: "Corrección automática de cuestionarios con IA: lo que medimos en 5.563 respuestas reales"
 seoTitle: "Corrección automática de cuestionarios con IA: caso real — Vantalogics"
-description: "Medimos dónde se equivoca la IA al corregir las respuestas de una academia real y por qué la nota la pone una clave verificada, no el modelo."
+description: "5.563 respuestas reales: el 99,4 % se corrige contra una clave verificada. Cuando la IA ponía la nota, el 43 % de los alumnos tuvo un veredicto inconsistente."
 answer: "En una academia con 5.563 respuestas de desarrollo sin corregir, el 99,4 % se puede corregir sin IA en el momento de corregir: comparando contra una clave verificada. Cuando la IA dictaminaba respuesta por respuesta, 80 de 185 alumnos (43 %) recibieron un veredicto opuesto al de otro alumno con la misma respuesta. La IA sirve para construir la clave y para redactar la devolución, no para poner la nota."
 date: 2026-10-15
 cluster: casos
