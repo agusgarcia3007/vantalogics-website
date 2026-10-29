@@ -1232,3 +1232,75 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
 | 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
 | 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+
+---
+
+## 2026-10-29 — Corrida 19
+
+### Métricas generales (GSC, datos hasta 2026-10-28; el 10-28 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-01 → 10-28) | 7 | 142 | 4,9 % | ~7,9 |
+| Últimos 7 d (10-22 → 10-28) | 1 | 62 | 1,6 % | ~6,9 |
+| 7 d anteriores (10-15 → 10-21) | 3 | 38 | 7,9 % | ~8,8 |
+
+- **Sexta semana seguida de récord: 62 impresiones, un 63 % más que la anterior**, y con mejor posición (~6,9 contra ~8,8). Los 28 d también son máximo (142). El 10-28 trae 10 impresiones en pos 5,1 aunque todavía es preliminar.
+- **Los clics no acompañan: 1 en la última semana.** Las impresiones nuevas son de páginas en pos 5–10 con 1–3 impresiones por día. Con un CTR esperable de 2–5 % en esas posiciones, 62 impresiones dan 1–3 clics. Todavía no es una señal de CTR bajo.
+- **El 10-27 quedó firme en 18 impresiones.** Por página suman ~45 (`/en/` 9, `/en/privacy/` 6, `/privacidad/` 3, `/en/solutions/` 3 y 15 URLs más con 1–2 cada una). Muchas URLs propias sobre pocas búsquedas es un patrón de búsqueda de marca. La privacidad EN en pos 1,7, por encima de la home en pos 3,6, apunta a alguien que buscó la política de privacidad del sitio, por ejemplo una revisión de app de Meta o Google. Sin clics. No pide ninguna acción.
+- Por página (28 d): `/en/` 28 imp en pos 4,2. Nota de costo EN 17 en pos 6,3. **Corrección ES 13 en pos 8,4 y corrección EN 13 en pos 12,8.** Protección ES 12 en pos 6,5. `/` 11 con 4 clics. Migración EN 10 en pos 5,6 y ES 9 en pos 6,6 con 1 clic.
+- Queries visibles (7): "apoyo escolar rv" 8 imp en pos 17 hacia el caso ES (es la marca del cliente, y su propio sitio va primero). La query de universidad tiene 7 imp en pos 5,4. "automatic grading" 2 en pos 45,5 y "sied" 2 en pos 22.
+- Por país (28 d): USA desktop 27 imp en pos 12,7. Argentina desktop 22 en pos 7,7, con 5 de los 7 clics. Brasil 7, Colombia 6 (pos 4,5), España 10 entre desktop y mobile.
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed" con Breadcrumbs válidos.
+- Rastreos nuevos: **home ES el 10-28**, el mismo día del arreglo del H1 (#40). **Generación de evaluaciones ES el 10-22** (antes 09-25), por el `lastmod` del #26.
+- Siguen sin rastreo nuevo: corrección asistida ES (08-18), generación de evaluaciones EN (10-02), evals ES (10-01) y hub EN (09-29).
+
+### Evaluación de cambios anteriores (revisión 10-29)
+- **#25 (nota de corrección automática ES/EN): funcionó. Se consolida.** Las dos indexaron en 1–2 días y suman 26 impresiones en 28 d. Es el segundo grupo de impresiones no de marca, detrás de la nota de costo. La ES tuvo impresiones 7 días seguidos (10-22 → 10-28) en pos 5–11 y viene mejorando: pos 9 el 10-22, pos 5 el 10-27, pos 7 el 10-28. La EN cae a pos 12,8 por "automatic grading" (2 imp en pos 45). Sin esa query, sus otras 11 impresiones promedian pos ~6,9, con pos 2,5 el 10-27. Tiene 0 clics, que con 26 impresiones en pos 7–8 todavía no es una señal (lo esperable es 0,5–1 clic).
+- **#26 (bloque de lecturas en generación de evaluaciones): no movió la página.** El `lastmod` provocó el rastreo de la ES (10-22), pero la página tiene 0 impresiones en ES y 1 en EN (pos 20) en 28 d. Antes tenía 9. Confirma el aprendizaje del 10-28: un link no crea demanda, y la página de servicio no tenía ningún dato propio. Se itera con evidencia (#41).
+- GEO: "corrección automática de cuestionarios con IA academia online" en el buscador de la sesión sigue devolviendo material académico (UC3M, CATEDU, UMA, UOC). La respuesta generada cierra con "no encontré datos sobre precisión de la calificación de respuestas de desarrollo en entornos reales ni sobre academias online concretas". Es exactamente lo que publica nuestra nota, pero ese índice no tiene el sitio (`site:vantalogics.com` devuelve Vantage Logistics). En la query de costo de tutor IA para universidades, los citados siguen siendo ibl.ai, quadc y liveinthefuture, todos vendedores con cifras.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200 y `lastmod`, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 49 destinos de links internos, 0 rotos y 0 redirigidos. robots.txt permite los 8 bots de IA. llms.txt y la clave de IndexNow responden 200.
+- Ya conocidos, sin cambio hoy: titles de casos de 71–84 caracteres (bloqueados hasta el 11-02), nota de costo EN de 77 (hasta el 11-05) y descriptions de 166–206 caracteres en 9 páginas (notas, solución EdTech y generación de evaluaciones). Se van a corregir cuando cada página se toque por otro motivo, no como cambio aislado.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 41 | `/soluciones/edtech-y-plataformas-educativas/generacion-de-evaluaciones/` y `/correccion-asistida/` + EN (AR también, en noindex) | Una FAQ nueva en cada página, con datos del caso Apoyo Escolar RV ya publicados en la nota #25 (sin cifras nuevas). Generación: "¿Cómo se detecta una pregunta con la respuesta correcta mal cargada?", con 581 preguntas, 97,8 % de coincidencia y al menos 4 de 13 desacuerdos con la clave mal. Corrección asistida: "¿Y si las respuestas de desarrollo son números o fórmulas?", con el 99,4 % de 5.563 que se corrige contra una clave y el 0,6 % que queda para la docente. Esta segunda FAQ además delimita para qué sirve la rúbrica, sin competir con la nota. El texto entra al FAQPage. `updated: 2026-10-29` en las dos. | Revisión de #26: generación tiene 1 imp en 28 d (antes 9) aunque la ES se rastreó. Corrección asistida tiene 3 imp (EN, pos 7,3) y la ES no se rastrea desde el 08-18. Aprendizaje del 10-28: ganan las páginas que tienen evidencia propia, no las que tienen más links. Eran las dos páginas de servicio sin un solo dato. | El `lastmod` hace que Google rastree las 4 URLs (sobre todo corrección asistida ES y generación EN, que llevan semanas sin rastreo). Las páginas pasan a tener un dato citable y vuelven a recibir impresiones en temas de evaluación. La nota no debería perder posición, porque las FAQ responden a otra pregunta. | Último rastreo de las 4 URLs; impresiones y posición de las dos páginas de servicio y de la nota de corrección ES/EN (28 d). | 2026-11-12 |
+| 42 | `/blog/correccion-automatica-de-cuestionarios-con-ia/` + EN | Solo la meta description. Antes no tenía cifras ("Medimos dónde se equivoca la IA…"). Ahora: "5.563 respuestas reales: el 99,4 % se corrige contra una clave verificada. Cuando la IA ponía la nota, el 43 % de los alumnos tuvo un veredicto inconsistente." (158 caracteres; EN 159). No cambian title, contenido ni `lastmod`, porque el texto de la nota es el mismo y Google la rastrea cada semana (10-22 y 10-23). | 26 impresiones en pos 7–8 y 0 clics en 28 d. Era la única página con impresiones cuya meta no tenía ningún dato, después del #30 en casos. Es la variable más liviana: el title, que pesa en el ranking, no se toca mientras la ES sube. | Más CTR cuando la nota aparece en página 1, y un snippet citable para motores de IA. | CTR e impresiones de la nota ES/EN; que el snippet de Google muestre la meta nueva. | 2026-11-12 |
+
+### Envíos
+- Deploy por push a `main` (commit `cfac7c5`, run 40870487918, ok). En producción ya salen las dos FAQ y las metas nuevas.
+- IndexNow: 200 para 4 URLs (las 4 páginas de servicio). La nota no se avisó porque su `lastmod` no cambió.
+- Sitemap reenviado a GSC (12:06).
+
+### Pendientes / hipótesis para próximas corridas
+- **10-30**: aprendizajes de casos (#29).
+- **11-02**: metas de casos (#30) y migración. Mismo criterio que el 10-27: si suma otro clic o sube a pos 1–3, se consolida y no se toca. Si se estanca en pos 5–7, primero el title EN.
+- **11-04**: protección ES. Si sigue en pos 8–30, mirar sus queries y si cobros le saca alguna.
+- **Nota de corrección**: si la ES llega a pos 1–5 sostenida y aparece una query visible, el siguiente paso es el title o el H2 de esa query. La EN no persigue "automatic grading".
+- **11-09**: Bing (#39 y #40). Si a esa fecha sigue sin aparecer nada del cluster, la palanca es Bing Webmaster Tools, y lo tiene que hacer el dueño. Hoy el bloqueo de GEO es claramente de índice: el buscador de la sesión no tiene el sitio, y su respuesta dice que falta justo lo que publicamos.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: aprendizajes de casos (10-30), metas de casos (11-02), cobros, hub y footer de cobros (11-03), nota de costo y notas relacionadas (11-05), índice de casos (11-06), IndexNow y H1 de la home (11-09), páginas de servicio de evaluación y meta de la nota de corrección (11-12).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | ~7,9 |
