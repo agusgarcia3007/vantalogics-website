@@ -1241,11 +1241,11 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 
 | Ventana | Clics | Impresiones | CTR | Posición |
 |---|---|---|---|---|
-| Últimos 28 d (10-01 → 10-28) | 7 | 142 | 4,9 % | ~7,9 |
-| Últimos 7 d (10-22 → 10-28) | 1 | 62 | 1,6 % | ~6,9 |
-| 7 d anteriores (10-15 → 10-21) | 3 | 38 | 7,9 % | ~8,8 |
+| Últimos 28 d (10-01 → 10-28) | 7 | 142 | 4,9 % | 8,3 |
+| Últimos 7 d (10-22 → 10-28) | 1 | 62 | 1,6 % | 7,1 |
+| 7 d anteriores (10-15 → 10-21) | 3 | 38 | 7,9 % | 8,4 |
 
-- **Sexta semana seguida de récord: 62 impresiones, un 63 % más que la anterior**, y con mejor posición (~6,9 contra ~8,8). Los 28 d también son máximo (142). El 10-28 trae 10 impresiones en pos 5,1 aunque todavía es preliminar.
+- **Sexta semana seguida de récord: 62 impresiones, un 63 % más que la anterior**, y con mejor posición (7,1 contra 8,4). Los 28 d también son máximo (142). El 10-28 trae 10 impresiones en pos 5,1 aunque todavía es preliminar.
 - **Los clics no acompañan: 1 en la última semana.** Las impresiones nuevas son de páginas en pos 5–10 con 1–3 impresiones por día. Con un CTR esperable de 2–5 % en esas posiciones, 62 impresiones dan 1–3 clics. Todavía no es una señal de CTR bajo.
 - **El 10-27 quedó firme en 18 impresiones.** Por página suman ~45 (`/en/` 9, `/en/privacy/` 6, `/privacidad/` 3, `/en/solutions/` 3 y 15 URLs más con 1–2 cada una). Muchas URLs propias sobre pocas búsquedas es un patrón de búsqueda de marca. La privacidad EN en pos 1,7, por encima de la home en pos 3,6, apunta a alguien que buscó la política de privacidad del sitio, por ejemplo una revisión de app de Meta o Google. Sin clics. No pide ninguna acción.
 - Por página (28 d): `/en/` 28 imp en pos 4,2. Nota de costo EN 17 en pos 6,3. **Corrección ES 13 en pos 8,4 y corrección EN 13 en pos 12,8.** Protección ES 12 en pos 6,5. `/` 11 con 4 clics. Migración EN 10 en pos 5,6 y ES 9 en pos 6,6 con 1 clic.
@@ -1303,4 +1303,4 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
 | 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
 | 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
-| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | ~7,9 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
