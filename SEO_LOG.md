@@ -1304,3 +1304,79 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
 | 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
 | 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+
+---
+
+## 2026-10-30 — Corrida 20
+
+### Métricas generales (GSC, datos hasta 2026-10-29; el 10-29 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-02 → 10-29) | 7 | 158 | 4,4 % | 7,9 |
+| Últimos 7 d (10-23 → 10-29) | 1 | 72 | 1,4 % | ~6,1 |
+| 7 d anteriores (10-16 → 10-22) | 3 | 41 | 7,3 % | ~9,5 |
+
+- **Séptima semana seguida de récord: 72 impresiones, un 76 % más que la anterior, y la posición mejora de ~9,5 a ~6,1.** Los 28 d también son máximo (158, posición 7,9). El 10-29 trae 19 impresiones en pos 5,1, el mejor día junto con el 10-27, aunque todavía es preliminar.
+- **La nota de costo EN es la página que más crece.** Suma 25 impresiones en 28 d (antes 17) en pos 5,1. En la última semana tuvo 13 en pos 2,6, contra 8 en pos 7,2 la semana anterior, y el 10-29 sacó 8 en pos 2,5. La query de universidad ("how much does it cost to add ai tutoring to our university?") llega a 9 impresiones en pos 4,7, y salió en pos 1–2 el 10-25, 10-27 y 10-29. **0 clics.** Con 13 impresiones en pos ~2,6, lo esperable es 1–2 clics, y la probabilidad de que salgan 0 por azar es de ~20 %. Hay que mirarlo, pero todavía no alcanza para afirmar que el CTR es bajo. Sigue bloqueada hasta el 11-05 (ver Decisiones).
+- Corrección automática: ES 17 imp en pos 8,5 y EN 17 en pos 11,6. El 10-29 tuvieron 4 cada una, en pos 8,8 y 7,8. Sin "automatic grading" (2 imp en pos 45,5), la EN promedia pos ~8,1.
+- Migración: ES 9 imp en pos 6,3 con 1 clic. EN 10 en pos 5,6 (5 en la última semana, en pos 4). Protección ES: 12 imp en pos 6,5. En la última semana tuvo 5 en pos 6,6, mejor que la anterior (8,6). Los 3 días del 10-28 salieron en pos 4,7.
+- Queries visibles (8): universidad 9 imp, "apoyo escolar rv" 8 hacia el caso ES en pos 17,1 (y 1 hacia el EN en pos 6), "automatic grading" 2, "sied" 2 en pos 22. El resto tiene 1 cada una.
+- Países (28 d): USA 32 imp en pos 11,6 y sin clics. Argentina 25 en pos 8,2, con 6 de los 7 clics. Brasil 7, Sudáfrica 5 (1 clic), Canadá 4 y Chile 4. Dispositivos: desktop 109 imp con 6 clics, mobile 45 con 1 clic (pos 6,2).
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed" con Breadcrumbs válidos. Sitemap: 48 URLs, 0 errores, descargado el 10-29 a las 12:06.
+- Rastreos nuevos: **caso Apoyo Escolar RV ES el 10-29 y EN el 10-30** (#29), **home EN el 10-30**, nota de costo ES el 10-29.
+- **Corrección asistida ES no se rastrea desde el 08-18.** Tuvo dos cambios de `lastmod` (10-15 y 10-29) y 8 links internos desde páginas que Google sí rastrea (nota de corrección, hub, solución EdTech, otras 3 páginas de servicio). Inspección detallada: el canonical de Google es el propio, el fetch es "SUCCESSFUL", y `referring_urls` está vacío. No es un problema técnico, es la prioridad de rastreo que Google le da a una página sin impresiones desde el 09-23. Siguen sin rastrear su versión actual, además: generación de evaluaciones EN (10-02), hub EN (09-29, actualizado el 10-20) y protección EN (10-06, esta sí está al día).
+- La API no permite pedir indexación. La única palanca que queda es "Solicitar indexación" desde la UI de GSC, y no hay sesión de Google en `playwright-cli`: pasa al dueño (ver Pendientes).
+
+### Evaluación de cambios anteriores (revisión 10-30)
+- **#29 (bloque "Lo que aprendimos en este proyecto" en Apoyo Escolar RV y Lu Apuntes): cumplió la parte de rastreo. Se consolida.** Google rastreó los 4 casos después del cambio (Lu Apuntes ES el 10-20 y EN el 10-23, Apoyo Escolar RV ES el 10-29 y EN el 10-30), cuando antes ninguno se rastreaba desde el 10-05. Migración ES se rastreó el 10-19 y la EN el 10-24 (antes, el 09-30). Las guías de destino suben o se sostienen: migración EN de ~6 a 10 imp en 28 d, migración ES estable en 9 con 1 clic, protección ES estable en 12 con mejor posición en la última semana, y corrección ES/EN de 13 a 17 cada una. No se puede atribuir la suba solo al bloque, porque cada página tiene sus propios cambios (#25, #41, #42), pero no hay ninguna señal negativa. El bloque queda. Que SIED y Dr. La Rosa sigan sin bloque es correcto: no hay ninguna nota con datos suyos.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 57 destinos de links internos, 0 rotos y 0 redirigidos. Ninguna URL indexable tiene menos de 6 links internos de entrada. robots.txt permite los 8 bots de IA y llms.txt responde 200.
+- Sin cambios respecto del 10-29: titles de casos de 71–84 caracteres (bloqueados hasta el 11-02), nota de costo EN de 77 (hasta el 11-05) y descriptions de 164–206 caracteres en 12 páginas, casi todas con 0–3 impresiones. Mismo criterio: se corrigen cuando la página se toque por otra razón.
+
+### GEO
+- "how much does it cost to add AI tutoring to our university per student" (buscador de la sesión): citan a ibl.ai (3 posts: "what AI tutoring actually costs", "per seat vs usage"), quadc, liveinthefuture, callsphere y la Western University. La respuesta generada se apoya en dos ideas que nuestra nota ya trabaja: usuarios activos contra matriculados ("solo el 10–15 % usa la tutoría") y costo por uso contra licencia por asiento. Todos los citados publican precios en USD, que es justo lo que este sitio no hace (regla del dueño). Nuestra ventaja es el método y el ratio de 126×. Ese índice todavía no tiene el sitio (`site:vantalogics.com` vuelve a dar Vantage Logistics y similares). Es el mismo bloqueo de índice del 10-29, y se revisa el 11-09.
+- Para el 11-05, la nota EN puede sumar una sección "active vs enrolled" y "per seat vs usage", explicadas con ratios y sin montos. Es lo que la respuesta generada cita de otros y la query de universidad pide.
+
+### Cambios
+- **Ninguno en el sitio.** Las páginas con señal están bloqueadas por revisiones en curso: nota de costo (11-05), casos (11-02), hub y cobros (11-03), páginas de evaluación y nota de corrección (11-12). La auditoría no encontró errores. Las páginas sin bloqueo tienen 0–3 impresiones, así que cualquier cambio sería una suposición, no un dato. Cambiar el title de la nota de costo hoy mezclaría esa variable con #35/#36 justo cuando la página pasó de pos 7 a pos 2–3.
+
+### Decisiones para la nota de costo EN (11-05)
+- Si llega a 20 o más impresiones en pos ≤ 3 sin clics, se cambia el title a uno de ≤ 60 caracteres que hable de la query de universidad (hoy tiene 77 y Google lo corta) y la meta a ≤ 155. Mismo cambio en la ES, que debe espejar.
+- Si suma un clic o más, se deja el title y se evalúa la sección de activos contra matriculados (ver GEO).
+- En los dos casos, el cambio de contenido va con `updated` nuevo y el de title/meta solo, sin `updated`.
+
+### Envíos
+- Sin deploy (no hubo cambios en el sitio). No se mandó IndexNow ni se reenvió el sitemap: Google ya lo bajó el 10-29 y no cambió nada.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-02**: metas de casos (#30) y migración. Si migración suma otro clic o sube a pos 1–3, se consolida. Si se estanca en pos 5–7, primero el title EN.
+- **11-03**: cobros, hub y footer de cobros.
+- **11-04**: protección ES. En la última semana mejoró (pos 6,6). Si se sostiene, no se toca.
+- **11-05**: nota de costo y #35/#36, con los criterios de arriba.
+- **11-09**: Bing (#39 y #40).
+- **Para el dueño (nuevo)**: en GSC → Inspección de URLs → "Solicitar indexación" de `/soluciones/edtech-y-plataformas-educativas/correccion-asistida/` (sin rastreo desde el 08-18 a pesar de dos `lastmod`), `/en/solutions/edtech-and-learning-platforms/assessment-generation/` y `/en/education-platforms/`. Así Google ve las FAQ del #41 y el link a cobros del hub EN. Son 2 minutos, y la API no lo permite.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: metas de casos (11-02), cobros, hub y footer de cobros (11-03), nota de costo y notas relacionadas (11-05), índice de casos (11-06), IndexNow y H1 de la home (11-09), páginas de servicio de evaluación y meta de la nota de corrección (11-12).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
