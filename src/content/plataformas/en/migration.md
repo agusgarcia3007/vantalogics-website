@@ -1,7 +1,7 @@
 ---
 title: "How to migrate an online academy from Hotmart, Tiendup or WordPress to a platform of your own"
-seoTitle: "Migrate your academy from Hotmart, Tiendup or WordPress | Vantalogics"
-description: "What you can export from Hotmart, Tiendup and WooCommerce, how students and purchases move without losing access, and the process we used with a real academy."
+seoTitle: "Migrate your academy off Hotmart or WordPress | Vantalogics"
+description: "What Hotmart, Tiendup and WooCommerce let you export, how purchases become course access, and the 7 steps we used with an academy of 22,000+ students."
 answer: "Migrating an academy is not copying videos: it is moving students, purchases and access without anyone losing a course. No platform does it automatically. Sales and enrollees are exported, normalized, each old product is mapped to a new course, the whole run is rehearsed without touching anything, and then it is imported in a single operation, notifying every student."
 nav: "Migration"
 order: 1
