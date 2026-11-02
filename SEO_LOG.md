@@ -1435,7 +1435,8 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 - **11-09**: Bing (#39 y #40).
 - **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42). Generación de evaluaciones EN ya se rastreó (10-31).
 - **11-16**: title y meta de migración EN (#43). Si mejora, se espeja en la ES. Si no, la siguiente palanca es la sección de migración por etapas (ver GEO).
-- Para el dueño, siguen abiertos: "Solicitar indexación" en GSC de corrección asistida ES, SIED ES y el hub EN; Bing Webmaster Tools; `sameAs` con perfiles reales; autor con nombre; links desde los sitios de los clientes; el commit `6ce459f` con atribución, y los montos de comisión de Hotmart en el pilar.
+- **Indexación pedida (11-02, después de la corrida):** el MCP `gsc` ahora tiene `request_indexing`, que maneja el botón "Solicitar indexación" de GSC desde el Chrome del VPS. Se pidió para corrección asistida ES (sin rastreo desde el 08-18), SIED ES (desde el 09-16) y el hub EN (desde el 09-29; ya tenía un pedido anterior). Las tres respondieron "Indexing requested". **Revisar el 11-05 si se rastrearon.** Desde ahora la indexación la pide cada corrida, con un cupo de ~10 por día, y deja de ser tarea del dueño.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools; `sameAs` con perfiles reales; autor con nombre; links desde los sitios de los clientes; el commit `6ce459f` con atribución, y los montos de comisión de Hotmart en el pilar.
 - No tocar: cobros, hub y footer de cobros (11-03), nota de costo y notas relacionadas (11-05), índice de casos (11-06), IndexNow y H1 de la home (11-09), páginas de servicio de evaluación y meta de la nota de corrección (11-12), migración EN (11-16).
 
 ### Evolución desde el inicio del log
