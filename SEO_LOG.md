@@ -1380,3 +1380,80 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
 | 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
 | 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+
+---
+
+## 2026-11-02 — Corrida 21
+
+### Métricas generales (GSC, datos hasta 2026-11-01; el 11-01 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-05 → 11-01) | 7 | 167 | 4,2 % | ~6,9 |
+| Últimos 7 d (10-26 → 11-01) | 1 | 70 | 1,4 % | ~5,3 |
+| 7 d anteriores (10-19 → 10-25) | 2 | 48 | 4,2 % | ~9,7 |
+
+- **Octava semana seguida de récord en 28 d (167 impresiones, posición ~6,9).** La semana es casi igual a la del 10-23 → 10-29 (72), con mejor posición. Los últimos tres días bajan a 6, 8 y 3 impresiones (fin de semana, y el 11-01 todavía es preliminar). No se lee como caída hasta ver el dato firme.
+- **Clics planos: 7 en 28 d, igual que en las últimas 5 corridas, y 1 en la última semana.** Las impresiones crecen en páginas en pos 4–8 con 1–3 impresiones por día, sobre todo en EN y en desktop USA, que no ha dado un clic desde el inicio del log.
+- **Nota de costo EN: 31 imp en pos 4,8, 0 clics** (25 hace 3 días). La query de universidad tiene 11 imp en pos 4,1. Se decide el 11-05 con el criterio de la corrida 20.
+- Corrección automática ES 21 imp en pos 8,4, EN 17 en pos 11,6, las dos sin clics. Protección ES 12 en pos 6,5 con 1 clic. Hub ES 9 en pos 4,4.
+- Queries visibles (7): universidad 11, "apoyo escolar rv" 8 hacia el caso ES en pos 17,1, "automatic grading" 2 en pos 45,5, "sied" 2 en pos 22 y tres con 1 impresión ("graded quiz: model development", "proviamo").
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed" con Breadcrumbs válidos. Sitemap: 48 URLs, todas con `lastmod`.
+- Rastreos nuevos: **generación de evaluaciones EN el 10-31** (sin rastreo desde el 10-02; ya incluye la FAQ del #41), caso SIED EN el 10-31, home ES el 10-31, home EN y hub ES el 10-30, nota de costo EN el 10-30.
+- Siguen sin rastreo de su versión actual: **corrección asistida ES (08-18)**, **SIED ES (09-16)** y hub EN (09-29). Las tres siguen en la lista para que el dueño pida indexación desde la UI.
+
+### Evaluación de cambios anteriores (revisión 11-02)
+- **#30 (meta propia por caso): neutral. Se consolida, sin más cambios.** Desde el 10-19 los casos suman ~18 impresiones en 14 días (antes ~11 en los 14 anteriores), pero con 0 clics. Casi todas son búsquedas de la marca del cliente: "apoyo escolar rv" en pos 15–24, donde el sitio propio del cliente va primero, y "sied" en pos 22. Para una búsqueda de navegación en pos 15–22 no hay snippet que dé clics, así que el CTR de los casos no sirve para medir la meta. La meta queda porque es la que leen llms.txt y los LLMs. **Aprendizaje:** los casos no van a traer clics desde Google por sí solos. Su papel es dar evidencia a las guías y a las notas (#29), que es donde están las impresiones no de marca.
+- **Migración: estancada, se aplica el criterio del 10-27.** No sumó otro clic desde el del 10-26 ni llegó a pos 1–3. En 28 d, ES tiene 11 imp en pos 7,9 con 1 clic (la última semana bajó a pos ~9,8, con 2 imp en pos 15 el 10-31) y EN 11 imp en pos 5,4 con 0 clics (la última semana, 5 en pos ~4,4). El paso fijado era "primero el title EN" (#43).
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 57 destinos de links internos, 0 rotos y 0 redirigidos. robots.txt permite los 8 bots de IA y llms.txt responde 200.
+- El commit `c09e201` (Astro 7.3.8, sharp, zod por CVE) entró hoy en producción sin cambios en el HTML: el build da las mismas 66 páginas.
+
+### GEO / SERP
+- "how to migrate online courses from Hotmart to your own platform without losing students" (buscador de la sesión): el resultado lo dominan las ayudas de Hotmart para migrar **hacia** Hotmart Club, Fiverr, y guías de migración de vendedores (Teachery, Ruzuku, Circle, SchoolMaker, Heights) entre plataformas SaaS. La respuesta generada cierra con que no encontró "un método para exportar desde Hotmart ni si los datos de ventas se pueden exportar". La ES ("migrar academia online de Hotmart a plataforma propia") dice lo mismo: "no encontré guías sobre cómo exportar alumnos o contenido desde Hotmart". Es justo la primera sección de nuestra guía ("Qué se puede sacar de cada plataforma"), pero ese índice no tiene el sitio. Se sigue el 11-09 con Bing.
+- Las dos respuestas citan el "solapamiento de 2 a 4 semanas" entre plataformas. Nuestra guía lo trata en el paso 7 y en el punto 10 del checklist, sin un nombre propio. Es el hueco que ya anotó la corrida 16 (migración por etapas). Queda para después de medir el #43.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 43 | `/en/education-platforms/migration/` | Solo title y meta. Title: "Migrate your academy from Hotmart, Tiendup or WordPress \| Vantalogics" (70 caracteres, Google lo corta) → "Migrate your academy off Hotmart or WordPress \| Vantalogics" (59). Tiendup sale del title EN porque es una plataforma argentina que el público en inglés no busca. Sigue en el H1, la meta y el cuerpo. Meta sin ningún dato → "What Hotmart, Tiendup and WooCommerce let you export, how purchases become course access, and the 7 steps we used with an academy of 22,000+ students." (150). El dato es el que ya está publicado en el caso. Sin `updated`, porque el contenido no cambia (mismo criterio que #42). **La ES no se toca:** tiene el único clic de la guía con el title actual, y el criterio del 10-27 era probar primero en EN para no mezclar variables. Si el EN mejora, se espeja el 11-16. | EN: 11 imp en pos 5,4 y 0 clics en 28 d, estancada en pos 4–7 desde el 10-08. El title superaba el ancho que muestra Google y la meta era la única del cluster de plataformas sin una cifra (protección y cobros tienen). | Title completo en el snippet y meta con un dato concreto: el CTR de la guía EN pasa de 0 a algún clic cuando sale en pos 3–5. La posición no debería moverse, porque el title conserva "migrate", "academy", "Hotmart" y "WordPress". | CTR, impresiones y posición de la guía EN (28 d); que el snippet muestre el title nuevo. | 2026-11-16 |
+
+### Envíos
+- Deploy por push a `main` (commit `cf613ee`, run 41441741069, ok). En producción ya salen el title y la meta nuevos.
+- IndexNow desde CI: "no URL changed, nothing sent", como se esperaba, porque el `lastmod` no cambió. Se mandó a mano la URL de la guía EN: 200.
+- Sitemap reenviado a GSC (12:05).
+- **Error de proceso:** el primer commit de la corrida (`da35d17`) llevaba la línea `Co-Authored-By`, que las reglas globales del dueño prohíben. Se corrigió con `--amend` y `--force-with-lease` a los segundos de pushearlo, antes de que nadie lo bajara. El deploy de ese commit quedó cancelado. Ningún commit de esta corrida lleva atribución.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-03**: cobros, hub y footer de cobros (#32–#34). Cobros ES tiene 2 imp en pos 6 y EN 1 en pos 2 en 28 d, y el hub EN no se rastrea desde el 09-29.
+- **11-04**: protección ES. Sigue en 12 imp en pos 6,5 con 1 clic. Si se sostiene, no se toca.
+- **11-05**: nota de costo (#35/#36), con los criterios de la corrida 20. Ya pasó las 20 impresiones (31), pero en pos 4,8. Hay que mirar cuántas salieron en pos ≤ 3.
+- **11-09**: Bing (#39 y #40).
+- **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42). Generación de evaluaciones EN ya se rastreó (10-31).
+- **11-16**: title y meta de migración EN (#43). Si mejora, se espeja en la ES. Si no, la siguiente palanca es la sección de migración por etapas (ver GEO).
+- Para el dueño, siguen abiertos: "Solicitar indexación" en GSC de corrección asistida ES, SIED ES y el hub EN; Bing Webmaster Tools; `sameAs` con perfiles reales; autor con nombre; links desde los sitios de los clientes; el commit `6ce459f` con atribución, y los montos de comisión de Hotmart en el pilar.
+- No tocar: cobros, hub y footer de cobros (11-03), nota de costo y notas relacionadas (11-05), índice de casos (11-06), IndexNow y H1 de la home (11-09), páginas de servicio de evaluación y meta de la nota de corrección (11-12), migración EN (11-16).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
