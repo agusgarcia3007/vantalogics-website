@@ -1458,3 +1458,84 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
 | 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
 | 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
+
+---
+
+## 2026-11-03 — Corrida 22
+
+### Métricas generales (GSC, datos hasta 2026-11-02; el 11-02 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-06 → 11-02) | 7 | 182 | 3,8 % | ~7,0 |
+| Últimos 7 d (10-27 → 11-02) | 0 | 81 | 0 % | ~5,7 |
+| 7 d anteriores (10-20 → 10-26) | 3 | 49 | 6,1 % | ~9,1 |
+
+- **Novena semana seguida de récord en 28 d: 182 impresiones (167 ayer).** La semana suma 81 impresiones, un 65 % más que la anterior, con mejor posición (9,1 → 5,7). El 11-02 trae 17 impresiones aunque es preliminar: la baja del fin de semana (6, 8 y 3) no era una caída.
+- **0 clics en la última semana, por primera vez desde que hay volumen.** Los 7 clics de 28 d son los mismos de siempre: 6 de Argentina y 1 de Sudáfrica, casi todos a la home ES (4 de 9 impresiones, pos 1,8). Las impresiones nuevas son EN, desktop y fuera de LatAm: USA ya tiene 37 en pos 7,4 y **ningún clic desde el inicio del log**.
+- **Nota de costo EN: 37 imp en pos 5,3 (23 en la última semana, en pos 4,3), 0 clics.** Por día: pos 2,5 el 10-29 (8 imp), 3 el 10-31 (4) y 8 el 11-02 (6). La query de universidad está en 11 imp en pos 4,1. Se decide el 11-05.
+- Corrección automática: **la EN mejora** (20 imp en 28 d; en la última semana 12 en pos 6,5, antes promediaba 11,6) y la ES está en 21 en pos 8,4 (11 en pos 7,7 la última semana). Sin clics.
+- Migración ES sube a 15 imp en pos 8 (11 hace un día), con 4 el 11-02 en pos 8,2. EN 11 en pos 5,4.
+- Queries visibles (9): universidad 11, "apoyo escolar rv" 8 + 1, "automatic grading" 2, "sied" 2 y cuatro con 1 ("graded quiz: model development", "lu apuntes", "luapuntes", "proviamo").
+- Dispositivos (28 d): desktop 123 imp con 6 clics, mobile 54 con 1, tablet 5.
+- Nota técnica: `get_advanced_search_analytics` ordena por impresiones solo dentro de la página que devuelve, así que con `row_limit` bajo un país grande (USA) puede no salir primero. Hay que pedir todas las filas.
+
+### Indexación
+- URL Inspection (20 URLs): todas "Submitted and indexed" con Breadcrumbs válidos. La API cortó por timeouts y errores SSL varias veces; se completó reintentando de a una.
+- **Los tres pedidos de indexación del 11-02 funcionaron:** corrección asistida ES se rastreó el 11-02 (no se rastreaba desde el 08-18, a pesar de dos `lastmod` y 8 links internos), SIED ES el 11-02 (desde el 09-16) y el hub EN el 11-03 (desde el 09-29). **Aprendizaje:** para páginas sin impresiones que Google no prioriza, "Solicitar indexación" logra en 1 día lo que `lastmod` + links no lograron en 2 meses. Desde ahora es la primera palanca cuando una página cambiada no se rastrea en una semana.
+- Otros rastreos nuevos: generación de evaluaciones ES el 11-01, corrección asistida EN el 11-03, nota de evaluar un tutor EN el 11-01.
+- Cambiaron y Google todavía no los releyó: **migración EN** (title y meta del #43, 11-02; último rastreo 10-24) y **nota de corrección ES/EN** (meta del #42, 10-29; últimos rastreos 10-22 y 10-23). Se pidió indexación y respondió `quota_exceeded` en la cuenta `/u/0` (la `/u/1` no tiene acceso a la propiedad). El cupo de ayer todavía no se liberó. Se reintenta mañana.
+- Cobros ES/EN: indexadas desde el 10-20 (día de publicación) y sin rastreo nuevo, que es correcto porque el contenido no cambió.
+
+### Evaluación de cambios anteriores (revisión 11-03)
+- **#32 (guía de cobros y acceso ES/EN): indexó, pero todavía no tiene demanda. Se consolida sin cambios.** Las dos URLs se indexaron el mismo día de la publicación (10-20), como #4 y #25. En 14 días tienen 3 impresiones: ES 2 en pos 6 (una en pos 10 la última semana) y EN 1 en pos 2 (10-27). La guía de migración y la de protección tardaron 3–4 semanas en pasar de 1–2 impresiones a 10 o más, así que 3 impresiones a los 14 días están dentro de lo esperable. El contenido ya responde lo que la SERP no responde (ver GEO). Cambiarlo ahora sería mover una página sin ningún dato. Se vuelve a mirar el 11-17.
+- **#33 (link desde el hub ES/EN): cumplió.** La guía nueva se descubrió en el día. El hub EN no se rastreó por el `lastmod` (lo logró el pedido de indexación del 11-02, ver arriba). El hub ES sigue en pos ~5 (7 imp en 28 d, antes 9 en pos 4,4): no se movió, que era la hipótesis.
+- **#34 (cobros en el footer): neutral.** Ninguna señal medible con 3 impresiones. Queda, porque es coherente con migración y protección, que también están en el footer.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 48 destinos de links internos, 0 rotos y 0 redirigidos. La página con menos links internos de entrada tiene 6. robots.txt permite los 8 bots de IA y llms.txt responde 200.
+- Sin cambios: titles de 66–84 caracteres y descriptions de 164–206 en las páginas ya conocidas. Mismo criterio: se corrigen cuando la página se toque por otra razón.
+
+### GEO
+- "cómo cobrar cursos online con Mercado Pago y dar acceso automático al alumno" (buscador de la sesión): la SERP la llenan ~12 páginas programáticas de OpenEduCat ("integrations/mercado-pago/boarding-school", "high-school", etc.), el plugin de Moodle `enrol_mpcheckoutpro`, un post de Shopify sobre medios de pago y un reglamento de la UTN. La respuesta generada abre con "no encontró una guía paso a paso específica para vender cursos con Mercado Pago y dar acceso automático" y termina recomendando "una plataforma que reciba la notificación de pago (webhook/IPN)". Es justo el centro de nuestra guía (webhook, conciliación, avisos repetidos). Es el mismo patrón de migración y corrección: el hueco existe y lo cubrimos, pero ese índice no tiene el sitio.
+- "vantalogics plataformas educativas": 0 resultados del sitio. El bloqueo sigue siendo de índice (Bing), y se revisa el 11-09.
+- IndexNow manual de la nota de corrección ES/EN (el cambio de meta del #42 no se había avisado porque el `lastmod` no cambió): 200.
+
+### Cambios
+- **Ninguno en el sitio.** La revisión de hoy (cobros) pide esperar, no cambiar. Las páginas con señal están bloqueadas por revisiones en curso: nota de costo (11-05), páginas de evaluación y meta de la nota de corrección (11-12), migración EN (11-16). Las páginas sin bloqueo tienen 0–9 impresiones, casi todas de marca. Lo útil de hoy era de índice: confirmar que el pedido de indexación funciona y avisar a Bing del cambio de meta.
+
+### Envíos
+- Sin deploy. IndexNow: 200 para las 2 URLs de la nota de corrección.
+- Pedido de indexación de migración EN y nota de corrección ES/EN: `quota_exceeded`. Pasa a mañana.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-04**: reintentar el pedido de indexación de migración EN y nota de corrección ES/EN, primero. Después, protección ES: sigue en 12 imp en pos 6,5 con 1 clic (4 en pos 5,8 la última semana). Si se sostiene, no se toca.
+- **11-05**: nota de costo (#35/#36). Criterio de la corrida 20. En la última semana salió 23 veces en pos 4,3; hay que contar cuántas impresiones salieron en pos ≤ 3 (por día: 10-27 2 en 3,5; 10-28 1 en 3; 10-29 8 en 2,5; 10-31 4 en 3, o sea ~15) y si sigue sin clics.
+- **11-09**: Bing (#39 y #40).
+- **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42). La meta solo cuenta desde que Google relea la nota.
+- **11-16**: migración EN (#43). Igual: cuenta desde el rastreo.
+- **11-17**: cobros ES/EN (#32). Si sigue con menos de 5 impresiones, mirar si el title ES compite con el hub por "cobrar cursos online" y si conviene un link desde la nota o el caso con más rastreo.
+- **USA, 37 impresiones y 0 clics desde el inicio**: no es una página sino un público. Si el 11-05 la nota de costo EN pasa a title nuevo y sigue en 0, es la próxima línea de análisis (intención informacional pura de universidades que no buscan proveedor).
+- Para el dueño, siguen abiertos: Bing Webmaster Tools; `sameAs` con perfiles reales; autor con nombre; links desde los sitios de los clientes; el commit `6ce459f` con atribución, y los montos de comisión de Hotmart en el pilar.
+- No tocar: nota de costo y notas relacionadas (11-05), índice de casos (11-06), IndexNow y H1 de la home (11-09), páginas de servicio de evaluación y meta de la nota de corrección (11-12), migración EN (11-16), cobros (11-17).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
