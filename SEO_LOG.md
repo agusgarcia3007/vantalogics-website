@@ -1539,3 +1539,81 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
 | 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
 | 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+
+---
+
+## 2026-11-04 — Corrida 23
+
+### Métricas generales (GSC, datos hasta 2026-11-03; el 11-03 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-07 → 11-03) | 6 | 195 | 3,1 % | ~6,8 |
+| Últimos 7 d (10-28 → 11-03) | 0 | 79 | 0 % | ~6,1 |
+| 7 d anteriores (10-21 → 10-27) | 1 | 58 | 1,7 % | ~8,2 |
+
+- **Décima semana seguida de récord en 28 d: 195 impresiones (182 ayer).** El 11-02 cerró en 18 y el 11-03 ya trae 15 siendo preliminar. La posición de la semana mejora de 8,2 a 6,1.
+- **Clics: 6 en 28 d, uno menos que ayer, solo porque el clic del 10-06 salió de la ventana.** Van 8 días seguidos sin clics (el último fue migración ES el 10-26). Los 6 clics son de Argentina (5 desktop y 1 mobile), y 4 son de la home ES (9 imp, pos 1,8).
+- **Nota de costo EN: 40 imp en pos 5,0, 0 clics** (26 en la última semana, en pos 4,5). La query de universidad tiene 9 imp en pos 2,9 en esta ventana.
+- Corrección automática ES 23 imp en pos 8,0, EN 21 en pos 10,9 (en la última semana, 11 en pos 7,6, antes 4 en pos 14,8). Migración ES 16 en pos 7,6 con 1 clic, EN 11 en pos 5,4. Protección ES 15 en pos 6,4 con 1 clic. `/en/` 26 en pos 3,8 sin clics.
+- Queries visibles (9), las mismas de ayer: universidad 9, "apoyo escolar rv" 8 + 1, "automatic grading" 2 (pos 45,5), "sied" 2 y cuatro con 1.
+- Países (28 d): USA desktop 34 imp en pos 7,5 y USA mobile 6, los dos sin clics. Argentina desktop 24 con 5 clics, Argentina mobile 10 con 1. Después vienen España (14), Colombia (8) y Canadá (6).
+
+### Indexación
+- **Pedidos de indexación reintentados, los tres con respuesta "requested":** migración EN (title y meta del #43, último rastreo 10-24), nota de corrección ES (ya era un pedido repetido) y nota de corrección EN. El cupo de `/u/0` se había liberado.
+- **La nota de corrección ya se releyó con la meta del #42:** ES el 11-03 y EN el 11-02. La revisión del 11-12 cuenta desde esas fechas.
+- Otros rastreos nuevos: corrección asistida EN el 11-03, caso SIED ES y `/casos/` el 11-02, corrección asistida ES el 11-02 (por el pedido del 11-02).
+- Sin rastreo nuevo y sin cambios pendientes: protección ES (10-24), protección EN (10-06), cobros EN (10-20) y nota de costo EN (10-30). Todas tienen la versión actual indexada.
+- URL Inspection: las 16 URLs que respondieron están "Submitted and indexed" con Breadcrumbs válidos. Home ES/EN, hub EN, migración ES y cobros ES no respondieron por timeouts de la API. No cambiaron desde su último rastreo, así que no se reintentó.
+- Sitemap: 48 URLs válidas, 0 errores, último download 11-02.
+
+### Evaluación de cambios anteriores (revisión 11-04)
+- **Protección ES: se sostiene y mejora. Se consolida sin cambios.** En 28 d tiene 15 imp en pos 6,4 y 1 clic (12 en pos 6,5 el 11-02). En la última semana tuvo 6 imp en pos 5,3, contra 4 en pos 14,2 la semana anterior. Las impresiones son de 1 a 3 por día, con posiciones de 1 a 10 y una suelta en 30. El criterio era "si se sostiene, no se toca".
+- **Protección EN: 2 imp en 28 d (pos 5,5) contra 15 de la ES**, sin rastreo desde el 10-06. El contenido indexado es el actual, así que un pedido de indexación no cambiaría nada. La SERP en inglés (ver GEO) la ocupan universidades, LMS y vendedores de DRM, con más autoridad que este sitio. No es algo que se arregle con title o meta: hace falta que Bing y los LLMs tengan el sitio (11-09).
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, todas con `lastmod`, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 49 destinos de links internos, 0 rotos y 0 redirigidos. robots.txt permite los 8 bots de IA y llms.txt responde 200.
+- `/en/solutions/` (índice con una sola solución) tiene 9 imp en pos 4,2. La página de la solución, `/en/solutions/edtech-and-learning-platforms/`, tiene 1. Es el riesgo de canibalización que anotó la corrida 1, pero las queries están anonimizadas y son 9 impresiones. No se fusiona sin ver la query. Si llega a 20 impresiones, o si aparece una query visible compartida, se evalúa un 301 del índice a la solución o un índice con contenido propio.
+
+### GEO
+- "cómo evitar que compartan la cuenta de un curso online y descarguen los videos" (buscador de la sesión): vdocipher (2 resultados), SendPulse, VideoShield, foros de HP Academy y el Brightspace de Vanderbilt. La respuesta generada propone sesión única, streaming sin URL directa y marca de agua con el nombre del alumno. Ninguna fuente da datos de una academia real. Nuestra página es la única con cifras (1.248 alertas, falsos positivos, PDFs cifrados), pero ese índice no tiene el sitio.
+- La misma búsqueda en inglés trae Vanderbilt, Knorish, Learnyst, Inkrypt, foros de Moodle y Canvas y una patente. Es el mismo patrón, y explica por qué la EN no despega en Google.
+
+### Cambios
+- **Ninguno en el sitio.** La revisión de hoy (protección ES) pedía consolidar. Las páginas con más señal tienen revisión pendiente: nota de costo (mañana), evaluación y nota de corrección (11-12), migración EN (11-16), cobros (11-17). Las páginas sin bloqueo tienen menos de 10 impresiones y queries anonimizadas. Hoy no se gastó cupo de indexación en páginas sin cambios, para guardarlo para el cambio de la nota de costo.
+
+### Envíos
+- Sin deploy, sin IndexNow y sin reenvío del sitemap (no cambió nada).
+- Pedido de indexación: migración EN y nota de corrección ES/EN, las tres "requested".
+
+### Pendientes / hipótesis para próximas corridas
+- **11-05: nota de costo EN (#35/#36), con el criterio de la corrida 20.** Dato para la decisión: con datos hasta el 11-03, las impresiones en pos ≤ 3 son ~15 (10-25 2 en pos 2, 10-28 1 en 3, 10-29 8 en 2,5 y 10-31 4 en 3, más 10-27 con 2 en 3,5, en el límite), todas sin clics. El umbral es 20. Las últimas tres fechas salieron en pos 5, 8 y 4,6. Si no llega a 20, hay que decidir si el criterio de "pos ≤ 3" sigue siendo el correcto con 40 impresiones en pos 5 y 0 clics, o si alcanza con eso para probar el title de ≤ 60 caracteres (hoy tiene 77 y Google lo corta).
+- **11-05**: confirmar que migración EN y la nota de corrección EN se rastrearon por el pedido de hoy.
+- **11-09**: Bing (#39 y #40). Protección, migración, cobros y costo dependen de ese índice para GEO.
+- **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42), que ya está releída.
+- **11-16**: migración EN (#43). **11-17**: cobros ES/EN (#32).
+- `/en/solutions/` vs la página de la solución EdTech: mirar cuando pase 20 impresiones.
+- Para el dueño, siguen abiertos: Bing Webmaster Tools; `sameAs` con perfiles reales; autor con nombre; links desde los sitios de los clientes; el commit `6ce459f` con atribución, y los montos de comisión de Hotmart en el pilar.
+- No tocar: nota de costo y notas relacionadas (11-05), índice de casos (11-06), IndexNow y H1 de la home (11-09), páginas de servicio de evaluación y meta de la nota de corrección (11-12), migración EN (11-16), cobros (11-17), protección (consolidada; no se reabre sin un dato nuevo).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 23 (11-04) | 10-07 → 11-03 | 6 | 195 | ~6,8 |
