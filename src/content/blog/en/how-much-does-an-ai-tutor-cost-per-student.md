@@ -1,10 +1,10 @@
 ---
 title: "What an AI tutor costs per student, and why the math comes before the prototype"
-seoTitle: "How much does an AI tutor cost per student? How to calculate it — Vantalogics"
-description: "How to calculate model cost per active student, why the same 40 messages a month can cost 126 times more depending on the architecture, and the four levers that bring it down."
+seoTitle: "AI tutoring cost per student for a university — Vantalogics"
+description: "Model cost follows active students, not enrolled ones. How to estimate it before building, why architecture can multiply it 126×, and 4 levers to cut it."
 answer: "An AI tutor's cost is measured per active student per month, not per query. It depends on three variables: messages per student, context retrieved per message, and the model chosen. In EdTech the unit economics are tight, so the math comes before the prototype: if it exceeds the margin of the plan selling the feature, there's no product. For the same student and the same number of messages, a large model fed the whole unit costs 126 times more than tight retrieval with a small model."
 date: 2026-08-09
-updated: 2026-10-09
+updated: 2026-11-05
 cluster: costos
 useCases:
   - tutor-de-ia
@@ -43,6 +43,25 @@ The calculation has three variables:
 **The model chosen.** With an order-of-magnitude difference between the small and large models of the same family.
 
 Multiplied out, they give the number you compare against the plan's margin.
+
+## For a university: enrolled students aren't active students
+
+The first number a university has is enrollment, and it's the wrong one for this calculation. Model cost is only incurred by students who actually write to the tutor in a given month, so the estimate starts from active students, not from everyone enrolled in the courses where the tutor is available.
+
+That share isn't fixed. It varies by course, by year and by moment in the term: it rises before exams and assignment deadlines and drops in between. That's why the calculation is done per month and with the peak month, not with a semester average that hides the month that breaks the budget.
+
+It also changes how two pricing models compare:
+
+| | Per-seat license | Usage-based cost |
+|---|---|---|
+| What you pay for | Every enrolled student with access | The messages active students actually send |
+| Predictability | High: known at enrollment | Lower: follows usage, with peaks |
+| Inactive students | Paid for anyway | Cost nothing |
+| What protects it | The contract | A per-student ceiling and the architecture above |
+
+Neither is better in the abstract. A per-seat license makes sense when almost every enrolled student uses the tutor every month. When usage is concentrated in a fraction of students and in a few weeks, paying per seat means paying for the ones who don't use it, and paying per use means the architecture decides the bill: the 126× from the example below applies to every active student.
+
+The practical way to get the active share before committing is the one in the last section: open semantic search over the same content to the same courses and measure who uses it and when.
 
 ## A worked example
 

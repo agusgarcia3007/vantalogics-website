@@ -1,10 +1,10 @@
 ---
 title: "Cuánto cuesta un tutor de IA por alumno, y por qué el cálculo va antes del prototipo"
-seoTitle: "¿Cuánto cuesta un tutor de IA por alumno? Cómo calcularlo — Vantalogics"
-description: "Cómo se calcula el costo de modelo por alumno activo, por qué los mismos 40 mensajes por mes pueden costar 126 veces más según la arquitectura y las cuatro palancas que lo bajan."
+seoTitle: "¿Cuánto cuesta un tutor de IA por alumno? — Vantalogics"
+description: "El costo de modelo sigue a los alumnos activos, no a los inscriptos. Cómo estimarlo antes de construir y por qué la arquitectura lo multiplica por 126."
 answer: "El costo de un tutor de IA se mide por alumno activo por mes, no por consulta. Depende de tres variables: mensajes por alumno, contexto recuperado por mensaje y modelo elegido. En EdTech la unidad económica es ajustada, así que el cálculo se hace antes del prototipo: si supera el margen del plan que vende la función, no hay producto. Para el mismo alumno y la misma cantidad de mensajes, un modelo grande que recibe la unidad entera cuesta 126 veces más que recuperación acotada con un modelo chico."
 date: 2026-08-09
-updated: 2026-10-09
+updated: 2026-11-05
 cluster: costos
 useCases:
   - tutor-de-ia
@@ -42,6 +42,25 @@ El cálculo tiene tres variables:
 **Modelo elegido.** Con una diferencia de un orden de magnitud entre los modelos chicos y los grandes de la misma familia.
 
 Multiplicadas, dan el número que hay que comparar contra el margen del plan.
+
+## En una universidad: inscriptos no es lo mismo que activos
+
+El primer número que tiene una universidad es la matrícula, y es el equivocado para este cálculo. El costo de modelo lo generan solo los alumnos que efectivamente le escriben al tutor en un mes, así que la estimación parte de los alumnos activos, no de todos los inscriptos en las materias donde el tutor está disponible.
+
+Esa proporción no es fija. Cambia por materia, por año y por momento del cuatrimestre: sube antes de los exámenes y de las entregas y baja entre medio. Por eso el cálculo se hace por mes y con el mes pico, no con un promedio del cuatrimestre que esconde el mes que rompe el presupuesto.
+
+También cambia cómo se comparan dos formas de pagar:
+
+| | Licencia por asiento | Costo por uso |
+|---|---|---|
+| Qué se paga | Cada inscripto con acceso | Los mensajes que mandan los alumnos activos |
+| Previsibilidad | Alta: se conoce al cerrar la inscripción | Menor: sigue al uso, con picos |
+| Alumnos inactivos | Se pagan igual | No cuestan nada |
+| Qué la protege | El contrato | Un techo por alumno y la arquitectura de arriba |
+
+Ninguna es mejor en abstracto. La licencia por asiento tiene sentido cuando casi todos los inscriptos usan el tutor todos los meses. Cuando el uso se concentra en una parte de los alumnos y en pocas semanas, pagar por asiento es pagar por los que no lo usan, y pagar por uso hace que la arquitectura decida la factura: el 126× del ejemplo de abajo se aplica a cada alumno activo.
+
+La forma práctica de conocer la proporción de activos antes de comprometerse es la de la última sección: abrir la búsqueda semántica sobre el mismo contenido en las mismas materias y medir quién la usa y cuándo.
 
 ## Un ejemplo con números
 
