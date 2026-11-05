@@ -1617,3 +1617,86 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
 | 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
 | 23 (11-04) | 10-07 → 11-03 | 6 | 195 | ~6,8 |
+
+---
+
+## 2026-11-05 — Corrida 24
+
+### Métricas generales (GSC, datos hasta 2026-11-04; el 11-04 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-08 → 11-04) | 6 | 214 | 2,8 % | 8,8 (6,9 sin el 11-04) |
+| Últimos 7 d (10-29 → 11-04) | 0 | 91 | 0 % | 10,8 |
+| 7 d anteriores (10-22 → 10-28) | 1 | 62 | 1,6 % | 7,1 |
+
+- **Undécima semana seguida de récord en 28 d: 214 impresiones (195 ayer).** El 11-04 trae 22 impresiones aunque es preliminar, el mejor día del log.
+- **La posición empeora solo por un dato raro:** el 11-04 la nota de corrección EN salió 5 veces en pos 87,6. Son 5 impresiones de Brasil desktop en pos ~81, con una query anonimizada. Sin ese día, los 28 d están en pos 6,9, igual que ayer. No es una caída: son impresiones nuevas en posiciones profundas que antes no aparecían.
+- **Clics: 6 en 28 d, y 10 días seguidos sin clics** (el último fue migración ES el 10-26). Todos los clics de la ventana son de Argentina.
+- **Nota de costo EN: 47 imp en pos 4,9, 0 clics** (40 ayer). La query de universidad tiene 11 imp en pos 2,5, y el 11-04 salió 2 veces **en pos 1** (Emiratos e Irlanda), sin clic. La ES tiene 5 imp en pos 6.
+- Corrección ES 24 imp en pos 8,1. Corrección EN 26 imp en pos 25,7 (el promedio lo arrastra el 11-04). Migración ES 17 en pos 7,7 con 1 clic, EN 11 en pos 5,4. Protección ES 15 en pos 6,4 con 1 clic. `/en/` 26 en pos 3,8.
+- Queries visibles (9), las mismas de siempre: universidad 11, "apoyo escolar rv" 8 + 2, "luapuntes" 3, "automatic grading" 2 (pos 45,5), "sied" 2, y tres con 1.
+- Países (7 d): USA desktop 15 imp en pos 7,3, Argentina mobile 10 en pos 7,9, Brasil desktop 5 en pos 81 (el dato raro), Canadá 4 y España 4. Ninguno tiene clics.
+
+### Indexación
+- **Migración EN se rastreó el 11-04 a las 12:02**, por el pedido de ayer. Ya tiene el title y la meta del #43, así que la revisión del 11-16 cuenta desde el 11-04.
+- La nota de corrección EN sigue con el rastreo del 11-02. Ya tenía la meta del #42, así que no hay nada pendiente.
+- La inspección en lote cortó la conexión (como en corridas anteriores). Se inspeccionaron de a una las dos URLs pendientes: las dos "Submitted and indexed" con Breadcrumbs válidos.
+- Sitemap: 48 URLs válidas, 0 errores. Se reenvió después del deploy (12:04).
+
+### Evaluación de cambios anteriores (revisión 11-05)
+- **#35 (4 notas relacionadas) y #36 (link contextual desde tutor o búsqueda): cumplieron. Se consolidan.** Desde el 10-22 la nota de costo EN pasó de 17 a 47 impresiones en 28 d, con la posición entre 4 y 5. La query de universidad pasó de pos ~4,7 a 2,5, con pos 1 el 11-04. La ES pasó de 1 a 5 impresiones. No se puede separar el efecto de los links del de la antigüedad de la página, pero ninguna señal es negativa y el objetivo era sostener el top 5.
+- **Criterio del title (corrida 20): el umbral literal no se alcanzó, pero se cambia igual.** Hay ~17 impresiones en pos ≤ 3 (10-25 2, 10-27 2 en 3,5, 10-28 1, 10-29 8, 10-31 4, y 11-04 2 en pos 1 por la query), menos que las 20 fijadas. Pero el total es de 47 impresiones en pos 4,9 sin un clic. Con un CTR esperado conservador del 4–5 % en pos 5, saldrían ~2 clics, y la probabilidad de 0 por azar baja a ~10 %. Además, el title de 77 caracteres sale cortado. Seguir esperando no da más información; cambiarlo sí.
+
+### Auditoría técnica (crawl de producción, después del deploy)
+- 48/48 URLs del sitemap con 200, todas con `lastmod`, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 49 destinos de links internos, 0 rotos y 0 redirigidos. robots.txt permite los 8 bots de IA y llms.txt responde 200.
+
+### GEO
+- "how much does it cost to add ai tutoring to our university? per student active vs enrolled" (buscador de la sesión): citan 4 posts de ibl.ai ("AI cost math for higher education: per seat vs usage", "what AI tutoring actually costs 2026"), quadc, liveinthefuture y otros. La respuesta generada se arma sobre dos ideas: un inscripto no es un usuario activo, y la licencia por asiento cobra por matrícula mientras que el costo por uso sigue a los activos. Todas las fuentes son de vendedores, con montos en USD, y la respuesta lo marca como debilidad ("sources have a commercial interest"). Cierra con que hay que medir la proporción de activos con un piloto. Esa es justo la recomendación de nuestra nota (búsqueda semántica primero), así que la sección nueva la conecta.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 44 | `/en/blog/how-much-does-an-ai-tutor-cost-per-student/` + `/blog/cuanto-cuesta-un-tutor-de-ia-por-alumno/` | **Title EN** de 77 a 59 caracteres: "AI tutoring cost per student for a university — Vantalogics". Usa las palabras de la query ("AI tutoring", "cost", "university"). **Meta EN** de 175 a 153: "Model cost follows active students, not enrolled ones. How to estimate it before building, why architecture can multiply it 126×, and 4 levers to cut it." **Title ES** de 71 a 55: "¿Cuánto cuesta un tutor de IA por alumno? — Vantalogics". No lleva "universidad" porque la ES no tiene ninguna query de universidad, y su público es de academias. **Meta ES** de 178 a 151, con la misma idea. **Sección nueva en las dos**, después de "La unidad correcta…": "En una universidad: inscriptos no es lo mismo que activos". Trae la proporción de activos variable por materia y por momento del cuatrimestre, el cálculo con el mes pico, una tabla de licencia por asiento contra costo por uso (qué se paga, previsibilidad, inactivos, qué la protege), y cuándo conviene cada una. Cierra con cómo medir los activos con la búsqueda semántica. **Sin montos y sin cifras de terceros**: la sección es método y comparación. `updated` → 2026-11-05, porque cambia el contenido. AR no se toca (noindex). | 47 imp en pos 4,9 y 0 clics en 28 d. La única query visible es de universidad, con 11 imp en pos 2,5 y pos 1 el 11-04. El title salía cortado y no decía "university"; la página solo trataba universidades en una FAQ. La respuesta generada para esa query cita a otros justo por "active vs enrolled" y "per seat vs usage" (corrida 20 y hoy). Title y sección van juntos a propósito: un title que promete "for a university" tiene que tener contenido que lo cumpla. | El snippet con title completo y la palabra de la query lleva el CTR de 0 a algún clic, sin perder posición. La sección hace la nota citable para la intención de universidades en motores de IA cuando el sitio entre en ese índice. | CTR y clics de la nota EN y de la query de universidad (28 d); posición, que no debería caer de ~5; rastreo de la versión nueva; impresiones de queries con "enrolled", "per seat" o "university". | 2026-11-19 |
+
+### Envíos
+- Deploy por push a `main` (commit `af5a3b4`, run 42023979265, ok en 36 s). En producción ya salen los titles, las metas y la sección nuevos.
+- IndexNow desde CI: 200 para 6 URLs (las dos notas, los índices del blog y las páginas que las listan, por el `lastmod`).
+- Sitemap reenviado a GSC (12:04).
+- Pedido de indexación: nota de costo EN y ES, las dos "requested" (la ES ya tenía un pedido anterior).
+- Ningún commit de esta corrida lleva atribución.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-06**: confirmar el rastreo de la nota de costo ES/EN. Índice de casos (revisión pendiente).
+- **11-09**: Bing (#39 y #40). Es el bloqueo común de GEO para costo, protección, migración y cobros: las respuestas generadas citan a otros con menos evidencia, porque ese índice no tiene el sitio.
+- **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42).
+- **11-16**: migración EN (#43), con rastreo del 11-04. **11-17**: cobros ES/EN (#32).
+- **11-19**: nota de costo (#44). Si sigue en 0 clics con 30 o más impresiones nuevas en pos ≤ 5, la intención es informacional de AI Overviews/AI Mode (preguntas largas con "our university"), y la palanca deja de ser el snippet: el valor de la página pasa a ser la cita en IA, no el clic.
+- Seguir el dato raro de corrección EN (5 imp en pos ~81 desde Brasil el 11-04). Si se repite, mirar la query cuando salga del anonimato.
+- `/en/solutions/` vs la solución EdTech: mirar cuando pase 20 impresiones (hoy 9).
+- Para el dueño, siguen abiertos: Bing Webmaster Tools; `sameAs` con perfiles reales; autor con nombre; links desde los sitios de los clientes; el commit `6ce459f` con atribución, y los montos de comisión de Hotmart en el pilar.
+- No tocar: índice de casos (11-06), IndexNow y H1 de la home (11-09), páginas de servicio de evaluación y meta de la nota de corrección (11-12), migración EN (11-16), cobros (11-17), nota de costo ES/EN y notas relacionadas (11-19), protección (consolidada).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 23 (11-04) | 10-07 → 11-03 | 6 | 195 | ~6,8 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
