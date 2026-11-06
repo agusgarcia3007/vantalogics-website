@@ -1700,3 +1700,78 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
 | 23 (11-04) | 10-07 → 11-03 | 6 | 195 | ~6,8 |
 | 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+
+---
+
+## 2026-11-06 — Corrida 25
+
+### Métricas generales (GSC, datos hasta 2026-11-05; el 11-05 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-09 → 11-05) | 6 | 228 | 2,6 % | 8,8 (7,1 sin el 11-04) |
+| Últimos 7 d (10-30 → 11-05) | 0 | 91 | 0 % | 11,6 (7,3 sin el 11-04) |
+| 7 d anteriores (10-23 → 10-29) | 1 | 72 | 1,4 % | 6,1 |
+
+- **Duodécima semana seguida de récord en 28 d: 228 impresiones (214 ayer).** El 11-04 cerró en 23, el mejor día del log, y el 11-05 ya trae 18 siendo preliminar.
+- La posición sigue arrastrada por el dato raro del 11-04 (corrección EN, 5 imp en pos ~88 desde Brasil). **No se repitió:** el 11-05 la misma nota salió 1 vez en pos 2.
+- **Clics: 6 en 28 d, todos de Argentina, y 11 días seguidos sin clics** (el último fue migración ES el 10-26).
+- **Nota de costo EN: 54 imp en pos 4,7, 0 clics.** El 11-05 salió 6 veces en pos 2,5, con 4 impresiones en pos 1 (Francia, India, y el 11-04 Emiratos e Irlanda). La query de universidad tiene 13 imp en pos 2,3. Todo eso es con el title viejo (ver Indexación).
+- Corrección ES 28 imp en pos 8,2 y EN 27 (pos 24,8 por el 11-04). Migración ES 17 en pos 7,7 con 1 clic, EN 12. Protección ES 15 en pos 6,4 con 1 clic. Nota de costo ES 7 en pos 7.
+- `/en/` bajó a 24 imp en 28 d y 1 en la última semana. No es una caída: por día siempre fue 0–2, salvo un pico de 9 el 10-27 que sostenía el promedio.
+- Queries visibles (10): universidad 13, "apoyo escolar rv" 8 + 2, "luapuntes" 4 + "lu apuntes" 1, "automatic grading" 2 (pos 45,5), "sied" 2, **"migrate from engrade pro" 2 en pos 33,5 (nueva, migración EN)**, "graded quiz: model development" 1 y "proviamo" 1. Engrade era un gradebook escolar. No es el público de academias y está en pos 33: no se actúa.
+- Países (28 d): USA 47 imp en pos 8,2 y 0 clics, Argentina 41 con los 6 clics, España 16, Brasil 10 (pos 45 por el dato raro), Canadá 9 y Reino Unido 9.
+
+### Indexación
+- **La nota de costo EN se releyó el 11-05 a las 21:46**, unas 10 horas después del deploy y del pedido de indexación. Google ya tiene el title de 59 caracteres, la meta nueva y la sección de universidades. Las impresiones del 11-05 son anteriores o casi simultáneas, así que la revisión del 11-19 cuenta desde el 11-06.
+- **La nota de costo ES sigue con el rastreo del 10-29.** Se volvió a pedir indexación y respondió `requested` con `again: false`, o sea que el pedido de ayer no había quedado registrado para esa URL. Se mira mañana.
+- Índice de casos ES/EN: "Submitted and indexed", rastreados el 10-23 (día de publicación), Breadcrumbs válidos.
+- Sitemap: 48 URLs válidas, 0 errores, último download 11-05 12:04.
+
+### Evaluación de cambios anteriores (revisión 11-06)
+- **#37 (índice de casos ES/EN): indexó en 0 días, tiene poca demanda propia y se consolida sin cambios.** En 14 días suma 4 impresiones: `/casos/` 2 en pos 4 y `/en/cases/` 2 en pos 9, con queries anonimizadas. Los 8 casos pasaron de 22 impresiones en 28 d (10-26) a 35 hoy: Lu Apuntes ES 10 (pos 8,1, sube con "luapuntes" desde Argentina mobile), Apoyo Escolar RV ES 9 (pos 16), SIED EN 6, Apoyo Escolar RV EN 4, Dr. La Rosa ES 3 y EN 2, SIED ES 1. Casos más índice son el 17 % de las impresiones (39 de 228), casi lo mismo que el 18 % del 10-23. Todas las queries visibles son de la marca del cliente, lo que confirma el aprendizaje del 11-02: los casos no traen clics desde Google, y su papel es ser evidencia para guías y notas. No hay ningún dato para cambiar el índice. Queda como página citable para motores de IA.
+- GEO del #37: el buscador de la sesión, para "casos de plataformas educativas a medida academias online", responde que **"no encontró casos detallados de academias online a medida con métricas de resultados de estudiantes"** y cita un caso de DataArt y una consultora. Es exactamente lo que publica `/casos/` (4 academias, alumnos por caso, qué se resolvió). Es el mismo bloqueo de siempre: ese índice no tiene el sitio ("vantalogics" sigue sin devolver nada propio). Se revisa el 11-09 con Bing.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, todas con `lastmod`, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 49 destinos de links internos, 0 rotos y 0 redirigidos. robots.txt permite los 8 bots de IA y llms.txt responde 200.
+
+### Cambios
+- **Ninguno en el sitio.** La revisión de hoy (índice de casos) pide consolidar. La nota de costo recién se releyó con el cambio de ayer, y tocarla ahora mezclaría señales. Las otras páginas con impresiones tienen revisión pendiente (evaluación y corrección 11-12, migración EN 11-16, cobros 11-17). Las demás tienen menos de 10 impresiones o queries de marca de clientes. La única query nueva ("migrate from engrade pro") no es del público.
+
+### Envíos
+- Sin deploy, sin IndexNow y sin reenvío del sitemap (no cambió nada).
+- Pedido de indexación: nota de costo ES, `requested`.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-07**: confirmar el rastreo de la nota de costo ES. Ver si la nota EN ya muestra el title nuevo en las impresiones del 11-06 en adelante (posición y CTR por día).
+- **11-09**: Bing (#39 y #40). Es el bloqueo común de GEO: el buscador de la sesión no tiene el sitio y responde que falta justo lo que publicamos (casos con métricas, migración, cobros, protección, costo por activos).
+- **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42).
+- **11-16**: migración EN (#43). **11-17**: cobros ES/EN (#32). **11-19**: nota de costo (#44), contando desde el rastreo del 11-05.
+- Lu Apuntes ES sube (10 imp, 7 en la última semana) por la búsqueda de la marca. Si aparece una query no de marca, mirarla.
+- `/en/solutions/` vs la solución EdTech: mirar cuando pase 20 impresiones (hoy 7).
+- Para el dueño, siguen abiertos: Bing Webmaster Tools; `sameAs` con perfiles reales; autor con nombre; links desde los sitios de los clientes; el commit `6ce459f` con atribución, y los montos de comisión de Hotmart en el pilar.
+- No tocar: IndexNow y H1 de la home (11-09), páginas de servicio de evaluación y meta de la nota de corrección (11-12), migración EN (11-16), cobros (11-17), nota de costo ES/EN y notas relacionadas (11-19), protección e índice de casos (consolidados; no se reabren sin un dato nuevo).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 23 (11-04) | 10-07 → 11-03 | 6 | 195 | ~6,8 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 25 (11-06) | 10-09 → 11-05 | 6 | 228 | 8,8 (7,1 sin el 11-04) |
