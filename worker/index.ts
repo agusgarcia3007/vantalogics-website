@@ -124,7 +124,10 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url)
 
-    if (url.hostname === "www.vantalogics.com") {
+    if (
+      url.hostname === "www.vantalogics.com" ||
+      (url.hostname === "vantalogics.com" && url.protocol === "http:")
+    ) {
       url.hostname = "vantalogics.com"
       url.protocol = "https:"
       return Response.redirect(url.toString(), 301)
@@ -137,6 +140,14 @@ export default {
       return Response.redirect(url.toString(), 301)
     }
 
-    return env.ASSETS.fetch(request)
+    const response = await env.ASSETS.fetch(request)
+    const location = response.headers.get("Location")
+    if (response.status === 307 && location) {
+      const next = new URL(location, url)
+      if (next.origin === url.origin && next.pathname === path) {
+        return Response.redirect(next.toString(), 301)
+      }
+    }
+    return response
   },
 }

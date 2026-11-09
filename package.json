@@ -16,7 +16,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,astro}\"",
     "typecheck": "astro check",
     "deploy": "bun run build && wrangler deploy",
-    "indexnow": "bun scripts/indexnow.mjs"
+    "indexnow": "bun scripts/indexnow.mjs",
+    "crawlers": "bun scripts/crawler-hits.mjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.65",
