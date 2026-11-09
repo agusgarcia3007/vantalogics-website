@@ -1775,3 +1775,95 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 23 (11-04) | 10-07 → 11-03 | 6 | 195 | ~6,8 |
 | 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
 | 25 (11-06) | 10-09 → 11-05 | 6 | 228 | 8,8 (7,1 sin el 11-04) |
+
+---
+
+## 2026-11-09 — Corrida 26
+
+### Métricas generales (GSC, datos hasta 2026-11-08; el 11-08 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-12 → 11-08) | 5 | 248 | 2,0 % | 8,4 (6,8 sin el 11-04) |
+| Últimos 7 d (11-02 → 11-08) | 0 | 102 | 0 % | 10,4 (~6,2 sin el 11-04) |
+| 7 d anteriores (10-26 → 11-01) | 1 | 70 | 1,4 % | 5,3 |
+
+- **Decimotercera semana seguida de récord en 28 d: 248 impresiones (228 el 11-06).** La semana pasó de 70 a 102 impresiones (+46 %).
+- **Clics: 5 en 28 d (se fue de la ventana un clic del 10-11) y 14 días seguidos sin clics.** Los 5 son de Argentina. USA suma 51 impresiones en pos 7,9 sin ningún clic desde el inicio del log.
+- **Nota de costo EN: 63 imp en pos 4,2, 0 clics.** Con el title nuevo (Google la releyó el 11-05 a las 21:46) suma 10 impresiones en pos ~1,8 (11-06: 5 en 1,6; 11-07: 3 en 2,7; 11-08: 2 en 1). La query de universidad tiene 18 imp en pos 1,4 en 28 d. Una página en pos 1–2 con 18 impresiones y 0 clics es la señal de que la respuesta se da arriba del resultado (AI Overview o AI Mode). Se evalúa el 11-19 con el criterio de la corrida 24.
+- Corrección EN 29 imp (pos 23,2 por el dato raro del 11-04, que no se repitió) y ES 28 en pos 8,2. Migración ES 17 en pos 7,7 con 1 clic, EN 12 en 9,9. Protección ES 17 en pos 6,8 con 1 clic. `/en/` 24 en pos 3,8.
+- Queries visibles (12): universidad 18, "apoyo escolar rv" 9 + 2 + "app apoyo escolar rv" 1, "luapuntes" 5 + 1, "lu apuntes" 1, "automatic grading" 2 (pos 45,5), "migrate from engrade pro" 2 (pos 33,5), "sied" 2, y **"vender apuntes digitales" 1 en pos 15 hacia el caso Lu Apuntes: es la primera query no de marca de ese caso**. Una impresión no alcanza para actuar. Se anota.
+
+### Indexación
+- Nota de costo ES: **rastreada el 11-07 a las 00:13**, con el title y la sección nuevos. El pedido del 11-06 funcionó. "Submitted and indexed", Breadcrumbs válidos.
+- Caso Lu Apuntes ES: rastreado el 11-06, indexado.
+- Sitemap: 48 URLs, todas con `lastmod`. No cambió nada en el sitemap hoy, así que no se reenvió.
+
+### Evaluación de cambios anteriores (revisión 11-09: #39 IndexNow diferencial y #40 H1 de la home)
+
+**Fuente nueva: los logs de Cloudflare.** Bing y DuckDuckGo devuelven captcha o resultados basura a cualquier búsqueda automática, también desde el Chromium de Agora (las dos corridas anteriores tampoco pudieron leer `site:`). En lugar de adivinar qué tiene Bing, hoy se miró quién pide qué página, con la API GraphQL de Cloudflare (`httpRequestsAdaptiveGroups` por user agent). Queda como `bun run crawlers [días] [bot]` (`scripts/crawler-hits.mjs`). Los conteos de 30 días vienen muestreados (múltiplos de 10). Los de 7 días son casi exactos.
+
+- **#39: Bing rastrea el cluster. Se consolida a nivel de rastreo.** En 7 días bingbot hizo 124 pedidos sobre ~50 rutas: protección ES/EN, hub EN, migración EN, nota de costo ES (3 veces después del aviso del 11-05), nota de corrección ES y EN (13 veces la EN), evaluar un tutor, RAG, casos y soluciones. En 30 días son ~820 pedidos sobre 41 páginas. Antes se creía que Bing solo tenía una foto vieja de 10 URLs. Eso era lo que mostraba `site:`, no lo que rastrea. Qué indexa y con qué título sigue sin poder verse sin Bing Webmaster Tools (tarea del dueño, abierta desde el 10-05).
+- **#40 (H1 de la home):** bingbot pidió `/` 4 veces en 7 días, después del cambio. `/en/` no aparece en esos 7 días. El HTML crudo dice bien "detrás de" y "behind education". Sin más señal posible. Se cierra como corrección hecha.
+- **GEO, el dato más importante del log hasta hoy: ChatGPT ya trae nuestras páginas.**
+  - **OAI-SearchBot** (el índice de búsqueda de ChatGPT) relee **protección ES y EN todos los días** a las 04:15 y 04:38 UTC. En 30 días solo pidió esas dos y `/en/cases/`. Ninguna otra página del sitio está en su ciclo.
+  - **ChatGPT-User** (un usuario de ChatGPT que hace que el modelo abra la página en vivo): 8 pedidos en 7 días y ~70 en 30. Pidió `/` (10-25, 11-02, 11-04, 11-05), protección ES el 11-03 y EN el 10-30, el hub `/plataformas-educativas` el 10-29 y una sesión el 11-08 a las 17:50 que abrió `/`, `/plataformas-educativas/`, `/casos/apoyo-escolar-rv/` y `/privacidad/` en el mismo minuto. Eso parece alguien investigando a Vantalogics desde ChatGPT.
+  - **PerplexityBot**: nota de corrección ES (11-06) y evals EN (11-02). **GPTBot** solo baja el sitemap todos los días. **ClaudeBot**: 160 pedidos en 30 d pero ninguno a una página (todos `robots.txt` o rutas que no existen). Claude-User y Claude-SearchBot: 0. Bot Management de Cloudflare tiene todo en `disabled`: no se bloquea a ningún bot de IA.
+  - Aprendizaje: **la página de protección es la única del sitio en el ciclo diario del índice de ChatGPT**. Es la primera página del cluster (10-06) y la de mejor evidencia propia. Las notas de costo, corrección, migración y cobros, que son las que más impresiones tienen en Google, no aparecen en OAI-SearchBot.
+- Los "404 en `/`" y "301 en `/blog/`" que aparecen con user agent de Googlebot o GPTBot no son del sitio: son otros hostnames de la zona (`www` redirige con 301; `portal`, `agent` y `tracing` no son el sitio) o escáneres que se hacen pasar por Googlebot (`/wp/`, `/wp-json/`, `/serverless.yml`). El script filtra ahora por `vantalogics.com`.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, `lastmod`, canonical self, un H1, JSON-LD que parsea, sin `noindex`. 48 destinos de links internos, 0 rotos y 0 redirigidos. robots.txt permite los 8 bots de IA. llms.txt 200. hreflang es/en/x-default, sin alternativos a `/ar/`.
+- **Error encontrado: las redirecciones canónicas eran temporales o no existían.**
+  1. Toda URL sin barra final respondía **307** (temporal) hacia la versión con barra. Es el `auto-trailing-slash` de Workers Assets. Google y Bing tratan un 307 como temporal: no consolidan del todo las señales en la URL de destino.
+  2. `http://vantalogics.com/*` respondía **200** con la página entera, sin redirigir a https. Eran dos versiones de cada página. El canonical apuntaba bien a https, pero la redirección es la señal fuerte.
+  - El dato que lo hace relevante: ChatGPT-User pidió `/plataformas-educativas` **sin barra** (10-29). O sea, ChatGPT tiene o arma la URL sin barra y la va a citar así.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 45 | Todo el sitio (`worker/index.ts`) | `http://vantalogics.com/*` → **301** a https (antes 200). URL sin barra final → **301** a la versión con barra, conservando la query (antes 307). Solo se convierte el 307 cuyo destino es la misma ruta con barra. `www` y los retirados siguen con 301 como antes. El contenido no cambia, y tampoco el sitemap ni el `lastmod`: IndexNow respondió "no URL changed, nothing sent". Probado en `wrangler dev` (127.0.0.1) y en producción: `/plataformas-educativas` 301, `/en/blog?x=1` 301 con la query, `http://…/` 301, 404 sigue en 404, robots, llms y sitemap en 200. | Logs de Cloudflare: ChatGPT-User pidió `/plataformas-educativas` sin barra y recibió un 307. Producción: http servía 200 en todas las páginas. | Las menciones y los links sin barra o con http (los que arman ChatGPT y otros) consolidan en la URL canónica. No debería moverse nada en GSC: es higiene de canonicalización, no un cambio de ranking. | En los logs (`bun run crawlers`): que ya no aparezcan 307 de páginas. En GSC, que no aparezcan URLs sin barra o con http en "Page with redirect" como canónicas. | 2026-11-23 |
+| 46 | Herramienta (`scripts/crawler-hits.mjs`, `bun run crawlers`) | Script que lee la API GraphQL de Cloudflare con la sesión de `cf` (o `CLOUDFLARE_API_TOKEN`) y lista, por bot (bingbot, OAI-SearchBot, ChatGPT-User, GPTBot, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User, DuckAssistBot y Googlebot), qué páginas pidió, cuántas veces, con qué código y la última fecha. Filtra por el host `vantalogics.com`. No corre en CI. | Bing y DuckDuckGo bloquean la lectura automática de `site:` desde el 10-28. No había manera de medir el #39 ni nada de GEO. | Cada corrida puede medir el GEO con un dato real: si una página nueva o cambiada entra en el ciclo de OAI-SearchBot o recibe visitas de ChatGPT-User o Perplexity. | Correrlo en cada corrida. La API tiene un presupuesto chico: una consulta de 30 días agota el cupo por ~5 minutos. | — |
+
+### Envíos
+- Deploy por push a `main` (commit `ebd40cb`, run 42614421462, ok).
+- IndexNow desde CI: "no URL changed, nothing sent" (correcto: no cambió ninguna página).
+- Sin reenvío del sitemap y sin pedidos de indexación: no cambió el contenido de ninguna URL.
+- Ningún commit de esta corrida lleva atribución.
+
+### Pendientes / hipótesis para próximas corridas
+- **Cada corrida:** `bun run crawlers 7`. Mirar si alguna otra página entra al ciclo diario de OAI-SearchBot (hoy solo protección ES/EN) y qué abre ChatGPT-User.
+- **Hipótesis GEO a validar:** protección entró al índice de ChatGPT y las notas no. Puede ser por antigüedad (es del 10-06), por los links externos que tenga, o porque Bing la indexó antes. Si en 2 semanas ninguna otra página entra, comparar qué tiene protección que no tengan las otras (respuesta arriba, tabla, datos propios) antes de tocar contenido.
+- **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42).
+- **11-16**: migración EN (#43). **11-17**: cobros ES/EN (#32). **11-19**: nota de costo (#44), contando desde el rastreo del 11-05 (EN) y del 11-07 (ES).
+- **11-23**: redirecciones 301 (#45).
+- "vender apuntes digitales" (caso Lu Apuntes, pos 15): si suma más impresiones de queries no de marca, hay un hueco de intención ("plataforma para vender apuntes o PDFs") que el caso cubre a medias. No actuar con 1 impresión.
+- `/en/solutions/` vs la solución EdTech: mirar cuando pase 20 impresiones (hoy 6).
+- Para el dueño, siguen abiertos: **Bing Webmaster Tools** (ahora se sabe que Bing rastrea; falta ver qué indexa y con qué título), `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: páginas de servicio de evaluación y meta de la nota de corrección (11-12), migración EN (11-16), cobros (11-17), nota de costo ES/EN y notas relacionadas (11-19), redirecciones (11-23), protección e índice de casos (consolidados; protección menos que nunca, porque es la página que ChatGPT relee todos los días).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 23 (11-04) | 10-07 → 11-03 | 6 | 195 | ~6,8 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 25 (11-06) | 10-09 → 11-05 | 6 | 228 | 8,8 (7,1 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
