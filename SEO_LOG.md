@@ -1867,3 +1867,94 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
 | 25 (11-06) | 10-09 → 11-05 | 6 | 228 | 8,8 (7,1 sin el 11-04) |
 | 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+
+---
+
+## 2026-11-10 — Corrida 27
+
+### Métricas generales (GSC, datos hasta 2026-11-09; el 11-09 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-13 → 11-09) | 5 | 263 | 1,9 % | 8,4 (6,8 sin el 11-04) |
+| Últimos 7 d (11-03 → 11-09) | 0 | 100 | 0 % | 10,5 (6,4 sin el 11-04) |
+| 7 d anteriores (10-27 → 11-02) | 0 | 82 | 0 % | 5,7 |
+
+- **Decimocuarta semana seguida de récord en 28 d: 263 impresiones (248 ayer).** La semana pasa de 82 a 100 (+22 %). El 11-09 ya trae 16 siendo preliminar.
+- **Clics: 5 en 28 d, todos de Argentina, y 15 días seguidos sin clics** (el último fue migración ES el 10-26). USA suma 57 impresiones en pos 8,1 sin clics; Reino Unido 14 en pos 5,9; Italia 7 en pos 2,9.
+- **Nota de costo EN: 68 imp en pos 4,6, 0 clics.** Con el title nuevo (rastreo del 11-05) suma 15 impresiones del 11-06 al 11-09, casi todas en pos 1–2 y todas de la query de universidad (USA, Reino Unido, Canadá, Italia; 100 % desktop). La query tiene 21 imp en pos 1,5 en 28 d. El 11-09 aparece una query nueva, "ai tuition management", en pos 45 (no es la intención de la nota). La revisión sigue el 11-19.
+- Corrección EN 33 imp (pos 20,9 por el 11-04); **el 11-09 salió 4 veces en pos 4,2**, la mejor posición diaria de esa nota con más de una impresión. Corrección ES 28 en pos 8,2. Protección ES 18 en pos 7,3 con 1 clic. Migración ES 17 en pos 7,7 con 1 clic, EN 14 en 9,8. `/en/` 27 en pos 3,7. `/en/solutions/` 8 en pos 3,4 (2 en pos 1 el 11-09).
+- Queries visibles (14), las mismas de ayer más "ai tuition management" y "plataforma sied". Ninguna query nueva con intención del público.
+
+### Indexación
+- `/en/solutions/`: "Submitted and indexed", rastreada el 11-03, Breadcrumbs válidos. Entre las URLs que la refieren, Google todavía lista una nota retirada de inmobiliarias (`/en/blog/mistakes-an-ai-agent-makes-at-a-real-estate-developer/`, que ya redirige).
+- La inspección en lote volvió a cortar la conexión; se inspeccionó de a una.
+- Sitemap reenviado después del deploy (12:05).
+- **`request_indexing` no funciona desde la mudanza a heaven (11-06):** dependía del Chrome con CDP en `127.0.0.1:9222` del escritorio noVNC, que se dio de baja. Respuesta de hoy: "Chrome is not reachable". No se reconfiguró nada; queda para el dueño (ver Pendientes). Mientras tanto: sitemap + IndexNow.
+
+### Crawlers (`bun run crawlers 7`, 11-03 → 11-10)
+- El script falló primero con "Authentication error": el token OAuth de `cf` había vencido. `cf auth whoami` lo refrescó y volvió a andar.
+- **OAI-SearchBot (índice de ChatGPT): 40 pedidos.** Sigue releyendo protección ES y EN todos los días. **Nuevo: el 11-07 pidió `/en/solutions/` (2) y `/en/solutions/law-firms/` (2, 301 a `/en/solutions/`).** O sea, el índice de ChatGPT todavía guarda URLs de los sectores retirados (pre-pivot) y, al seguirlas, aterriza en el índice de soluciones.
+- ChatGPT-User: 7 pedidos, la misma sesión del 11-08 (home, hub, caso Apoyo Escolar RV, privacidad) y protección ES el 11-03.
+- bingbot: 127 pedidos sobre 40 rutas. La más pedida es corrección EN (14, la última hoy). También relee las URLs retiradas (agente de WhatsApp, coordinación de visitas, nota de costo de automatización) y recibe 301.
+- Googlebot: 114 pedidos; también relee las URLs de sectores retirados (`/en/solutions/accounting-firms/`, `/ecommerce/`, `/law-firms/`, `/soluciones/inmobiliarias/`, `/estudios-contables/`), todas con 301 al índice de soluciones.
+- PerplexityBot: nota de corrección ES (11-06). ClaudeBot, Claude-User y Claude-SearchBot: 0.
+- **#45 (301 en vez de 307): ya no aparece ningún 307 de páginas en 7 días.** Los únicos 301 sobre rutas con barra son pedidos por http, que ahora redirigen como corresponde.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, `lastmod`, canonical self, un H1, JSON-LD que parsea, sin `noindex`. 49 destinos de links internos, 0 rotos y 0 redirigidos.
+- Hallazgo de contenido: **el índice de soluciones (`/soluciones/`, `/en/solutions/`) es el destino de todos los 301 de los sectores retirados** (13 grupos de URLs × 3 idiomas en `worker/index.ts`), y era una página fina: un título, una línea y 5 tarjetas. No decía en ningún lado que el estudio trabaja solo en educación ni explicaba por qué alguien que venía de "law firms" llegaba ahí.
+
+### GEO
+- "vantalogics" en el buscador de la sesión: sigue sin devolver nada propio (VortalLogic, Avantalytics, Vanteon, Vanta).
+- "automatic quiz grading with AI open-ended answers rubric teacher review": citan arXiv, Universidad de Zúrich, CustomGPT, Formswrite, Inquisitive, ExperQuiz y 8allocate. El consenso es "borrador de IA + revisión docente", que es lo que publica nuestra nota con datos medidos. Mismo bloqueo de siempre: ese índice no tiene el sitio.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 47 | `/soluciones/` + `/en/solutions/` (AR igual, en noindex) | **Párrafo de alcance** debajo de la intro: "Vantalogics trabaja solo en educación: academias online, instituciones y empresas de educación. Construimos la plataforma propia, o la migramos desde Hotmart, Tiendup o WordPress, y la IA que va encima. Las páginas que teníamos sobre otros sectores (estudios jurídicos y contables, inmobiliarias, clínicas, distribuidoras y e-commerce) se retiraron en septiembre de 2026 y redirigen a esta página." (EN espejo; la fecha sale del commit `3e1580f` del 2026-09-23). **Sección nueva "Antes de la IA, la plataforma propia"** con tarjetas al hub de plataformas, migración, protección, cobros y el índice de casos (solo ES/EN; AR no tiene esas páginas). **ItemList** de 1 a 10 elementos (solución, 4 casos de uso, 4 páginas de plataforma, casos). `SOLUTIONS_INDEX_UPDATED` = 2026-11-10 en `src/data/solutions.ts`, usado en el `lastmod` del sitemap. Title y meta sin cambios. | OAI-SearchBot pidió `/en/solutions/` y `/en/solutions/law-firms/` (301 ahí) el 11-07: el índice de ChatGPT sigue asociando el dominio a sectores pre-pivot. Googlebot y bingbot también releen esas URLs viejas. `/en/solutions/` tiene 8 imp en pos 3,4. El 10-09 una herramienta de research describió a Vantalogics como agencia de chatbots/WhatsApp por una foto vieja (ver memoria de precios). | Cuando ChatGPT, Bing o Google siguen una URL vieja, aterrizan en una página que dice explícitamente a qué se dedica el estudio y enlaza la evidencia. Las descripciones de la marca en motores de IA pasan de "automatización para varios sectores" a "educación". El índice deja de ser fino y reparte links al cluster de plataformas. No se espera movimiento en GSC: es entidad y GEO. | `bun run crawlers 7 OAI-SearchBot`: que siga pidiendo `/en/solutions/` y si después pide alguna página del cluster de plataformas. Rastreo de las dos URLs en URL Inspection. Impresiones de `/en/solutions/` y `/soluciones/` (no deberían caer). Riesgo de canibalización con la página de la solución EdTech: mirar si aparecen queries compartidas. | 2026-11-24 |
+
+### Envíos
+- Deploy por push a `main` (commit del índice de soluciones, run 42812682271, ok). En producción ya salen el párrafo, la sección y la ItemList de 10; `/soluciones` y `/en/solutions/law-firms/` siguen con 301 al índice.
+- IndexNow desde CI: 200 para 2 URLs (`/soluciones/` y `/en/solutions/`, por el `lastmod` nuevo).
+- Sitemap reenviado a GSC (12:05).
+- Pedido de indexación: **no se pudo** (Chrome de CDP no existe en heaven). Quedan para pedir a mano: `/en/solutions/` y `/soluciones/`.
+- Render verificado con Agora (árbol de accesibilidad: H2 y 5 tarjetas nuevas). Las capturas salen negras debajo del primer bloque por las animaciones `reveal`, que no corren en la pestaña de fondo; pasa igual con las tarjetas que ya existían.
+- Ningún commit de esta corrida lleva atribución.
+
+### Pendientes / hipótesis para próximas corridas
+- **Para el dueño, nuevo: devolverle a la MCP de GSC un Chrome con CDP** (el perfil con las sesiones de Google quedó en `/root/.browser/chrome-profile`), o aceptar que los pedidos de indexación se hacen a mano. Sin eso, cada cambio depende del sitemap y del rastreo natural.
+- **Cada corrida:** `bun run crawlers 7` (si da "Authentication error", correr antes `cf auth whoami`).
+- **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42). Dato a favor: corrección EN salió en pos 4,2 el 11-09 y bingbot la pide más que a ninguna otra.
+- **11-16**: migración EN (#43). **11-17**: cobros ES/EN (#32). **11-19**: nota de costo (#44): ya van 15 impresiones en pos 1–2 con el title nuevo y 0 clics; si llega a 30 sin clics se aplica el criterio de la corrida 24 (el valor de la nota es la cita en IA, no el clic).
+- **11-23**: redirecciones 301 (#45); en los logs ya no hay 307. **11-24**: índice de soluciones (#47).
+- "vender apuntes digitales" (caso Lu Apuntes): sin impresiones nuevas.
+- Siguen abiertos para el dueño: Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: páginas de servicio de evaluación y meta de la nota de corrección (11-12), migración EN (11-16), cobros (11-17), nota de costo ES/EN y notas relacionadas (11-19), redirecciones (11-23), índice de soluciones (11-24), protección e índice de casos (consolidados).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 5 (10-09) | 09-11 → 10-08 | 4 | 82 | 14,7 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 8 (10-14) | 09-16 → 10-13 | 5 | 93 | 12,1 |
+| 10 (10-16) | 09-18 → 10-15 | 5 | 95 | 11,9 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 15 (10-23) | 09-25 → 10-22 | 7 | 108 | 10,0 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 17 (10-27) | 09-29 → 10-26 | 7 | 125 | ~9,2 |
+| 18 (10-28) | 09-30 → 10-27 | 7 | 137 | 8,6 |
+| 19 (10-29) | 10-01 → 10-28 | 7 | 142 | 8,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 21 (11-02) | 10-05 → 11-01 | 7 | 167 | ~6,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 23 (11-04) | 10-07 → 11-03 | 6 | 195 | ~6,8 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 25 (11-06) | 10-09 → 11-05 | 6 | 228 | 8,8 (7,1 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 27 (11-10) | 10-13 → 11-09 | 5 | 263 | 8,4 (6,8 sin el 11-04) |
