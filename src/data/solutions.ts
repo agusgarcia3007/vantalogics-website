@@ -260,4 +260,6 @@ export function findSolution(lang: Lang, slug: string): Solution | undefined {
   return SOLUTIONS.find((solution) => solution.slug[lang] === slug)
 }
 
+export const SOLUTIONS_INDEX_UPDATED = "2026-11-10"
+
 export const FOCUS_SOLUTIONS: Solution[] = SOLUTIONS.filter((s) => s.focus)

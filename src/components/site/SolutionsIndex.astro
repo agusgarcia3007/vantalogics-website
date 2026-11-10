@@ -7,11 +7,17 @@ import NextStep from "@/components/cine/NextStep.astro"
 import { LANGS, localizePath, useTranslations, type Lang } from "@/i18n"
 import {
   FOCUS_SOLUTIONS,
-  SOLUTIONS,
   solutionPath,
   solutionsIndexPath,
 } from "@/data/solutions"
 import { casePath, casesFor } from "@/data/use-cases"
+import {
+  CASES,
+  CASES_INDEX,
+  casesIndexPath,
+  formatTotalStudents,
+} from "@/data/cases"
+import { getPlatformPages, platformPath } from "@/lib/plataformas"
 
 interface Props {
   lang: Lang
@@ -24,16 +30,37 @@ const t = useTranslations(lang)
 const path = solutionsIndexPath(lang)
 const pageUrl = new URL(path, SITE).href
 
+const platformPages = await getPlatformPages(lang)
+const casesPath = casesIndexPath(lang)
+const casesCopy = lang === "es" || lang === "en" ? CASES_INDEX[lang] : null
+
+const listed = [
+  ...FOCUS_SOLUTIONS.flatMap((solution) => [
+    { name: solution.title[lang], path: solutionPath(lang, solution) },
+    ...casesFor(solution).map((useCase) => ({
+      name: useCase.title[lang],
+      path: casePath(lang, solution, useCase),
+    })),
+  ]),
+  ...platformPages.map((page) => ({
+    name: page.data.title,
+    path: platformPath(page),
+  })),
+  ...(casesPath && casesCopy
+    ? [{ name: casesCopy.title, path: casesPath }]
+    : []),
+]
+
 const itemList = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "@id": `${pageUrl}#list`,
   name: t.solutions.indexTitle,
-  itemListElement: SOLUTIONS.map((solution, index) => ({
+  itemListElement: listed.map((item, index) => ({
     "@type": "ListItem",
     position: index + 1,
-    name: solution.title[lang],
-    url: new URL(solutionPath(lang, solution), SITE).href,
+    name: item.name,
+    url: new URL(item.path, SITE).href,
   })),
 }
 
@@ -87,6 +114,9 @@ const breadcrumb = {
           <p class="appear appear--soft" style="--d:0.42s">
             {t.solutions.indexIntro}
           </p>
+          <p class="appear appear--soft" style="--d:0.5s">
+            {t.solutions.indexScope}
+          </p>
         </div>
       </div>
     </main>
@@ -116,6 +146,41 @@ const breadcrumb = {
             </div>
           </section>
         ))
+      }
+
+      {
+        platformPages.length > 0 && (
+          <section class="section">
+            <div class="shell">
+              <div class="section-head reveal">
+                <span class="eyebrow">{t.solutions.platformEyebrow}</span>
+                <h2>{t.solutions.platformTitle}</h2>
+              </div>
+              <div class="posts">
+                {platformPages.map((page, index) => (
+                  <LinkCard
+                    href={platformPath(page)}
+                    title={page.data.title}
+                    description={page.data.description}
+                    featured={index === 0}
+                    index={index}
+                  />
+                ))}
+                {casesPath && casesCopy && (
+                  <LinkCard
+                    href={casesPath}
+                    title={casesCopy.title}
+                    description={casesCopy.description(
+                      CASES.length,
+                      formatTotalStudents(lang)
+                    )}
+                    index={platformPages.length}
+                  />
+                )}
+              </div>
+            </div>
+          </section>
+        )
       }
 
       <NextStep lang={lang} />

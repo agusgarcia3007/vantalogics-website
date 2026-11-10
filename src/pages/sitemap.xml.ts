@@ -7,7 +7,12 @@ import {
   localizePath,
 } from "@/i18n"
 import { getAllPosts, getTranslations, postLang, postPath } from "@/lib/blog"
-import { SOLUTIONS, solutionPath, solutionsIndexPath } from "@/data/solutions"
+import {
+  SOLUTIONS,
+  SOLUTIONS_INDEX_UPDATED,
+  solutionPath,
+  solutionsIndexPath,
+} from "@/data/solutions"
 import { USE_CASE_ROUTES, casePath } from "@/data/use-cases"
 import {
   CASES,
@@ -78,7 +83,10 @@ export const GET: APIRoute = async () => {
       path: solutionsIndexPath(lang),
       priority: lang === DEFAULT_LANG ? "0.8" : "0.7",
       changefreq: "monthly",
-      lastmod: latest(...SOLUTIONS.map((solution) => solution.updated)),
+      lastmod: latest(
+        SOLUTIONS_INDEX_UPDATED,
+        ...SOLUTIONS.map((solution) => solution.updated)
+      ),
       alternates: Object.fromEntries(
         LANGS.map((code) => [code, solutionsIndexPath(code)])
       ),

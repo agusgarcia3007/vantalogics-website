@@ -194,6 +194,10 @@ export const en: Dictionary = {
       "How we integrate AI into learning platforms and EdTech: tutors, assisted grading, assessments and semantic search, with human approval where it matters.",
     indexIntro:
       "What we build first in a learning platform, which systems it integrates with, and where a person stays in the loop.",
+    indexScope:
+      "Vantalogics works only in education: online academies, educational institutions and education companies. We build the platform you own, or migrate it from Hotmart, Tiendup or WordPress, and the AI that runs on top of it. The pages we had about other industries (law and accounting firms, real estate, clinics, distributors and e-commerce) were retired in September 2026 and redirect to this page.",
+    platformEyebrow: "The foundation",
+    platformTitle: "Before the AI, a platform you own",
     focusLabel: "Education",
     processesLabel: "What we build first",
     stackLabel: "What it integrates with",

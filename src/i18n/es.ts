@@ -193,6 +193,10 @@ export const es = {
       "Cómo integramos IA en plataformas educativas y EdTech: tutores, corrección asistida, evaluaciones y búsqueda semántica, con aprobación humana donde importa.",
     indexIntro:
       "Qué construimos primero en una plataforma educativa, con qué sistemas se integra y dónde dejamos a una persona decidiendo.",
+    indexScope:
+      "Vantalogics trabaja solo en educación: academias online, instituciones y empresas de educación. Construimos la plataforma propia, o la migramos desde Hotmart, Tiendup o WordPress, y la IA que va encima. Las páginas que teníamos sobre otros sectores (estudios jurídicos y contables, inmobiliarias, clínicas, distribuidoras y e-commerce) se retiraron en septiembre de 2026 y redirigen a esta página.",
+    platformEyebrow: "La base",
+    platformTitle: "Antes de la IA, la plataforma propia",
     focusLabel: "Educación",
     processesLabel: "Qué construimos primero",
     stackLabel: "Con qué se integra",
