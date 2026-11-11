@@ -1958,3 +1958,73 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 25 (11-06) | 10-09 → 11-05 | 6 | 228 | 8,8 (7,1 sin el 11-04) |
 | 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
 | 27 (11-10) | 10-13 → 11-09 | 5 | 263 | 8,4 (6,8 sin el 11-04) |
+
+---
+
+## 2026-11-11 — Corrida 28
+
+### Métricas generales (GSC, datos hasta 2026-11-10; el 11-10 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-14 → 11-10) | 4 | 272 | 1,5 % | 8,4 (7,0 sin el 11-04) |
+| Últimos 7 d (11-04 → 11-10) | 0 | 101 | 0 % | 10,9 (6,9 sin el 11-04) |
+| 7 d anteriores (10-28 → 11-03) | 0 | 79 | 0 % | 6,1 |
+
+- **Decimoquinta semana seguida de récord en 28 d: 272 impresiones (263 ayer).** La semana pasa de 79 a 101 (+28 %). El 11-10 ya trae 15 siendo preliminar.
+- **Clics: 4 en 28 d (se fue de la ventana el clic del 10-13) y 16 días seguidos sin clics.** Los 4 son de Argentina (home 2, protección ES 1, migración ES 1).
+- **Nota de costo EN: 73 imp en pos 4,6, 0 clics.** La query de universidad suma 23 imp en pos 1,7 en 28 d. Del 11-08 al 11-10 aparece desde Canadá, Italia, Reino Unido, Corea y USA, casi siempre en pos 1–2. Con el title nuevo ya van ~20 impresiones en pos 1–2 y 0 clics. Se evalúa el 11-19 (si llega a 30 sin clics, criterio de la corrida 24).
+- Corrección EN 35 imp (pos 21,5, arrastrada por el 11-04; el 11-10 salió 1 vez en pos 60 desde Reino Unido para "auto-marked quizzes"). Corrección ES 29 en pos 8,1. `/en/` 25 en pos 3,2. Protección ES 19 en pos 7,2 con 1 clic.
+- **Migración ES: 0 impresiones desde el 11-05 (6 días).** Venía con ~1 por día. Ya tuvo un hueco igual del 10-02 al 10-17, así que con este volumen no se lee como caída. Migración EN (title nuevo #43 desde el 11-02): 5 imp desde el cambio, en pos 33,5 (la query de Engrade) y dos días en pos 9. Antes del cambio salía en pos 3–7. Muestra chica; se mira el 11-16 como estaba previsto.
+- Queries visibles (16): las mismas de ayer más "auto-marked quizzes" (pos 60) y "rv apoyo escolar" (pos 5). Ninguna query nueva con intención del público.
+
+### Indexación
+- `/en/solutions/` y `/soluciones/` (#47, de ayer): todavía sin rastreo nuevo (último 11-03 y 11-07). Indexadas, Breadcrumbs válidos.
+- Sitemap: 48 URLs válidas, 0 errores, bajado el 11-10 a las 12:05. Hoy no cambió nada, así que no se reenvía.
+- `request_indexing` sigue sin funcionar (no hay Chrome con CDP en heaven). Siguen pendientes de pedido manual `/en/solutions/` y `/soluciones/`.
+
+### Crawlers (`bun run crawlers 7`, 11-04 → 11-11)
+- Otra vez "Authentication error" al primer intento; `cf auth whoami` refrescó el token.
+- **bingbot pidió `/en/solutions/` 7 veces, la última hoy**, y `/soluciones/` 4. Ya leyó la versión nueva del #47 (IndexNow del 11-10). También relee mucho las páginas `/ar/` (noindex, fuera del sitemap) y las URLs retiradas, que dan 301.
+- **OAI-SearchBot: 41 pedidos, las mismas 4 páginas.** Protección ES y EN todos los días; `/en/solutions/` y `/en/solutions/law-firms/` el 11-07. Ninguna página nueva entra a su ciclo.
+- ChatGPT-User: solo la sesión del 11-08 (home, hub, caso Apoyo Escolar RV, privacidad). PerplexityBot: corrección ES (11-06). GPTBot: solo sitemap/robots. ClaudeBot, Claude-User y Claude-SearchBot: 0.
+- Googlebot: 123 pedidos sobre 40 rutas; `/` 10 veces y `/blog/` 7. Sigue releyendo las URLs de sectores retirados (301). Los `/en/ 301` de hoy son pedidos por http, que redirigen bien (verificado con curl).
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, `lastmod`, canonical self, un H1, JSON-LD que parsea, sin `noindex`. 49 destinos de links internos, 0 rotos y 0 redirigidos. robots.txt y llms.txt 200. http y www redirigen con 301.
+- Solo detalles de longitud: 21 URLs con title de más de 65 caracteres o meta de más de 165 (la peor, evals ES con 206). Son páginas de casos, que ya se sabe que no traen clics (corrida 21), y notas con 1–3 impresiones. No se tocan: no hay dato que lo justifique.
+
+### GEO / SERP
+- "vantalogics plataformas educativas" en el buscador de la sesión: nada propio, solo papers. Es el mismo bloqueo de índice de siempre.
+- "migrar academia online por etapas sin perder alumnos convivencia dos plataformas": la respuesta generada dice que **las fuentes no tratan la convivencia de dos plataformas con alumnos activos**. Cita papers (RIDE, UNAM), guías genéricas de migración de datos (Acronis, D2L, Shopify Plus), Teachfloor y un foro de alumnos donde la solución es "terminá el curso en la plataforma vieja". Confirma el hueco anotado en las corridas 16 y 21 (migración por etapas). Se encara después de la revisión del #43 (11-16). Sin evidencia propia de la convivencia en el repo del cliente todavía: hay que buscarla antes de escribir (la guía la trata en el paso 7 y en el punto 10 del checklist).
+
+### Cambios
+**Ninguno.** Todo lo que tiene tráfico está en ventana de espera (corrección y servicios de evaluación 11-12, migración EN 11-16, cobros 11-17, costo 11-19, redirecciones 11-23, índice de soluciones 11-24) o ya consolidado (protección, casos). No apareció ningún error técnico ni ninguna query nueva con intención que pida una página. Cambiar algo hoy solo mezclaría variables en las pruebas abiertas.
+
+### Envíos
+- Sin deploy de contenido, sin IndexNow y sin reenvío del sitemap: no cambió ninguna URL.
+- Solo se commitea este registro.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-12**: páginas de servicio de evaluación (#41) y meta de la nota de corrección (#42).
+- **11-16**: migración EN (#43). Si el title EN no mejora, no se espeja en ES. En cualquier caso, preparar la sección de **migración por etapas** (convivencia de plataformas) con evidencia del caso Apoyo Escolar RV, buscando antes en su repo cómo convivieron Tiendup/WooCommerce y la plataforma nueva.
+- **11-17**: cobros ES/EN (#32). **11-19**: nota de costo (#44). **11-23**: redirecciones (#45) e hipótesis GEO (si ninguna otra página entró al ciclo de OAI-SearchBot, comparar qué tiene protección que no tengan las otras). **11-24**: índice de soluciones (#47).
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`.
+- Para el dueño, siguen abiertos: Chrome con CDP para `request_indexing` (o pedir a mano `/en/solutions/` y `/soluciones/`), Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 27 (11-10) | 10-13 → 11-09 | 5 | 263 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
