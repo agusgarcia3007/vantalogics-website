@@ -2028,3 +2028,93 @@ Ninguno. Todas las páginas con señal están bloqueadas por revisiones en curso
 | 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
 | 27 (11-10) | 10-13 → 11-09 | 5 | 263 | 8,4 (6,8 sin el 11-04) |
 | 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+
+---
+
+## 2026-11-12 — Corrida 29
+
+### Métricas generales (GSC, datos hasta 2026-11-11; el 11-11 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-15 → 11-11) | 4 | 283 | 1,4 % | 8,6 (7,3 sin el 11-04) |
+| Últimos 7 d (11-05 → 11-11) | 0 | 91 | 0 % | 7,6 |
+| 7 d anteriores (10-29 → 11-04) | 0 | 92 | 0 % | 10,8 (6,2 sin el 11-04) |
+
+- **Decimosexta semana seguida de récord en 28 d: 283 impresiones (272 ayer).** Pero **la semana quedó plana: 91 contra 92**. Es la primera semana sin crecimiento desde el 10-05. El 11-11 todavía es preliminar (11 impresiones en pos 13,5), así que puede subir unas pocas.
+- **Clics: 4 en 28 d, todos de Argentina, y 17 días seguidos sin clics** (el último fue migración ES el 10-26).
+- **Nota de costo EN: 76 imp en pos 4,6, 0 clics.** La query de universidad suma 26 imp en pos 1,8 en 28 d. Con el title nuevo ya van ~23 impresiones en pos 1–2 sin un clic. Revisión el 11-19 con el criterio de la corrida 24.
+- Corrección EN 37 imp (pos 20,8, arrastrada por el 11-04; el 11-11 salió 2 veces en pos 8). Corrección ES 29 en pos 8,1. `/en/` 24 en pos 3,2. Protección ES 21 en pos 6,7 con 1 clic. Migración ES 17 en pos 7,7 con 1 clic, todavía sin impresiones desde el 11-05. Migración EN 12 en pos 15,5.
+- Queries visibles (17): las mismas de ayer más "graded quiz: model development" (pos 14, un quiz de Coursera, no es nuestra intención) y "proviamo" (pos 3, ruido). Ninguna query nueva con intención del público.
+
+### Evaluación de cambios anteriores (revisión 11-12: #41 y #42)
+
+- **#41 (FAQ con datos en las páginas de servicio de evaluación): el rastreo funcionó, las impresiones no. Se cierra sin seguir invirtiendo en esas páginas.**
+  - Las 4 URLs se rastrearon después del cambio del 10-29: generación EN el 10-31, generación ES el 11-01, corrección asistida ES el 11-02 (**no se rastreaba desde el 08-18**) y corrección asistida EN el 11-03. Todas "Submitted and indexed", con Breadcrumbs válidos.
+  - Impresiones del 10-29 al 11-11: generación EN 1 (11-06, pos 5), corrección asistida ES 1 (11-04, pos 10) y corrección asistida EN 1 (10-30, pos 8). Generación ES tiene 4 en todo el período desde el 09-20. Antes del cambio tenían lo mismo: entre 0 y 1 por semana.
+  - Aprendizaje: un `lastmod` nuevo consigue que Google rastree en 2–5 días, pero una FAQ con datos no convierte una página de servicio en una página que Google muestra. Para estos temas Google muestra la nota (corrección ES/EN, 66 impresiones), no la página de servicio. Las páginas de servicio se quedan como están: le pasan el link a la nota y son el destino de conversión.
+- **#42 (meta con cifras en la nota de corrección): neutro. Se deja la meta como está.**
+  - ES antes (10-16 → 10-28, 13 días): ~13 impresiones en pos ~8,5, 0 clics. ES después (10-29 → 11-11, 14 días): 16 impresiones en pos ~7,5, 0 clics. EN después: 25 impresiones en pos 1–8 (sin contar el dato raro del 11-04), 0 clics.
+  - Con ~40 impresiones en pos 5–9, el CTR esperado da 1–2 clics. Que haya 0 no prueba que la meta sea peor. Tampoco se puede saber si Google muestra nuestra meta o reescribe el snippet. No hay motivo para revertirla: es la variable más liviana y no cambió la posición.
+  - ES con 1 sola impresión del 11-06 al 11-11 (venía de 4 el 11-05). Ya tuvo huecos así (10-17 → 10-21). Se mira en la próxima corrida. Si se cumplen 10 días sin impresiones, se revisa el rastreo.
+
+### Indexación
+- Las 4 páginas de servicio de evaluación: indexadas (ver arriba).
+- Sitemap: 48 URLs válidas, 0 errores, bajado el 11-10 a las 12:05. Hoy no cambió nada, así que no se reenvía.
+- `request_indexing` sigue sin funcionar (no hay Chrome con CDP en heaven). Siguen pendientes de pedido manual `/en/solutions/` y `/soluciones/`, aunque **Googlebot ya pidió `/soluciones/` 4 veces (la última el 11-11)**, así que probablemente ya leyó la versión del #47.
+
+### Crawlers (`bun run crawlers 7`, 11-05 → 11-12)
+- `cf auth whoami` antes de correrlo: esta vez no dio "Authentication error".
+- **ChatGPT-User, sesiones nuevas: `/` 3 veces el 11-11 y el hub `/plataformas-educativas/` 2 veces el 11-12.** Más la sesión del 11-08 (home, caso Apoyo Escolar RV, privacidad). Son tres días distintos en una semana con alguien en ChatGPT que abre la home y el hub. Es la señal GEO más directa que hay de que el sitio se lee para responder preguntas sobre Vantalogics o sobre plataformas.
+- **OAI-SearchBot: 39 pedidos, las mismas 4 páginas.** Protección EN (última hoy) y ES todos los días, `/en/solutions/` y `/en/solutions/law-firms/` el 11-07. Ninguna página nueva entra a su ciclo.
+- bingbot: 127 pedidos sobre 41 rutas. Corrección EN sigue siendo la más pedida (15, la última hoy). `/en/solutions/` 6 veces. Los 301 de rutas con barra (`/correccion-asistida/`, `/en/education-platforms/migration/`, `/`) son pedidos por http, que redirigen bien (el crawl de https da 200 en todas).
+- Googlebot: 127 pedidos sobre 37 rutas. La nota de costo EN 5 veces (la última hoy) y la ES 3. Sigue releyendo las URLs de los sectores retirados (301).
+- PerplexityBot: corrección ES (11-06). GPTBot solo sitemap y robots. ClaudeBot, Claude-User y Claude-SearchBot: 0.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, `lastmod`, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 49 destinos de links internos, 0 rotos y 0 redirigidos. robots.txt, llms.txt y la clave de IndexNow responden 200.
+
+### Preparación para el 11-16: sección de migración por etapas
+Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó escrito que no había que escribir sin ella). La guía ES ya cubre la segunda pasada de ventas de la transición (paso 7), el video MP4 conviviendo con el streaming y la plataforma vieja en solo lectura (punto 10). **Le falta esto, todo verificable en el repo de Apoyo Escolar RV:**
+1. **El vencimiento del acceso migrado se calcula desde la fecha de compra original, no desde el día de la migración.** El script `migrate-legacy-users.ts` (2025-11-21) pone `expiresAt` = fecha de compra + 12 meses. El plan de migración lo dice como objetivo: "manteniendo el tiempo de acceso restante". La guía no lo menciona en ningún lado. La búsqueda de hoy ("migrar alumnos de Tiendup o WooCommerce… respetar fecha de vencimiento del acceso") no devuelve ninguna fuente que lo trate: son todas guías de migración de tiendas (Shopify, Tiendanube, LitExtension).
+2. **La experiencia nueva se prende detrás de un solo interruptor, y la URL del curso no cambia para el alumno.** Commit `4baf2468` (2026-08-13): `PLATFORM_V2` prende y apaga juntos el portal del curso, el progreso, la comunidad, el chat y la gamificación. Con el interruptor apagado, `/my-courses/<curso>` redirige al reproductor de siempre, "así que el alumno no nota nada". 38 endpoints de v2 devuelven 404 si la v2 no está prendida en ese entorno.
+3. **Restituir accesos por derecho y no por lo que se observó.** Commit `d886dbcb` (2026-08-18): cuando hay que mudar un grupo, la audiencia sale de las compras completadas y vigentes, porque la base no sabe quién entró al grupo (10.184 de 10.709 eventos son "enlace enviado por email"). Antes de enviar se corre una simulación obligatoria, y los envíos salen a 30 por minuto, con un id determinístico para que apretar dos veces no mande dos mails.
+- Datos que no se publican: emails, nombres de alumnos, nombre de la docente, nombre del asistente interno, montos (el script guarda `amount: 0`, que no aporta nada).
+- Plan: si el 11-16 el title EN (#43) no muestra nada negativo, sumar a la guía ES y EN una sección "Migrar por etapas sin cortar el acceso" con los 3 puntos, una línea nueva en el checklist ("vencimientos calculados desde la compra original") y una FAQ. Con `updated` nuevo, porque cambia el contenido.
+
+### GEO / SERP
+- "migrar alumnos de Tiendup o WooCommerce a plataforma propia respetar fecha de vencimiento del acceso": ninguna fuente trata alumnos ni vencimientos. Citan ecosire, LitExtension, Tiendanube, Seahawk, Kinsta, LaunchTip, WPBeginner, Hackceleration y un PDF de Shopify Plus, todos de migración de tiendas. La respuesta dice que sobre Tiendup no aparece nada. Es el mismo hueco que la corrida 28 encontró sobre la convivencia de plataformas.
+
+### Cambios
+**Ninguno en el sitio.** #41 y #42 se cierran sin cambios: revertirlos no tiene sentido, porque ninguno hizo daño, e iterar sobre páginas de servicio no tiene dato que lo justifique. Lo demás sigue en ventana de espera: migración EN 11-16, cobros 11-17, costo 11-19, redirecciones 11-23 e índice de soluciones 11-24. La sección de migración por etapas espera al 11-16 para no mezclarse con la prueba del title EN.
+
+### Envíos
+- Sin deploy de contenido, sin IndexNow y sin reenvío del sitemap: no cambió ninguna URL.
+- Solo se commitea este registro.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-13**: ver si la semana sigue plana con el 11-11 completo. Si la semana del 11-06 al 11-12 queda por debajo de 91, mirar qué página perdió impresiones antes de leerlo como estancamiento.
+- **11-16**: migración EN (#43) y, si da el visto bueno, publicar la sección de migración por etapas (ES + EN) con la evidencia de arriba.
+- **11-17**: cobros ES/EN (#32). **11-19**: nota de costo (#44). **11-23**: redirecciones (#45) e hipótesis GEO (protección sigue siendo la única página en el ciclo de OAI-SearchBot). **11-24**: índice de soluciones (#47).
+- Corrección ES: si llega a 10 días sin impresiones (11-15), revisar el rastreo y la posición por query.
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`. Seguir las sesiones de ChatGPT-User sobre la home y el hub.
+- Para el dueño, siguen abiertos: Chrome con CDP para `request_indexing` (o pedir a mano `/en/solutions/` y `/soluciones/`), Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: migración EN (11-16), cobros (11-17), nota de costo ES/EN y notas relacionadas (11-19), redirecciones (11-23), índice de soluciones (11-24), protección y casos (consolidados), páginas de servicio de evaluación y meta de corrección (cerradas hoy).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 27 (11-10) | 10-13 → 11-09 | 5 | 263 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 29 (11-12) | 10-15 → 11-11 | 4 | 283 | 8,6 (7,3 sin el 11-04) |
