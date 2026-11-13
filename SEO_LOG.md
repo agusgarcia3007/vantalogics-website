@@ -2127,12 +2127,12 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 
 | Ventana | Clics | Impresiones | CTR | Posición |
 |---|---|---|---|---|
-| Últimos 28 d (10-16 → 11-12) | 4 | 295 | 1,4 % | ~8,5 |
-| Últimos 7 d (11-06 → 11-12) | 0 | 90 | 0 % | ~6,6 |
-| 7 d anteriores (10-30 → 11-05) | 0 | 92 | 0 % | ~10 (6,4 sin el 11-04) |
+| Últimos 28 d (10-16 → 11-12) | 4 | 295 | 1,4 % | 8,5 (7,2 sin el 11-04) |
+| Últimos 7 d (11-06 → 11-12) | 0 | 90 | 0 % | 7,0 |
+| 7 d anteriores (10-30 → 11-05) | 0 | 92 | 0 % | 11,5 (7,3 sin el 11-04) |
 
 - **Decimoséptima semana seguida de récord en 28 d: 295 impresiones (283 ayer).** El 11-11 cerró en 14 (ayer figuraba con 11), así que la semana del 11-05 al 11-11 terminó en 94 contra 92: no fue una caída.
-- **La semana del 11-06 al 11-12 queda en 90 contra 92, con el 11-12 todavía preliminar (15).** Es la segunda semana plana seguida. La posición mejora (~6,6 contra ~10). Se miró qué páginas perdieron impresiones, como estaba previsto:
+- **La semana del 11-06 al 11-12 queda en 90 contra 92, con el 11-12 todavía preliminar (15).** Es la segunda semana plana seguida. La posición queda casi igual sin el dato raro del 11-04 (7,0 contra 7,3). Se miró qué páginas perdieron impresiones, como estaba previsto:
   - Bajan: corrección ES 11 → 3 (pero en pos 4,3, contra 7,7 antes), migración ES 8 → 1 (pos 1), Lu Apuntes ES 7 → 2, costo EN 32 → 27 y costo ES 6 → 2.
   - Suben: protección ES 3 → 10, caso SIED ES 0 → 7, migración EN 3 → 7 (pos 23 → 16; el 11-12 salió 3 veces en pos 6), corrección EN 10 → 11 (pos 47 → 9,5), `/en/` 1 → 5, caso Apoyo Escolar RV ES 0 → 4.
   - Lectura: no hay una página que se caiga. El total se mantiene porque se compensan altibajos de 1 a 8 impresiones por página, con el volumen de ahora. Las páginas que bajan en impresiones salen mejor posicionadas.
@@ -2196,4 +2196,4 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | 27 (11-10) | 10-13 → 11-09 | 5 | 263 | 8,4 (6,8 sin el 11-04) |
 | 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
 | 29 (11-12) | 10-15 → 11-11 | 4 | 283 | 8,6 (7,3 sin el 11-04) |
-| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | ~8,5 |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
