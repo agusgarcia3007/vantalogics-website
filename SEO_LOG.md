@@ -2118,3 +2118,82 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | 27 (11-10) | 10-13 → 11-09 | 5 | 263 | 8,4 (6,8 sin el 11-04) |
 | 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
 | 29 (11-12) | 10-15 → 11-11 | 4 | 283 | 8,6 (7,3 sin el 11-04) |
+
+---
+
+## 2026-11-13 — Corrida 30
+
+### Métricas generales (GSC, datos hasta 2026-11-12; el 11-12 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-16 → 11-12) | 4 | 295 | 1,4 % | ~8,5 |
+| Últimos 7 d (11-06 → 11-12) | 0 | 90 | 0 % | ~6,6 |
+| 7 d anteriores (10-30 → 11-05) | 0 | 92 | 0 % | ~10 (6,4 sin el 11-04) |
+
+- **Decimoséptima semana seguida de récord en 28 d: 295 impresiones (283 ayer).** El 11-11 cerró en 14 (ayer figuraba con 11), así que la semana del 11-05 al 11-11 terminó en 94 contra 92: no fue una caída.
+- **La semana del 11-06 al 11-12 queda en 90 contra 92, con el 11-12 todavía preliminar (15).** Es la segunda semana plana seguida. La posición mejora (~6,6 contra ~10). Se miró qué páginas perdieron impresiones, como estaba previsto:
+  - Bajan: corrección ES 11 → 3 (pero en pos 4,3, contra 7,7 antes), migración ES 8 → 1 (pos 1), Lu Apuntes ES 7 → 2, costo EN 32 → 27 y costo ES 6 → 2.
+  - Suben: protección ES 3 → 10, caso SIED ES 0 → 7, migración EN 3 → 7 (pos 23 → 16; el 11-12 salió 3 veces en pos 6), corrección EN 10 → 11 (pos 47 → 9,5), `/en/` 1 → 5, caso Apoyo Escolar RV ES 0 → 4.
+  - Lectura: no hay una página que se caiga. El total se mantiene porque se compensan altibajos de 1 a 8 impresiones por página, con el volumen de ahora. Las páginas que bajan en impresiones salen mejor posicionadas.
+- **Clics: 4 en 28 d, todos de Argentina, y 18 días seguidos sin clics** (el último fue migración ES el 10-26).
+- **Nota de costo EN: 80 imp en pos 4,6, 0 clics.** La query de universidad suma 27 imp en pos 1,8. Revisión el 11-19.
+- Queries visibles (19): las mismas que ayer. Ninguna nueva con intención del público.
+
+### Evaluación pendiente del 11-12
+- **Corrección ES:** ya no está en riesgo de los 10 días sin impresiones. Salió el 11-10 (pos 5) y 2 veces el 11-12 (pos 4). Se cierra el seguimiento.
+- **Migración ES:** volvió a salir el 11-12, en pos 1 (también el 11-03). Lleva sin rastreo desde el 10-19, indexada. Nada que hacer.
+
+### Indexación
+- **`/soluciones/` se rastreó el 11-11 a las 23:07, después del deploy del #47 (11-10).** Google ya tiene la versión con el párrafo de alcance y la ItemList. Indexada, Breadcrumbs válidos.
+- `/en/solutions/`: sigue con el rastreo del 11-03 (indexada). Googlebot no la pidió en 7 días; bingbot sí, 6 veces. Sigue pendiente el pedido manual de indexación.
+- Migración ES: indexada, último rastreo 10-19.
+- Sitemap: hoy no cambió nada, no se reenvía.
+
+### Crawlers (`bun run crawlers 7`, 11-06 → 11-13)
+- `cf auth whoami` antes: sin errores de autenticación.
+- **ChatGPT-User: `/` 4 veces y el hub `/plataformas-educativas/` 2 veces el 11-12**, más la sesión del 11-08 (caso Apoyo Escolar RV, privacidad). Sigue la señal de ayer.
+- **OAI-SearchBot: 38 pedidos, las mismas 4 páginas** (protección EN, la última hoy; protección ES; `/en/solutions/` y `/en/solutions/law-firms/` el 11-07). Ninguna página nueva entra a su ciclo.
+- bingbot: 114 pedidos sobre 41 rutas. Lo más pedido: `/en/blog/` y `/en/solutions/` (6 cada una), evals ES y costo ES (5). Los 301 sobre rutas vigentes (`/en/education-platforms/migration/`, `/ar/cases/academia-dr-la-rosa/`, `/`) son pedidos por http: con https dan 200 (verificado con curl).
+- Googlebot: 108 pedidos sobre 32 rutas; `/` 9 veces, `/soluciones/` 3, costo ES 3 y costo EN 2. Sigue releyendo las URLs de los sectores retirados (301).
+- PerplexityBot: corrección ES (11-06). GPTBot: solo sitemap y robots. ClaudeBot, Claude-User y Claude-SearchBot: 0.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200 y `lastmod`, canonical self, un H1, JSON-LD que parsea y sin `noindex`. 49 destinos de links internos: 0 rotos y 0 redirigidos. robots.txt, llms.txt y la clave de IndexNow responden 200.
+
+### GEO / SERP
+- **"how much does it cost to add AI tutoring to our university per student"** (la query con más impresiones del sitio): la respuesta cita ibl.ai (2 notas), Quadc, The 74, CallSphere y un par de blogs más. **Todas las fuentes citadas dan montos en dólares por alumno por mes o por año.** Nuestra nota no da montos (regla del dueño: sin precios) sino tokens, proporciones y la fórmula. Es la explicación más probable de las ~25 impresiones en pos 1–2 sin un clic: el snippet no promete el número que la persona busca. **No se cambia la regla.** El 11-19 se evalúa con esto en mente: el valor de la nota es que la citen por el método (tokens por sesión, la fórmula, qué mueve el costo), no el clic. Si se quiere competir por el clic, la única salida compatible con la regla es un title o una meta que prometa "calculá el costo por alumno con la fórmula" y no "cuánto cuesta". Se decide el 11-19, no antes.
+
+### Cambios
+**Ninguno en el sitio.** La semana plana no la explica ninguna página que se caiga, así que no hay nada que corregir. Lo demás sigue en ventana de espera: migración EN el 11-16 (con la sección de migración por etapas preparada), cobros el 11-17, costo el 11-19, redirecciones el 11-23 e índice de soluciones el 11-24.
+
+### Envíos
+- Sin deploy de contenido, sin IndexNow y sin reenviar el sitemap: no cambió ninguna URL.
+- Solo se commitea este registro.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-16**: migración EN (#43). Dato a favor: el 11-12 salió 3 veces en pos 6, y en la semana pasó de pos 23 a 16. Si se confirma, publicar la sección "Migrar por etapas sin cortar el acceso" (ES + EN) con la evidencia de la corrida 29.
+- **11-17**: cobros ES/EN (#32). **11-19**: nota de costo (#44), con lo que se vio hoy en la SERP: todas las fuentes que aparecen dan dólares, que nosotros no damos. **11-23**: redirecciones (#45) e hipótesis GEO (protección sigue siendo la única página en el ciclo de OAI-SearchBot). **11-24**: índice de soluciones (#47); `/soluciones/` ya se rastreó, `/en/solutions/` no.
+- Si la semana del 11-07 al 11-13 vuelve a quedar en ~90, ya son tres semanas planas: revisar si el techo es de cobertura (pocas páginas con impresiones) y no de posición, y priorizar páginas nuevas en los huecos ya detectados (migración por etapas, acceso migrado con vencimiento).
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`.
+- Para el dueño, siguen abiertos: Chrome con CDP para `request_indexing` (o pedir a mano `/en/solutions/`), Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: migración EN (11-16), cobros (11-17), nota de costo ES/EN y notas relacionadas (11-19), redirecciones (11-23), índice de soluciones (11-24), protección y casos (consolidados), páginas de servicio de evaluación y meta de corrección (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 27 (11-10) | 10-13 → 11-09 | 5 | 263 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 29 (11-12) | 10-15 → 11-11 | 4 | 283 | 8,6 (7,3 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | ~8,5 |
