@@ -1,140 +1,140 @@
 {
-  "version": 1,
+  "version": 2,
   "skills": {
     "accessibility": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "06d5b1f1cbf55e704c15640b592af6df5cb37514de5d5fb51c9dcbd579248427",
+      "computedHash": "cacc5d441eaf300610cef9d4041a6476ad08199150e738bfc1e4ae4af5c74bbd",
       "wellKnownDigest": "sha256:a9f096529082513ec04fa1da9f25e061fff2e4daae77f0bc13e3e277860737a9"
     },
     "anti-ui-slop": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "c981cdd4edecb7557d797f1f8ef0a63a1ae5e61c5ccff8290ab7591f9ffa2a22",
+      "computedHash": "bd153b06c001ecdc0e3194b3f6eecd1fcb9915d169453fef6dfcd595a79d140d",
       "wellKnownDigest": "sha256:651c8cb2bf0e1ac39d175937e042722cbe77d2d96787f13e8fc3fb928bf01190"
     },
     "cannibalization-check": {
       "source": "marketingskills/seo",
       "sourceType": "github",
       "skillPath": "skills/cannibalization-check/SKILL.md",
-      "computedHash": "262efd7be0cb78ccd94ac3fd53c66c56992e57e875f3ae0352def3dd378546b6"
+      "computedHash": "2dfd52ad1a3c6c4e65bc1b96f03034cb5bd067a5e1f62c0402852c590c0463ac"
     },
     "copywriting": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "326130c59775eb21408f16abfccd1c7d0ef16f7835fa56edd62637a5c9c86b10",
+      "computedHash": "5a4b08f257642a3c50bdbf4cbb994d725783f056b318d9b9478f77c3bc0a58f1",
       "wellKnownDigest": "sha256:bc81a6ceaa5d4745f040169f232a418a2923fdb8545d64410e4dcf446e8ee12d"
     },
     "emil-design-eng": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "41b0a4dc1a27164fe297845a6c6850a39e9242c42c9be999967fcee9df2c5974",
+      "computedHash": "d80dbb053bf35f3ef9f3ffe493054b76d93f4ae5e2c85a97ee1222677471a622",
       "wellKnownDigest": "sha256:3e4c7e2b34a2fef2f972c1836d3d7925e39875623a76ee1b7a2026a5b32c1454"
     },
     "exceed-quality-threshold": {
       "source": "marketingskills/seo",
       "sourceType": "github",
       "skillPath": "skills/exceed-quality-threshold/SKILL.md",
-      "computedHash": "0c2f640f4186c393190cb4e0bbdf8ae7e54829a189207cd447eba67ba3595d6d"
+      "computedHash": "a6b11378575e241f13b3dbfe4334242b9352f883e66087a00324a11631b96418"
     },
     "gsap-scrolltrigger": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "1cdc5647693783cb7a662d84a5de434c88a051ed56b4d33597c9b5782b5973e6",
+      "computedHash": "c29c5a0fb1506a7f577fe68282eafc6df14b8d2b8ecd24f1f05836f5a0957b67",
       "wellKnownDigest": "sha256:b1997611820c8b7fdac73312492b1af00308649af0e5ca3426ef905f1903a98d"
     },
     "impeccable": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "34456da40dd9d548987d44fcaa23a03117f64fdad5d2a76cd00d08930911deda",
+      "computedHash": "741237dacc5a9b6a795a976bfcb8559a69e203ba12c0d6dc7e6ade5db24887b1",
       "wellKnownDigest": "sha256:326a1113765dd23e7d4bddee9b52ed2135cfd112b01b7ea3fe60ae904a858558"
     },
     "improve": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "d47589b26696fd18283075c075e874240afdcaad5a96d23710d8716a592d1181",
+      "computedHash": "dcfe3bf68cee1413ba9d5de65572cb1005091709fb1b28342e45d5c4b39171a2",
       "wellKnownDigest": "sha256:23e0b490bf5ce01f5e2e80347334859a64ab12988dc2465fba073c81048f97cb"
     },
     "internal-link-builder": {
       "source": "marketingskills/seo",
       "sourceType": "github",
       "skillPath": "skills/internal-link-builder/SKILL.md",
-      "computedHash": "7e38ba34ab3746460d3b84072b2d42438fc0577afe6cd8c3bae5e43b57ba9347"
+      "computedHash": "c9cff79972f5e123d025a24cde023353bc7271484d35e65533897a2830f438cc"
     },
     "keyword-opportunity-finder": {
       "source": "marketingskills/seo",
       "sourceType": "github",
       "skillPath": "skills/keyword-opportunity-finder/SKILL.md",
-      "computedHash": "4d25f53a40024507fe2ee87dfe118840d5d65ac270cf8f6b8c6694382765dda0"
+      "computedHash": "f21125596bd5f9d0751dde1f24f39d34218183482f5188f5a044829f085a626e"
     },
     "programmatic-seo": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",
       "skillPath": "skills/programmatic-seo/SKILL.md",
-      "computedHash": "0bbdcbacfbe46fd78d774041ee49afd313505bb435b775dc246f4b8e6981d797"
+      "computedHash": "f37db3caa28d6e8e7d4bc0b73e65db26cae7dfb15b53d97f58a0f2330bca545b"
     },
     "refresh-vs-new-content": {
       "source": "marketingskills/seo",
       "sourceType": "github",
       "skillPath": "skills/refresh-vs-new-content/SKILL.md",
-      "computedHash": "d686cc2fa396a541c5dc7c9eeadc578d653914948548cfad597b82c13202911e"
+      "computedHash": "b30ace0eab823f661afca7a3b9613bfd902fa2d4f22816efc4f815d43a6a44c2"
     },
     "remotion-best-practices": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "4f8621b54497f7541f3e5df08b20c1b501989c9655c47d35f5db00454fdc39af",
+      "computedHash": "1fe9a8a9a093320a24810697b7f8e5de1b0be4dcd18f54fa6b1a9894dcd75adf",
       "wellKnownDigest": "sha256:b6f312896f623dea6dc436a288b279f022854581f86b397043fb4fb9ba85bcb8"
     },
     "schema-fix-writer": {
       "source": "marketingskills/seo",
       "sourceType": "github",
       "skillPath": "skills/schema-fix-writer/SKILL.md",
-      "computedHash": "6dfb4bdc59fda9c8c6439e2c65cfe7f45f484b99969fb3519e70afc133fa8044"
+      "computedHash": "3e6cf7473fcae479e012e77bd013bea72e7a94eca1b907e619713394296d5418"
     },
     "seo-aeo-best-practices": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "be345b36752b8f421d6894a14b8a2e3ae7702c00e017db79a246356c8bedd10d",
+      "computedHash": "50a391de14a734037ab0f9706a185d0494edbc94205afa0a5d7e7707d8872168",
       "wellKnownDigest": "sha256:a6b02aa58062bd61d9f1b44304f634450a74110e0dfe77c27531c296d8e161df"
     },
     "seo-growth-loop": {
       "source": "marketingskills/seo",
       "sourceType": "github",
       "skillPath": "skills/seo-growth-loop/SKILL.md",
-      "computedHash": "5977e7f627241ced0099d8b3a3547c156e1f070cd8cdcaa8694a0f6c7547305c"
+      "computedHash": "afafc9db2a0a2440c73ff4aebbf6ffd3ffc4910841948fb8c18a364613e27f7d"
     },
     "site-architecture": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",
       "skillPath": "skills/site-architecture/SKILL.md",
-      "computedHash": "48a38c5e2b000d134c3db282364b1014bad362fa91d4618ad8c2eb7cee991208"
+      "computedHash": "b705d5e242192822cdb1aa2efb48f3efc1fe10cdb97f444066c37a5fd629db88"
     },
     "three-best-practices": {
       "source": "joyco-studio/skills",
       "sourceType": "github",
       "skillPath": "skills/three-best-practices/SKILL.md",
-      "computedHash": "29f9d6f53f92c1915b1ed085761e4d5b827a4b79bcb467d73f5fddb15aa1803d"
+      "computedHash": "a3cab083460975790edcec5ef4dc55aec4ba71f8a2a9163c2031f775ce8c8606"
     },
     "title-meta-rewriter": {
       "source": "marketingskills/seo",
       "sourceType": "github",
       "skillPath": "skills/title-meta-rewriter/SKILL.md",
-      "computedHash": "72a71dae0e18ce60d9d9ed4b24de02babd73c66ebeb553fa94103d5d2fad6cd8"
+      "computedHash": "eb35d2cbacb329817270189d99f7c0f25c54e6bea270e6769801a98dd3715247"
     },
     "vercel-react-best-practices": {
       "source": "skills.sh",
       "sourceUrl": "https://skills.sh/p/mUwIsVZuIzULUtCz",
       "sourceType": "well-known",
-      "computedHash": "6d60b430de79d8283df426585ac17f72d66352d822612569e32342fe61f7a881",
+      "computedHash": "9a7b9d21ca4fdde0c531647a94f8b843a7d17a011cdc490e34fc7b8007466e46",
       "wellKnownDigest": "sha256:7459708cf5d16fd98ee4d8bdf538b88b566effc7fb1c5cd962c929ad3b8ea8eb"
     }
   }
