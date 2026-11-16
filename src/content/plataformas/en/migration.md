@@ -6,7 +6,7 @@ answer: "Migrating an academy is not copying videos: it is moving students, purc
 nav: "Migration"
 order: 1
 serviceType: "Online academy migration to a platform of your own"
-updated: 2026-09-23
+updated: 2026-11-16
 translationOf: migracion
 cases:
   - apoyo-escolar-rv
@@ -17,6 +17,8 @@ faq:
     answer: "It depends on what the source platform exports. Lesson-by-lesson progress almost never comes out in the exports. Tiendup does include the percentage completed per course, which is useful to show students where they were. It is best to decide before the migration what gets kept and tell students, rather than letting them find out."
   - question: "What happens to active subscriptions?"
     answer: "They do not move on their own. The subscriber's card stays stored with the previous platform's processor and cannot be transferred. There are two paths: let current subscriptions run out there and charge new ones on your own platform, or ask each subscriber to subscribe again, ideally with an incentive."
+  - question: "Can you migrate without shutting the academy down for a weekend?"
+    answer: "Yes. You migrate in stages, with students using the platform the whole time: purchases are imported with their original date, which also sets when each access expires; new features are switched on with a single switch without changing the course URL; and sales that came in meanwhile are added in a second pass without duplicating anything. The previous platform stays read-only for a few weeks."
   - question: "Can you migrate from Moodle?"
     answer: "Yes. Moodle exports users as CSV and courses as backups, and with database access you can also extract enrollments and grades. It is the migration with the most data available; the work lies in adapting Moodle's structure to the new platform's learning path."
   - question: "What happens to the links and search rankings of the previous platform?"
@@ -74,6 +76,22 @@ The real import processes orders 100 at a time. Emails go out in batches of 10 e
 
 While the migration was being prepared, the previous stores kept selling. Those sales were exported afterwards and added with the same process. Since the script recognizes purchases that already exist, running it twice duplicates nothing.
 
+## Migrating in stages without cutting off access
+
+You do not have to pick a weekend and switch everything at once. At Apoyo Escolar RV the move happened in parts, with students using the platform the whole time. Three decisions made it possible.
+
+### Expiry is counted from the original purchase
+
+If access to a course lasts a fixed period, migrated access expires counting from the day the student bought on the previous platform, not from the day of the migration. At Apoyo Escolar RV every imported purchase expires 12 months after its original purchase date. Counting from the import day would give every student back the time they had already used. That is why the master file keeps the date of every order (step 1) and dates are normalized carefully (step 2): a format error here changes when each person loses access.
+
+### The new experience is switched on with a single switch
+
+The course portal, progress, community, course chat and gamification are switched on and off together, with a single switch that can be changed without redeploying the platform. With the switch off, the course URL the student has saved takes them to the same player as always, so they notice nothing. Meanwhile, the new features do not exist in that environment: their 38 endpoints respond as if they were not there, and nothing half-finished is visible. The same build runs in the test environment with everything on and in production with everything off, until the day of the switch.
+
+### Access is restored by entitlement, not by what was observed
+
+When a group of students has to be moved to a new place, the list comes from completed, current purchases, not from records of who was there. At Apoyo Escolar RV a new Q&A group had to be opened and the database did not know who had joined the previous one: 10,184 of 10,709 recorded events said the link had been sent by email, not that the person had joined. The audience was built from purchases with current tutoring access. Sending is not enabled until a simulation has been run with that list, and any change to the list requires simulating again. Notices go out at 30 per minute and each one carries a fixed identifier per group and student, so pressing send twice does not send two emails.
+
 ## Video: two formats side by side for a while
 
 Content is the easy part if you have the originals, and the only part that cannot be rebuilt if you do not. Get the original files before closing any account.
@@ -85,13 +103,14 @@ Moving video between providers is also a migration. At Apoyo Escolar RV, video w
 1. Originals of every video and material downloaded and verified.
 2. Sales and enrollee exports from each platform, with the cutover date and time noted.
 3. Old product → new course table reviewed and approved by the academy.
-4. Dry run with no orphaned products or unexplained errors.
-5. Access emails written, tested and sent from an authenticated sender so they do not land in spam.
-6. Purchase links on social media, ads, emails and your bio ready to change.
-7. 301 redirects for the old URLs, if they were on your domain.
-8. A plan for active subscriptions: let them expire or ask subscribers to sign up again.
-9. Extra support the first week: questions will come in even if everything goes well.
-10. The previous platform kept active for a few more weeks, read-only, in case some data needs to be recovered.
+4. Expiry dates calculated from the original purchase date, not from the day of the migration.
+5. Dry run with no orphaned products or unexplained errors.
+6. Access emails written, tested and sent from an authenticated sender so they do not land in spam.
+7. Purchase links on social media, ads, emails and your bio ready to change.
+8. 301 redirects for the old URLs, if they were on your domain.
+9. A plan for active subscriptions: let them expire or ask subscribers to sign up again.
+10. Extra support the first week: questions will come in even if everything goes well.
+11. The previous platform kept active for a few more weeks, read-only, in case some data needs to be recovered.
 
 ## After migrating
 
