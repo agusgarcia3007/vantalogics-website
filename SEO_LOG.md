@@ -2197,3 +2197,88 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
 | 29 (11-12) | 10-15 → 11-11 | 4 | 283 | 8,6 (7,3 sin el 11-04) |
 | 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+
+---
+
+## 2026-11-16 — Corrida 31
+
+### Métricas generales (GSC, datos hasta 2026-11-15; el 11-15 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-19 → 11-15) | 3 | 328 | 0,9 % | 8,3 (7,1 sin el 11-04) |
+| Últimos 7 d (11-09 → 11-15) | 0 | 108 | 0 % | 7,8 |
+| 7 d anteriores (11-02 → 11-08) | 0 | 102 | 0 % | 10,4 (6,3 sin el 11-04) |
+
+- **Decimoctava semana seguida de récord en 28 d: 328 impresiones (295 el 11-13).** La semana vuelve a crecer: 108 contra 102 (+6 %), después de dos semanas planas. El techo de ~90 no se repitió.
+- **Clics: 3 en 28 d (se fue de la ventana un clic anterior al 10-19; quedan los 2 del 10-20 y el de migración ES del 10-26) y 21 días seguidos sin clics.** Todos de Argentina.
+- **Nota de costo EN: 89 imp en pos 4,3, 0 clics.** La query de universidad suma 34 imp en pos 1,6. En la semana aparece desde USA, Reino Unido, Italia, Austria, Irlanda, Corea y Portugal, casi siempre en pos 1. Revisión el 11-19.
+- Corrección EN 40 imp (pos 20,3; Reino Unido 5 en pos 24). **Query nueva con intención: "are automatic maths scoring engines accurate with equivalent answers and unusual formats?" → corrección EN, 3 imp en pos 2,3.** Es una pregunta conversacional larga, del mismo tipo que la de universidad. Se anota; con 3 impresiones no se actúa.
+- **Query nueva: "download protection for courses" → protección EN, 3 imp en pos 20,3 (USA).** Primera query no de marca de protección EN. Pos 20: se mira si sube sola.
+- Corrección ES 32 en pos 7,6. `/en/` 31 en pos 3,0. Protección ES 23 en pos 7,2. Migración ES 18 en pos 7,4 con 1 clic; EN 15 en pos 13,6.
+- Países (7 d): USA 23 (pos 8,2), Costa Rica 9 (pos 1,3), Reino Unido 9, Argentina 8, Chile 6, Colombia 5, España 5. 32 países con al menos una impresión.
+
+### Evaluación de cambios anteriores (revisión 11-16: #43)
+
+- **#43 (title y meta de migración EN): neutro, con muestra chica. No se espeja en ES y no se revierte.**
+  - Antes (10-08 → 11-01, rastreo previo al cambio): 12 imp, pos 1–10 (media ~5,5), 0 clics.
+  - Después (rastreo del 11-04 → 11-15): 9 imp. Sin la query de Engrade (2 en pos 33,5, fuera de intención) ni el 69 del 11-11: 6 imp en pos 6–9. 0 clics.
+  - Lectura: ni ganó clics ni se puede afirmar que bajó la posición (6 impresiones). El title nuevo entra completo en el snippet, que era el objetivo mecánico. Como la ES tiene el único clic de la guía, no se toca su title: la prueba no dio un motivo para hacerlo.
+  - Aprendizaje (igual que #42): con 1–2 impresiones por día, los cambios de title/meta no se pueden medir en 2 semanas. La palanca que queda es el contenido.
+
+### Indexación
+- **`/en/solutions/` se rastreó hoy a las 10:43** (#47). Se cierra el pedido manual pendiente desde el 11-10.
+- Migración EN: rastreada el 11-15 (antes del cambio de hoy). Migración ES: rastreada el 11-13. Las dos indexadas, Breadcrumbs válidos.
+- `batch_url_inspection` falló con "[SSL] record layer failure" en las 7 URLs a la vez; una por una con `inspect_url_enhanced` funcionó. Probable problema de concurrencia del wrapper.
+- `request_indexing` sigue roto ("Chrome is not reachable on 127.0.0.1:9222").
+
+### Crawlers (`bun run crawlers 7`, 11-09 → 11-16)
+- **Los conteos salieron todos en múltiplos de 10 y con muy pocas rutas por bot** (bingbot 9, Googlebot 7). Antes la ventana de 7 días daba conteos casi exactos y 30–40 rutas. La API devolvió una muestra más gruesa esta vez; no se comparan los números con las corridas anteriores.
+- **Casi todo lo que firma como bot de IA son escáneres:** OAI-SearchBot pidió `/litellm/spend/logs` y `/prisma/schema.prisma`, ClaudeBot `/litellm/key/info`, GPTBot `/.env.production.local`, PerplexityBot `/azure-pipelines.yml`, DuckAssistBot `/apps/web/.env`, Perplexity-User `/.vercel/project.json`. Todos 404. Es el mismo patrón que los falsos Googlebot de `/wp/`: user agents falsos buscando secretos. No hay nada expuesto.
+- Pedidos reales: OAI-SearchBot sigue con protección EN (11-13). Googlebot: `/`, costo ES, evals ES, `/soluciones/` y **migración EN el 11-15**. bingbot: hub EN, búsqueda semántica EN, corrección asistida EN.
+- ChatGPT-User: 0 en la muestra (la semana pasada abría home y hub). Con la muestra gruesa no se puede afirmar que se cortó.
+
+### Auditoría técnica (crawl de producción, después del deploy)
+- 48/48 URLs del sitemap con 200, canonical self, un H1 y sin `noindex`. Links internos de las dos páginas cambiadas: 0 rotos. robots.txt, llms.txt y sitemap 200; llms.txt ya lista la guía con la fecha nueva.
+- Cloudflare devuelve 403 al user agent `Python-urllib` (con curl, 200). No afecta a crawlers reales; para auditar hay que usar curl.
+
+### GEO / SERP
+- "migrate online course students to new platform keep access expiration date original purchase": aparecen ayudas de plataformas (Thinkific con la columna de vencimiento en la importación masiva, Learnybox, Ruzuku), avisos de migración de academias puntuales (Integrative Nutrition, The Expedition Project, Elastic, Coursera) y listas genéricas. Ninguna fuente explica por qué el vencimiento se cuenta desde la compra original ni cómo convivir por etapas con datos de un caso. Es el hueco que cubre la sección nueva.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 48 | `/plataformas-educativas/migracion/` + `/en/education-platforms/migration/` | **Sección nueva "Migrar por etapas sin cortar el acceso" / "Migrating in stages without cutting off access"**, entre el paso 7 y la sección de video, con tres subsecciones: (1) el vencimiento se cuenta desde la compra original (cada compra importada vence 12 meses después de su fecha original: `scripts/migrate-legacy-users.ts` del repo de Apoyo Escolar RV, `planId: legacy-12-months`); (2) la experiencia nueva se prende con un solo interruptor, sin rebuild, la URL del curso no cambia y los 38 endpoints de v2 no existen con el interruptor apagado (commit `4baf2468`, 2026-08-13); (3) los accesos se restituyen por derecho y no por lo observado: 10.184 de 10.709 eventos eran "enlace enviado", simulación obligatoria, 30 envíos por minuto con id fijo (commit `d886dbcb`, 2026-08-18). **Checklist**: ítem nuevo 4 ("vencimientos calculados desde la fecha de compra original"), pasa de 10 a 11 puntos. **FAQ nueva**: "¿Se puede migrar sin cerrar la academia un fin de semana?". `updated` → 2026-11-16 (dateModified en el WebPage y lastmod en el sitemap). Title y meta sin cambios (ES y EN). Sin montos, sin nombres de personas, sin LearnBase, sin recomendar competidores. | La guía lleva 6 semanas estancada en pos 6–9 (ES 18 imp en pos 7,4; EN 15 en 13,6) y #43 no movió nada. Tres búsquedas (corridas 28 y 29, y hoy en EN) muestran que ninguna fuente trata la convivencia de plataformas con alumnos activos ni el vencimiento del acceso migrado. Es contenido con evidencia propia que la SERP no tiene. | Google relee la guía en 2–5 días (como #41 con `lastmod` nuevo). Con más profundidad, la guía sube de pos 7 a 3–5 en sus queries y suma impresiones para "migrar alumnos", "convivencia de plataformas" y "vencimiento". Que la citen los motores de IA por el dato del vencimiento y la restitución por derecho. | Rastreo de las 2 URLs; impresiones y posición (28 d) de migración ES/EN; queries nuevas con "etapas", "acceso", "vencimiento", "expiry", "without losing"; web search de las queries de la corrida 28. | 2026-11-30 |
+
+### Envíos
+- Deploy por push a `main` (run 43863246264, ok en 31 s). IndexNow desde CI: `200 for 2 URLs` (las dos guías).
+- Sitemap reenviado a GSC (12:05).
+- `request_indexing` sin Chrome: pedir a mano las dos guías de migración si el dueño puede.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-17**: cobros ES/EN (#32). **11-19**: nota de costo (#44): 34 imp en pos 1,6 en la query de universidad y 0 clics; decidir con el criterio de la corrida 24 y lo visto en la SERP de la corrida 30 (todas las fuentes citadas dan dólares). **11-23**: redirecciones (#45) e hipótesis GEO de OAI-SearchBot. **11-24**: índice de soluciones (#47), ya rastreado en ES y EN. **11-30**: migración por etapas (#48).
+- Ver el rastreo de las dos guías de migración en las próximas corridas.
+- Queries conversacionales en inglés (universidad, "maths scoring engines… equivalent answers") salen en pos 1–2 sin clics: patrón de AI Overview. Si la de corrección suma 10+ impresiones, revisar que la nota EN responda en la primera línea si la corrección automática acepta respuestas equivalentes y formatos raros.
+- Crawlers: si la próxima corrida vuelve a dar conteos en múltiplos de 10 con 7 días, revisar `scripts/crawler-hits.mjs` (límite de filas o cambio de muestreo de la API).
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`.
+- Para el dueño, siguen abiertos: Chrome con CDP para `request_indexing` (o pedir a mano las dos guías de migración), Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: migración ES/EN (11-30), cobros (11-17), nota de costo ES/EN y relacionadas (11-19), redirecciones (11-23), índice de soluciones (11-24), protección y casos (consolidados), páginas de servicio de evaluación y meta de corrección (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
