@@ -100,7 +100,7 @@ export const CASES: CaseStudy[] = [
       en: "We migrated its sales from Tiendup and WooCommerce to its own platform, take payments through Mercado Pago, bank transfers and PayPal, and grade its quizzes against a verified answer key: 99.4% of 5,563 answers can be graded without AI. In continuous development since December 2024.",
     },
     updated: "2026-10-19",
-    guides: ["migracion", "proteccion-de-contenido"],
+    guides: ["migracion", "cobros-y-acceso", "proteccion-de-contenido"],
     reading: ["correccion-automatica-de-cuestionarios-con-ia"],
     period: {
       es: "Producto revisado en sep. 2026",
@@ -172,7 +172,7 @@ export const CASES: CaseStudy[] = [
       en: "It only takes bank transfers: every order gets its own virtual account and the notes unlock when the money arrives, with no receipts to check. Each account has a single active session so it cannot be shared.",
     },
     updated: "2026-10-19",
-    guides: ["proteccion-de-contenido"],
+    guides: ["cobros-y-acceso", "proteccion-de-contenido"],
     period: {
       es: "Producto revisado en sep. 2026",
       en: "Product reviewed Sep 2026",
