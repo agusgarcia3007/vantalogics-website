@@ -2282,3 +2282,89 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
 | 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
 | 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+
+---
+
+## 2026-11-17 — Corrida 32
+
+### Métricas generales (GSC, datos hasta 2026-11-16; el 11-16 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-20 → 11-16) | 3 | 346 | 0,9 % | 8,6 (7,5 sin el 11-04) |
+| Últimos 7 d (11-10 → 11-16) | 0 | 114 | 0 % | 8,8 |
+| 7 d anteriores (11-03 → 11-09) | 0 | 101 | 0 % | 10,5 (incluye el 11-04) |
+
+- **Decimonovena semana seguida de récord en 28 d: 346 impresiones (328 ayer).** La semana sube a 114 contra 101 (+13 %). El 11-16 ya trae 22 siendo preliminar, el día con más impresiones desde el 11-04.
+- **Clics: 3 en 28 d, todos de Argentina, y 22 días seguidos sin clics** (el último fue migración ES el 10-26).
+- La posición del 11-16 (12,7) la tiran el caso Lu Apuntes ES (3 imp desde Argentina en pos 17 para "luapuntes") y corrección EN (pos 54 desde Reino Unido). Lu Apuntes ES suma 21 imp en 28 d (pos 10,5), casi todas búsquedas de marca del cliente en las que su propio sitio va primero.
+- Nota de costo EN: 89 imp en pos 4,3; la query de universidad 36 imp en pos 1,9, 0 clics. Revisión el 11-19.
+- "download protection for courses" → protección EN: 4 imp en pos 21 (USA, 11-14 a 11-16). Sigue en pos 19–23, no sube sola todavía.
+- "are automatic maths scoring engines accurate…" → corrección EN: sigue en 3 imp (umbral para actuar: 10).
+
+### Evaluación de cambios anteriores (revisión 11-17: #32 y #34)
+
+- **#32 (guía de cobros y acceso ES/EN) y #34 (link en el footer): sin demanda en 4 semanas. Se mantiene el contenido y se ataca el enlazado contextual.**
+  - Desde la publicación (10-20): ES 2 imp en pos 6, EN 1 imp en pos 2. 0 clics. Es la página del cluster con menos impresiones (protección ES 26, migración ES 17 en el mismo período).
+  - **URL Inspection: cobros ES no se rastrea desde el 10-20 (28 días) y la única URL de referencia que Google lista es el sitemap.** Googlebot no la pidió en los últimos 7 días (`bun run crawlers 7`). EN se rastreó el 11-07; refieren el sitemap, la ES y la nota tutor o búsqueda semántica EN.
+  - El footer (#34, en todas las páginas) no cambió nada: pasar de 3 a 46 páginas de origen no hizo que Google la releyera. Un link de footer pesa poco.
+  - **Los dos casos de donde salen los datos de la guía (Lu Apuntes y Apoyo Escolar RV) no la enlazaban.** La guía enlaza a los casos (`cases:`), pero los casos no enlazaban a la guía: el campo `guides` de `src/data/cases.ts` solo tenía migración y protección. Los casos sí se rastrean (Lu Apuntes ES 11-14, Apoyo ES 11-14 y EN 11-14) y ChatGPT-User abrió los dos el 11-13 en una sesión que pasó por home, hub y migración, pero no por cobros.
+  - SERP de hoy ("cómo dar acceso automático a un curso online cuando el alumno paga por transferencia o Mercado Pago"): conectores de Zapier (Kajabi, Teachable, Thinkific, systeme.io), docs de Mercado Pago, un plugin de Moodle y la ayuda de Tiendanube. **La respuesta generada dice textualmente que "los resultados no explican cómo detectar transferencias automáticamente".** Es lo que cubre la guía (CVU por orden, estados de la transferencia). El contenido no es el problema: falta que Google lo relea y le dé peso.
+  - Title ES contra el hub: el hub va por "desarrollo de plataformas educativas a medida" y la guía por "cobrar cursos online y dar acceso automático". No compiten (ninguna query visible las cruza). No se toca el title.
+
+### Indexación
+- Migración ES (#48): último rastreo 11-13; EN 11-15. Ninguna de las dos se releyó todavía después del deploy de ayer. Indexadas, Breadcrumbs válidos.
+- Cobros ES: indexada, último rastreo 10-20 (ver arriba). Cobros EN: indexada, 11-07.
+- Lu Apuntes ES: indexada; URL Inspection dice rastreo del 11-06, pero los logs de Cloudflare muestran a Googlebot pidiéndola el 11-14.
+- `request_indexing` sigue sin Chrome.
+
+### Crawlers (`bun run crawlers 7`, 11-10 → 11-17)
+- `cf auth whoami` sin errores. **Los conteos vuelven a ser casi exactos** (bingbot 150 pedidos sobre 54 rutas, Googlebot 180 sobre 58). La muestra gruesa de ayer fue puntual; no hace falta tocar `scripts/crawler-hits.mjs`.
+- **ChatGPT-User, 11-12 y 11-13: `/` 4 veces, hub, migración ES, caso Apoyo Escolar RV y caso Lu Apuntes.** Es una sesión que recorrió el cluster y los casos.
+- OAI-SearchBot: protección EN 7 veces (la última hoy). Sigue siendo la única página real en su ciclo.
+- bingbot: lo más pedido es evals ES (7), `/` (5), `/ar/blog/` (5), hub EN y hub ES (4 cada uno), costo ES (4). Cobros EN el 11-12.
+- Googlebot: `/` 6, `/en/blog/` 5, `/soluciones/` 4; migración ES 11-13, migración EN 11-15, protección ES 11-16. Ningún pedido a cobros ES.
+- Todo lo demás que firma como GPTBot, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User y DuckAssistBot son escáneres buscando `.env` y credenciales, con 404. También hay falsos Googlebot con el mismo patrón.
+
+### Auditoría técnica (crawl de producción, después del deploy)
+- 48/48 URLs del sitemap con 200, canonical self, un H1 y sin `noindex`. Los 37 destinos de links internos de los 4 casos cambiados responden 200. robots.txt, llms.txt y la clave de IndexNow responden 200. JSON-LD del caso Lu Apuntes parsea y ya incluye `cobros-y-acceso/#webpage` en la lista de lecturas.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 49 | `/casos/lu-apuntes/`, `/casos/apoyo-escolar-rv/`, `/en/cases/lu-apuntes/`, `/en/cases/apoyo-escolar-rv/` | `guides` en `src/data/cases.ts`: Lu Apuntes pasa a `["cobros-y-acceso", "proteccion-de-contenido"]` y Apoyo Escolar RV a `["migracion", "cobros-y-acceso", "proteccion-de-contenido"]`. La guía de cobros aparece en el bloque "Guías y notas con datos de este caso" con su title y description, y en el JSON-LD del caso. Sin cambio de `updated` (el contenido del caso no cambia, como en #5 y #34). AR no tiene páginas de plataformas. | Cobros ES: 2 imp en 4 semanas, sin rastreo desde el 10-20 y con el sitemap como única referencia para Google. Los casos que aportan sus datos (el destacado de Lu Apuntes es justamente la transferencia que se acredita sola) no la enlazaban. Los casos se rastrean cada semana y ChatGPT-User los abrió el 11-13. | Google relee cobros ES en 1–2 semanas al encontrarla desde páginas que rastrea seguido y con anchor temático. Con eso empieza a sumar impresiones como pasó con migración y protección (3–4 semanas de 1–2 impresiones antes de despegar). Una sesión de ChatGPT-User que entra por un caso llega a la guía. | Último rastreo de cobros ES/EN en URL Inspection; URLs de referencia; impresiones y queries de las 2 URLs (28 d); pedidos de Googlebot y ChatGPT-User a cobros en `bun run crawlers 7`. | 2026-12-01 |
+
+### Envíos
+- Deploy por push a `main` (run 44079691050, ok en 36 s). El IndexNow de CI no envía nada porque ningún `lastmod` cambió.
+- IndexNow a mano: `200` para los 4 casos y las 2 guías de cobros.
+- Sitemap sin cambios de `lastmod`: no se reenvía.
+- Pedido manual de indexación para el dueño, si puede: cobros ES (28 días sin rastreo) y las dos guías de migración.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-19**: nota de costo (#44): 36 imp en pos 1,9 en la query de universidad y 0 clics. Decidir con el criterio de la corrida 24 y lo que se vio en la SERP de la corrida 30. **11-23**: redirecciones (#45) e hipótesis GEO de OAI-SearchBot. **11-24**: índice de soluciones (#47). **11-30**: migración por etapas (#48). **12-01**: enlazado de cobros desde los casos (#49).
+- Mirar en cada corrida si cobros ES se rastrea (hoy: 10-20) y si migración ES/EN se releyó después del #48.
+- Si cobros ES sigue sin rastreo el 11-24, sumar un link contextual desde la sección "Migrar por etapas" de la guía de migración ("los accesos se restituyen por derecho"), que ya va a llevar una semana publicada. Hoy no se toca para no editar la guía dos días seguidos.
+- "download protection for courses" (protección EN, pos 21): si llega a 10 impresiones sin subir de pos 15, revisar si la EN responde "download protection" en el H2 y en la primera línea.
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`.
+- Para el dueño, siguen abiertos: Chrome con CDP para `request_indexing` (o pedir a mano cobros ES y las dos guías de migración), Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: migración ES/EN (11-30), casos y cobros (12-01), nota de costo ES/EN y relacionadas (11-19), redirecciones (11-23), índice de soluciones (11-24), protección (consolidada), páginas de servicio de evaluación y meta de corrección (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
