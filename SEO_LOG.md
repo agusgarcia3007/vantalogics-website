@@ -2368,3 +2368,86 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
 | 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
 | 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+
+---
+
+## 2026-11-18 — Corrida 33
+
+### Métricas generales (GSC, datos hasta 2026-11-17; el 11-17 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-21 → 11-17) | 2 | 362 | 0,6 % | 8,8 (7,7 sin el 11-04) |
+| Últimos 7 d (11-11 → 11-17) | 1 | 122 | 0,8 % | 8,9 |
+| 7 d anteriores (11-04 → 11-10) | 0 | 103 | 0 % | 10,4 (incluye el 11-04) |
+
+- **Vigésima semana seguida de récord en 28 d: 362 impresiones (346 ayer).** La semana sube a 122 contra 103 (+18 %). El 11-16 cerró en 24 y el 11-17 ya trae 23 siendo preliminar: son los dos días con más impresiones desde que el sitio está en el índice.
+- **Se cortó la racha de 22 días sin clics: 1 clic el 11-16, "luapuntes" → caso Lu Apuntes ES (Argentina, pos 15).** Es una búsqueda de marca del cliente. En 28 d quedan 2 clics porque se fueron de la ventana los del 10-20.
+- Nota de costo EN: 97 imp en pos 4,3, 0 clics. La query de universidad suma 38 imp en pos 2,0. Revisión mañana (#44).
+- Corrección EN: 39 imp en pos 22,9. La posición la tiran queries británicas lejanas: "auto-marked quizzes" (4 imp en pos 55, Reino Unido, 11-16 y 11-17, nueva) y "automatic grading" (pos 48). La conversacional "are automatic maths scoring engines accurate with equivalent answers and unusual formats?" sigue en 3 imp en pos 2,3.
+- Lu Apuntes ES: 26 imp (pos 10,8). Aparecen dos queries sin marca: "venta de apuntes" (2 imp en pos 8, Puerto Rico) y "vender apuntes digitales" (1 en pos 15). Se anotan; con 3 impresiones no se actúa.
+- "download protection for courses" → protección EN: sigue en 4 imp en pos 21.
+- Migración EN: en 7 d, 4 imp en pos 21,8, todas de queries anonimizadas. El 69 del 11-11 y la query de Engrade (pos 33) explican casi todo. Se mira en la revisión de #48 (11-30).
+
+### Indexación
+- **Cobros ES: sigue sin rastreo desde el 10-20 (29 días). La única referencia que lista Google es el sitemap.** Los casos con el link nuevo (#49, ayer) todavía no se releyeron: el último pedido de Googlebot a los casos fue el 11-14.
+- Migración ES: último rastreo 11-13. EN: 11-15. Ninguna se releyó después del #48 (11-16). Indexadas, Breadcrumbs válidos.
+- Sitemap reenviado después del deploy de hoy (12:05).
+
+### Crawlers (`bun run crawlers 7`, 11-11 → 11-18)
+- `cf auth whoami` sin errores. Conteos casi exactos (bingbot 139 pedidos sobre 51 rutas, Googlebot 167 sobre 56).
+- **GPTBot pidió hoy (11-18) 8 páginas reales por primera vez**: RAG ES y EN, tutor o búsqueda ES, evaluar un tutor EN, costo ES y EN, migración ES y la solución EdTech EN. Hasta ahora solo pedía sitemap y robots. Es el crawler de entrenamiento de OpenAI, no el de búsqueda, pero es la primera vez que entra al contenido.
+- OAI-SearchBot: protección EN 7 veces (la última hoy). Sigue siendo la única página real en su ciclo.
+- ChatGPT-User: la sesión del 11-12 y 11-13 (home, hub, migración ES, los dos casos). Nada nuevo.
+- bingbot: lo más pedido es evals ES (7, hoy), `/ar/blog/` (6), corrección ES (4), hub EN (4), `/` y `/soluciones/` (4).
+- Googlebot: `/` 8 (hoy), `/en/blog/` y `/soluciones/` 4, evals ES 3. Ningún pedido a cobros ES ni a las guías de migración después del 11-15.
+- Todo lo que firma ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User y DuckAssistBot son escáneres que buscan `.env` y credenciales: todos 404 (o 307 que terminan en 404 por la normalización de `//`).
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1 y sin `noindex`. Las dos notas cambiadas: 200 y todos sus links internos dan 200. llms.txt con las fechas nuevas.
+- Titles de más de 65 caracteres en casos y algunas páginas de servicio (el máximo es Apoyo Escolar RV, con 84). Ya se sabía. Los casos están en ventana hasta el 12-01: no se tocan.
+
+### GEO / SERP
+- **"are automatic maths scoring engines accurate with equivalent answers and unusual formats?"**: la respuesta generada cita la documentación de Learnosity (numéricamente igual, "formatted as", simbólicamente igual), papers de arXiv (MARIO Eval y uno de corrección de respuestas cortas con LLM) y la ayuda de proveedores. **Dice textualmente que no encontró "ninguna prueba independiente" de precisión: son promesas de proveedores, no mediciones.**
+- "auto-marked quizzes accuracy open answers numbers units": guía de e-learning de Manchester, Wiris, Learning Pool, Cadmus, Kiddom, NFER y la Open University. De nuevo, la conclusión es que "no hay benchmarks independientes".
+- Nuestra nota tiene justo lo que falta: una validación medida (115 correcciones manuales, 110 decididas y todas correctas, 5 abstenciones, y las 4 diferencias eran errores de la corrección manual) y el detalle de unidades, fracciones, notación científica y coma decimal. Pero estaba en el cuerpo, a mitad de la nota, y no como respuesta directa a la pregunta.
+
+### Cambios
+
+| # | URL | Qué cambió | Por qué (dato) | Hipótesis | Métrica a mirar | Revisión |
+|---|---|---|---|---|---|---|
+| 50 | `/en/blog/automatic-quiz-grading-with-ai/` + `/blog/correccion-automatica-de-cuestionarios-con-ia/` | **FAQ nueva, en el segundo lugar**: EN "Is automatic marking accurate when students write equivalent answers or unusual formats?" / ES "¿La corrección automática acierta cuando el alumno escribe una respuesta equivalente o en un formato raro?". Primera oración con la respuesta (solo si el motor compara valores y no texto), después unidades, fracciones, notación científica, coma decimal y partes por etiqueta, la validación contra 115 correcciones manuales y la salida "no soportado". **Sin cifras nuevas**: todo ya estaba en el cuerpo. La pregunta EN usa "automatic marking", el término británico. Entra al FAQPage (pasa de 4 a 5 preguntas). `updated: 2026-11-18` (dateModified y lastmod). Title, meta y cuerpo sin cambios. | La query conversacional sale en pos 2,3 (patrón de AI Overview, como la de universidad) y la respuesta generada dice que no hay pruebas independientes: nuestra medición es justo eso. Corrección EN suma impresiones británicas ("auto-marked quizzes" en pos 55) y la nota no usaba nunca "marking". El umbral de 10 impresiones de la corrida 31 era para reescribir la primera línea. Esto es una FAQ que solo reordena datos ya publicados, sin riesgo para la ES (pos 7,6). | Google relee las dos notas en 2–5 días con el `lastmod` nuevo. La FAQ es el fragmento que se cita para preguntas de equivalencia y formatos, y la nota EN suma impresiones británicas con "marking" en mejor posición. | Rastreo de las 2 URLs; impresiones y posición (28 d) de corrección EN/ES; queries con "equivalent", "marking", "auto-marked", "formats"; web search de la query conversacional (¿nos cita?). | 2026-12-02 |
+| 51 | `/llms.txt` (`src/pages/llms.txt.ts`) | Las notas muestran la fecha de actualización además de la de publicación: "— 2026-10-15 (actualizado 2026-11-18)" / "(updated …)". Afecta a corrección, costo y evals, ES y EN. | Las notas que se actualizaron (costo el 11-05, evals el 10-14) seguían figurando en llms.txt solo con la fecha de publicación de agosto o julio. La frescura real tiene que verse donde leen los motores de IA. | Señal de frescura coherente con el `dateModified` del JSON-LD y el sitemap. No se espera nada medible en GSC. | Que llms.txt siga respondiendo 200 y refleje cada `updated` nuevo. | Sin revisión (higiene) |
+
+### Envíos
+- Deploy por push a `main` (commit `4bc78eb`, ok). IndexNow desde CI: `200 for 6 URLs` (las 2 notas y los índices de blog con `lastmod` nuevo).
+- Sitemap reenviado a GSC (12:05).
+- `request_indexing` sigue sin Chrome. Si el dueño puede pedir indexación a mano: cobros ES (29 días sin rastreo) y las dos notas de corrección.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-19 (mañana): nota de costo (#44).** Datos de hoy: EN 97 imp en pos 4,3; la query de universidad 38 imp en pos 2,0; 0 clics. Decidir con el criterio de la corrida 24 y con la SERP de la corrida 30 (todas las fuentes citadas dan dólares, que nosotros no damos). **11-23**: redirecciones (#45) e hipótesis GEO de OAI-SearchBot. **11-24**: índice de soluciones (#47) y, si cobros ES sigue sin rastreo, el link contextual desde "Migrar por etapas". **11-30**: migración por etapas (#48). **12-01**: casos y cobros (#49). **12-02**: FAQ de equivalencias en corrección (#50).
+- GPTBot empezó a leer contenido real hoy. Mirar si vuelve, y si OAI-SearchBot suma alguna página además de protección EN.
+- Lu Apuntes: si "vender apuntes digitales" o "venta de apuntes" llegan a 10 impresiones, evaluar si conviene una sección o una nota sobre vender material digital de estudio (con los datos del caso: entrega automática, biblioteca, visor y PDFs con marca personal) en vez de dejar que rankee el caso.
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`.
+- Para el dueño, siguen abiertos: Chrome con CDP para `request_indexing`, Bing Webmaster Tools, `sameAs` con perfiles reales, autor con nombre, links desde los sitios de los clientes, el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas de corrección ES/EN (12-02), migración ES/EN (11-30), casos y cobros (12-01), nota de costo ES/EN y relacionadas (decisión mañana), redirecciones (11-23), índice de soluciones (11-24), protección (consolidada), páginas de servicio de evaluación (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+| 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
