@@ -2378,8 +2378,8 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | Ventana | Clics | Impresiones | CTR | Posición |
 |---|---|---|---|---|
 | Últimos 28 d (10-21 → 11-17) | 2 | 362 | 0,6 % | 8,8 (7,7 sin el 11-04) |
-| Últimos 7 d (11-11 → 11-17) | 1 | 122 | 0,8 % | 8,9 |
-| 7 d anteriores (11-04 → 11-10) | 0 | 103 | 0 % | 10,4 (incluye el 11-04) |
+| Últimos 7 d (11-11 → 11-17) | 1 | 122 | 0,8 % | 9,2 |
+| 7 d anteriores (11-04 → 11-10) | 0 | 103 | 0 % | 10,7 (incluye el 11-04) |
 
 - **Vigésima semana seguida de récord en 28 d: 362 impresiones (346 ayer).** La semana sube a 122 contra 103 (+18 %). El 11-16 cerró en 24 y el 11-17 ya trae 23 siendo preliminar: son los dos días con más impresiones desde que el sitio está en el índice.
 - **Se cortó la racha de 22 días sin clics: 1 clic el 11-16, "luapuntes" → caso Lu Apuntes ES (Argentina, pos 15).** Es una búsqueda de marca del cliente. En 28 d quedan 2 clics porque se fueron de la ventana los del 10-20.
