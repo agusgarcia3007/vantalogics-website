@@ -4,6 +4,7 @@ seoTitle: "Corrección automática de cuestionarios con IA: caso real — Vantal
 description: "5.563 respuestas reales: el 99,4 % se corrige contra una clave verificada. Cuando la IA ponía la nota, el 43 % de los alumnos tuvo un veredicto inconsistente."
 answer: "En una academia con 5.563 respuestas de desarrollo sin corregir, el 99,4 % se puede corregir sin IA en el momento de corregir: comparando contra una clave verificada. Cuando la IA dictaminaba respuesta por respuesta, 80 de 185 alumnos (43 %) recibieron un veredicto opuesto al de otro alumno con la misma respuesta. La IA sirve para construir la clave y para redactar la devolución, no para poner la nota."
 date: 2026-10-15
+updated: 2026-11-18
 cluster: casos
 industry: edtech-y-plataformas-educativas
 useCases:
@@ -18,6 +19,8 @@ tags:
 faq:
   - question: "¿Se puede corregir un cuestionario con ChatGPT u otro modelo de lenguaje?"
     answer: "Se puede usar el modelo para resolver el ejercicio, y lo hace bien: en nuestra medición resolvió el mismo ejercicio correctamente 24 de 25 veces. Lo que no conviene es que dictamine respuesta por respuesta. Sobre 185 respuestas reales, el veredicto cambió entre llamadas para respuestas idénticas y afectó al 43 % de los alumnos. El modelo sirve para construir una clave una vez; la corrección después es una comparación determinística."
+  - question: "¿La corrección automática acierta cuando el alumno escribe una respuesta equivalente o en un formato raro?"
+    answer: "Solo si el motor compara valores y no texto. El nuestro convierte unidades (463 cm/s es 4,63 m/s), lee fracciones, notación científica escrita a mano y coma o punto decimal, y separa las respuestas de varias partes por su etiqueta. Contra 115 correcciones manuales que ya existían, decidió 110, se abstuvo en 5 y acertó las 110; las 4 diferencias con la nota manual eran errores de la corrección manual. Cuando no sabe leer un formato devuelve \"no soportado\" y deja la respuesta para la docente en vez de adivinar."
   - question: "¿Qué pasa con las respuestas que necesitan criterio?"
     answer: "Quedan pendientes para el docente. En una cátedra de física y química fueron el 0,6 % de las respuestas de desarrollo. Para preguntas abiertas en prosa, donde el criterio es la mayor parte del trabajo, el enfoque es otro: rúbrica explícita, borrador con evidencia citada y un docente que firma la nota."
   - question: "¿Hay que cargar las claves a mano?"

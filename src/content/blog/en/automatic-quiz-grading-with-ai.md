@@ -4,6 +4,7 @@ seoTitle: "Automatic quiz grading with AI: a real case — Vantalogics"
 description: "5,563 real answers from an academy: 99.4% can be graded against a verified answer key. When the AI gave the grade, 43% of students got an inconsistent verdict."
 answer: "At an academy with 5,563 ungraded open answers, 99.4% can be graded without AI at grading time: by comparing against a verified answer key. When the AI ruled answer by answer, 80 of 185 students (43%) got the opposite verdict to another student with the same answer. AI is useful for building the key and for writing the feedback, not for giving the grade."
 date: 2026-10-15
+updated: 2026-11-18
 cluster: casos
 industry: edtech-y-plataformas-educativas
 useCases:
@@ -19,6 +20,8 @@ translationOf: correccion-automatica-de-cuestionarios-con-ia
 faq:
   - question: "Can you grade a quiz with ChatGPT or another language model?"
     answer: "You can use the model to solve the exercise, and it does that well: in our measurement it solved the same exercise correctly 24 times out of 25. What you shouldn't do is let it rule answer by answer. On 185 real answers, the verdict changed between calls for identical answers and affected 43% of students. The model is useful for building a key once; grading after that is a deterministic comparison."
+  - question: "Is automatic marking accurate when students write equivalent answers or unusual formats?"
+    answer: "Only if the engine compares values instead of text. Ours converts units (463 cm/s is 4.63 m/s), reads fractions, handwritten scientific notation and decimal commas, and splits multipart answers by label. Against 115 existing manual gradings it decided 110, abstained on 5 and got all 110 right; the 4 differences from the manual grade were errors in the manual grade. When it can't read a format it returns \"unsupported\" and leaves the answer for the teacher instead of guessing."
   - question: "What happens to answers that need judgement?"
     answer: "They stay pending for the teacher. In a physics and chemistry course they were 0.6% of open answers. For open prose questions, where judgement is most of the work, the approach is different: an explicit rubric, a draft with quoted evidence and a teacher who signs off on the grade."
   - question: "Do the answer keys have to be entered by hand?"

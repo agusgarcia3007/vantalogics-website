@@ -112,7 +112,7 @@ producción. Cada entrada incluye su respuesta corta.
 ${postsEs
   .map(
     (post) =>
-      `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}\n  ${post.data.answer}`
+      `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}${post.data.updated ? ` (actualizado ${post.data.updated.toISOString().slice(0, 10)})` : ""}\n  ${post.data.answer}`
   )
   .join("\n")}
 
@@ -121,7 +121,7 @@ ${postsEs
 ${postsEn
   .map(
     (post) =>
-      `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}\n  ${post.data.answer}`
+      `- [${post.data.title}](${url(postPath(post))}) — ${post.data.date.toISOString().slice(0, 10)}${post.data.updated ? ` (updated ${post.data.updated.toISOString().slice(0, 10)})` : ""}\n  ${post.data.answer}`
   )
   .join("\n")}`
 
