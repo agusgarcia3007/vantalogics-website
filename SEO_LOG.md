@@ -2451,3 +2451,92 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
 | 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
 | 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
+
+---
+
+## 2026-11-19 — Corrida 34
+
+### Métricas generales (GSC, datos hasta 2026-11-18; el 11-18 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-22 → 11-18) | 2 | 370 | 0,5 % | 8,7 (7,7 sin el 11-04) |
+| Últimos 7 d (11-12 → 11-18) | 1 | 122 | 0,8 % | 9,0 |
+| 7 d anteriores (11-05 → 11-11) | 0 | 94 | 0 % | 7,6 |
+
+- **Vigesimoprimera semana seguida de récord en 28 d: 370 impresiones (362 ayer).** La semana sube a 122 contra 94 (+30 %), con el 11-18 todavía en 13 (preliminar). El 11-17 cerró en 24, igual que el 11-16.
+- Clics: 2 en 28 d, los dos de Argentina en mobile ("luapuntes" el 11-16 y migración ES el 10-26).
+- La posición de la semana empeora (7,6 → 9,0) porque crecen las impresiones lejanas: corrección EN británica (pos 55) y "luapuntes" en pos 12–17. No hay ninguna página que haya perdido posición en sus queries.
+- Queries visibles (23): las mismas de ayer. Nada nuevo con intención del público. "download protection for courses" sube a 5 imp (pos 21,4; umbral para actuar: 10). "venta de apuntes" 2 y "vender apuntes digitales" 1 (umbral: 10).
+
+### Evaluación de cambios anteriores (revisión 11-19: #44)
+
+- **#44 (title + sección de universidad en la nota de costo): se consolida sin más cambios. Falló la hipótesis del clic y se cumplió la de posición; según el criterio de la corrida 24, el valor de la página pasa a ser la cita, no el clic.**
+  - Desde el rastreo de la versión nueva (11-05): 37 impresiones de la nota EN, ~30 de ellas en pos 1–2, y 0 clics. En 28 d: 101 imp en pos 4,4. La query de universidad suma 40 imp en pos 1,9.
+  - Cómo son esas impresiones: **la misma pregunta larga, una o dos por día, casi todas desktop y desde 11 países distintos** (Italia, Reino Unido, Irlanda, Emiratos, Francia, India, Canadá, Corea, Austria, Portugal, USA). No es el patrón de gente buscando en Google y eligiendo un resultado azul.
+  - **SERP real de Google (OpenSEO, USA, desktop, 3 lecturas): la nota sale en la posición orgánica 3 en las 3 lecturas.** GSC la da en pos 1 casi todos los días. Esa diferencia encaja con un link dentro del AI Overview o AI Mode, que GSC cuenta con la posición del bloque. Es una inferencia: GSC no separa el AI Overview y la herramienta de SERP no lo devuelve.
+  - La posición se sostuvo (era la condición: no caer de ~5). El title nuevo no trajo clics porque la respuesta se resuelve arriba del resultado. No hay nada para cambiar en la página: el `answer` y la primera FAQ ya responden la pregunta de universidad, sin montos.
+  - Web search de la misma pregunta (otro buscador, US): cita a ibl.ai, getmonetizely, quadc, callsphere y otros, todos vendedores, con montos en USD. La respuesta generada marca que "no hay un precio confiable específico de universidades" y que nadie cuantifica integración ni horas del equipo. Nosotros no aparecemos ahí: es el mismo bloqueo de Bing de siempre.
+- Se cierra el seguimiento de #44. La nota de costo ES/EN queda consolidada; volver a tocarla solo si cae de pos 5 en la query de universidad o aparece una query nueva con 10 o más impresiones.
+
+### Dato nuevo: el hub no está en el top 30 de su query de dinero
+
+- SERP real de Google Argentina (OpenSEO, desktop, profundidad 30): **vantalogics.com no aparece en los primeros 30 resultados de "desarrollo de plataformas educativas a medida" ni de "migrar academia de hotmart a plataforma propia".** En GSC el hub ES suma 3 imp en 28 d (pos 5,7), todas de queries anonimizadas, no de la principal.
+- El on-page del hub está bien (title, H1 y meta con la frase exacta; 9 H2 que cubren la intención; casos y FAQ). Lo que falta es autoridad externa: el sitio tiene 3 meses en el índice y no se le conocen links de otros dominios. La herramienta de backlinks de OpenSEO no está disponible en modo gratis, así que no se pudo medir.
+- Los volúmenes de keywords de OpenSEO para Argentina vienen en 0 para todas las queries del cluster (solo "plataforma educativa" da 46). Es un dato de Google Ads agrupado, no sirve para priorizar.
+- Conclusión: el cuello de botella del hub no se resuelve editando la página. **Se sube la prioridad del pendiente del dueño "links desde los sitios de los clientes"** (Apoyo Escolar RV, Lu Apuntes, Academia SIED y Dr. La Rosa, con un "Desarrollado por Vantalogics" que apunte al caso o al hub). Es la palanca que más mueve la query principal.
+
+### Indexación (URL Inspection por la API; la batch de la MCP dio timeout dos veces)
+- **Cobros ES: sigue sin rastreo desde el 10-20 (30 días)**, con el sitemap como única referencia. Bingbot sí la pidió hoy (por http, 301 a https).
+- Casos Lu Apuntes y Apoyo Escolar RV: último rastreo 11-14, todavía sin releer el link a cobros (#49).
+- Corrección ES: rastreo 11-04; EN: 11-14. Ninguna se releyó después del #50 (ayer).
+- Migración ES 11-13, EN 11-15 (sin releer después del #48). Costo EN 11-05, ES 11-07.
+- Todas "Submitted and indexed".
+
+### Crawlers (`bun run crawlers 7`, 11-12 → 11-19)
+- `cf auth whoami` sin errores. Bingbot 137 pedidos sobre 54 rutas.
+- **OAI-SearchBot pidió `/en/solutions/` hoy (11-19), la primera página real distinta de protección EN** que entra en su ciclo. Protección EN sigue con 7 pedidos (la última hoy). Se mira en la revisión de #47 (11-24).
+- **ChatGPT-User, 11-18: caso Academia SIED ES y `/en/cases/`.** Sesión nueva, distinta de la del 11-13 (home, hub, migración y los otros dos casos).
+- GPTBot: las 8 páginas reales del 11-18 (sin pedidos nuevos hoy).
+- bingbot: lo más pedido es evals ES y `/ar/blog/` (6 cada una), `/`, `/soluciones/` y la nota de costo en `/ar/` (4). Corrección ES 3. Las `/ar/` son noindex: Bing gasta pedidos ahí, pero sacarlas del rastreo le impediría ver el noindex. No se toca.
+- Lo que firma ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot y Perplexity-User siguen siendo escáneres con 404 (todos el 11-15).
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, sin `noindex` y con JSON-LD que parsea. robots.txt, llms.txt y la clave de IndexNow en 200.
+
+### Cambios
+- **Ninguno en el sitio.** Las páginas con señal están en ventana de revisión (corrección 12-02, casos y cobros 12-01, migración 11-30, índice de soluciones 11-24, redirecciones 11-23) y #44 se cierra sin tocar la página. Los umbrales de protección EN y de Lu Apuntes no se alcanzaron. El problema nuevo (hub fuera del top 30) es de autoridad, no de contenido.
+
+### Envíos
+- Sin deploy de contenido: no hay `lastmod` nuevos, así que no se reenvía el sitemap ni se manda IndexNow.
+- `request_indexing` sigue sin Chrome. Si el dueño puede pedir a mano: cobros ES (30 días sin rastreo).
+
+### Pendientes / hipótesis para próximas corridas
+- **11-23**: redirecciones (#45) e hipótesis GEO de OAI-SearchBot (hoy sumó `/en/solutions/`). **11-24**: índice de soluciones (#47) y, si cobros ES sigue sin rastreo, el link contextual desde "Migrar por etapas" de la guía de migración. **11-30**: migración por etapas (#48). **12-01**: casos y cobros (#49). **12-02**: FAQ de equivalencias en corrección (#50).
+- Nota de costo: solo se reabre si la query de universidad cae de pos 5 o aparece otra query con 10+ impresiones.
+- Repetir la SERP real del hub ("desarrollo de plataformas educativas a medida", AR, profundidad 30) una vez por semana (próxima: 11-26) para tener la línea de base de autoridad. Cuesta créditos de OpenSEO: no más de una vez por semana.
+- Umbrales vigentes: "download protection for courses" 10 imp (hoy 5); "venta de apuntes"/"vender apuntes digitales" 10 imp (hoy 3).
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`.
+- **Para el dueño, en orden de impacto:** (1) links desde los sitios de los clientes hacia el caso o el hub (es lo que falta para la query principal); (2) Bing Webmaster Tools (sin Bing no hay cita en ChatGPT ni Copilot); (3) Chrome con CDP para `request_indexing` o pedido manual de cobros ES; (4) `sameAs` con perfiles reales y autor con nombre; (5) el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas de corrección ES/EN (12-02), migración ES/EN (11-30), casos y cobros (12-01), redirecciones (11-23), índice de soluciones (11-24), nota de costo ES/EN (consolidada), protección (consolidada), páginas de servicio de evaluación (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+| 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
+| 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
