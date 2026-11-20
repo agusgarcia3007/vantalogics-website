@@ -2540,3 +2540,85 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
 | 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
 | 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
+
+---
+
+## 2026-11-20 — Corrida 35
+
+### Métricas generales (GSC, datos hasta 2026-11-19; el 11-19 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-23 → 11-19) | 2 | 380 | 0,5 % | 9,2 (8,3 sin el 11-04) |
+| Últimos 7 d (11-13 → 11-19) | 1 | 123 | 0,8 % | 11,1 |
+| 7 d anteriores (11-06 → 11-12) | 0 | 93 | 0 % | 6,9 |
+
+- **Vigesimosegunda semana seguida de récord en 28 d: 380 impresiones (370 ayer).** La semana sube a 123 contra 93 (+32 %). El 11-18 cerró en 16 y el 11-19 ya trae 16 siendo preliminar.
+- Clics: 2 en 28 d, los mismos de ayer ("luapuntes" el 11-16 y migración ES el 10-26).
+- **La posición de la semana empeora (6,9 → 11,1), pero no hay ninguna página que haya perdido posición en sus queries.** Crecen las impresiones lejanas: Lu Apuntes ES (21 imp en pos 13,3, búsquedas de marca del cliente donde su propio sitio va primero), la nota de evals ES (9 imp en pos 15,4, ver abajo), "migrate from engrade pro" → migración EN (2 imp en pos 47 el 11-19) y corrección EN británica (pos 52–56). Corrección ES marca 23,6 en la semana por **una sola impresión en pos 91 el 11-19**; el resto de sus días sigue en pos 5–8.
+- Queries visibles (23). Nueva: **"tutorial de evaluación de agente" → evals ES, 4 imp en pos 25–27, todas desde España (11-18 y 11-19).** Las demás son las de ayer. Nota de costo EN: 101 imp en pos 4,2; la query de universidad 42 imp en pos 1,9 (consolidada). "download protection for courses" sigue en 5 imp (umbral 10). "venta de apuntes" 2 y "vender apuntes digitales" 1 (umbral 10).
+
+### Dato nuevo: la nota de evals ES se rastreó y empieza a tener impresiones
+
+- **URL Inspection: evals ES rastreada el 11-15** (Googlebot la pidió 2 veces ese día). Venía de un rastreo del 10-01, así que recién ahora Google indexa la versión reorientada a educación (#22, 10-14), que la corrida 19 dejó como "no concluyente por falta de rastreo".
+- Impresiones: 0 en la semana 11-06 → 11-12 y 9 en la semana 11-13 → 11-19 (pos 15,4). Solo 4 tienen query visible (la del tutorial, en España); el resto está anonimizado. Bingbot la pidió 5 veces el 11-18: es la página que más rastrea Bing después de `/ar/blog/`.
+- **No se toca.** La SERP de "tutorial de evaluación de agentes de IA evals" (web search, US) son tutoriales con código de Google (ADK, Vertex AI), OpenAI, IBM y DataCamp, sobre evaluar agentes en general. Nuestra nota trata evals para tutores y correctores en educación: para esa query no es la mejor respuesta, y perseguirla nos alejaría del tema del sitio. La versión nueva lleva 5 días en el índice. Se mira la evolución hasta el 12-04 (3 semanas de datos con la versión nueva). Si aparece una query sobre evaluar tutores o correctores, ahí sí vale ajustar la primera línea.
+- Evals EN: rastreo 11-06, 4 imp en 28 d (pos 6,8). Sin cambios.
+
+### Indexación (URL Inspection por la API)
+- **Corrección EN rastreada el 11-19 (Googlebot la pidió 2 veces): Google ya vio la FAQ de equivalencias (#50).** Corrección ES sigue con el rastreo del 11-04 (todavía no se releyó después del #50).
+- **Cobros ES: sigue sin rastreo desde el 10-20 (31 días)**, con una sola URL de referencia. Bingbot la pidió el 11-19 (con barra y sin barra, la sin barra con 301).
+- Casos Lu Apuntes y Apoyo Escolar RV: rastreo 11-14, todavía sin releer el link a cobros (#49).
+- Migración ES 11-13, EN 11-15. Hub ES 11-18. `/en/solutions/` 11-16. Todas "Submitted and indexed".
+
+### Crawlers (`bun run crawlers 7`, 11-13 → 11-20)
+- `cf auth whoami` sin errores. Bingbot 137 pedidos sobre 55 rutas, Googlebot 147 sobre 57.
+- OAI-SearchBot: protección EN 7 veces (la última hoy) y `/en/solutions/` 2 veces (11-19). Nada nuevo desde ayer.
+- ChatGPT-User: las sesiones del 11-13 (home, migración, Apoyo Escolar RV, Lu Apuntes) y del 11-18 (Academia SIED, `/en/cases/`). Nada nuevo.
+- GPTBot: las 8 páginas del 11-18; ningún pedido nuevo.
+- bingbot: `/ar/blog/` 7 (hoy), evals ES 5, la nota de costo en `/ar/` 5, `/soluciones/` 4, búsqueda semántica EN y `/en/solutions/` 3.
+- Googlebot: `/` 5, `/en/solutions/` 3, `/soluciones/` y `/en/blog/` 3, evals ES y corrección EN 2. También recorre los 301 de las páginas retiradas (contables, estudios jurídicos, ecommerce, notas viejas): siguen respondiendo 301.
+- Lo que firma ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User y DuckAssistBot siguen siendo escáneres con 404 (todos el 11-15).
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1 y sin `noindex`. El JSON-LD de las 48 parsea sin errores. robots.txt, llms.txt y la clave de IndexNow en 200.
+
+### GEO / SERP
+- "are automatic maths scoring engines accurate with equivalent answers and unusual formats?" (web search, US): las mismas fuentes que el 11-18 (Learnosity, MARIO Eval, papers de arXiv). La respuesta sigue diciendo que no encontró ninguna auditoría independiente de precisión. No nos cita: es el mismo bloqueo de Bing de siempre (el buscador de la herramienta no nos tiene). En Google, la versión con la FAQ se rastreó ayer; se evalúa el 12-02.
+
+### Cambios
+- **Ninguno en el sitio.** No vence ninguna revisión hoy y las páginas con señal están en ventana (redirecciones 11-23, índice de soluciones 11-24, migración 11-30, casos y cobros 12-01, corrección 12-02). La única señal nueva (evals ES) es de una versión que lleva 5 días en el índice y de una query que no es del público del sitio. No se alcanzó ningún umbral.
+
+### Envíos
+- Sin deploy de contenido: no hay `lastmod` nuevos, así que no se reenvía el sitemap ni se manda IndexNow.
+- `request_indexing` sigue sin Chrome. Si el dueño puede pedir a mano: cobros ES (31 días sin rastreo) y corrección ES.
+
+### Pendientes / hipótesis para próximas corridas
+- **11-23**: redirecciones (#45) e hipótesis GEO de OAI-SearchBot (protección EN y `/en/solutions/`). **11-24**: índice de soluciones (#47) y, si cobros ES sigue sin rastreo, el link contextual desde "Migrar por etapas" de la guía de migración. **11-26**: SERP real del hub (AR, profundidad 30). **11-30**: migración por etapas (#48). **12-01**: casos y cobros (#49). **12-02**: FAQ de equivalencias en corrección (#50). **12-04**: evolución de evals ES con la versión reorientada.
+- Umbrales vigentes: "download protection for courses" 10 imp (hoy 5); "venta de apuntes"/"vender apuntes digitales" 10 imp (hoy 3); evals ES: actuar solo si aparece una query de evaluación de tutores o correctores, no por la del tutorial genérico.
+- "migrate from engrade pro" → migración EN (4 imp, pos 40–47): no es nuestro público (gradebook de escuelas de EE. UU.). No se persigue.
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`.
+- **Para el dueño, en orden de impacto:** (1) links desde los sitios de los clientes hacia el caso o el hub; (2) Bing Webmaster Tools; (3) Chrome con CDP para `request_indexing` o pedido manual de cobros ES; (4) `sameAs` con perfiles reales y autor con nombre; (5) el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas de corrección ES/EN (12-02), evals ES/EN (12-04), migración ES/EN (11-30), casos y cobros (12-01), redirecciones (11-23), índice de soluciones (11-24), nota de costo ES/EN (consolidada), protección (consolidada), páginas de servicio de evaluación (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+| 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
+| 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
+| 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
