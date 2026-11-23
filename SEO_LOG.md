@@ -2622,3 +2622,99 @@ Se buscó en el repo del cliente la evidencia que faltaba (la corrida 28 dejó e
 | 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
 | 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
 | 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
+
+---
+
+## 2026-11-23 — Corrida 36
+
+La MCP de GSC dio timeout en las dos primeras consultas. Todo lo de GSC salió de la API directa con la misma cuenta de servicio.
+
+### Métricas generales (GSC, datos hasta 2026-11-22; el 11-22 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-26 → 11-22) | 3 | 398 | 0,8 % | 9,6 |
+| Últimos 7 d (11-16 → 11-22) | 2 | 117 | 1,7 % | 13,0 |
+| 7 d anteriores (11-09 → 11-15) | 0 | 109 | 0 % | 7,8 |
+
+- **Vigesimotercera semana seguida de récord en 28 d: 398 impresiones (380 el 11-20).** La semana suma 117 contra 109 (+7 %). El fin de semana bajó (13 y 10), como los anteriores.
+- **Primer clic sin marca en protección EN: el 11-21, 4 impresiones en pos 5,2 y 1 clic, desde Croacia en mobile.** Las queries de ese día están anonimizadas. Es la página que OAI-SearchBot relee todos los días. En 28 d suma 12 imp (pos 14,3), con 9 en la última semana.
+- El otro clic de la semana es "luapuntes" del 11-16 (ya registrado). En 28 d: Lu Apuntes ES, migración ES y protección EN, 1 cada una.
+- **La posición semanal empeora (7,8 → 13,0) y otra vez no es porque alguna página haya perdido posición en sus queries.** Pesan "auto-marked quizzes" → corrección EN (3 imp en pos 72 el 11-21, Reino Unido), "migrate from engrade pro" (pos 47), "tutorial de evaluación de agente" (pos 25–27, España) y Lu Apuntes en pos 13–25. Reino Unido aporta 12 impresiones en pos 29,5 y España 11 en pos 20.
+- Corrección ES: 1 imp en pos 30 el 11-22, después del rastreo del 11-20. Son impresiones sueltas (del 11-14 al 11-16 estaba en pos 5–8). Se mira el 12-02 con #50.
+- Nota de costo EN: 108 imp en pos 4,2; la query de universidad 45 imp en pos 1,8 (consolidada). "venta de apuntes" llega a 3 imp (pos 8,7) y "vender apuntes digitales" sigue en 1: el umbral es 10. "download protection for courses" sigue en 5 (umbral 10).
+- Países (7 d): USA 23 (pos 13,4), Argentina 20 (1 clic), Reino Unido 12, España 11, Croacia 4 (1 clic), Chile, Ecuador e Italia 4.
+
+### Evaluación de cambios anteriores (revisión 11-23: #45 e hipótesis GEO de OAI-SearchBot)
+
+- **#45 (http y URL sin barra → 301 a la canónica): funcionó. Se consolida.**
+  - Logs de 7 días: ningún 307 en páginas. Los 301 que se ven a URLs con barra (bingbot en corrección asistida, la nota de corrección, cobros ES) son pedidos por http que terminan en https. Los 301 de Googlebot y OAI-SearchBot son a sectores retirados, como corresponde.
+  - URL Inspection: `http://vantalogics.com/plataformas-educativas/` y `https://vantalogics.com/plataformas-educativas` son "URL is unknown to Google". Google no guarda variantes duplicadas, y las 48 del sitemap tienen como canonical de Google la propia.
+  - Producción: http → 301 a https, sin barra → 301 a con barra, www → 301 al dominio, `/en/solutions/law-firms/` → 301 a `/en/solutions/`.
+- **Hipótesis GEO (qué tiene protección que no tengan las otras para estar en el ciclo de OAI-SearchBot): nada de la plantilla. Se cierra.**
+  - Las páginas del cluster EN y las notas que más impresiones tienen comparten la misma estructura: entre 2.000 y 3.300 palabras, 12 a 17 H2, 1 a 3 tablas, `answer` arriba y el mismo JSON-LD (WebPage + Service u Organization + FAQPage + Speakable + BreadcrumbList en el cluster; BlogPosting en las notas). Protección no tiene nada que falte en migración, cobros o el hub.
+  - Lo que sí la distingue es la demanda. ChatGPT-User la abrió antes de que entrara al ciclo diario (corrida 26), y la otra página real que OAI-SearchBot relee, `/en/solutions/`, entra por URLs viejas de sectores retirados que el índice de ChatGPT todavía guarda (`accounting-firms` y `clinics-and-medical-practices` el 11-19). O sea que el ciclo de OAI-SearchBot sigue lo que ChatGPT ya tiene y le piden, y no un formato que podamos copiar.
+  - Aprendizaje: para que otra página entre al índice de ChatGPT no alcanza con editarla. Hace falta que ChatGPT la encuentre, y eso pasa por el índice de Bing (Bing Webmaster Tools, pendiente del dueño) y por links externos. No se cambia ninguna página por esta hipótesis.
+  - El primer clic sin marca de protección EN llega justo en la página que está en ese ciclo. Una sola muestra, pero encaja con que sea la página del sitio con más señales de uso.
+- Intenté medir referers externos (chatgpt.com, perplexity.ai) en los logs de Cloudflare: el plan de la zona no da acceso al campo `clientRefererHost` de GraphQL, y el sitio no tiene analítica propia. No hay manera de contar visitas que llegan desde ChatGPT por ahora.
+
+### Indexación (URL Inspection por la API)
+- **Caso Apoyo Escolar RV rastreado hoy (11-23), con el link a cobros (#49).** Es el primero de los casos con el link nuevo que Google relee. Lu Apuntes sigue con el rastreo del 11-14.
+- **Cobros ES: sigue sin rastreo desde el 10-20 (34 días)**, con 1 URL de referencia. Cobros EN: 11-07.
+- **Corrección ES rastreada el 11-20: Google ya vio la FAQ de equivalencias (#50) en las dos versiones** (EN el 11-19).
+- Protección ES 11-16, EN 11-13. Migración ES 11-13, EN 11-15. Hub ES 11-18. `/soluciones/` 11-15, `/en/solutions/` 11-16. Evals ES 11-15. Todas "Submitted and indexed".
+- Sitemap: 48 URLs, 0 errores, último download 11-21.
+
+### Crawlers (`bun run crawlers 7`, 11-16 → 11-23)
+- `cf auth whoami` sin errores. Bingbot 108 pedidos sobre 39 rutas (baja desde 137); Googlebot 73 sobre 30 (baja desde 147).
+- OAI-SearchBot: protección EN 7 veces (la última hoy), `/en/solutions/` 2 y dos URLs de sectores retirados (301 a `/en/solutions/`) el 11-19.
+- **ChatGPT-User: la home 3 veces el 11-21.** Sesión nueva. También la de SIED y `/en/cases/` del 11-18.
+- GPTBot: las 8 páginas del 11-18, sin pedidos nuevos.
+- bingbot: evals ES, `/ar/blog/`, la nota del tutor en `/ar/` y corrección asistida ES, 5 cada una. Corrección ES 4. Protección EN y hub EN 3.
+- Googlebot: `/` 4, `/en/solutions/` 3, `/blog/` y corrección EN 2, caso Apoyo Escolar RV hoy. Sigue recorriendo los 301 de las páginas retiradas.
+- ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User y DuckAssistBot: 0 pedidos esta semana (ni siquiera los escáneres).
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, sin `noindex` y con JSON-LD que parsea. robots.txt, llms.txt y la clave de IndexNow en 200.
+
+### GEO / SERP (web search, US)
+- "how to stop students sharing course account and downloading course videos": Vanderbilt, Drexel, UH, systeme.io, Gumlet, LearnDash, vdocipher, SendPulse. La respuesta dice que no se puede impedir del todo y recomienda capas; nadie da datos de una academia real.
+- "download protection for online courses videos PDFs watermark": LearnWorlds, Kwiga, LearnDash, Gumlet, Locklizard, VeryPDF. La respuesta marca que son promesas de vendedores y que la marca en el PDF disuade pero no impide. Nuestra página tiene justo lo que falta (alertas medidas, falsos positivos, PDFs cifrados), pero el buscador de la herramienta no nos tiene: es el mismo bloqueo de Bing.
+
+### Cambios
+- **Ninguno en el sitio.** #45 se consolida y la hipótesis GEO se cierra sin nada que copiar entre páginas. Las páginas con señal están en ventana: índice de soluciones (#47) mañana, migración (#48) el 11-30, casos y cobros (#49) el 12-01, corrección (#50) el 12-02 y evals el 12-04. No se alcanzó ningún umbral. El link a cobros desde la guía de migración se decide mañana: el caso Apoyo Escolar RV, que ya enlaza a cobros, se rastreó hoy, y conviene ver si eso alcanza antes de tocar la guía, que está en ventana hasta el 11-30.
+
+### Envíos
+- Sin deploy de contenido: no hay `lastmod` nuevos, así que no se reenvía el sitemap ni se manda IndexNow.
+- `request_indexing` sigue sin Chrome. Si el dueño puede pedirlo a mano: cobros ES (34 días sin rastreo).
+
+### Pendientes / hipótesis para próximas corridas
+- **11-24**: índice de soluciones (#47). OAI-SearchBot sigue entrando por URLs de sectores retirados y aterriza en el índice con el párrafo de alcance. Cobros ES: si sigue sin rastreo, decidir el link contextual desde "Migrar por etapas" teniendo en cuenta que el caso Apoyo Escolar RV con el link se rastreó hoy. **11-26**: SERP real del hub (AR, profundidad 30). **11-30**: migración por etapas (#48). **12-01**: casos y cobros (#49). **12-02**: FAQ de equivalencias en corrección (#50). **12-04**: evals ES.
+- Protección EN: seguir las impresiones sin marca después del primer clic. Si "download protection for courses" u otra query llega a 10 imp, evaluar la primera línea EN con ese término.
+- Umbrales vigentes: "download protection for courses" 10 imp (hoy 5); "venta de apuntes"/"vender apuntes digitales" 10 imp (hoy 4 entre las dos).
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`. Para GSC, si la MCP da timeout, la API directa (`/tmp/seo36/gsc.py` hace overview, pages, queries, qdate, pd e inspect; hay que regenerarlo si se borró `/tmp`).
+- **Para el dueño, en orden de impacto:** (1) links desde los sitios de los clientes hacia el caso o el hub; (2) Bing Webmaster Tools (lo que se vio hoy refuerza esto: el índice de ChatGPT solo relee lo que ya conoce); (3) Chrome con CDP para `request_indexing` o pedido manual de cobros ES; (4) `sameAs` con perfiles reales y autor con nombre; (5) el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas de corrección ES/EN (12-02), evals ES/EN (12-04), migración ES/EN (11-30), casos y cobros (12-01), índice de soluciones (mañana), nota de costo ES/EN, protección y redirecciones (consolidadas), páginas de servicio de evaluación (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+| 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
+| 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
+| 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
+| 36 (11-23) | 10-26 → 11-22 | 3 | 398 | 9,6 |
