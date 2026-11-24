@@ -2718,3 +2718,97 @@ La MCP de GSC dio timeout en las dos primeras consultas. Todo lo de GSC salió d
 | 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
 | 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
 | 36 (11-23) | 10-26 → 11-22 | 3 | 398 | 9,6 |
+
+---
+
+## 2026-11-24 — Corrida 37
+
+La MCP de GSC dio timeout otra vez. Todo lo de GSC salió de la API directa con la misma cuenta de servicio (`/tmp/seo37/gsc.py`: overview, dims con filtro, inspect, sitemaps).
+
+### Métricas generales (GSC, datos hasta 2026-11-23; el 11-23 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-27 → 11-23) | 2 | 408 | 0,5 % | 10,3 |
+| 28 d anteriores (09-29 → 10-26) | 7 | 125 | 5,6 % | 9,2 |
+| Últimos 7 d (11-17 → 11-23) | 1 | 109 | 0,9 % | 15,0 |
+| 7 d anteriores (11-10 → 11-16) | 1 | 116 | 0,9 % | 8,8 |
+
+- **Vigesimocuarta semana seguida de récord en 28 d: 408 impresiones (398 ayer), 3,3 veces las de los 28 d anteriores.** La semana baja un 6 % (109 contra 116), con el 11-23 todavía preliminar (15).
+- Clics en 28 d: 2, "luapuntes" (11-16) y protección EN (11-21). El de migración ES del 10-26 salió de la ventana.
+- **La posición semanal empeora otra vez (8,8 → 15,0) por queries lejanas y no porque alguna página haya perdido posición.** Nueva: **"ai tuition management" → nota de costo EN, 4 imp en pos 56 el 11-23 (USA).** Por web search es software de cobro de cuotas escolares (Veracross, Blackbaud, Kinderpedia), así que no es nuestro público y no se persigue. Siguen pesando "auto-marked quizzes" (5 imp en pos 70), "migrate from engrade pro" (pos 47) y "tutorial de evaluación de agente" (pos 25).
+- Nota de costo EN: la query de universidad tiene 47 imp en 28 d en pos 2,2 y 0 clics. El 11-23 marcó pos 10–11 en 2 impresiones desde Aruba y Palestina: con el día preliminar y esos países no se lee como caída. Se mira en la próxima corrida.
+- Protección ES: de 12 imp en pos 4,2 a 5 imp en pos 7,2 en la semana. Protección EN: 8 imp en pos 9,9 y el clic del 11-21. "download protection for courses" sigue en 5 imp en 28 d (umbral 10).
+- `/en/` baja de 11 a 4 impresiones en la semana. Son búsquedas anonimizadas y la home nunca pasó de 6 impresiones por día. No se actúa.
+- Marca de clientes: "plataforma sied" 4 imp en pos 10 → caso SIED; "apoyo escolar rv" 8 en pos 8,1; Lu Apuntes 21 + 3 + 2 en pos 12–17. "venta de apuntes" 3 y "vender apuntes digitales" 1 (umbral 10).
+- Dispositivos (7 d): mobile 44 imp (pos 13,1, 1 clic), desktop 60 (pos 17,3; venía de 76 en pos 9,7), tablet 5. Países: USA 23 imp en pos 19,9 (la empuja la query de cuotas), Croacia 4 con el clic, Italia 4 en pos 1.
+
+### Evaluación de cambios anteriores (revisión 11-24: #47 y link a cobros)
+
+- **#47 (párrafo de alcance, sección de plataformas e ItemList en el índice de soluciones): se consolida sin efecto medible. No hay nada que revertir.**
+  - Rastreo: `/soluciones/` el 11-15 y `/en/solutions/` el 11-16. Google ya tiene la versión nueva en las dos.
+  - OAI-SearchBot sigue pidiendo `/en/solutions/` (2 veces el 11-19), y entra por URLs viejas (`clinics-and-medical-practices` y `accounting-firms`, con 301). En 14 días no siguió desde ahí a ninguna página del cluster de plataformas. El párrafo no hizo que el índice de ChatGPT pidiera páginas nuevas, y eso coincide con lo que se aprendió ayer: el ciclo de OAI-SearchBot sigue la demanda.
+  - GSC: el índice de soluciones tenía entre 1 y 5 impresiones por semana antes del cambio (la última de `/en/solutions/` fue el 11-09, 2 imp en pos 1) y ninguna después. Con ese volumen no se distingue de ruido. No aparecieron queries compartidas con la página de la solución EdTech, así que no hay canibalización.
+  - Descripción de la marca: un web search de "Vantalogics qué hace empresa plataformas educativas" no encuentra nada sobre Vantalogics (ni la descripción vieja ni la nueva). Es el bloqueo de Bing de siempre.
+  - Se deja como está: el párrafo es correcto, le dice a quien llega por una URL vieja a qué se dedica el estudio, y reparte links al cluster. Se cierra la revisión.
+- **Link contextual a cobros desde "Migrar por etapas": no se agrega.** En el build, cobros ES recibe links desde el menú de todas las páginas ES, desde el hub (3), la guía de migración (2), protección (2), el índice de soluciones (2), el índice de casos (3) y los 4 casos. El problema no es que Google no la encuentre, sino la prioridad de rastreo: URL Inspection da 1 sola URL de referencia y último rastreo el 10-20 (35 días). Un link más en una página que se rastreó el 11-13 no cambia eso, y la guía está en ventana hasta el 11-30 (#48). La palanca que falta es el pedido manual de indexación (tarea del dueño mientras no haya Chrome con CDP). El caso Apoyo Escolar RV, que enlaza a cobros, se rastreó el 11-23; se mira si eso lleva a Googlebot a cobros antes del 12-01 (#49).
+
+### Indexación (URL Inspection por la API)
+- Cobros ES 10-20 (35 días, 1 referencia); cobros EN 11-07 (3 referencias).
+- Casos: Apoyo Escolar RV 11-23, Lu Apuntes 11-14.
+- Migración ES 11-13, EN 11-15. Hub ES 11-18. Home 11-16, `/en/` 11-20. Nota de costo EN 11-05. Todas "Submitted and indexed" con el canonical de Google igual al propio.
+- Sitemap: 48 URLs, 0 errores, 0 advertencias, último download hoy 11:07.
+
+### Crawlers (`bun run crawlers 7`, 11-17 → 11-24)
+- `cf auth whoami` sin errores. Bingbot 117 pedidos sobre 43 rutas (108 la semana pasada); Googlebot 70 sobre 26.
+- OAI-SearchBot: protección EN 7 veces (la última hoy), `/en/solutions/` 2 y las dos URLs de sectores retirados del 11-19. Nada nuevo.
+- **ChatGPT-User: la home 4 veces hoy (11-24)**, después de las 3 del 11-21. Es la segunda sesión en la home en 4 días. Los pedidos del 11-23 a `/.env.old`, `/config.yml` y similares con ese user agent son escáneres (404).
+- GPTBot: las 8 páginas del 11-18, sin pedidos nuevos.
+- bingbot: la nota del tutor en `/ar/` y corrección asistida ES 6 cada una (hoy), `/ar/blog/` 4, hub EN 4 (hoy), `/soluciones/` 3, protección EN y migración EN 3. Cobros ES el 11-19.
+- Googlebot: `/` 4 y `/en/solutions/` 3 (11-21), `/blog/` 2, corrección EN 2, caso Apoyo Escolar RV el 11-23. Sigue recorriendo los 301 de las páginas retiradas.
+- ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User y DuckAssistBot: 0.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, sin `noindex` y con JSON-LD que parsea. robots.txt, llms.txt y la clave de IndexNow en 200.
+
+### GEO / SERP (web search, US)
+- "Vantalogics qué hace empresa plataformas educativas": no hay ningún resultado de Vantalogics. Aparecen DataArt, Cleveroad, Capterra y el BID. El buscador de la herramienta sigue sin tener el sitio.
+- "ai tuition management" software: SourceForge, G2, Capterra, Veracross. Es facturación de cuotas, no tutoría con IA.
+
+### Cambios
+- **Ninguno en el sitio.** #47 se consolida sin nada que revertir. El link a cobros desde migración no se agrega porque ya hay más de 20 links internos hacia esa página. No se alcanzó ningún umbral, y las páginas con señal están en ventana: migración (#48) el 11-30, casos y cobros (#49) el 12-01, corrección (#50) el 12-02 y evals el 12-04.
+
+### Envíos
+- Sin deploy de contenido: no hay `lastmod` nuevos, así que no se reenvía el sitemap ni se manda IndexNow.
+- `request_indexing` sigue sin Chrome. Si el dueño puede pedirlo a mano: cobros ES (35 días sin rastreo).
+
+### Pendientes / hipótesis para próximas corridas
+- **11-25**: query de universidad de la nota de costo. Si el 11-24 y el 11-25 siguen en pos ≥ 8, mirar si es un cambio de SERP (web search US). **11-26**: SERP real del hub (AR, profundidad 30, OpenSEO). **11-30**: migración por etapas (#48). **12-01**: casos y cobros (#49), y si Googlebot llegó a cobros ES después del rastreo del caso Apoyo Escolar RV. **12-02**: FAQ de equivalencias en corrección (#50). **12-04**: evals ES.
+- Umbrales vigentes: "download protection for courses" 10 imp (hoy 5); "venta de apuntes"/"vender apuntes digitales" 10 imp (hoy 4 entre las dos). No se persiguen "ai tuition management", "migrate from engrade pro" ni "auto-marked quizzes" (no son nuestro público o están a más de 40 posiciones).
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`. Para GSC, si la MCP da timeout, la API directa (`/tmp/seo37/gsc.py`; regenerarlo si se borró `/tmp`).
+- **Para el dueño, en orden de impacto:** (1) links desde los sitios de los clientes hacia el caso o el hub; (2) Bing Webmaster Tools (hoy el web search tampoco encuentra la marca); (3) Chrome con CDP para `request_indexing` o pedido manual de cobros ES; (4) `sameAs` con perfiles reales y autor con nombre; (5) el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas de corrección ES/EN (12-02), evals ES/EN (12-04), migración ES/EN (11-30), casos y cobros (12-01), nota de costo ES/EN, protección, redirecciones e índice de soluciones (consolidados), páginas de servicio de evaluación (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+| 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
+| 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
+| 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
+| 36 (11-23) | 10-26 → 11-22 | 3 | 398 | 9,6 |
+| 37 (11-24) | 10-27 → 11-23 | 2 | 408 | 10,3 |
