@@ -2812,3 +2812,93 @@ La MCP de GSC dio timeout otra vez. Todo lo de GSC salió de la API directa con 
 | 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
 | 36 (11-23) | 10-26 → 11-22 | 3 | 398 | 9,6 |
 | 37 (11-24) | 10-27 → 11-23 | 2 | 408 | 10,3 |
+
+---
+
+## 2026-11-25 — Corrida 38
+
+La MCP de GSC respondió para rendimiento. La batch de URL Inspection cayó ("Search Console exited"), así que la inspección y los sitemaps salieron de la API directa (`/tmp/seo38/inspect.py`).
+
+### Métricas generales (GSC, datos hasta 2026-11-24; el 11-24 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-28 → 11-24) | 2 | 409 | 0,5 % | 10,6 |
+| 28 d anteriores (09-30 → 10-27) | 7 | 137 | 5,1 % | 8,6 |
+| Últimos 7 d (11-18 → 11-24) | 1 | 104 | 1,0 % | 15,6 |
+| 7 d anteriores (11-11 → 11-17) | 1 | 123 | 0,8 % | 9,2 |
+
+- **28 d plano: 409 impresiones (408 ayer).** Es récord por una impresión, pero la serie dejó de crecer: la semana baja un 15 % (104 contra 123). La semana anterior tuvo dos días de 24 (11-16 y 11-17) y esta ninguno pasa de 18.
+- **La posición semanal empeora (9,2 → 15,6) por los mismos días con queries lejanas que en las corridas 36 y 37:** 11-23 (pos 26,7: "ai tuition management" en pos 56 y "auto-marked quizzes" en pos 77), 11-21 (pos 21,1) y 11-19 (pos 19,6). Ninguna página perdió posición en sus queries propias.
+- Clics en 28 d: los mismos 2 ("luapuntes" el 11-16 y protección EN el 11-21).
+- Dispositivos (28 d): desktop 256 imp en pos 11,7 y 0 clics; mobile 136 en pos 9,3 y los 2 clics; tablet 17. Países (7 d): USA 23 (pos 20,5), Reino Unido 14 (pos 29), España 12 (pos 21,9), Argentina 8, Italia 6 (pos 1), Croacia 4 (el clic).
+
+### Revisión del día (11-25): query de universidad de la nota de costo EN
+
+- **Fue un día suelto. Sin cambios.** "how much does it cost to add ai tutoring to our university?" marcó pos 1 los días 11-18, 19, 20, 21 y 22, pos 10,5 el 11-23 (2 imp, Aruba y Palestina) y **otra vez pos 1 el 11-24 (2 imp)**. No llegó al criterio de la corrida 37 (pos ≥ 8 el 11-24 y el 11-25), así que no hace falta revisar la SERP. Se mantiene el criterio de consolidación del #44: volver a tocar la nota solo si cae de pos 5 en esta query de forma sostenida.
+- La nota EN baja de pos 3,7 a 12,6 en la semana solo por las 4 impresiones de "ai tuition management" en pos 56 (no se persigue, ver corrida 37). Hay una impresión de "homework" en pos 2 (11-21), suelta.
+
+### Otras señales de la semana
+
+- **Corrección ES: 3 imp en pos 43,3 contra 6 en pos 5,8.** Son 3 impresiones sueltas: pos 91 (11-19), 30 (11-22) y **9 (11-24)**. Del 11-04 al 11-16 estuvo siempre en pos 4–9. Con 1 impresión por día no se puede separar ruido de un efecto del #50 (rastreado el 11-20). Se evalúa el 12-02 como estaba previsto.
+- Corrección EN: 15 imp (10 la semana anterior). La pregunta de los motores de corrección de matemáticas está en pos 1 el 11-23 y el 11-24 (venía en pos 3–7): es la FAQ de equivalencias del #50. Lo que tira la posición promedio hacia abajo es "auto-marked quizzes" (pos 72–77).
+- Protección EN: 8 imp en pos 10,6 (21,2 la semana anterior) y el clic del 11-21. "download protection for courses" suma 2 imp en la semana (pos 15 y 23); sigue lejos del umbral de 10.
+- Caso SIED ES: 6 imp en pos 8,3 (20,2 la semana anterior), con "plataforma sied" y "sied salud" en pos 10. Lu Apuntes ES baja de 18 a 8 imp, siempre en búsquedas de marca del cliente.
+- Evals ES: 7 imp en pos 21,9, casi todas de "tutorial de evaluación de agente" (pos 22–27, España). Sigue sin aparecer una query de evaluación de tutores o correctores. Se mira el 12-04.
+
+### Indexación (URL Inspection por la API)
+- **Caso Lu Apuntes rastreado el 11-24, con el link a cobros (#49).** Con Apoyo Escolar RV (11-23), los dos casos que enlazan a cobros ya se releyeron.
+- **Cobros ES: sigue sin rastreo desde el 10-20 (36 días), con 1 URL de referencia.** Se mira el 12-01 si los dos casos releídos llevan a Googlebot hasta cobros. Cobros EN: 11-07 (3 referencias).
+- Home rastreada hoy (11-25). Corrección ES 11-20, EN 11-19. Migración ES 11-13, EN 11-15. Hub ES 11-18. Protección EN 11-13. Nota de costo EN 11-05. Todas "Submitted and indexed" con el canonical de Google igual al propio.
+- Sitemap: 48 URLs, 0 errores, 0 advertencias, último download 11-24 11:07.
+
+### Crawlers (`bun run crawlers 7`, 11-18 → 11-25)
+- `cf auth whoami` sin errores. **Hoy la salida volvió muestreada (múltiplos de 10 y solo las rutas más pedidas)**, así que no se comparan los totales con la semana pasada.
+- **OAI-SearchBot: protección EN con 20 pedidos (muestreados) hoy, 11-25.** Sigue siendo la única página real en su ciclo.
+- ChatGPT-User: la home el 11-24 (la sesión ya registrada ayer) y SIED el 11-18. El `/.env.old` del 11-23 es un escáner.
+- bingbot: corrección asistida ES (11-23 y 11-24), búsqueda semántica EN (11-24), `/soluciones/` hoy, protección EN, caso Dr. La Rosa EN y tutor EN el 11-19.
+- Googlebot: `/en/solutions/` el 11-18 y los 301 de notas retiradas (11-18 y hoy). El 301 de `/` de hoy es el pedido por http; URL Inspection da la home rastreada hoy.
+- GPTBot, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User y DuckAssistBot: 0.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, sin `noindex` y con JSON-LD que parsea. robots.txt, llms.txt y la clave de IndexNow en 200.
+
+### Cambios
+- **Ninguno en el sitio.** La revisión del día (query de universidad) se cierra sin cambios: fue un solo día en pos 10,5. Las páginas con señal siguen en ventana: migración (#48) el 11-30, casos y cobros (#49) el 12-01, corrección (#50) el 12-02 y evals el 12-04. No se alcanzó ningún umbral. La semana más floja (−15 %) no viene de ninguna página que haya perdido posición, sino de menos días con picos de impresiones, y con este volumen no justifica editar páginas que están en ventana.
+
+### Envíos
+- Sin deploy de contenido: no hay `lastmod` nuevos, así que no se reenvía el sitemap ni se manda IndexNow.
+- `request_indexing` sigue sin Chrome. Si el dueño puede pedirlo a mano: cobros ES (36 días sin rastreo).
+
+### Pendientes / hipótesis para próximas corridas
+- **11-26**: SERP real del hub (AR, profundidad 30, OpenSEO). **11-30**: migración por etapas (#48). **12-01**: casos y cobros (#49), y si Googlebot llegó a cobros ES después de releer los dos casos (11-23 y 11-24). **12-02**: FAQ de equivalencias en corrección (#50); para corrección ES mirar si vuelve a pos 4–9 de forma estable. **12-04**: evals ES.
+- Si la semana próxima vuelve a bajar contra la anterior, mirar si el freno es estacional (fin de cuatrimestre en el hemisferio sur, feriados de EE. UU.) o de alguna página, antes de tocar nada.
+- Umbrales vigentes: "download protection for courses" 10 imp (hoy 5 en 28 d); "venta de apuntes"/"vender apuntes digitales" 10 imp (hoy 4). No se persiguen "ai tuition management", "migrate from engrade pro", "auto-marked quizzes" ni "homework".
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`. Si la batch de URL Inspection de la MCP falla, `/tmp/seo38/inspect.py` (regenerarlo si se borró `/tmp`).
+- **Para el dueño, en orden de impacto:** (1) links desde los sitios de los clientes hacia el caso o el hub; (2) Bing Webmaster Tools; (3) Chrome con CDP para `request_indexing` o pedido manual de cobros ES; (4) `sameAs` con perfiles reales y autor con nombre; (5) el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas de corrección ES/EN (12-02), evals ES/EN (12-04), migración ES/EN (11-30), casos y cobros (12-01), nota de costo ES/EN, protección, redirecciones e índice de soluciones (consolidados), páginas de servicio de evaluación (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+| 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
+| 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
+| 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
+| 36 (11-23) | 10-26 → 11-22 | 3 | 398 | 9,6 |
+| 37 (11-24) | 10-27 → 11-23 | 2 | 408 | 10,3 |
+| 38 (11-25) | 10-28 → 11-24 | 2 | 409 | 10,6 |
