@@ -2902,3 +2902,98 @@ La MCP de GSC respondió para rendimiento. La batch de URL Inspection cayó ("Se
 | 36 (11-23) | 10-26 → 11-22 | 3 | 398 | 9,6 |
 | 37 (11-24) | 10-27 → 11-23 | 2 | 408 | 10,3 |
 | 38 (11-25) | 10-28 → 11-24 | 2 | 409 | 10,6 |
+
+---
+
+## 2026-11-26 — Corrida 39
+
+GSC salió entero de la API directa (`/tmp/seo39/gsc.py` e `inspect.py`), sin pasar por la MCP.
+
+### Métricas generales (GSC, datos hasta 2026-11-25; el 11-25 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-29 → 11-25) | 2 | 412 | 0,5 % | 10,7 |
+| 28 d anteriores (10-01 → 10-28) | 7 | 142 | 4,9 % | 8,3 |
+| Últimos 7 d (11-19 → 11-25) | 1 | 101 | 1,0 % | 15,3 |
+| 7 d anteriores (11-12 → 11-18) | 1 | 125 | 0,8 % | 9,2 |
+
+- **28 d: 412 impresiones, récord por 3 (409 ayer), 2,9 veces los 28 d anteriores.** La semana baja un 19 % (101 contra 125). La semana anterior tuvo dos días de 24 (11-16 y 11-17); esta no pasa de 18. Es la segunda semana seguida a la baja contra la anterior, así que toca el chequeo previsto en la corrida 38 (ver abajo).
+- Clics en 28 d: los mismos 2 ("luapuntes" el 11-16 y protección EN el 11-21).
+- La posición semanal (9,2 → 15,3) la siguen tirando las mismas queries lejanas: "auto-marked quizzes" (5 imp en pos 74), "ai tuition management" (4 en pos 56), "migrate from engrade pro" (2 en pos 47) y "tutorial de evaluación de agente" (4 en pos 24,5). Ninguna página perdió posición en sus queries propias.
+- Query de universidad (nota de costo EN): 12 imp en la semana en pos 3,2. Por día: pos 1 el 11-24 y **pos 5 el 11-25 (2 imp, preliminar)**. El criterio del #44 es reabrir la nota solo si cae de pos 5 de forma sostenida: un día en el límite no alcanza. Se mira mañana.
+- La pregunta de motores de corrección de matemáticas → corrección EN: 5 imp en pos 3, pos 1 el 11-24.
+- Países (7 d): USA 22 (pos 20,4), Reino Unido 14 (pos 29), España 11 (pos 21,5), Argentina 9 (pos 11,7), Colombia 6, Italia 5 (pos 1), Croacia 4 (el clic).
+
+### ¿La semana floja es de alguna página o es estacional? (chequeo de la corrida 38)
+
+- **Páginas, semana contra semana:** Lu Apuntes ES baja de 21 a 7 imp, `/en/` de 14 a 2, `/en/privacy/` de 8 a 0 y `/casos/` de 6 a 0. Suman −40 impresiones; el resto del sitio queda igual o sube (corrección EN 8 → 15, caso SIED ES 4 → 7, migración ES 3 → 5).
+- Ninguna de esas cuatro es una caída de posición. Lu Apuntes son búsquedas de marca del cliente (su sitio va primero). Las de `/en/` y `/en/privacy/` son casi todas de un mismo día (11-15: 6 + 6 impresiones, anonimizadas) y fuera de eso la home EN nunca pasó de 4 por día. `/casos/` tuvo el clic de "luapuntes" del 11-16.
+- Conclusión: no hay página con problema. La baja es menos búsquedas de marca de clientes y la falta de un pico como el del 11-15. Sin datos para separar lo estacional (fin de cuatrimestre en el sur, Thanksgiving hoy en EE. UU.). No se actúa.
+
+### Revisión del día (11-26): SERP real del hub (OpenSEO, Google Argentina, desktop, profundidad 30)
+
+- **"desarrollo de plataformas educativas a medida": vantalogics.com sigue fuera del top 30.** Igual que el 11-19.
+- **"migrar academia de hotmart a plataforma propia": sigue fuera del top 30.** Igual que el 11-19.
+- Web search de "desarrollo de plataformas educativas a medida Argentina academia online" (US): El Cronista, pedidos de Workana, DataArt, Aprender21 y tesis de UdeSA y UNLP. Ninguna agencia con casos de academias reales. No aparecemos (el bloqueo de Bing de siempre).
+- Lectura: una semana más y sin ningún cambio de autoridad, el resultado no podía moverse. Confirma lo de la corrida 34: el on-page del hub está bien y lo que falta son links de otros dominios. Revisé si alguno de los repos de clientes en `/projects/` ya enlaza al sitio: el único que menciona Vantalogics es `apoyoescolarrv`, y es el reporte de errores del servidor, no un link visible. Poner un "Desarrollado por Vantalogics" en el sitio de un cliente es una decisión del dueño con el cliente, no de esta rutina.
+- Próxima lectura: 12-10 (cada dos semanas en vez de cada semana, mientras no haya links nuevos: cuesta créditos y no aporta si no cambió nada de autoridad).
+
+### Indexación (URL Inspection por la API)
+- **Cobros ES: sigue sin rastreo de Googlebot desde el 10-20 (37 días), con 1 URL de referencia.** Novedad: **GPTBot la pidió el 11-25** (ver crawlers). Cobros EN: 11-07 (3 referencias).
+- **Migración EN rastreada hoy (11-26).** Es la primera relectura después del #48; migración ES sigue en el 11-13.
+- Corrección ES 11-20, EN 11-19. Hub ES 11-18. `/en/` 11-20. `/en/privacy/` 11-18. Nota de costo EN 11-05. Todas "Submitted and indexed" con el canonical de Google igual al propio.
+- Sitemap: 48 URLs, 0 errores, 0 advertencias, último download 11-24 11:07.
+
+### Crawlers (`bun run crawlers 7`, 11-19 → 11-26)
+- `cf auth whoami` sin errores. Bingbot 119 pedidos sobre 40 rutas; Googlebot 106 sobre 37.
+- OAI-SearchBot: protección EN 7 veces (la última hoy), `/en/solutions/` y una URL de sector retirado el 11-19. Nada nuevo.
+- **GPTBot: sesión nueva el 11-25 con 7 páginas: home, `/casos/`, casos Academia SIED (ES y EN) y Dr. La Rosa, `/privacidad/` y cobros ES.** Cobros ES es justo la página que Googlebot no relee hace 37 días.
+- ChatGPT-User: la home 4 veces el 11-24 (ya registrada). Lo del 11-23 (`/.env.old`, `/config.yml`) son escáneres con 404.
+- bingbot: corrección asistida ES 7 (11-25), la nota del tutor en `/ar/` 6, el comparativo tutor/búsqueda semántica en `/ar/` 5, migración EN, hub EN, `/en/blog/` y tutor EN 4. Cobros ES el 11-19.
+- Googlebot: `/` 6, corrección EN 4 (11-25), `/blog/` y `/en/blog/` 3, `/en/` hoy, migración EN hoy, evals ES/EN, casos Lu Apuntes EN y SIED EN. Sigue recorriendo los 301 de las páginas retiradas.
+- ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User y DuckAssistBot: 0.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, sin `noindex` y con JSON-LD que parsea. robots.txt, llms.txt y la clave de IndexNow en 200.
+
+### Cambios
+- **Ninguno en el sitio.** La SERP del hub confirma que el problema es de autoridad y no de la página. La semana floja no viene de ninguna página que haya perdido posición. Las páginas con señal siguen en ventana: migración (#48) el 11-30 (la EN se releyó hoy), casos y cobros (#49) el 12-01, corrección (#50) el 12-02 y evals el 12-04. No se alcanzó ningún umbral.
+
+### Envíos
+- Sin deploy de contenido: no hay `lastmod` nuevos, así que no se reenvía el sitemap ni se manda IndexNow.
+- `request_indexing` sigue sin Chrome. Si el dueño puede pedirlo a mano: cobros ES (37 días sin rastreo de Googlebot).
+
+### Pendientes / hipótesis para próximas corridas
+- **11-27**: query de universidad. Si el 11-26 y el 11-27 marcan pos > 5, mirar la SERP (web search US y, si hace falta, OpenSEO USA). **11-30**: migración por etapas (#48); la EN ya está releída. **12-01**: casos y cobros (#49), y si Googlebot llega a cobros ES (GPTBot ya la pidió el 11-25). **12-02**: FAQ de equivalencias en corrección (#50); corrección ES, ver si vuelve a pos 4–9 estable. **12-04**: evals ES. **12-10**: SERP real del hub (AR, profundidad 30).
+- Si la tercera semana (11-26 → 12-02) vuelve a bajar, separar marca de clientes de lo demás antes de leerlo como tendencia del sitio.
+- Umbrales vigentes: "download protection for courses" 10 imp (hoy 5 en 28 d); "venta de apuntes"/"vender apuntes digitales" 10 imp (hoy 4). No se persiguen "ai tuition management", "migrate from engrade pro", "auto-marked quizzes" ni "homework".
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`. GSC por la API directa (`/tmp/seo39/gsc.py overview` y `gsc.py x <desde> <hasta> <dims> [filtro JSON]`; `inspect.py <urls>`). Regenerarlos si se borró `/tmp`.
+- **Para el dueño, en orden de impacto:** (1) links desde los sitios de los clientes hacia el caso o el hub (hoy se volvió a confirmar que es lo único que le falta al hub); (2) Bing Webmaster Tools; (3) Chrome con CDP para `request_indexing` o pedido manual de cobros ES; (4) `sameAs` con perfiles reales y autor con nombre; (5) el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas de corrección ES/EN (12-02), evals ES/EN (12-04), migración ES/EN (11-30), casos y cobros (12-01), nota de costo ES/EN, protección, redirecciones e índice de soluciones (consolidados), páginas de servicio de evaluación (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+| 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
+| 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
+| 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
+| 36 (11-23) | 10-26 → 11-22 | 3 | 398 | 9,6 |
+| 37 (11-24) | 10-27 → 11-23 | 2 | 408 | 10,3 |
+| 38 (11-25) | 10-28 → 11-24 | 2 | 409 | 10,6 |
+| 39 (11-26) | 10-29 → 11-25 | 2 | 412 | 10,7 |
