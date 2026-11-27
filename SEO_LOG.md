@@ -2997,3 +2997,91 @@ GSC salió entero de la API directa (`/tmp/seo39/gsc.py` e `inspect.py`), sin pa
 | 37 (11-24) | 10-27 → 11-23 | 2 | 408 | 10,3 |
 | 38 (11-25) | 10-28 → 11-24 | 2 | 409 | 10,6 |
 | 39 (11-26) | 10-29 → 11-25 | 2 | 412 | 10,7 |
+
+---
+
+## 2026-11-27 — Corrida 40
+
+GSC salió entero de la API directa (`/tmp/seo40/gsc.py` y `urlinspect.py`). El script de inspección se renombró: `inspect.py` tapaba el módulo `inspect` de Python y rompía la importación de `google-auth` cuando se corría desde su carpeta. Las dependencias ya no estaban instaladas en el sistema; se corren con `uv run -q --with google-api-python-client --with google-auth python -I gsc.py ...`.
+
+### Métricas generales (GSC, datos hasta 2026-11-26; el 11-26 es preliminar)
+
+| Ventana | Clics | Impresiones | CTR | Posición |
+|---|---|---|---|---|
+| Últimos 28 d (10-30 → 11-26) | 2 | 419 | 0,5 % | 11,9 |
+| 28 d anteriores (10-02 → 10-29) | 7 | 158 | 4,4 % | 7,9 |
+| Últimos 7 d (11-20 → 11-26) | 1 | 111 | 0,9 % | 17,2 |
+| 7 d anteriores (11-13 → 11-19) | 1 | 123 | 0,8 % | 11,1 |
+
+- **28 d: 419 impresiones, récord (412 ayer), 2,7 veces los 28 d anteriores.** La semana baja un 10 % (111 contra 123), menos que ayer (−19 %), porque el 11-26 tuvo 26 impresiones, el mejor día del período.
+- **El pico del 11-26 es de queries lejanas en mobile:** 17 imp en pos 36 (desktop 9 en pos 7,3). Casi todo anonimizado: migración EN 3 imp en pos 61, corrección EN 3 en pos 61, tutor o búsqueda semántica EN 1 en pos 85. Por eso la posición semanal empeora (11,1 → 17,2) sin que ninguna página haya perdido posición en sus queries propias.
+- Clics en 28 d: los mismos 2 ("luapuntes" el 11-16 y protección EN el 11-21).
+- Nota de costo EN: 30 imp en pos 11,9 (28 en pos 4,1 la semana anterior). Lo que baja el promedio es el 11-23 (6 imp en pos 40,8, "ai tuition management"); el resto de los días está entre pos 1 y 5,8.
+- La pregunta de motores de corrección de matemáticas → corrección EN: 5 imp en pos 3. Protección ES 9 imp en pos 8,4; EN 8 en pos 10,9. Casos SIED ES 8 (pos 9,5), Lu Apuntes ES 8 (pos 16), Apoyo Escolar RV 3. "venta de apuntes" 1 imp en pos 10.
+
+### Revisión del día (11-27): query de universidad de la nota de costo EN
+
+- Por día: pos 1 del 11-18 al 11-22, 10,5 el 11-23, 1 el 11-24, **5 el 11-25 (2 imp) y 6 el 11-26 (1 imp, preliminar)**. El criterio de la corrida 39 pedía pos > 5 el 11-26 y el 11-27. El 11-26 cumple por poco y del 11-27 todavía no hay datos.
+- Se adelantó la mirada a la SERP (web search US): getmonetizely (dos guías de precios), ibl.ai ("what AI tutoring actually costs 2026" y "AI cost math for higher education per seat vs usage"), finmodelslab, quadc, el Substack de Marc Watkins, LSI y una calculadora de ROI de OpenEducat. Todas las fuentes dan montos en dólares o calculadoras por alumno. ibl.ai tiene dos notas de 2026 sobre el tema exacto; si alguna entró hace poco, explicaría el paso de pos 1 a pos 5–6.
+- **Decisión: sin cambios.** Son 3 impresiones en dos días, una de ellas preliminar. Lo que tienen los que están arriba son cifras en dólares, y esta nota no puede darlas (regla de no publicar precios). Lo que sí se puede reforzar son proporciones, tokens por sesión y horas. Se decide con los datos del 11-27 y 11-28: si la query se queda en pos > 5 los dos días, se lee la nota de ibl.ai y se compara qué responde que la nuestra no responda sin montos.
+
+### Indexación (URL Inspection por la API)
+- **Cobros ES: sigue sin rastreo de Googlebot desde el 10-20 (38 días), con 1 URL de referencia.** GPTBot la pidió el 11-25. Cobros EN: 11-07 (3 referencias).
+- Migración EN 11-26 (releída después del #48); migración ES sigue en el 11-13. Hub ES 11-18. Corrección ES 11-20. Nota de costo EN 11-05. Evals ES 11-15. Casos Apoyo Escolar RV 11-23 y Lu Apuntes 11-24. Home 11-25. Todas "Submitted and indexed" con el canonical de Google igual al propio.
+- Sitemap: 48 URLs, 0 errores, 0 advertencias, último download 11-24 11:07.
+
+### Crawlers (`bun run crawlers 7`, 11-20 → 11-27)
+- `cf auth whoami` sin errores. Bingbot 111 pedidos sobre 32 rutas; Googlebot 120 sobre 39.
+- **Claude-User: la home el 11-27. Es el primer pedido de un agente de Claude desde que se registran los crawlers** (todas las corridas anteriores daban 0). Claude-User es un fetch que dispara una persona desde Claude, no un rastreo. Esta rutina no usó ese user agent (el crawl de auditoría va con `Mozilla/5.0 seo-audit`). No se puede saber si fue un prospecto, el dueño u otra sesión.
+- **ChatGPT-User: el hub ES (`/plataformas-educativas/`) el 11-27, por primera vez.** Hasta ahora ChatGPT-User solo había pedido la home y SIED. Igual que con Claude-User, es una consulta de una persona en ChatGPT. Hay que ver si se repite.
+- OAI-SearchBot: protección EN 7 veces (la última hoy). Sigue siendo la única página en su ciclo.
+- GPTBot: la sesión de 7 páginas del 11-25 (ya registrada), nada nuevo.
+- bingbot: corrección asistida ES 7 (11-25), búsqueda semántica y tutor o búsqueda en `/ar/` (noindex) 5–6 hoy, migración EN 5 hoy, tutor EN y `/ar/` 4, nota de costo ES 3 (11-23).
+- Googlebot: `/` 7 hoy, búsqueda semántica EN 3 hoy, `/en/` 3, corrección EN, `/blog/` y `/en/blog/` 3 (11-25), caso Apoyo Escolar RV 2 (11-26), tutor EN, hub EN, migración EN, evals EN y RAG EN el 11-26. Sigue recorriendo los 301 de las páginas retiradas. No pidió cobros ES.
+- ClaudeBot, Claude-SearchBot, PerplexityBot, Perplexity-User y DuckAssistBot: 0.
+
+### Auditoría técnica (crawl de producción)
+- 48/48 URLs del sitemap con 200, canonical self, un H1, sin `noindex` y con JSON-LD que parsea. robots.txt, llms.txt y la clave de IndexNow en 200. Las URLs `/ar/*` que pide bingbot responden 200 con `noindex, follow` y no están en el sitemap (como está previsto).
+
+### Cambios
+- **Ninguno en el sitio.** La query de universidad bajó a pos 5–6 en dos días con 3 impresiones, y el criterio del #44 pide que la caída se sostenga. Las páginas con señal siguen en ventana: migración (#48) el 11-30, casos y cobros (#49) el 12-01, corrección (#50) el 12-02 y evals el 12-04. No se alcanzó ningún umbral. El pico del 11-26 son queries lejanas en mobile.
+
+### Envíos
+- Sin deploy de contenido: no hay `lastmod` nuevos, así que no se reenvía el sitemap ni se manda IndexNow.
+- `request_indexing` sigue sin Chrome. Si el dueño puede pedirlo a mano: cobros ES (38 días sin rastreo de Googlebot).
+
+### Pendientes / hipótesis para próximas corridas
+- **Próxima corrida (11-30 o antes)**: query de universidad con los datos del 11-27 y 11-28. Si sigue en pos > 5 los dos días, leer la nota de ibl.ai sobre lo que cuesta el tutoreo con IA en 2026 y ver qué contesta que la nuestra no contesta sin montos (proporciones, sesiones, tokens). **11-30**: migración por etapas (#48); la EN ya está releída, la ES no. **12-01**: casos y cobros (#49), y si Googlebot llega a cobros ES. **12-02**: FAQ de equivalencias en corrección (#50); corrección ES, ver si vuelve a pos 4–9 estable. **12-04**: evals ES. **12-10**: SERP real del hub (AR, profundidad 30).
+- Mirar si Claude-User y ChatGPT-User vuelven a pedir páginas, y cuáles. Si se repiten sobre el hub o los casos, es demanda real de asistentes y conviene revisar que esas páginas respondan en las primeras líneas qué hace el estudio y para quién.
+- Si la tercera semana (11-26 → 12-02) vuelve a bajar, separar marca de clientes de lo demás antes de leerlo como tendencia del sitio.
+- Umbrales vigentes: "download protection for courses" 10 imp (hoy 5 en 28 d); "venta de apuntes"/"vender apuntes digitales" 10 imp (hoy 4). No se persiguen "ai tuition management", "migrate from engrade pro", "auto-marked quizzes" ni "homework".
+- **Cada corrida:** `cf auth whoami` y después `bun run crawlers 7`. GSC por la API directa con `uv run` (ver arriba); los scripts están en `/tmp/seo40/` (`gsc.py overview`, `gsc.py x <desde> <hasta> <dims> [filtro JSON]`, `urlinspect.py <urls>`, `audit.py`). Regenerarlos si se borró `/tmp`, y nunca llamar a un script `inspect.py`.
+- **Para el dueño, en orden de impacto:** (1) links desde los sitios de los clientes hacia el caso o el hub; (2) Bing Webmaster Tools; (3) Chrome con CDP para `request_indexing` o pedido manual de cobros ES; (4) `sameAs` con perfiles reales y autor con nombre; (5) el commit `6ce459f` con atribución y los montos de comisión de Hotmart en el pilar.
+- No tocar: notas de corrección ES/EN (12-02), evals ES/EN (12-04), migración ES/EN (11-30), casos y cobros (12-01), nota de costo ES/EN (salvo lo de la query de universidad), protección, redirecciones e índice de soluciones (consolidados), páginas de servicio de evaluación (cerradas).
+
+### Evolución desde el inicio del log
+
+| Corrida | Ventana 28 d | Clics | Impresiones | Posición |
+|---|---|---|---|---|
+| 1 (10-05) | 09-07 → 10-05 | 4 | ~85 | ~7 (90 d: 29,5) |
+| 2 (10-06) | 09-08 → 10-05 | 4 | 77 | 15,1 |
+| 6 (10-12) | 09-14 → 10-11 | 5 | 89 | 12,3 |
+| 11 (10-19) | 09-21 → 10-18 | 6 | 103 | 8,6 |
+| 13 (10-21) | 09-23 → 10-20 | 8 | 107 | 8,8 |
+| 16 (10-26) | 09-28 → 10-25 | 6 | 119 | 9,3 |
+| 20 (10-30) | 10-02 → 10-29 | 7 | 158 | 7,9 |
+| 22 (11-03) | 10-06 → 11-02 | 7 | 182 | ~7,0 |
+| 24 (11-05) | 10-08 → 11-04 | 6 | 214 | 8,8 (6,9 sin el 11-04) |
+| 26 (11-09) | 10-12 → 11-08 | 5 | 248 | 8,4 (6,8 sin el 11-04) |
+| 28 (11-11) | 10-14 → 11-10 | 4 | 272 | 8,4 (7,0 sin el 11-04) |
+| 30 (11-13) | 10-16 → 11-12 | 4 | 295 | 8,5 (7,2 sin el 11-04) |
+| 31 (11-16) | 10-19 → 11-15 | 3 | 328 | 8,3 (7,1 sin el 11-04) |
+| 32 (11-17) | 10-20 → 11-16 | 3 | 346 | 8,6 (7,5 sin el 11-04) |
+| 33 (11-18) | 10-21 → 11-17 | 2 | 362 | 8,8 (7,7 sin el 11-04) |
+| 34 (11-19) | 10-22 → 11-18 | 2 | 370 | 8,7 (7,7 sin el 11-04) |
+| 35 (11-20) | 10-23 → 11-19 | 2 | 380 | 9,2 (8,3 sin el 11-04) |
+| 36 (11-23) | 10-26 → 11-22 | 3 | 398 | 9,6 |
+| 37 (11-24) | 10-27 → 11-23 | 2 | 408 | 10,3 |
+| 38 (11-25) | 10-28 → 11-24 | 2 | 409 | 10,6 |
+| 39 (11-26) | 10-29 → 11-25 | 2 | 412 | 10,7 |
+| 40 (11-27) | 10-30 → 11-26 | 2 | 419 | 11,9 |
